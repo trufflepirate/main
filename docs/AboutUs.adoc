@@ -15,7 +15,7 @@ image::psyf.jpg[width="150", align="left"]
 {empty}[http://github.com/Psyf[github]] [<<psyf#, portfolio>>]
 
 Role: Team Lead +
-Responsibilities: FULLSTACK
+Responsibilities: Deliverables and Deadlines
 
 '''
 
@@ -24,7 +24,7 @@ image::trufflepirate.jpg[width="150", align="left"]
 {empty}[http://github.com/trufflepirate[github]] [<<trufflepirate#, portfolio>>]
 
 Role: Developer +
-Responsibilities: FULLSTACK
+Responsibilities: Documentation
 
 '''
 
@@ -33,7 +33,7 @@ image::teojunjie.jpg[width="150", align="left"]
 {empty}[http://github.com/teojunjie[github]] [<<teojunjie#, portfolio>>]
 
 Role: Developer +
-Responsibilities: FULLSTACK
+Responsibilities: Code Quality
 
 '''
 
@@ -42,6 +42,6 @@ image::ftywan.jpg[width="150", align="left"]
 {empty}[http://github.com/ftywan[github]] [<<ftywan#, portfolio>>]
 
 Role: Developer +
-Responsibilities: FULLSTACK
+Responsibilities: Integration
 
 '''
