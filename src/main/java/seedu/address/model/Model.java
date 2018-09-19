@@ -16,6 +16,8 @@ public interface Model {
     void resetData(ReadOnlyAddressBook newData);
 
     /** Returns the AddressBook */
+
+
     ReadOnlyAddressBook getAddressBook();
 
     /**
