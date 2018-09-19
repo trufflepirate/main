@@ -1,3 +1,6 @@
+/**
+ * Represents a Printing job in printQ9000
+ */
 package seedu.address.model;
 
 public class Jobs {
