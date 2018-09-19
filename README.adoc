@@ -17,7 +17,7 @@ endif::[]
 * It is a Java application intended for maker spaces to manage primarily 3-D prints but has capabilities to handle other forms of manufacturing machines as well.
 * It is *written in OOP fashion*. It provides a *reasonably well-written* code that is based on https://github.com/se-edu/addressbook-level4[Address Book (level 4)], a sample java program written for students to learn software engineering.
 * Features:
-** A GUI that for displaying available machines at a glance.
+** A GUI for displaying all available machines at a glance.
 ** More test cases, including automated GUI testing.
 ** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using Travis CI.
 
