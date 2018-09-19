@@ -813,89 +813,250 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == Product Scope
 
-*Target user profile*:
+*Target user profile:***
+**There will be two categories of users for the app. The main user will be students using the makerspace. The second user will be the lab manager.
 
-* has a need to manage a significant number of contacts
+* has a need to manage a significant number shared devices (lab manager)
+* has a need to prioritize and queue certain print jobs over others (lab manager)
+* has a need to look up when certain devices will be free for use (students)
 * prefer desktop apps over other types
 * can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: see 3D printers are being used, and the estimated time left until the equipment will be free. This will reduce system loss and increase the efficiency of all parties involved.
 
 [appendix]
 == User Stories
 
-Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
+Priorities: High (must have) - ** * **, Medium (nice to have) - ** **, Low (unlikely to have) - *****
 
-[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
-|=======================================================================
-|Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|===
+|*Priority *|*As a...*|*I want to...*|*So that i can...*|*v1.4*
 
-|`* * *` |user |add a new person |
-
-|`* * *` |user |delete a person |remove entries that I no longer need
-
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
-
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
-
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
-|=======================================================================
-
-_{More to be added}_
+|**|Student|Have notifications informing me when my current printing job is almost complete|Plan my schedule accordingly to collect my print.|
+|***|Student|Request deletion of my print job|Cancel any printing job that has not been executed yet|Y
+|***|User|Add a print to a particular queue manually|-|Y
+|**|User|Add a print automatically to any available devices|Contribute towards optimizing the device usage|
+|***|User|Reset the time of a print if it fails halfway|-|Y
+|***|User|Write a special note of print jobs, if any|Avoid explaining changes in status to students|Y
+|***|Lab Manager|Cancel a print job|-|Y
+|**|Student|Have suggestions provided by the system to schedule my print|Properly plan my timetable accordingly to the suggestion|
+|**|Student|Upload the file to be printed|Request printing job commencement by third party without being physically there|
+|**|Student|Be able to see the status of my current print job online|Can plan on when to pick it up|
+|*|Student|Be able to send a print request to use a particular device at a certain time|Collect an urgent print job earlier by choosing a fast printer.|
+|**|Student|Be able to see the status of the devices online from the comfort of my home|See if any printers are currently available|
+|**|Student |Be able to confirm the collection time of my print job|Can ensure that the print job is being executed according to schedule without any delays|
+|*|Student|Be able to request a higher priority of printing |Get my emergency handled properly|
+|***|Lab Manager|Be able to control the queues for each device|Streamline printing job requests, so that I can prioritize effectively|Y
+|***|Lab Manager|Be able to list out all my devices|See the time remaining till they are free|Y
+|***|Lab Manager|Be able to list the devices available at the moment|I can allocate the queue work well|Y
+|***|User|View the current queue for using a(set of) particular device|Plan my schedule accordingly|Y
+|**|Student|Change my print request |So that I can adjust according to my dynamic schedule. |Y
+|***|User|View print requests|-|Y
+|**|Lab Manager|Add/Remove machines in the lab|New queues are added/removed for/from use|Y
+|***|User|Start countdown of a print job|Signal the start of a print|Y
+|*|Lab Manager|Request student to collect print|Students are notified when prints are complete|
+|***|Lab Manager|View print history|Keep an official record|Y
+|***|User |Change print status|Change the status of a print|Y
+|***|Lab Manager|Change admin password|Change admin password if needed|Y
+|**|Lab Manager|Add administrator|Fulfill my job as lab manager by having access to admin-specific commands|Y
+|***|Lab|Logout of admin mode|Prevent students from accessing admin mode|Y
+|***|Users|View sorted and filtered prints|Easily see prints that are relevant to me|Y
+|***|Lab Manager|Change machine status|Indicated nonfunctional/disabled machines|Y
+|***|Lab Manager|Login to Admin Mode|Access admin functions|Y
+|===
 
 [appendix]
 == Use Cases
+In all cases, System refers to printQ9000.
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+*Actor: lab manager* +
+*Use case: reset the time remains if the printing job fails halfway* +
+MSS:
 
-[discrete]
-=== Use case: Delete person
+. User resets time after resetting devices
+. System updates queues
 
-*MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
-+
+*Actor: students* +
+*Use case: request to remove the printing job* +
+MSS:
+
+. User sends the request to remove the printing job
+. System send notification to the admin
+User case ends.
+
+
+*Actor: lab manager* +
+*Use case: remove the printing job* +
+MSS:
+
+. User sends command to remove a particular print job (by ID)
+. System removes the print job
+Extension:  +
+1a. User enters invalid print job ID +
+1b. System shows error and returns to main menu
+
+
+*Actor: lab manager* +
+*Use case: add machines to the list* +
+MSS:
+
+. User chooses to add a new printer
+. System asks for name and details
+. User provides name and details
+. System shows confirmation of addition
+	User case ends. +
+Extension: +
+3a. User does not provide valid name and details  +
+3b. System goes back to main menu.
+
+
+*Actor: Users* +
+*Use case: View Printing Queues* +
+MSS:
+
+. Users execute the command to see the queues
+. System shows all the queues
+User case ends. +
+Extension:  +
+	2a. User can specify sorting and filtering based on attributes +
+	2b. System shows list according to demands
+
+
+*Actor: Lab manager* +
+*Use case: manually change the status of machine* +
+MSS:
+
+. User executes the command to change machine status
+. System updates the status of the machine.
+User case ends.
+
+
+*Actor: Lab manager* +
+*Use case: logout of admin mode* +
+MSS:
+
+. User executes the command to exit the admin mode
+. System changes to normal user mode.
 Use case ends.
 
-*Extensions*
 
-[none]
-* 2a. The list is empty.
-+
+*Actor: Lab manager, student* +
+*Use case: add administrator* +
+MSS:
+
+. User executes the command to add the new administrator profile, along with details
+. System updates the new admin profile to storage
+User case ends.
+
+
+*Actor: Student, Lab Manager* +
+*Use case: see the printing job queue for a specific facility* +
+MSS:
+
+. User specifies the facility (s)he wants to view
+. System list down all the running printing jobs in the particular queue
 Use case ends.
 
-* 3a. The given index is invalid.
-+
-[none]
-** 3a1. AddressBook shows an error message.
-+
-Use case resumes at step 2.
 
-_{More to be added}_
+*Actor: Lab manager* +
+*Use case: change the admin password* +
+MSS:
+
+. User executes the command for changing the passwords
+. System pops out the window for user to input the new password
+. User enters the new password
+. System updates the user profile
+	User case ends.
+
+
+*Actor: students* +
+*Use case: change the print request* +
+MSS:
+
+. User executes command to change a certain print job (by ID)
+. System asks for the changes
+. User enters changes
+. System updates storage and queues to reflect changes
+User case ends. +
+Extension:  +
+1a. User enters invalid print job ID +
+1b. System shows error and returns to main menu
+
+
+*Actor: Lab manager* +
+*Use case: view print requests* +
+MSS:
+
+. User executes the command line
+. System list down all the current printing job
+User case ends.
+
+
+*Actor: lab manager* +
+*Use case: admin login* +
+MSS:
+
+. User types in the username and password
+. System authenticates the user name and password
+. System shows the main menu or returns to the login page
+User case ends. +
+Extension:
+	2a. User entered wrong username or password +
+	2b. System returns to the login page
+
+
+*Actor : Lab Manager* +
+*User case : Show history* +
+MSS:
+
+. User types in command to show log
+. System gives the user a view of the log
+Use case ends.
+
+
+*Use case : Show printing progress notifications* +
+*Actor : Lab manager* +
+MSS:
+
+. User execute commands to send the notification.
+. System generates the notification and sends to the printer’s phone.
+User case ends.
+
+
+*Actor: students, lab managers* +
+*Use Case: manually add a job* +
+MSS:
+
+. user enters command to show all devices
+. System lists down devices
+. user requests to add a job to a specific machine in the list, specifies the estimated time left
+. system adds a job to the specific machine in the list.
+Use case ends.
+
+
+*User Case: Show device statuses* +
+*Actor: Lab Manager* +
+MSS:
+
+. User enters command to show all devices
+. System lists down devices and shows time remaining till device is free next to the devices or the machine is not available for use.
+Use case ends.
 
 [appendix]
 == Non Functional Requirements
 
-.  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `9` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-_{More to be added}_
+. Should work on any mainstream OS as long as it has Java 9 or higher installed.
+. Should be able to hold up to 1000 prints without a noticeable sluggishness in performance for typical usage.
+. A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 
 [appendix]
 == Glossary
 
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, OS-X
-
-[[private-contact-detail]] Private contact detail::
-A contact detail that is not meant to be shared with others
 
 [appendix]
 == Product Survey
