@@ -12,4 +12,5 @@ public class Username {
     }
 
     public String toString() { return value; }
+
 }

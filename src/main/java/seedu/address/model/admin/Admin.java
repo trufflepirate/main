@@ -14,4 +14,5 @@ public class Admin {
 
     public Username getUsername() { return username; }
     public PasswordHash getPasswordHash() { return passwordHash; }
+
 }

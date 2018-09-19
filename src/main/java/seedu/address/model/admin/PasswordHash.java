@@ -12,4 +12,5 @@ public class PasswordHash {
     }
 
     public String toString() { return value; }
+
 }
