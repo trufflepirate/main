@@ -1,10 +1,15 @@
 package seedu.address.model.person;
 
-import seedu.address.model.tag.Tag;
-
-import java.util.*;
-
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
+
+import seedu.address.model.tag.Tag;
 
 /**
  * Represents a Machine in the lab. Morphed from Persons.
@@ -16,7 +21,8 @@ public class Machine {
     private final Name name;
 
     // Data fields
-    private final List<Name> jobs = new ArrayList<>();  //Name is a placeholder. To be replaced by Job class in the future
+    //Name is a placeholder. To be replaced by Job class in the future
+    private final List<Name> jobs = new ArrayList<>();
     private final Set<Tag> tags = new HashSet<>();
 
     /**
