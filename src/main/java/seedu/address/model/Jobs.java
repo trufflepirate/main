@@ -1,8 +1,8 @@
+package seedu.address.model;
+
 /**
  * Represents a Printing job in printQ9000
  */
-
-package seedu.address.model;
 
 public class Jobs {
     private String name;
