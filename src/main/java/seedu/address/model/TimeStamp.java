@@ -14,6 +14,7 @@ public class TimeStamp {
         return createdTimeStamp.getTime();
     }
 
+
     private long getDate(){
         return createdTimeStamp.getTime();
     }
@@ -21,5 +22,5 @@ public class TimeStamp {
     private long getElapsedTime(){
         return System.nanoTime() - createdTimeStamp.getTime();
     }
-    
+
 }
