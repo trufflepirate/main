@@ -6,7 +6,7 @@ package seedu.address.model.job;
 public class Job {
     private String name;
     private String machine;
-    //TimeObj time = new Time();
+    TimeStamp time = new TimeStamp();
 
     public Job(String name, String machine) {
         this.name = name;
@@ -21,9 +21,9 @@ public class Job {
         return machine;
     }
 
-    /*public long getTime() {
-        return time.getTime;
-    }*/
+    public long getTime() {
+        return time.getTime();
+    }
 
     public void changeName(String name) {
         this.name = name;

@@ -15,13 +15,15 @@ public class TimeStamp {
         this.createdTimeStamp = new Date(System.currentTimeMillis());
     }
 
-    private long getTime() {
+    public long getTime() {
         return createdTimeStamp.getTime();
     }
 
-    private long getDate() {
+    /*
+    public long getDate() {
         return createdTimeStamp.getTime();
     }
+    */
 
     private long getElapsedTime() {
         return System.nanoTime() - createdTimeStamp.getTime();
