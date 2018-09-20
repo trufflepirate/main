@@ -2,6 +2,7 @@ package seedu.address.model.job;
 
 import seedu.address.model.person.Machine;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
 
 /**
  * Represents a Printing job in makerManager
@@ -9,12 +10,16 @@ import seedu.address.model.person.Name;
 public class Job {
     private Name name;
     private Machine machine;
-    private Note note = new Note("");
-    private TimeStamp time = new TimeStamp();
+    private Note note;
+    private TimeStamp time;
+    private Person owner;
 
-    public Job(String name, Machine machine) {
-        this.name = new Name(name);
+    public Job(Name name, Machine machine, Person owner, Note note) {
+        this.name = name;
         this.machine = machine;
+        this.note = note;
+        this.time = new TimeStamp();
+        this.owner = owner;
     }
 
     public Name getName() {
@@ -25,8 +30,16 @@ public class Job {
         return machine;
     }
 
-    public long getTime() {
-        return time.getTime();
+    public TimeStamp getTime() {
+        return time;
+    }
+
+    public Note getNote() {
+        return note;
+    }
+
+    public Person getOwner() {
+        return owner;
     }
 
     public void changeName(String name) {

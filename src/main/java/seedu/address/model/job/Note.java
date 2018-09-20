@@ -11,7 +11,7 @@ public class Note {
         this.value = note;
     }
 
-    public String getNote() {
+    public String toString() {
         return value;
     }
 
