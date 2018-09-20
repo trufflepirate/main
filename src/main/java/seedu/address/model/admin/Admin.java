@@ -12,7 +12,12 @@ public class Admin {
         this.passwordHash = passwordHash;
     }
 
-    public Username getUsername() { return username; }
-    public PasswordHash getPasswordHash() { return passwordHash; }
+    public Username getUsername() {
+        return username;
+    }
+
+    public PasswordHash getPasswordHash() {
+        return passwordHash;
+    }
 
 }
