@@ -1,4 +1,4 @@
-package seedu.address.model;
+package seedu.address.model.job;
 
 import java.util.Date;
 
@@ -18,7 +18,6 @@ public class TimeStamp {
     private long getTime() {
         return createdTimeStamp.getTime();
     }
-
 
     private long getDate() {
         return createdTimeStamp.getTime();

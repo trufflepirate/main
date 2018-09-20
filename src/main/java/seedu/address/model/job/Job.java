@@ -1,14 +1,14 @@
-package seedu.address.model;
+package seedu.address.model.job;
 
 /**
  * Represents a Printing job in printQ9000
  */
-public class Jobs {
+public class Job {
     private String name;
     private String machine;
     //TimeObj time = new Time();
 
-    public Jobs(String name, String machine) {
+    public Job(String name, String machine) {
         this.name = name;
         this.machine = machine;
     }
