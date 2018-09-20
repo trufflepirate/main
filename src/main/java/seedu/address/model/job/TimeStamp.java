@@ -4,7 +4,7 @@ import java.util.Date;
 
 
 /**
- * Represents a TimeStamp Object for Machines.
+ * Represents a TimeStamp Object for Job.
  */
 
 public class TimeStamp {

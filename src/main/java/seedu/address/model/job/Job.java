@@ -9,7 +9,8 @@ import seedu.address.model.person.Name;
 public class Job {
     private Name name;
     private Machine machine;
-    TimeStamp time = new TimeStamp();
+    private Note note = new Note("");
+    private TimeStamp time = new TimeStamp();
 
     public Job(String name, Machine machine) {
         this.name = new Name(name);
