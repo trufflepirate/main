@@ -4,7 +4,7 @@ import seedu.address.model.person.Machine;
 import seedu.address.model.person.Name;
 
 /**
- * Represents a Printing job in printQ9000
+ * Represents a Printing job in makerManager
  */
 public class Job {
     private Name name;
