@@ -3,6 +3,8 @@ package seedu.address.logic.commands;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.admin.PasswordHash;
+import seedu.address.model.admin.Username;
 
 /**
  * Lets the admin login to MakerManager
@@ -16,11 +18,11 @@ public class LoginCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + "Login used for admin access.\n"
             + "Example: login USERNAME PASSWORD\n";
 
-    private final String username;
-    private final String password;
+    private final Username username;
+    private final PasswordHash password;
 
 
-    public LoginCommand(String username, String password) {
+    public LoginCommand(Username username, PasswordHash password) {
         this.username = username;
         this.password = password;
     }
