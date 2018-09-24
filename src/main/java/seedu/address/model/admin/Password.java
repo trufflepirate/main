@@ -7,8 +7,8 @@ public class Password {
 
     private String value;
 
-    public Password(String hash) {
-        this.value = hash;
+    public Password(String password) {
+        this.value = password;
     }
 
     public String toString() {
