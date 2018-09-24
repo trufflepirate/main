@@ -1,15 +1,13 @@
 package seedu.address.model.admin;
 
-import seedu.address.model.person.Address;
-
 /**
  * Represents the hash of the password of an admin
  */
-public class PasswordHash {
+public class Password {
 
     private String value;
 
-    public PasswordHash(String hash) {
+    public Password(String hash) {
         this.value = hash;
     }
 
@@ -20,8 +18,8 @@ public class PasswordHash {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof PasswordHash // instanceof handles nulls
-                && value.equals(((PasswordHash) other).value)); // state check
+                || (other instanceof Password // instanceof handles nulls
+                && value.equals(((Password) other).value)); // state check
     }
 
     @Override

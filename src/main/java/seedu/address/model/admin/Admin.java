@@ -1,7 +1,5 @@
 package seedu.address.model.admin;
 
-import seedu.address.model.person.Person;
-
 import java.util.Objects;
 
 /**
@@ -9,19 +7,19 @@ import java.util.Objects;
  */
 public class Admin {
     private Username username;
-    private PasswordHash passwordHash;
+    private Password password;
 
-    public Admin (Username username, PasswordHash passwordHash) {
+    public Admin (Username username, Password password) {
         this.username = username;
-        this.passwordHash = passwordHash;
+        this.password = password;
     }
 
     public Username getUsername() {
         return username;
     }
 
-    public PasswordHash getPasswordHash() {
-        return passwordHash;
+    public Password getPassword() {
+        return password;
     }
 
     /**
@@ -40,12 +38,12 @@ public class Admin {
 
         Admin otherAdmin = (Admin) other;
         return otherAdmin.getUsername().equals(getUsername())
-                && otherAdmin.getPasswordHash().equals(getPasswordHash());
+                && otherAdmin.getPassword().equals(getPassword());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(username, passwordHash);
+        return Objects.hash(username, password);
     }
 }

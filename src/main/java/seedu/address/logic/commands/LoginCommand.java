@@ -1,9 +1,8 @@
 package seedu.address.logic.commands;
 
 import seedu.address.logic.CommandHistory;
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.admin.PasswordHash;
+import seedu.address.model.admin.Password;
 import seedu.address.model.admin.Username;
 
 /**
@@ -19,10 +18,10 @@ public class LoginCommand extends Command {
             + "Example: login USERNAME PASSWORD\n";
 
     private final Username username;
-    private final PasswordHash password;
+    private final Password password;
 
 
-    public LoginCommand(Username username, PasswordHash password) {
+    public LoginCommand(Username username, Password password) {
         this.username = username;
         this.password = password;
     }
