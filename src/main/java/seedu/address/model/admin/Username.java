@@ -15,4 +15,16 @@ public class Username {
         return value;
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Username // instanceof handles nulls
+                && value.equals(((Username) other).value)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
+
 }
