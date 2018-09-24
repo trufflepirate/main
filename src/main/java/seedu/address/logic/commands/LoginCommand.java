@@ -31,4 +31,12 @@ public class LoginCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) {
         return new CommandResult("username=" + this.username + " pw=" + this.password);
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof LoginCommand // instanceof handles nulls
+                && username.equals(((LoginCommand) other).username)
+                && password.equals(((LoginCommand) other).password)); // state check
+    }
 }
