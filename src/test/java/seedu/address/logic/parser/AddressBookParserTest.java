@@ -28,9 +28,8 @@ import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.LogoutCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.admin.Password;
-import seedu.address.model.admin.Username;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
@@ -121,6 +120,11 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_login() throws Exception {
         assertTrue(parser.parseCommand(LoginCommand.COMMAND_WORD + " testUN testPW") instanceof LoginCommand);
+    }
+
+    @Test
+    public void parseCommand_logout() throws Exception {
+        assertTrue(parser.parseCommand("logout") instanceof LogoutCommand);
     }
 
     @Test
