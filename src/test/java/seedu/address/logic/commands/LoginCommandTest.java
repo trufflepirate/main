@@ -1,29 +1,31 @@
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
 import seedu.address.logic.CommandHistory;
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.admin.Password;
 import seedu.address.model.admin.Username;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 public class LoginCommandTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
     private Model model = new ModelManager();
     private Model expectedModel = new ModelManager();
     private CommandHistory commandHistory = new CommandHistory();
-
-    public ExpectedException thrown = ExpectedException.none();
 
     /*
     @Test
@@ -39,24 +41,24 @@ public class LoginCommandTest {
         Password alicePw = new Password("123456");
         Password bobPw = new Password("abcdef");
 
-        LoginCommand LoginAliceCommand = new LoginCommand(alice, alicePw);
-        LoginCommand LoginBobCommand = new LoginCommand(bob, bobPw);
+        LoginCommand loginAliceCommand = new LoginCommand(alice, alicePw);
+        LoginCommand loginBobCommand = new LoginCommand(bob, bobPw);
 
         // same object -> returns true
-        assertTrue(LoginAliceCommand.equals(LoginAliceCommand));
+        assertTrue(loginAliceCommand.equals(loginAliceCommand));
 
         // same values -> returns true
-        LoginCommand LoginAliceCommandCopy = new LoginCommand(alice, alicePw);
-        assertTrue(LoginAliceCommand.equals(LoginAliceCommandCopy));
+        LoginCommand loginAliceCommandCopy = new LoginCommand(alice, alicePw);
+        assertTrue(loginAliceCommand.equals(loginAliceCommandCopy));
 
         // different types -> returns false
-        assertFalse(LoginAliceCommand.equals(1));
+        assertFalse(loginAliceCommand.equals(1));
 
         // null -> returns false
-        assertFalse(LoginAliceCommand.equals(null));
+        assertFalse(loginAliceCommand.equals(null));
 
         // different person -> returns false
-        assertFalse(LoginAliceCommand.equals(LoginBobCommand));
+        assertFalse(loginAliceCommand.equals(loginBobCommand));
     }
 
 }
