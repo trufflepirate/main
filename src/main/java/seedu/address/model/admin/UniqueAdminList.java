@@ -1,10 +1,11 @@
 package seedu.address.model.admin;
 
+import static java.util.Objects.requireNonNull;
 import java.util.ArrayList;
 
 import seedu.address.model.admin.exceptions.AdminNotFoundException;
 import seedu.address.model.admin.exceptions.DuplicateAdminException;
-import static java.util.Objects.requireNonNull;
+
 
 /**
  * A list of admins that ensures uniqueness in Usernames
@@ -20,6 +21,11 @@ public class UniqueAdminList {
         return internalList.stream().anyMatch(toCheck::equals);
     }
 
+    /**
+     * Adds the Admin to the list
+     * The admin must not exist in the list
+     * @param toAdd
+     */
     public void add(Admin toAdd) {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
