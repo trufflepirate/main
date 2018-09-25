@@ -17,6 +17,11 @@ public class LoginCommandParser implements Parser<LoginCommand> {
         }
 
         String [] temp = trimmedArgs.split(" ");
+
+        if (temp.length != 2) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, LoginCommand.MESSAGE_USAGE));
+        }
+
         Username username = new Username(temp[0]);
         Password password = new Password(temp[1]);
 
