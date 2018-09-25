@@ -40,6 +40,4 @@ public class UniqueAdminList {
         }
     }
 
-    //TODO: Update which calls remove and add?
-
 }
