@@ -16,8 +16,8 @@ public class UniqueAdminList {
      * Returns true if the list contains an equivalent userName
      */
     public boolean contains(Admin toCheck) {
-        //TODO: apply logic
-        return false;
+        requireNonNull(toCheck);
+        return internalList.stream().anyMatch(toCheck::equals);
     }
 
     public void add(Admin toAdd) {
