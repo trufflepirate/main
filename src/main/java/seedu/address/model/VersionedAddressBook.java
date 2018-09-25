@@ -1,5 +1,7 @@
 package seedu.address.model;
 
+import seedu.address.model.admin.Admin;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,6 +89,11 @@ public class VersionedAddressBook extends AddressBook {
         return super.equals(otherVersionedAddressBook)
                 && addressBookStateList.equals(otherVersionedAddressBook.addressBookStateList)
                 && currentStatePointer == otherVersionedAddressBook.currentStatePointer;
+    }
+
+    public boolean hasAdmin(Admin admin) {
+        //TODO: plugIn logic
+        return true;
     }
 
     /**
