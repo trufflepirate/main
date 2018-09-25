@@ -1,6 +1,8 @@
 package seedu.address.model.admin;
 
 import java.util.ArrayList;
+
+import seedu.address.model.admin.exceptions.AdminNotFoundException;
 import seedu.address.model.admin.exceptions.DuplicateAdminException;
 import static java.util.Objects.requireNonNull;
 
@@ -26,5 +28,18 @@ public class UniqueAdminList {
 
         internalList.add(toAdd);
     }
+
+    /**
+     * Removes the equivalent admin from the list.
+     * The admin must exist in the list.
+     */
+    public void remove(Admin toRemove) {
+        requireNonNull(toRemove);
+        if (!internalList.remove(toRemove)) {
+            throw new AdminNotFoundException();
+        }
+    }
+
+    //TODO: Update which calls remove and add?
 
 }
