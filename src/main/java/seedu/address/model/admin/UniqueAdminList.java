@@ -1,6 +1,7 @@
 package seedu.address.model.admin;
 
 import static java.util.Objects.requireNonNull;
+
 import java.util.ArrayList;
 
 import seedu.address.model.admin.exceptions.AdminNotFoundException;
