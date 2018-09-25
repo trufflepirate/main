@@ -13,6 +13,8 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.admin.Admin;
+import seedu.address.model.admin.Password;
+import seedu.address.model.admin.Username;
 import seedu.address.model.person.Person;
 
 /**
@@ -37,6 +39,12 @@ public class ModelManager extends ComponentManager implements Model {
 
         versionedAddressBook = new VersionedAddressBook(addressBook);
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
+
+        //TODO: Move this to a proper place later
+        Username theFirstUN = new Username("admin");
+        Password theFirstPW = new Password("admin");
+        Admin theFirstAdmin = new Admin(theFirstUN, theFirstPW);
+        versionedAddressBook.addAdmin(theFirstAdmin);
     }
 
     public ModelManager() {

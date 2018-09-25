@@ -91,11 +91,6 @@ public class VersionedAddressBook extends AddressBook {
                 && currentStatePointer == otherVersionedAddressBook.currentStatePointer;
     }
 
-    public boolean hasAdmin(Admin admin) {
-        //TODO: plugIn logic
-        return true;
-    }
-
     /**
      * Thrown when trying to {@code undo()} but can't.
      */

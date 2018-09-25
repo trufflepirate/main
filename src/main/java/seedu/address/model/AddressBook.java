@@ -123,6 +123,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         admins.add(toAdd);
     }
 
+    public boolean hasAdmin(Admin admin) {
+        return admins.contains(admin);
+    }
+
     //// util methods
 
     @Override
@@ -147,4 +151,5 @@ public class AddressBook implements ReadOnlyAddressBook {
     public int hashCode() {
         return persons.hashCode();
     }
+
 }
