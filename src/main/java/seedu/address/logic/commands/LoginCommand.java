@@ -15,7 +15,8 @@ public class LoginCommand extends Command {
     public static final String COMMAND_WORD = "login";
     public static final String MESSAGE_SUCCESS = "login success!";
     public static final String MESSAGE_WRONG_DETAILS = "Login failed! Wrong Username/Password.";
-    private static final String MESSAGE_ALREADY_LOGGED_IN = "Login failed! Please Logout of current account before logging in again.";
+    private static final String MESSAGE_ALREADY_LOGGED_IN = "Login failed! "
+            + "Please Logout of current account before logging in again.";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + "Login used for admin access.\n"
             + "Example: login USERNAME PASSWORD\n";

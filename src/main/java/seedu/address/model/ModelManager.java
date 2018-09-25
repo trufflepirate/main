@@ -35,15 +35,16 @@ public class ModelManager extends ComponentManager implements Model {
         super();
         requireAllNonNull(addressBook, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs + "and initial admin");
+        logger.fine("Initializing with address book: " + addressBook + " and user prefs "
+                + userPrefs + "and initial admin");
 
         versionedAddressBook = new VersionedAddressBook(addressBook);
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
 
         //TODO: Move this to a proper place later
-        Username theFirstUN = new Username("admin");
-        Password theFirstPW = new Password("admin");
-        Admin theFirstAdmin = new Admin(theFirstUN, theFirstPW);
+        Username theFirstUn = new Username("admin");
+        Password theFirstPw = new Password("admin");
+        Admin theFirstAdmin = new Admin(theFirstUn, theFirstPw);
         versionedAddressBook.addAdmin(theFirstAdmin);
     }
 
