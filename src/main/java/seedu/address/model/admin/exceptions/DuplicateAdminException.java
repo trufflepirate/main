@@ -8,4 +8,5 @@ public class DuplicateAdminException extends RuntimeException {
     public DuplicateAdminException() {
         super("Operation would result in duplicate persons");
     }
+
 }
