@@ -1,7 +1,5 @@
 package seedu.address.model.admin;
 
-import seedu.address.model.person.Person;
-
 import java.util.ArrayList;
 import seedu.address.model.admin.exceptions.DuplicateAdminException;
 import static java.util.Objects.requireNonNull;
@@ -10,7 +8,7 @@ import static java.util.Objects.requireNonNull;
  * A list of admins that ensures uniqueness in Usernames
  */
 public class UniqueAdminList {
-    private final ArrayList<Admin> internalList = new ArrayList();
+    private final ArrayList<Admin> internalList = new ArrayList<>();
 
     /**
      * Returns true if the list contains an equivalent userName
@@ -28,4 +26,5 @@ public class UniqueAdminList {
 
         internalList.add(toAdd);
     }
+
 }
