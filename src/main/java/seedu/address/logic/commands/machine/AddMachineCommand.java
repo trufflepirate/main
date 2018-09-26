@@ -21,7 +21,7 @@ public class AddMachineCommand extends Command {
             + "Parameters: "
             + PREFIX_NAME + "MACHINE NAME "
             + PREFIX_MACHINE_STATUS + "MACHINE STATUS "
-            + "Example: " + COMMAND_WORD + " "
+            + "\nExample: " + COMMAND_WORD + " "
             + PREFIX_NAME + "3D_PRINTER_402 "
             + PREFIX_MACHINE_STATUS +"ENABLED";
 
