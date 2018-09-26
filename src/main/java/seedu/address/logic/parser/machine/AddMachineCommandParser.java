@@ -1,14 +1,14 @@
 package seedu.address.logic.parser.machine;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MACHINE_STATUS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MACHINE_STATUS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
 import seedu.address.logic.commands.machine.AddMachineCommand;
 import seedu.address.logic.parser.ArgumentMultimap;
@@ -37,8 +37,8 @@ public class AddMachineCommandParser implements Parser<AddMachineCommand> {
     public AddMachineCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_MACHINE_STATUS);
 
-        if(!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_MACHINE_STATUS)
-                || !argMultimap.getPreamble().isEmpty()){
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_MACHINE_STATUS)
+                || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMachineCommand.MESSAGE_USAGE));
         }
 

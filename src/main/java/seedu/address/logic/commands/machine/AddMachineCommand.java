@@ -1,8 +1,9 @@
 package seedu.address.logic.commands.machine;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MACHINE_STATUS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.Command;
@@ -43,7 +44,7 @@ public class AddMachineCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS,machineToAdd));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, machineToAdd));
     }
 
 
