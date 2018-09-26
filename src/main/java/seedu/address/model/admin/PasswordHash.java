@@ -11,6 +11,8 @@ public class PasswordHash {
         this.value = hash;
     }
 
-    public String toString() { return value; }
+    public String toString() {
+        return value;
+    }
 
 }

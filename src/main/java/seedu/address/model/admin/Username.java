@@ -11,6 +11,8 @@ public class Username {
         this.value = username;
     }
 
-    public String toString() { return value; }
+    public String toString() {
+        return value;
+    }
 
 }

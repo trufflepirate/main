@@ -1,7 +1,7 @@
 package seedu.address.model.admin;
 
 /**
- * Represents an Admin in printQ9000.
+ * Represents an Admin in makerManager.
  */
 public class Admin {
     private Username username;
@@ -12,7 +12,12 @@ public class Admin {
         this.passwordHash = passwordHash;
     }
 
-    public Username getUsername() { return username; }
-    public PasswordHash getPasswordHash() { return passwordHash; }
+    public Username getUsername() {
+        return username;
+    }
+
+    public PasswordHash getPasswordHash() {
+        return passwordHash;
+    }
 
 }
