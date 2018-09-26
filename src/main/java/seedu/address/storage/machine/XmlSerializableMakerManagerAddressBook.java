@@ -31,7 +31,6 @@ public class XmlSerializableMakerManagerAddressBook {
     public XmlSerializableMakerManagerAddressBook() {
         machines = new ArrayList<>();
     }
-    
     /**
      * Conversion
      */
