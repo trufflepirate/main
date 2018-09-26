@@ -1,5 +1,9 @@
 package seedu.address.logic.commands.machine;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MACHINE_STATUS;
+
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
@@ -7,8 +11,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.machine.Machine;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.*;
+
 
 /**
  * Adds a machine to MakerManager address book
@@ -23,7 +26,7 @@ public class AddMachineCommand extends Command {
             + PREFIX_MACHINE_STATUS + "MACHINE STATUS "
             + "\nExample: " + COMMAND_WORD + " "
             + PREFIX_NAME + "3D_PRINTER_402 "
-            + PREFIX_MACHINE_STATUS +"ENABLED";
+            + PREFIX_MACHINE_STATUS + "ENABLED";
 
 
     public static final String MESSAGE_SUCCESS = "New machine added: %l$s";

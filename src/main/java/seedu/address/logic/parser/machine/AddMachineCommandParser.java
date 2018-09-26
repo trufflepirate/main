@@ -1,5 +1,15 @@
 package seedu.address.logic.parser.machine;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Stream;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MACHINE_STATUS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+
 import seedu.address.logic.commands.machine.AddMachineCommand;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
@@ -11,15 +21,7 @@ import seedu.address.model.machine.MachineName;
 import seedu.address.model.person.Name;
 import seedu.address.model.tag.Tag;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Stream;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MACHINE_STATUS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
 /**
  * Parses input arguments and creates a new AddMachineCommand object
@@ -33,17 +35,17 @@ public class AddMachineCommandParser implements Parser<AddMachineCommand> {
      */
 
     public AddMachineCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args,PREFIX_NAME,PREFIX_MACHINE_STATUS);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_MACHINE_STATUS);
 
-        if(!arePrefixesPresent(argMultimap,PREFIX_NAME,PREFIX_MACHINE_STATUS)
+        if(!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_MACHINE_STATUS)
                 || !argMultimap.getPreamble().isEmpty()){
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,AddMachineCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMachineCommand.MESSAGE_USAGE));
         }
 
         MachineName name = new MachineName("JJ's_Printer");
         List<Name> jobs = new ArrayList<>();
         Set<Tag> tags = new HashSet<>();
-        Machine machine = new Machine(name,jobs,tags,true);
+        Machine machine = new Machine(name, jobs, tags, true);
 
         return new AddMachineCommand(machine);
     }

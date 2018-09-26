@@ -21,8 +21,8 @@ import seedu.address.logic.commands.LogoutCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.commands.machine.AddMachineCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.parser.machine.AddMachineCommandParser;
 
 /**
@@ -89,7 +89,7 @@ public class AddressBookParser {
             return new RedoCommand();
 
 
-        // Machine commands below
+        // MakerManager commands below
 
         case AddMachineCommand.COMMAND_WORD:
             return new AddMachineCommandParser().parse(arguments);
