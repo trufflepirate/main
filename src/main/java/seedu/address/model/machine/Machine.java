@@ -19,7 +19,7 @@ import seedu.address.model.tag.Tag;
 public class Machine {
 
     // Identity fields
-    private final Name name;
+    private final MachineName machineName;
 
     // Data fields
     //Name is a placeholder. To be replaced by Job class in the future
@@ -29,15 +29,15 @@ public class Machine {
     /**
      * Every field must be present and not null.
      */
-    public Machine(Name name, List<Name> jobs, Set<Tag> tags) {
+    public Machine(MachineName name, List<Name> jobs, Set<Tag> tags) {
         requireAllNonNull(name, jobs, tags);
-        this.name = name;
+        this.machineName = name;
         this.jobs.addAll(jobs);
         this.tags.addAll(tags);
     }
 
-    public Name getName() {
-        return name;
+    public MachineName getName() {
+        return machineName;
     }
 
     /**
@@ -93,7 +93,7 @@ public class Machine {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, jobs, tags);
+        return Objects.hash(machineName, jobs, tags);
     }
 
     @Override
@@ -108,5 +108,6 @@ public class Machine {
 
         return builder.toString();
     }
+
 
 }
