@@ -1,11 +1,13 @@
 package seedu.address.storage.machine;
 
+import javax.xml.bind.annotation.XmlValue;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Name;
 
-import javax.xml.bind.annotation.XmlValue;
-
+/**
+ * JAXB-friendly version of the JobName.
+ */
 public class XmlAdaptedJobName {
 
     @XmlValue
@@ -27,8 +29,13 @@ public class XmlAdaptedJobName {
     public XmlAdaptedJobName(Name name) {
     }
 
+    /**
+     * Converts this jaxb-friendly adapted jobname object into the model's Name object.
+     *
+     * @throws IllegalValueException if there were any data constraints violated in the adapted name
+     */
     public Name toModelType() throws IllegalValueException {
-        if(!Name.isValidName(jobName)) {
+        if (!Name.isValidName(jobName)) {
             throw new IllegalValueException((Name.MESSAGE_NAME_CONSTRAINTS));
         }
         return new Name(jobName);

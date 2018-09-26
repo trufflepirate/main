@@ -161,11 +161,17 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.hashCode();
     }
 
+    /**
+     * Returns true if a machine that matches the {@code machine}
+     */
     public boolean hasMachine(Machine machine) {
         requireNonNull(machine);
         return machines.contains(machine);
     }
 
+    /**
+     * Adds a machine if {@code machine} does not exist in the list
+     */
     public void addMachine(Machine machine) {
         requireNonNull(machine);
         machines.add(machine);

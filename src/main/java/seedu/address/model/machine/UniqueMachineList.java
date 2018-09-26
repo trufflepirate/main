@@ -1,11 +1,11 @@
 package seedu.address.model.machine;
 
-import seedu.address.model.machine.exceptions.DuplicateMachineException;
-import seedu.address.model.machine.exceptions.MachineNotFoundException;
-
 import java.util.ArrayList;
 
 import static java.util.Objects.requireNonNull;
+
+import seedu.address.model.machine.exceptions.DuplicateMachineException;
+import seedu.address.model.machine.exceptions.MachineNotFoundException;
 
 /**
  * A list of machines that ensures uniqueness in Machine names

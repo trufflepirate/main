@@ -1,5 +1,9 @@
 package seedu.address.storage.machine;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -7,9 +11,7 @@ import seedu.address.model.machine.Machine;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+
 
 /**
  * An Immutable MakerManager AddressBook that is serializable to XML format
@@ -26,9 +28,10 @@ public class XmlSerializableMakerManagerAddressBook {
      * Creates an empty XmlSerializableMakerManagerAddressBook.
      * This empty constructor is required for marshalling
      */
-    public XmlSerializableMakerManagerAddressBook() {machines = new ArrayList<>();  }
-
-
+    public XmlSerializableMakerManagerAddressBook() {
+        machines = new ArrayList<>();
+    }
+    
     /**
      * Conversion
      */
@@ -40,7 +43,8 @@ public class XmlSerializableMakerManagerAddressBook {
     /**
      * Converts this addressbook in the model's {@code Addressbook} object.
      *
-     * @throws seedu.address.commons.exceptions.IllegalValueException if there were any data constrainst violations or duplicates in the
+     * @throws seedu.address.commons.exceptions.IllegalValueException if there were any data
+     * constraints violations or duplicates in the
      * {@code XmlAdaptedMachine}.
      */
     public AddressBook toModelType() throws IllegalValueException {

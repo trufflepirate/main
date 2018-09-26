@@ -1,5 +1,13 @@
 package seedu.address.storage.machine;
 
+import javax.xml.bind.annotation.XmlElement;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.MachineName;
@@ -7,9 +15,9 @@ import seedu.address.model.person.Name;
 import seedu.address.model.tag.Tag;
 import seedu.address.storage.XmlAdaptedTag;
 
-import javax.xml.bind.annotation.XmlElement;
-import java.util.*;
-import java.util.stream.Collectors;
+/**
+ * JAXB-friendly version of the Machine
+ */
 
 public class XmlAdaptedMachine {
 
@@ -57,10 +65,14 @@ public class XmlAdaptedMachine {
                 .collect(Collectors.toSet());
     }
 
-
+    /**
+     * Converts this jaxb-friendly adapted machine object into the model's Machine object.
+     *
+     * @throws IllegalValueException if there were any data constraints violated in the adapted machine
+     */
     public Machine toModelType() throws IllegalValueException {
         if (machineName == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,Machine.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Machine.class.getSimpleName()));
         }
 
         if (!Machine.isValidName(machineName)) {
@@ -70,7 +82,7 @@ public class XmlAdaptedMachine {
         final MachineName name = new MachineName(machineName);
 
         if (status == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,"STATUS"));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "STATUS"));
         }
 
         final List<Name> finalJobs = new ArrayList<>();
@@ -84,7 +96,7 @@ public class XmlAdaptedMachine {
         }
 
         final Set<Tag> finalTags = new HashSet<>(modelTags);
-        return new Machine(name,finalJobs,finalTags,status);
+        return new Machine(name, finalJobs, finalTags, status);
     }
 
     @Override
@@ -98,8 +110,8 @@ public class XmlAdaptedMachine {
         }
 
         XmlAdaptedMachine otherMachine = (XmlAdaptedMachine) other;
-        return Objects.equals(machineName,otherMachine.machineName)
-                && Objects.equals(status,otherMachine.status)
+        return Objects.equals(machineName, otherMachine.machineName)
+                && Objects.equals(status, otherMachine.status)
                 && jobs.equals(otherMachine.jobs)
                 && tags.equals(otherMachine.tags);
     }

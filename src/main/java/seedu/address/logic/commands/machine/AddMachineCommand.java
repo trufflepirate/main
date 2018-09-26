@@ -31,6 +31,7 @@ public class AddMachineCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "New machine added: %l$s";
     public static final String MESSAGE_DUPLICATE_MACHINE = " This machine already exists in MakerManager address book";
+    private static final String MESSAGE_ACCESS_DENIED = "Non admin user is not allowed to add a machine to maker manager";
 
     private final Machine machineToAdd;
 
@@ -42,6 +43,9 @@ public class AddMachineCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
+        if (!model.isLoggedIn()) {
+            throw new CommandException(MESSAGE_ACCESS_DENIED);
+        }
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, machineToAdd));
     }
