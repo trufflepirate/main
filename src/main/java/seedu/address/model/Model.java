@@ -3,6 +3,7 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.admin.Admin;
 import seedu.address.model.person.Person;
 
 /**
@@ -43,6 +44,50 @@ public interface Model {
      * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
      */
     void updatePerson(Person target, Person editedPerson);
+
+
+    /**
+     * Adds the given Admin
+     * admin must not exist
+     * @param admin
+     */
+    void addAdmin(Admin admin);
+
+    /**
+     * Removes the given Admin
+     * admin must exist in the database
+     * @param admin
+     */
+    void removeAdmin(Admin admin);
+
+    /**
+     * Updates the admin
+     * admin must be present in data
+     * updatedAdmin must be different from admin
+     * @param admin
+     * @param updatedAdmin
+     */
+    void updateAdmin(Admin admin, Admin updatedAdmin);
+
+    /**
+     * sets loginStatus to true
+     */
+    void setLogin();
+
+    /**
+     * sets loginStatus to false
+     */
+    void clearLogin();
+
+    /**
+     * Returns loginStatus
+     */
+    boolean isLoggedIn();
+
+    /**
+     * Returns true if an admin with the same identity as {@code admin} exists in the address book.
+     */
+    boolean hasAdmin(Admin admin);
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
