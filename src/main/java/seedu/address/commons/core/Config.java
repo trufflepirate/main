@@ -12,6 +12,8 @@ public class Config {
 
     public static final Path DEFAULT_CONFIG_FILE = Paths.get("config.json");
 
+    //TODO: Load Admins
+
     // Config values customizable through config file
     private String appTitle = "Address App";
     private Level logLevel = Level.INFO;

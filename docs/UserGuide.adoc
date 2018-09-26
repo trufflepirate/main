@@ -12,13 +12,12 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/NUSCS2113-T09-1/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `NUSCS2113-T09-1`      Since: `Sep 2018`      Licence: `MIT`
 
 == Introduction
-
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+makerManager is for those who prefer to use a desktop app for managing prints and other machine jobs in a makerspace. More importantly, makerManager is optimized for those who prefer to work with a Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, makerManager can get your print and machine management tasks done faster than traditional GUI apps. Interested? Jump to the Section 2, “Quick Start” to get started. Enjoy!
 
 == Quick Start
 
@@ -45,216 +44,132 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 ====
 *Command Format*
-
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`
+* Arguments in square brackets [ ] are optional
+* Arguments in angle brackets < > are admin only
+* All other arguments are required for a valid command execution
+* Every argument may be subject to further validation by the parser before execution
+* Words in upper-case are parameters to be supplied by users
 
-Format: `help`
+.. *Viewing Help:*
+Give the user guidance as to what (s)he can do with makerManager +
 
-=== Adding a person: `add`
+    Format: help
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+.. *Adding Print:*
+Add a print job to the queue. +
 
-[TIP]
-A person can have any number of tags (including 0)
+    Format: add_print n/PRINT_NAME m/MACHINE_NAME d/PRINT_DURATION [s/SPECIAL_NOTES] <p/PRIORITY>
 
-Examples:
+    Examples:  +
+    add_print n/myprint m/printer_1 d/13:00 s/use red filament p/1 +
+    add_print n/myprint m/printer_2 d/2:00 s/use blue filament
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+.. *Starting a Print:*
+Starts an existing print in the queue. +
 
-=== Listing all persons : `list`
+    Format: start INDEX
 
-Shows a list of all persons in the address book. +
-Format: `list`
+    Examples:
+    START 1
 
-=== Editing a person : `edit`
+.. *Listing Prints:*
+Lists prints with optional filters. +
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+    Format: list [n/PRINT_NAME] [m/MACHINE_NAME] [s/SPECIAL_NOTES] [p/PRIORITY]
 
-****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
+    Examples:
+    list n/myprint m/printer_1 s/red filament only p/1 +
+    list p/1
 
-Examples:
+.. *Listing History of Prints:*
+Lists all completed prints with optional filters. +
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+    Format: list_history [n/PRINT_NAME] [m/MACHINE_NAME] [s/SPECIAL_NOTES] [p/PRIORITY]
 
-=== Locating persons by name: `find`
+    Examples:
+    list_history n/myprint m/printer_1 s/red filament only p/1 +
+    list_history p/1
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+.. *Editing a Print:*
+Edits an existing print in the queue. +
 
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
+    Format: edit INDEX [n/PRINT_NAME] [m/MACHINE_NAME] [s/SPECIAL_NOTES] <p/PRIORITY>
 
-Examples:
+    Examples:
+    edit 1 n/myprint m/printer_1 s/red filament only p/1 +
+    edit 2 p/1
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+.. *Deleting a Print:*
+deletes an existing print in the queue. +
+Format: del INDEX
 
-=== Deleting a person : `delete`
+    Examples:
+    del 1
+    del 2
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+.. *Exit the program:*
+Exits the program +
 
-****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
+    Format: exit
 
-Examples:
+.. *Saving Data:*
+Address book data are saved in the hard disk automatically after any command that changes the data.There is no need to save manually.
 
-* `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
+.. *Admin specific commands:*
+The following commands will only work in admin mode.
 
-=== Selecting a person : `select`
+... *Login:*
+Enables admin mode. +
 
-Selects the person identified by the index number used in the displayed person list. +
-Format: `select INDEX`
+	Format: login ADMIN_ID PASSWORD
 
-****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
+... *Logout:*
+Disable admin mode. +
 
-Examples:
+	Format: logout
 
-* `list` +
-`select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+... *Add Machine:*
+Adds a new machine. All machine names must be unique. Status can only be either “enabled” or “disabled”. +
 
-=== Listing entered commands : `history`
+    Format:
+    add_machine n/MACHINE_NAME s/STATUS
 
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+    Example:
+    add_machine n/my_machine s/enabled
 
-[NOTE]
-====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-====
+... *Remove Machine:*
+removes a machine.  +
 
-// tag::undoredo[]
-=== Undoing previous command : `undo`
+    Format: remove_machine MACHINE_NAME
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+    Example:
+    remove_machine my_machine
 
-[NOTE]
-====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
-====
+... *Change Device Status:*
+Edits an existing machine. All machine names must be unique. Status can only be either “enabled” or “disabled”. At least one optional argument must be present. +
 
-Examples:
+    Format: edit_machine MACHINE_NAME [n/MACHINE_NAME] [s/STATUS]
 
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
+    Example:
+    edit_machine my_machine n/my_machine2 s/enabled
 
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-
-=== Redoing the previously undone command : `redo`
-
-Reverses the most recent `undo` command. +
-Format: `redo`
-
-Examples:
-
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
-// end::undoredo[]
-
-=== Clearing all entries : `clear`
-
-Clears all entries from the address book. +
-Format: `clear`
-
-=== Exiting the program : `exit`
-
-Exits the program. +
-Format: `exit`
-
-=== Saving the data
-
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
-
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
-
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
 
 == FAQ
-
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*Q:* How do I transfer my data to another Computer? +
+*A: *Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous makerManagerfolder.
 
 == Command Summary
-
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+. help
+. add_print n/PRINT_NAME m/MACHINE_NAME d/PRINT_DURATION [s/SPECIAL_NOTES] <p/PRIORITY>
+. list [n/PRINT_NAME] [m/MACHINE_NAME] [s/SPECIAL_NOTES] [p/PRIORITY]
+. list_history [n/PRINT_NAME] [m/MACHINE_NAME] [s/SPECIAL_NOTES] [p/PRIORITY]
+. edit INDEX [n/PRINT_NAME] [m/MACHINE_NAME] [s/SPECIAL_NOTES] <p/PRIORITY>
+. del INDEX
+. exit
+. login ADMIN_ID PASSWORD
+. logout
+. add_machine n/MACHINE_NAME s/STATUS
+. remove_machine MACHINE_NAME
+. edit_machine MACHINE_NAME [n/MACHINE_NAME] [s/STATUS]
