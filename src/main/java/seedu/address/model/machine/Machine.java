@@ -1,4 +1,4 @@
-package seedu.address.model.person;
+package seedu.address.model.machine;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.model.person.Name;
 import seedu.address.model.tag.Tag;
 
 /**
