@@ -38,7 +38,9 @@ public class AddMachineCommand extends Command {
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
-        return null;
+        requireNonNull(model);
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS,machineToAdd));
     }
 
 
