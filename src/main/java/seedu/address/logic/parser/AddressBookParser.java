@@ -21,7 +21,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.commands.machine.AddMachineCommand;
-import seedu.address.logic.parser.machine.AddMachineParser;
+import seedu.address.logic.parser.machine.AddMachineCommandParser;
 
 /**
  * Parses user input.
@@ -89,7 +89,7 @@ public class AddressBookParser {
         // Machine commands below
 
         case AddMachineCommand.COMMAND_WORD:
-            return new AddMachineParser().parse(arguments);
+            return new AddMachineCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

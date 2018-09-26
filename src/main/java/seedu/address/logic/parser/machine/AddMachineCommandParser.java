@@ -24,7 +24,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 /**
  * Parses input arguments and creates a new AddMachineCommand object
  */
-public class AddMachineParser implements Parser<AddMachineCommand> {
+public class AddMachineCommandParser implements Parser<AddMachineCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddMachineCommand
