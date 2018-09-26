@@ -7,6 +7,8 @@ import java.util.List;
 import javafx.collections.ObservableList;
 import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.UniqueAdminList;
+import seedu.address.model.machine.Machine;
+import seedu.address.model.machine.UniqueMachineList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 
@@ -18,6 +20,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueAdminList admins;
+    private final UniqueMachineList machines;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -29,6 +32,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         admins = new UniqueAdminList();
+        machines = new UniqueMachineList();
     }
 
     public AddressBook() {}
@@ -141,6 +145,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
+    public ObservableList<Machine> getMachineList() {
+        return null;
+    }
+
+    @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
@@ -152,4 +161,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.hashCode();
     }
 
+    public boolean hasMachine(Machine machine) {
+        requireNonNull(machine);
+        return machines.contains(machine);
+    }
+
+    public void addMachine(Machine machine) {
+        requireNonNull(machine);
+        machines.add(machine);
+    }
 }

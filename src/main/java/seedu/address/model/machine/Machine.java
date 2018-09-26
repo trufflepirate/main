@@ -27,6 +27,16 @@ public class Machine {
     private final List<Name> jobs = new ArrayList<>();
     private final Set<Tag> tags = new HashSet<>();
 
+    public static final String MESSAGE_NAME_CONSTRAINTS =
+            "Names should only contain alphanumeric characters and spaces, and it should not be blank";
+
+    /*
+     * The first character of the address must not be a whitespace,
+     * otherwise " " (a blank string) becomes a valid input.
+     */
+    public static final String NAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+
+
     /**
      * Every field must be present and not null.
      */
@@ -111,5 +121,16 @@ public class Machine {
         return builder.toString();
     }
 
+    /**
+     * Returns true if a given string is a valid name.
+     */
+    public static boolean isValidName(String test) {
+        return test.matches(NAME_VALIDATION_REGEX);
+    }
 
+
+
+    public boolean getStatus() {
+        return status;
+    }
 }
