@@ -20,6 +20,7 @@ public class Machine {
 
     // Identity fields
     private final MachineName machineName;
+    private final boolean status;
 
     // Data fields
     //Name is a placeholder. To be replaced by Job class in the future
@@ -29,11 +30,12 @@ public class Machine {
     /**
      * Every field must be present and not null.
      */
-    public Machine(MachineName name, List<Name> jobs, Set<Tag> tags) {
+    public Machine(MachineName name, List<Name> jobs, Set<Tag> tags, boolean status) {
         requireAllNonNull(name, jobs, tags);
         this.machineName = name;
         this.jobs.addAll(jobs);
         this.tags.addAll(tags);
+        this.status = status;
     }
 
     public MachineName getName() {
