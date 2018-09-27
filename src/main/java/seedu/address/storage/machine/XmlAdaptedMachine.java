@@ -1,12 +1,13 @@
 package seedu.address.storage.machine;
 
-import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
+
+import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.machine.Machine;
@@ -42,7 +43,10 @@ public class XmlAdaptedMachine {
     /**
      * Constructs an {@code XmlAdaptedMachine} with the given machine details.
      */
-    public XmlAdaptedMachine(String machineName, Boolean status, List<XmlAdaptedJobName> jobs, Set<XmlAdaptedTag> tags) {
+    public XmlAdaptedMachine(String machineName,
+                             Boolean status,
+                             List<XmlAdaptedJobName> jobs,
+                             Set<XmlAdaptedTag> tags) {
         this.machineName = machineName;
         this.status = status;
         this.jobs = jobs;
