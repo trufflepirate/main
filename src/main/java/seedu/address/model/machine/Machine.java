@@ -5,11 +5,10 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import seedu.address.model.person.Name;
+import seedu.address.model.job.Job;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -29,19 +28,19 @@ public class Machine {
 
     // Identity fields
     private final MachineName machineName;
+    //TODO make status be more diverse, like enum
     private final boolean status;
 
     // Data fields
     //Name is a placeholder. To be replaced by Job class in the future
-    private final List<Name> jobs = new ArrayList<>();
+    private final ArrayList<Job> jobs = new ArrayList<>();
     private final Set<Tag> tags = new HashSet<>();
-
 
 
     /**
      * Every field must be present and not null.
      */
-    public Machine(MachineName name, List<Name> jobs, Set<Tag> tags, boolean status) {
+    public Machine(MachineName name, ArrayList<Job> jobs, Set<Tag> tags, boolean status) {
         requireAllNonNull(name, jobs, tags);
         this.machineName = name;
         this.jobs.addAll(jobs);
@@ -57,8 +56,8 @@ public class Machine {
      * Returns an immutable Job List, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
-    public List<Name> getJobs() {
-        return Collections.unmodifiableList(jobs);
+    public ArrayList<Job> getJobs() {
+        return (ArrayList<Job>) Collections.unmodifiableList(jobs);
     }
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

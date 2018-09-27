@@ -16,6 +16,7 @@ import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.job.Job;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.MachineName;
 import seedu.address.model.person.Name;
@@ -42,8 +43,9 @@ public class AddMachineCommandParser implements Parser<AddMachineCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMachineCommand.MESSAGE_USAGE));
         }
 
+        //TODO Remove hardcoding
         MachineName name = new MachineName("JJ's_Printer");
-        List<Name> jobs = new ArrayList<>();
+        ArrayList<Job> jobs = new ArrayList<>();
         Set<Tag> tags = new HashSet<>();
         Machine machine = new Machine(name, jobs, tags, true);
 

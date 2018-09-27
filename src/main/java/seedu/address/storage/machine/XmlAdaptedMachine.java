@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.job.Job;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.MachineName;
 import seedu.address.model.person.Name;
@@ -89,7 +90,7 @@ public class XmlAdaptedMachine {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "STATUS"));
         }
 
-        final List<Name> finalJobs = new ArrayList<>();
+        final ArrayList<Job> finalJobs = new ArrayList<>();
         for (XmlAdaptedJobName job : jobs) {
             finalJobs.add(job.toModelType());
         }
