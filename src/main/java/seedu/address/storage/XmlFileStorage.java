@@ -37,6 +37,8 @@ public class XmlFileStorage {
         }
     }
 
+    //MakerManager address book xml file functions below
+
     /**
      * Saves the given maker manager address book data to the specified file
      */
