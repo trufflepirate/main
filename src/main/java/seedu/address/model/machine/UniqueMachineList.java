@@ -4,14 +4,17 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import seedu.address.model.machine.exceptions.DuplicateMachineException;
 import seedu.address.model.machine.exceptions.MachineNotFoundException;
+
 
 /**
  * A list of machines that ensures uniqueness in Machine names
  */
 public class UniqueMachineList {
-    private final ArrayList<Machine> internalList = new ArrayList<>();
+    private final ObservableList<Machine> internalList = FXCollections.observableArrayList();
 
     /**
      * Returns true if the list contains an equivalent machineName
@@ -44,6 +47,13 @@ public class UniqueMachineList {
         if (!internalList.remove(toRemove)) {
             throw new MachineNotFoundException();
         }
+    }
+
+    /**
+     * Returns the backing list as an unmodifiable {@code ObservableList}
+     */
+    public ObservableList<Machine> asUnmodifiableObservableList() {
+        return FXCollections.unmodifiableObservableList(internalList);
     }
 
 

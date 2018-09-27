@@ -144,10 +144,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.asUnmodifiableObservableList();
     }
 
-    @Override
-    public ObservableList<Machine> getMachineList() {
-        return null;
-    }
+
 
     @Override
     public boolean equals(Object other) {
@@ -159,6 +156,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public int hashCode() {
         return persons.hashCode();
+    }
+
+    // Maker Manager Address Book machine functions below
+
+    @Override
+    public ObservableList<Machine> getMachineList() {
+        return machines.asUnmodifiableObservableList();
     }
 
     /**
