@@ -54,7 +54,8 @@ public class XmlFileStorage {
      * Returns makerManager address book in the file or an empty address book
      */
 
-    public static XmlSerializableMakerManagerAddressBook loadMakerManagerDataFromSaveFile(Path file) throws DataConversionException,
+    public static XmlSerializableMakerManagerAddressBook loadMakerManagerDataFromSaveFile(Path file)
+            throws DataConversionException,
             FileNotFoundException {
         try {
             return XmlUtil.getDataFromFile(file, XmlSerializableMakerManagerAddressBook.class);
