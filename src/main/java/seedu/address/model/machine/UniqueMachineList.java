@@ -2,8 +2,6 @@ package seedu.address.model.machine;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.ArrayList;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.machine.exceptions.DuplicateMachineException;
