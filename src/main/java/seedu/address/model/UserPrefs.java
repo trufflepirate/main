@@ -13,6 +13,7 @@ public class UserPrefs {
 
     private GuiSettings guiSettings;
     private Path addressBookFilePath = Paths.get("data" , "addressbook.xml");
+    private Path makerManagerAddressBookFilePath = Paths.get("data", "makerManagerAddressBook.xml");
 
     public UserPrefs() {
         setGuiSettings(500, 500, 0, 0);
@@ -36,6 +37,14 @@ public class UserPrefs {
 
     public void setAddressBookFilePath(Path addressBookFilePath) {
         this.addressBookFilePath = addressBookFilePath;
+    }
+
+    public Path getMakerManagerAddressBookFilePath() {
+        return makerManagerAddressBookFilePath;
+    }
+
+    public void setMakerManagerAddressBookFilePath(Path makerManagerAddressBookFilePath) {
+        this.makerManagerAddressBookFilePath = makerManagerAddressBookFilePath;
     }
 
     @Override
@@ -65,5 +74,6 @@ public class UserPrefs {
         sb.append("\nLocal data file location : " + addressBookFilePath);
         return sb.toString();
     }
+
 
 }
