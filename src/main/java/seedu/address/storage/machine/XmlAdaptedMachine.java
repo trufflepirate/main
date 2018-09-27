@@ -13,7 +13,6 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.job.Job;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.MachineName;
-import seedu.address.model.person.Name;
 import seedu.address.model.tag.Tag;
 import seedu.address.storage.XmlAdaptedTag;
 
