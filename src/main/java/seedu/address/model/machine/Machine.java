@@ -24,8 +24,8 @@ public class Machine {
      */
     public static final String NAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
     public static final String MESSAGE_NAME_CONSTRAINTS =
-            "Names should only contain alphanumeric characters and spaces, " +
-                    "and it should not be blank";
+            "Names should only contain alphanumeric characters and spaces, "
+                    + "and it should not be blank";
 
     // Identity fields
     private final MachineName machineName;
