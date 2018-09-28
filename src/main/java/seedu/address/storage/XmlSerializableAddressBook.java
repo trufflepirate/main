@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.admin.Admin;
 import seedu.address.model.person.Person;
 
 /**
@@ -19,15 +20,19 @@ import seedu.address.model.person.Person;
 public class XmlSerializableAddressBook {
 
     public static final String MESSAGE_DUPLICATE_PERSON = "Persons list contains duplicate person(s).";
+    public static final String MESSAGE_DUPLICATE_ADMIN= "Admins list contains duplicate admin(s).";
 
     @XmlElement
     private List<XmlAdaptedPerson> persons;
+    private List<XmlAdaptedAdmin> admins;
 
     /**
      * Creates an empty XmlSerializableAddressBook.
      * This empty constructor is required for marshalling.
+     * TODO: What is marshalling?
      */
     public XmlSerializableAddressBook() {
+        admins = new ArrayList<>();
         persons = new ArrayList<>();
     }
 
@@ -37,6 +42,7 @@ public class XmlSerializableAddressBook {
     public XmlSerializableAddressBook(ReadOnlyAddressBook src) {
         this();
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
+        admins.addAll(src.getAdminList().stream().map(XmlAdaptedAdmin::new).collect(Collectors.toList()));
     }
 
     /**
@@ -54,6 +60,15 @@ public class XmlSerializableAddressBook {
             }
             addressBook.addPerson(person);
         }
+
+        for (XmlAdaptedAdmin a : admins) {
+            Admin admin = a.toModelType();
+            if (addressBook.hasAdmin(admin)) {
+                throw new IllegalValueException(MESSAGE_DUPLICATE_ADMIN);
+            }
+            addressBook.addAdmin(admin);
+        }
+
         return addressBook;
     }
 
@@ -66,6 +81,7 @@ public class XmlSerializableAddressBook {
         if (!(other instanceof XmlSerializableAddressBook)) {
             return false;
         }
-        return persons.equals(((XmlSerializableAddressBook) other).persons);
+        return persons.equals(((XmlSerializableAddressBook) other).persons)
+                && admins.equals(((XmlSerializableAddressBook) other).admins);
     }
 }
