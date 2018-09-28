@@ -101,8 +101,8 @@ public class AddressBookParser {
         case AddAdminCommand.COMMAND_WORD:
             return new AddAdminCommandParser().parse(arguments);
 
-            case RemoveAdminCommand.COMMAND_WORD:
-                return new RemoveAdminCommandParser().parse(arguments);
+        case RemoveAdminCommand.COMMAND_WORD:
+            return new RemoveAdminCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
