@@ -98,9 +98,10 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    //TODO: Add command, add tests
+    //TODO: add tests
     @Override
     public void addAdmin(Admin admin) {
+        versionedAddressBook.addAdmin(admin);
         indicateAddressBookChanged();
     }
 
