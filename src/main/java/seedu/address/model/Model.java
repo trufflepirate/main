@@ -74,7 +74,7 @@ public interface Model {
     /**
      * sets loginStatus to true
      */
-    void setLogin();
+    void setLogin(Username username);
 
     /**
      * sets loginStatus to false
@@ -85,6 +85,11 @@ public interface Model {
      * Returns loginStatus
      */
     boolean isLoggedIn();
+
+    /**
+     * Returns the current logged in admin
+     */
+    Username currentlyLoggedIn();
 
     /**
      * Returns true if an admin with the same identity as {@code admin} exists in the address book.

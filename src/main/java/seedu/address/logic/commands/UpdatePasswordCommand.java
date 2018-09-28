@@ -16,6 +16,7 @@ public class UpdatePasswordCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Your password has been changed successfully!";
     public static final String MESSAGE_USAGE = COMMAND_WORD + " is used to change password of logged in admin.\n"
             + "Example: udpatePassword USERNAME OLD_PW NEW_PW NEW_PW_VERIFY\n";
+    public static final String MESSAGE_ONLY_CHANGE_YOUR_OWN_PW = "You can only change your own password.";
     public static final String MESSAGE_PASSWORDS_DONT_MATCH = "The two password fields don't match! Please try again.";
 
     private final Username username;
@@ -25,7 +26,8 @@ public class UpdatePasswordCommand extends Command {
     private final Admin toUpdate;
     private final Admin updatedAdmin;
 
-    public UpdatePasswordCommand(Username username, Password oldPassword, Password newPassword, Password passwordVerify) {
+    public UpdatePasswordCommand(Username username, Password oldPassword,
+                                 Password newPassword, Password passwordVerify) {
         this.username = username;
         this.oldPassword = oldPassword;
         this.newPassword = newPassword;
@@ -44,7 +46,9 @@ public class UpdatePasswordCommand extends Command {
             throw new CommandException(MESSAGE_PASSWORDS_DONT_MATCH);
         }
 
-        //TODO: only let the current logged in Admin change his password
+        if (!username.equals(model.currentlyLoggedIn())) {
+            throw new CommandException(MESSAGE_ONLY_CHANGE_YOUR_OWN_PW);
+        }
 
         model.updateAdmin(toUpdate, updatedAdmin);
         model.commitAddressBook();  //TODO: not sure what this does;

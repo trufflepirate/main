@@ -184,7 +184,7 @@ Edits an existing machine. All machine names must be unique. Status can only be 
 . logout
 . addAdmin USERNAME PASSWORD VERIFY_PASSWORD
 . removeAdmin USERNAME
-. updatePW USERNAME OLD_PW NEW_PW NEW_PW_VERIFY
+. updatePassword USERNAME OLD_PW NEW_PW NEW_PW_VERIFY
 . add_machine n/MACHINE_NAME s/STATUS
 . remove_machine MACHINE_NAME
 . edit_machine MACHINE_NAME [n/MACHINE_NAME] [s/STATUS]

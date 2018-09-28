@@ -29,6 +29,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<Machine> filteredMachines;
 
     private boolean loginStatus = false;
+    private Username loggedInAdmin = null;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -120,18 +121,25 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void setLogin() {
+    public void setLogin(Username username) {
+        this.loggedInAdmin = username;
         this.loginStatus = true;
     }
 
     @Override
     public void clearLogin() {
+        this.loggedInAdmin = null;
         this.loginStatus = false;
     }
 
     @Override
     public boolean isLoggedIn() {
         return this.loginStatus;
+    }
+
+    @Override
+    public Username currentlyLoggedIn() {
+        return this.loggedInAdmin;
     }
 
     @Override

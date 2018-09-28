@@ -39,7 +39,7 @@ public class LoginCommand extends Command {
             throw new CommandException(MESSAGE_ALREADY_LOGGED_IN);
         }
 
-        model.setLogin();
+        model.setLogin(username);
         model.commitAddressBook(); //TODO: not sure what this does;
 
         return new CommandResult(MESSAGE_SUCCESS);
