@@ -56,6 +56,8 @@ public class XmlMakerManagerAddressBookStorage implements AddressBookStorage {
             return Optional.empty();
         }
 
+        logger.info("Filepath in XmlMakerManagerAddressBookStorage class : " + filePath.toString());
+
         XmlSerializableMakerManagerAddressBook xmlSerializableMakerManagerAddressBook =
                 XmlFileStorage.loadMakerManagerDataFromSaveFile(filePath);
         try {

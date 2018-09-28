@@ -34,6 +34,7 @@ public class XmlAddressBookStorage implements AddressBookStorage {
 
     @Override
     public Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException {
+        logger.info("Reading address book in XmlAddressBookStorage class");
         return readAddressBook(filePath);
     }
 
@@ -50,6 +51,7 @@ public class XmlAddressBookStorage implements AddressBookStorage {
             logger.info("AddressBook file "  + filePath + " not found");
             return Optional.empty();
         }
+        logger.info("Filepath in XmlAddressBookStorage class : " + filePath.toString());
 
         XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(filePath);
         try {

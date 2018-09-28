@@ -4,6 +4,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.admin.Admin;
+import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
 
 /**
@@ -97,6 +98,16 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+    /** Returns an unmodifiable view of the filtered machine list */
+    ObservableList<Machine> getFilteredMachineList();
+
+    /**
+     * Updates the filtere of the filtered machine list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+
+    void updateFilteredMachineList(Predicate<Machine> predicate);
 
     /**
      * Returns true if the model has previous address book states to restore.

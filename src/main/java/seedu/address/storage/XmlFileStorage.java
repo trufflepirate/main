@@ -2,17 +2,23 @@ package seedu.address.storage;
 
 import java.io.FileNotFoundException;
 import java.nio.file.Path;
+import java.util.logging.Logger;
 
 import javax.xml.bind.JAXBException;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.XmlUtil;
+import seedu.address.storage.machine.XmlMakerManagerAddressBookStorage;
 import seedu.address.storage.machine.XmlSerializableMakerManagerAddressBook;
 
 /**
  * Stores addressbook data in an XML file
  */
 public class XmlFileStorage {
+
+    private static final Logger logger = LogsCenter.getLogger(XmlFileStorage.class);
+
     /**
      * Saves the given addressbook data to the specified file.
      */
@@ -58,6 +64,7 @@ public class XmlFileStorage {
             throws DataConversionException,
             FileNotFoundException {
         try {
+            logger.info("Getting serialized data from custom xml file");
             return XmlUtil.getDataFromFile(file, XmlSerializableMakerManagerAddressBook.class);
         } catch (JAXBException e) {
             throw new DataConversionException(e);
