@@ -15,6 +15,7 @@ public class AddAdminCommand extends Command {
     public static final String COMMAND_WORD = "addAdmin";
     public static final String MESSAGE_NO_ACCESS = "You must be logged in to add another admin!";
     public static final String MESSAGE_SUCCESS = "New admin added successfully!";
+    public static final String MESSAGE_ADMIN_ALREADY_EXISTS = "This username already exists. Try a new one or login.";
     public static final String MESSAGE_USAGE = COMMAND_WORD + "Used to add another admin.\n"
             + "Example: addAdmin USERNAME PASSWORD PASSWORD\n";
     public static final String MESSAGE_PASSWORDS_DONT_MATCH = "The two password fields don't match! Please try again.";
@@ -41,7 +42,9 @@ public class AddAdminCommand extends Command {
             throw new CommandException(MESSAGE_PASSWORDS_DONT_MATCH);
         }
 
-        //TODO: if usernameTaken, already exists
+        if (model.findAdmin(username) != null) {
+            throw new CommandException(MESSAGE_ADMIN_ALREADY_EXISTS);
+        }
 
         model.addAdmin(toAddIn);
         model.commitAddressBook();  //TODO: not sure what this does;
