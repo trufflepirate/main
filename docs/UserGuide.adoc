@@ -130,6 +130,18 @@ Disable admin mode. +
 
 	Format: logout
 
+... *Add Admin:*
+Add another admin. +
+    Format: addAdmin USERNAME PASSWORD VERIFY_PASSWORD
+
+... *Remove Admin:*
+Add another admin. +
+    Format: removeAdmin USERNAME
+
+... *Update Admin Password:*
+Add another admin. +
+    Format: updatePW USERNAME OLD_PW NEW_PW NEW_PW_VERIFY
+
 ... *Add Machine:*
 Adds a new machine. All machine names must be unique. Status can only be either “enabled” or “disabled”. +
 
@@ -170,6 +182,9 @@ Edits an existing machine. All machine names must be unique. Status can only be 
 . exit
 . login ADMIN_ID PASSWORD
 . logout
+. addAdmin USERNAME PASSWORD VERIFY_PASSWORD
+. removeAdmin USERNAME
+. updatePW USERNAME OLD_PW NEW_PW NEW_PW_VERIFY
 . add_machine n/MACHINE_NAME s/STATUS
 . remove_machine MACHINE_NAME
 . edit_machine MACHINE_NAME [n/MACHINE_NAME] [s/STATUS]
