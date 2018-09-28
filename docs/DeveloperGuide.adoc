@@ -869,7 +869,7 @@ Priorities: High (must have) - ** * **, Medium (nice to have) - ** **, Low (unli
 
 [appendix]
 == Use Cases
-In all cases, System refers to printQ9000.
+In all cases, System refers to makerManager.
 
 *Actor: lab manager* +
 *Use case: reset the time remains if the printing job fails halfway* +

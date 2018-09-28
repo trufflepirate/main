@@ -1,10 +1,10 @@
-package seedu.address.model;
+package seedu.address.model.job;
 
 import java.util.Date;
 
 
 /**
- * Represents a TimeStamp Object for Machines.
+ * Represents a TimeStamp Object for Job.
  */
 
 public class TimeStamp {
@@ -15,17 +15,14 @@ public class TimeStamp {
         this.createdTimeStamp = new Date(System.currentTimeMillis());
     }
 
-    private long getTime() {
+    public long toLong() {
         return createdTimeStamp.getTime();
     }
 
-
-    private long getDate() {
-        return createdTimeStamp.getTime();
-    }
-
+    /*
     private long getElapsedTime() {
         return System.nanoTime() - createdTimeStamp.getTime();
     }
+    */
 
 }
