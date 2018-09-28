@@ -124,12 +124,14 @@ public class ModelManager extends ComponentManager implements Model {
     public void setLogin(Username username) {
         this.loggedInAdmin = username;
         this.loginStatus = true;
+        indicateAddressBookChanged();
     }
 
     @Override
     public void clearLogin() {
         this.loggedInAdmin = null;
         this.loginStatus = false;
+        indicateAddressBookChanged();
     }
 
     @Override
@@ -152,6 +154,11 @@ public class ModelManager extends ComponentManager implements Model {
     public Admin findAdmin(Username username) {
         requireNonNull(username);
         return versionedAddressBook.findAdmin(username);
+    }
+
+    @Override
+    public int numAdmins() {
+        return versionedAddressBook.numAdmins();
     }
 
     //=========== Filtered Person List Accessors =============================================================

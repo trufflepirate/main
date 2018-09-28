@@ -146,6 +146,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         return admins.findAdmin(username);
     }
 
+    @Override
+    public int numAdmins() {
+        return admins.size();
+    }
+
     //// util methods
 
     @Override

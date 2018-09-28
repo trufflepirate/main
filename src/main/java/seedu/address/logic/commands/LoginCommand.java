@@ -33,10 +33,10 @@ public class LoginCommand extends Command {
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
-        if (!model.hasAdmin(toLogIn)) {
-            throw new CommandException(MESSAGE_WRONG_DETAILS);
-        } else if (model.isLoggedIn()) {
+        if (model.isLoggedIn()) {
             throw new CommandException(MESSAGE_ALREADY_LOGGED_IN);
+        } else if (!model.hasAdmin(toLogIn)) {
+            throw new CommandException(MESSAGE_WRONG_DETAILS);
         }
 
         model.setLogin(username);

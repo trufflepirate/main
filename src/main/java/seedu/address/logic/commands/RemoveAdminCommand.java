@@ -14,6 +14,7 @@ public class RemoveAdminCommand extends Command {
     public static final String MESSAGE_NO_ACCESS = "You must be logged in to remove another admin!";
     public static final String MESSAGE_SUCCESS = "Admin removed successfully!";
     public static final String MESSAGE_NO_SUCH_ADMIN = "No such admins exist. Have you typed the username correctly?";
+    private static final String MESSAGE_CANT_DELETE_LAST_ADMIN = "You can't delete the last admin.";
     public static final String MESSAGE_USAGE = COMMAND_WORD + "Used to remove another admin.\n"
             + "Example: removeAdmin USERNAME\n";
 
@@ -34,7 +35,17 @@ public class RemoveAdminCommand extends Command {
             throw new CommandException(MESSAGE_NO_SUCH_ADMIN);
         }
 
+        if (model.numAdmins() == 1) {
+            throw new CommandException(MESSAGE_CANT_DELETE_LAST_ADMIN);
+        }
+
         model.removeAdmin(toRemove);
+
+        //Logout current admin if deleted him/herself
+        if (model.currentlyLoggedIn().equals(username)) {
+            model.clearLogin();
+        }
+
         model.commitAddressBook();  //TODO: not sure what this does;
 
         return new CommandResult(MESSAGE_SUCCESS);

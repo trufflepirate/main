@@ -63,4 +63,10 @@ public class UniqueAdminList {
         internalList.remove(toRemove);
     }
 
+    /**
+     * Returns size of adminList
+     */
+    public int size() {
+        return internalList.size();
+    }
 }

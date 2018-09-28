@@ -13,6 +13,8 @@ public interface ReadOnlyAddressBook {
 
     Admin findAdmin(Username username);
 
+    int numAdmins();
+
     /**
      * Returns an unmodifiable view of the persons list.
      * This list will not contain any duplicate persons.

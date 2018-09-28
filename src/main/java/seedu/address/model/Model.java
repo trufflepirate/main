@@ -98,6 +98,8 @@ public interface Model {
 
     Admin findAdmin(Username username);
 
+    int numAdmins();
+
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
 
