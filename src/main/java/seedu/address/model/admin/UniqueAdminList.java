@@ -2,13 +2,10 @@ package seedu.address.model.admin;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.ArrayList;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.admin.exceptions.AdminNotFoundException;
 import seedu.address.model.admin.exceptions.DuplicateAdminException;
-import seedu.address.model.person.Person;
 
 
 /**
