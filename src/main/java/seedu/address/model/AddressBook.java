@@ -7,6 +7,7 @@ import java.util.List;
 import javafx.collections.ObservableList;
 import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.UniqueAdminList;
+import seedu.address.model.admin.Username;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.UniqueMachineList;
 import seedu.address.model.person.Person;
@@ -138,6 +139,11 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public boolean hasAdmin(Admin admin) {
         return admins.contains(admin);
+    }
+
+    @Override
+    public Admin findAdmin(Username username) {
+        return admins.findAdmin(username);
     }
 
     //// util methods

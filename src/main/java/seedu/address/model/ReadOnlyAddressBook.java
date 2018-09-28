@@ -2,12 +2,16 @@ package seedu.address.model;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.machine.Machine;
+import seedu.address.model.admin.Admin;
+import seedu.address.model.admin.Username;
 import seedu.address.model.person.Person;
 
 /**
  * Unmodifiable view of an address book
  */
 public interface ReadOnlyAddressBook {
+
+    Admin findAdmin(Username username);
 
     /**
      * Returns an unmodifiable view of the persons list.

@@ -23,6 +23,20 @@ public class UniqueAdminList {
     }
 
     /**
+     * Returns the admin, given the username
+     * @param username
+     * @return
+     */
+    public Admin findAdmin(Username username) {
+        for (Admin admin : internalList) {
+            if (admin.getUsername().equals(username)) {
+                return admin;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Adds the Admin to the list
      * The admin must not exist in the list
      * @param toAdd

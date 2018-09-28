@@ -41,6 +41,8 @@ public class AddAdminCommand extends Command {
             throw new CommandException(MESSAGE_PASSWORDS_DONT_MATCH);
         }
 
+        //TODO: if usernameTaken, already exists
+
         model.addAdmin(toAddIn);
         model.commitAddressBook();  //TODO: not sure what this does;
 

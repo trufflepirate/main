@@ -105,9 +105,10 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    //TODO: Add command, add tests
+    //TODO: add tests
     @Override
     public void removeAdmin(Admin admin) {
+        versionedAddressBook.removeAdmin(admin);
         indicateAddressBookChanged();
     }
 
@@ -137,6 +138,13 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(admin);
         return versionedAddressBook.hasAdmin(admin);
     }
+
+    @Override
+    public Admin findAdmin(Username username) {
+        requireNonNull(username);
+        return versionedAddressBook.findAdmin(username);
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
