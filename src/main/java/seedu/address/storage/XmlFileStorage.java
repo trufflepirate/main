@@ -9,7 +9,6 @@ import javax.xml.bind.JAXBException;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.XmlUtil;
-import seedu.address.storage.machine.XmlMakerManagerAddressBookStorage;
 import seedu.address.storage.machine.XmlSerializableMakerManagerAddressBook;
 
 /**

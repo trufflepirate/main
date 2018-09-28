@@ -64,9 +64,18 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
+
+
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         AddressBookStorage makerManagerAddressBookStorage =
                 new XmlMakerManagerAddressBookStorage(userPrefs.getMakerManagerAddressBookFilePath());
+
+        //TODO completely remove persons and integrate machines completely
+        /**
+         * Can change back to addressBookStorage here instead of makerManagerAddressBookStorage
+         * Need to change MainWindow UI back also for initial addressbook app to work normally
+         * App will function normally
+         */
         storage = new StorageManager(makerManagerAddressBookStorage, userPrefsStorage);
 
         initLogging(config);
@@ -95,7 +104,8 @@ public class MainApp extends Application {
                 logger.info("Data file not found. Will be starting with a sample AddressBook");
             }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
-            for ( Machine machine : initialData.getMachineList()){
+            //TODO Remove debugging here
+            for (Machine machine : initialData.getMachineList()) {
                 logger.info("Machine full name : " + machine.getName().fullName);
             }
         } catch (DataConversionException e) {

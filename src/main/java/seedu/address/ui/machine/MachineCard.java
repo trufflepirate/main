@@ -34,7 +34,7 @@ public class MachineCard extends UiPart<Region> {
     @FXML
     private Label status;
 
-    public MachineCard(Machine machine, int displayIndex){
+    public MachineCard(Machine machine, int displayIndex) {
         super(FXML);
         this.machine = machine;
         id.setText(displayIndex + ". ");

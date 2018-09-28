@@ -125,9 +125,16 @@ public class MainWindow extends UiPart<Stage> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
+        //TODO Completely remove the personListPanel, should not be needed in the future
+        /**
+         * Uncomment the two lines below to get the original code working again
+         */
         //personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         //personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
+        /**
+         * Comment out the 5 lines below to get the original code working again
+         */
         machineListPanel = new MachineListPanel(logic.getFilteredMachineList());
         for (Machine machine : logic.getFilteredMachineList()) {
             logger.info(machine.getName().fullName + "is " + (machine.getStatus() ? "ON" : "OFF"));

@@ -2,12 +2,15 @@ package seedu.address.model.machine;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.List;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import seedu.address.model.machine.exceptions.DuplicateMachineException;
 import seedu.address.model.machine.exceptions.MachineNotFoundException;
 
-import java.util.List;
+
 
 
 /**
@@ -73,8 +76,8 @@ public class UniqueMachineList {
      */
     private boolean machinesAreUnique(List<Machine> machines) {
         for (int i = 0; i < machines.size() - 1; i++) {
-            for (int j = i + 1; j< machines.size(); j++) {
-                if (machines.get(i).isSameMachine(machines.get(j))){
+            for (int j = i + 1; j < machines.size(); j++) {
+                if (machines.get(i).isSameMachine(machines.get(j))) {
                     return false;
                 }
             }

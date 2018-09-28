@@ -19,5 +19,7 @@ public class MachinePanelSelectiononChangedEvent extends BaseEvent {
         return getClass().getSimpleName();
     }
 
-    public Machine getNewSelection() { return newSelection; }
+    public Machine getNewSelection() {
+        return newSelection;
+    }
 }

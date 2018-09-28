@@ -1,19 +1,23 @@
 package seedu.address.ui.machine;
 
+import java.util.logging.Logger;
+
 import com.google.common.eventbus.Subscribe;
+
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
+
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.MachinePanelSelectiononChangedEvent;
 import seedu.address.model.machine.Machine;
 import seedu.address.ui.UiPart;
 
-import java.util.logging.Logger;
+
 
 
 /**
@@ -26,7 +30,7 @@ public class MachineListPanel extends UiPart<Region> {
     @FXML
     private ListView<Machine> machineListView;
 
-    public MachineListPanel(ObservableList<Machine> machineList){
+    public MachineListPanel(ObservableList<Machine> machineList) {
         super(FXML);
         setConnections(machineList);
         registerAsAnEventHandler(this);
