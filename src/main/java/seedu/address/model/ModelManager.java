@@ -28,6 +28,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Machine> filteredMachines;
 
+    //TODO: Should these be inside versionedAddressBook?
     private boolean loginStatus = false;
     private Username loggedInAdmin = null;
 
