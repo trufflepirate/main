@@ -15,7 +15,7 @@ public class UniqueAdminList {
     private final ArrayList<Admin> internalList = new ArrayList<>();
 
     /**
-     * Returns true if the list contains an equivalent userName
+     * Returns true if the list contains an equivalent admin
      */
     public boolean contains(Admin toCheck) {
         requireNonNull(toCheck);
@@ -42,9 +42,11 @@ public class UniqueAdminList {
      */
     public void remove(Admin toRemove) {
         requireNonNull(toRemove);
-        if (!internalList.remove(toRemove)) {
+        if (!contains(toRemove)) {
             throw new AdminNotFoundException();
         }
+
+        internalList.remove(toRemove);
     }
 
 }
