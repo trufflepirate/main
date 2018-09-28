@@ -4,15 +4,19 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import seedu.address.model.admin.exceptions.AdminNotFoundException;
 import seedu.address.model.admin.exceptions.DuplicateAdminException;
+import seedu.address.model.person.Person;
 
 
 /**
  * A list of admins that ensures uniqueness in Usernames
  */
 public class UniqueAdminList {
-    private final ArrayList<Admin> internalList = new ArrayList<>();
+
+    private final ObservableList<Admin> internalList = FXCollections.observableArrayList();
 
     /**
      * Returns true if the list contains an equivalent admin
@@ -68,5 +72,12 @@ public class UniqueAdminList {
      */
     public int size() {
         return internalList.size();
+    }
+
+    /**
+     * Returns the backing list as an unmodifiable {@code ObservableList}.
+     */
+    public ObservableList<Admin> asUnmodifiableObservableList() {
+        return FXCollections.unmodifiableObservableList(internalList);
     }
 }

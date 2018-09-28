@@ -141,12 +141,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         return admins.contains(admin);
     }
 
-    @Override
     public Admin findAdmin(Username username) {
         return admins.findAdmin(username);
     }
 
-    @Override
     public int numAdmins() {
         return admins.size();
     }
@@ -165,6 +163,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
 
+
+    @Override
+    public ObservableList<Admin> getAdminList() { return admins.asUnmodifiableObservableList(); }
 
     @Override
     public boolean equals(Object other) {

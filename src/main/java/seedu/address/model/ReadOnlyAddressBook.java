@@ -11,8 +11,6 @@ import seedu.address.model.person.Person;
  */
 public interface ReadOnlyAddressBook {
 
-    Admin findAdmin(Username username);
-
     /**
      * Returns an unmodifiable view of the persons list.
      * This list will not contain any duplicate persons.
