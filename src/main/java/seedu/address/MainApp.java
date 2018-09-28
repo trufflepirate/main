@@ -76,7 +76,7 @@ public class MainApp extends Application {
          * Need to change MainWindow UI back also for initial addressbook app to work normally
          * App will function normally
          */
-        storage = new StorageManager(makerManagerAddressBookStorage, userPrefsStorage);
+        storage = new StorageManager(addressBookStorage, userPrefsStorage);
 
         initLogging(config);
 
