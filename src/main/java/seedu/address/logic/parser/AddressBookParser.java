@@ -24,6 +24,7 @@ import seedu.address.logic.commands.RemoveAdminCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.machine.AddMachineCommand;
+import seedu.address.logic.commands.UpdatePasswordCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.parser.machine.AddMachineCommandParser;
 
@@ -103,6 +104,9 @@ public class AddressBookParser {
 
         case RemoveAdminCommand.COMMAND_WORD:
             return new RemoveAdminCommandParser().parse(arguments);
+
+        case UpdatePasswordCommand.COMMAND_WORD:
+            return new UpdatePasswordCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
