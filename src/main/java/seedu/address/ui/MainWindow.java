@@ -19,6 +19,7 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.machine.Machine;
 import seedu.address.ui.machine.MachineListPanel;
 
 /**
@@ -128,6 +129,9 @@ public class MainWindow extends UiPart<Stage> {
         //personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         machineListPanel = new MachineListPanel(logic.getFilteredMachineList());
+        for (Machine machine : logic.getFilteredMachineList()) {
+            logger.info(machine.getName().fullName + "is " + (machine.getStatus() ? "ON" : "OFF"));
+        }
         //TODO change the placeholder name to machine, must also change fxml file id for the placeholder
         personListPanelPlaceholder.getChildren().add(machineListPanel.getRoot());
 

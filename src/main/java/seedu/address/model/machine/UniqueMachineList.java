@@ -7,6 +7,8 @@ import javafx.collections.ObservableList;
 import seedu.address.model.machine.exceptions.DuplicateMachineException;
 import seedu.address.model.machine.exceptions.MachineNotFoundException;
 
+import java.util.List;
+
 
 /**
  * A list of machines that ensures uniqueness in Machine names
@@ -22,6 +24,18 @@ public class UniqueMachineList {
         return internalList.stream().anyMatch(toCheck::equals);
     }
 
+    /**
+     * Replaces the contents of this list with {@code machines}.
+     * {@code machines} must not contain duplicate machines.
+     */
+    public void setMachines(List<Machine> machines) {
+        requireNonNull(machines);
+        if (!machinesAreUnique(machines)) {
+            throw new DuplicateMachineException();
+        }
+
+        internalList.setAll(machines);
+    }
     /**
      * Adds the Machine to the list
      * The Machine must not exist in the list
@@ -54,6 +68,19 @@ public class UniqueMachineList {
         return FXCollections.unmodifiableObservableList(internalList);
     }
 
+    /**
+     * Returns true if {@code machines} contains only unique machines
+     */
+    private boolean machinesAreUnique(List<Machine> machines) {
+        for (int i = 0; i < machines.size() - 1; i++) {
+            for (int j = i + 1; j< machines.size(); j++) {
+                if (machines.get(i).isSameMachine(machines.get(j))){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
 
 

@@ -56,12 +56,19 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Replaces the contents of the machine list with {@code machines}.
+     * {@code machines} must not contain duplicate machines
+     */
+    public void setMachines(List<Machine> machines) { this.machines.setMachines(machines);}
+
+    /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
 
         setPersons(newData.getPersonList());
+        setMachines(newData.getMachineList());
     }
 
     //// person-level operations
