@@ -1,14 +1,14 @@
 package seedu.address.model.admin;
 
 /**
- * Represents the Username of an admin
+ * Represents the hash of the password of an admin
  */
-public class Username {
+public class Password {
 
     private String value;
 
-    public Username(String username) {
-        this.value = username;
+    public Password(String password) {
+        this.value = password;
     }
 
     public String toString() {
@@ -18,8 +18,8 @@ public class Username {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Username // instanceof handles nulls
-                && value.equals(((Username) other).value)); // state check
+                || (other instanceof Password // instanceof handles nulls
+                && value.equals(((Password) other).value)); // state check
     }
 
     @Override
