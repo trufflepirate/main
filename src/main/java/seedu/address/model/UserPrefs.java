@@ -13,7 +13,7 @@ public class UserPrefs {
 
     private GuiSettings guiSettings;
     private Path addressBookFilePath = Paths.get("data" , "addressbook.xml");
-    private Path makerManagerMachinesFilePath = Paths.get("data", "makerManagerMachines.xml");
+    private Path makerManagerMachinesFilePath = Paths.get("data", "makerManagerAdmins.xml");
     private Path makerManagerAdminsFilePath = Paths.get("data", "makerManagerAdmins.xml");
 
     public UserPrefs() {
