@@ -92,6 +92,7 @@ public class AddressBookParser {
             return new RedoCommand();
 
         case LoginCommand.COMMAND_WORD:
+            return new LoginCommandParser().parse(arguments);
 
         case LogoutCommand.COMMAND_WORD:
             return new LogoutCommand();
