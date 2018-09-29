@@ -16,7 +16,7 @@ import seedu.address.model.machine.Machine;
  * An Immutable MakerManager AddressBook that is serializable to XML format
  */
 @XmlRootElement(name = "MakerManagerAddressBook")
-public class XmlSerializableMakerManagerAddressBook {
+public class XmlSerializableMakerManagerMachines {
 
     public static final String MESSAGE_DUPLICATE_MACHINE = "Machines list contains duplicate machine(s)";
 
@@ -24,16 +24,16 @@ public class XmlSerializableMakerManagerAddressBook {
     private List<XmlAdaptedMachine> machines;
 
     /**
-     * Creates an empty XmlSerializableMakerManagerAddressBook.
+     * Creates an empty XmlSerializableMakerManagerMachines.
      * This empty constructor is required for marshalling
      */
-    public XmlSerializableMakerManagerAddressBook() {
+    public XmlSerializableMakerManagerMachines() {
         machines = new ArrayList<>();
     }
     /**
      * Conversion
      */
-    public XmlSerializableMakerManagerAddressBook(ReadOnlyAddressBook src) {
+    public XmlSerializableMakerManagerMachines(ReadOnlyAddressBook src) {
         this();
         machines.addAll(src.getMachineList().stream().map(XmlAdaptedMachine::new).collect(Collectors.toList()));
     }
@@ -63,10 +63,10 @@ public class XmlSerializableMakerManagerAddressBook {
             return true;
         }
 
-        if (!(other instanceof XmlSerializableMakerManagerAddressBook)) {
+        if (!(other instanceof XmlSerializableMakerManagerMachines)) {
             return false;
         }
 
-        return machines.equals(((XmlSerializableMakerManagerAddressBook) other).machines);
+        return machines.equals(((XmlSerializableMakerManagerMachines) other).machines);
     }
 }

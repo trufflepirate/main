@@ -9,7 +9,7 @@ import javax.xml.bind.JAXBException;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.XmlUtil;
-import seedu.address.storage.machine.XmlSerializableMakerManagerAddressBook;
+import seedu.address.storage.machine.XmlSerializableMakerManagerMachines;
 
 /**
  * Stores addressbook data in an XML file
@@ -47,7 +47,7 @@ public class XmlFileStorage {
     /**
      * Saves the given maker manager address book data to the specified file
      */
-    public static void saveMakerManagerDataToFile(Path file, XmlSerializableMakerManagerAddressBook addressBook)
+    public static void saveMakerManagerDataToFile(Path file, XmlSerializableMakerManagerMachines addressBook)
             throws FileNotFoundException {
         try {
             XmlUtil.saveDataToFile(file, addressBook);
@@ -59,12 +59,12 @@ public class XmlFileStorage {
      * Returns makerManager address book in the file or an empty address book
      */
 
-    public static XmlSerializableMakerManagerAddressBook loadMakerManagerDataFromSaveFile(Path file)
+    public static XmlSerializableMakerManagerMachines loadMakerManagerDataFromSaveFile(Path file)
             throws DataConversionException,
             FileNotFoundException {
         try {
             logger.info("Getting serialized data from custom xml file");
-            return XmlUtil.getDataFromFile(file, XmlSerializableMakerManagerAddressBook.class);
+            return XmlUtil.getDataFromFile(file, XmlSerializableMakerManagerMachines.class);
         } catch (JAXBException e) {
             throw new DataConversionException(e);
         }

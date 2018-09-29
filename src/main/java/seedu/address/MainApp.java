@@ -33,7 +33,7 @@ import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlAddressBookStorage;
-import seedu.address.storage.machine.XmlMakerManagerAddressBookStorage;
+import seedu.address.storage.machine.XmlMakerManagerMachines;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 
@@ -65,10 +65,20 @@ public class MainApp extends Application {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
 
+        /**
+         * Must manually add this in to change the userprefs path
+         * Paths is probably stored in some cache which takes the
+         * old path instead of the new one
+         */
+        //Path path = Paths.get("data", "makerManagerMachines.xml");
+        //userPrefs.setMakerManagerAddressBookFilePath(path);
+        //logger.info("Address book file for maker manager " + userPrefs.getMakerManagerAddressBookFilePath());
 
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         AddressBookStorage makerManagerAddressBookStorage =
-                new XmlMakerManagerAddressBookStorage(userPrefs.getMakerManagerAddressBookFilePath());
+                new XmlMakerManagerMachines(userPrefs.getMakerManagerAddressBookFilePath());
+
+
 
         //TODO completely remove persons and integrate machines completely
         /**

@@ -23,13 +23,13 @@ import seedu.address.storage.XmlFileStorage;
 /**
  * A class to access makerManagerAddressBook data stored as xml file on the hard disk.
  */
-public class XmlMakerManagerAddressBookStorage implements AddressBookStorage {
+public class XmlMakerManagerMachines implements AddressBookStorage {
 
-    private static final Logger logger = LogsCenter.getLogger(XmlMakerManagerAddressBookStorage.class);
+    private static final Logger logger = LogsCenter.getLogger(XmlMakerManagerMachines.class);
 
     private Path filePath;
 
-    public XmlMakerManagerAddressBookStorage(Path filePath) {
+    public XmlMakerManagerMachines(Path filePath) {
         this.filePath = filePath;
     }
 
@@ -56,12 +56,12 @@ public class XmlMakerManagerAddressBookStorage implements AddressBookStorage {
             return Optional.empty();
         }
 
-        logger.info("Filepath in XmlMakerManagerAddressBookStorage class : " + filePath.toString());
+        logger.info("Filepath in XmlMakerManagerMachines class : " + filePath.toString());
 
-        XmlSerializableMakerManagerAddressBook xmlSerializableMakerManagerAddressBook =
+        XmlSerializableMakerManagerMachines xmlSerializableMakerManagerMachines =
                 XmlFileStorage.loadMakerManagerDataFromSaveFile(filePath);
         try {
-            return Optional.of(xmlSerializableMakerManagerAddressBook.toModelType());
+            return Optional.of(xmlSerializableMakerManagerMachines.toModelType());
         } catch (IllegalValueException ive) {
             logger.info("Illegal values found in " + filePath + ": " + ive.getMessage());
             throw new DataConversionException(ive);
@@ -82,6 +82,6 @@ public class XmlMakerManagerAddressBookStorage implements AddressBookStorage {
         requireNonNull(filePath);
 
         FileUtil.createIfMissing(filePath);
-        XmlFileStorage.saveMakerManagerDataToFile(filePath, new XmlSerializableMakerManagerAddressBook(addressBook));
+        XmlFileStorage.saveMakerManagerDataToFile(filePath, new XmlSerializableMakerManagerMachines(addressBook));
     }
 }
