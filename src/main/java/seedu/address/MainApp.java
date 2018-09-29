@@ -25,6 +25,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.machine.Machine;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
@@ -32,6 +33,7 @@ import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlAddressBookStorage;
+import seedu.address.storage.machine.XmlMakerManagerMachineStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 
@@ -62,7 +64,28 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
+
+        /**
+         * Must manually add this in to change the userprefs path
+         * Paths is probably stored in some cache which takes the
+         * old path instead of the new one
+         */
+        //Path path = Paths.get("data", "makerManagerMachines.xml");
+        //userPrefs.setMakerManagerAddressBookFilePath(path);
+        //logger.info("Address book file for maker manager " + userPrefs.getMakerManagerAddressBookFilePath());
+
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
+        AddressBookStorage makerManagerAddressBookStorage =
+                new XmlMakerManagerMachineStorage(userPrefs.getMakerManagerAddressBookFilePath());
+
+
+
+        //TODO completely remove persons and integrate machines completely
+        /**
+         * Can change back to addressBookStorage here instead of makerManagerAddressBookStorage
+         * Need to change MainWindow UI back also for initial addressbook app to work normally
+         * App will function normally
+         */
         storage = new StorageManager(addressBookStorage, userPrefsStorage);
 
         initLogging(config);
@@ -86,10 +109,15 @@ public class MainApp extends Application {
         ReadOnlyAddressBook initialData;
         try {
             addressBookOptional = storage.readAddressBook();
+            logger.info("Reading address book from storage");
             if (!addressBookOptional.isPresent()) {
                 logger.info("Data file not found. Will be starting with a sample AddressBook");
             }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+            //TODO Remove debugging here
+            for (Machine machine : initialData.getMachineList()) {
+                logger.info("Machine full name : " + machine.getName().fullName);
+            }
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
