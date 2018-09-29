@@ -4,8 +4,8 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.admin.Admin;
-import seedu.address.model.machine.Machine;
 import seedu.address.model.admin.Username;
+import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
 
 /**

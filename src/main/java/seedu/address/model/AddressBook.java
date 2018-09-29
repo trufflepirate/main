@@ -165,7 +165,9 @@ public class AddressBook implements ReadOnlyAddressBook {
 
 
     @Override
-    public ObservableList<Admin> getAdminList() { return admins.asUnmodifiableObservableList(); }
+    public ObservableList<Admin> getAdminList() {
+        return admins.asUnmodifiableObservableList();
+    }
 
     @Override
     public boolean equals(Object other) {

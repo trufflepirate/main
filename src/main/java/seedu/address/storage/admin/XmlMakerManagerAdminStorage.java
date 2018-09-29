@@ -55,7 +55,8 @@ public class XmlMakerManagerAdminStorage implements AddressBookStorage {
         }
         logger.info("Filepath in XmlAddressBookStorage class : " + filePath.toString());
 
-        XmlSerializableMakerManagerAdmins xmlAddressBook = XmlFileStorage.loadMakerManagerAdminDataFromSaveFile(filePath);
+        XmlSerializableMakerManagerAdmins xmlAddressBook =
+                XmlFileStorage.loadMakerManagerAdminDataFromSaveFile(filePath);
 
         try {
             return Optional.of(xmlAddressBook.toModelType());

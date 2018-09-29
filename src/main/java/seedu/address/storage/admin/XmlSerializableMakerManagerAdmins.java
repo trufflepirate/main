@@ -18,7 +18,7 @@ import seedu.address.model.admin.Admin;
 @XmlRootElement(name = "makermanager_admins")
 public class XmlSerializableMakerManagerAdmins {
 
-    public static final String MESSAGE_DUPLICATE_ADMIN= "Admins list contains duplicate admin(s).";
+    public static final String MESSAGE_DUPLICATE_ADMIN = "Admins list contains duplicate admin(s).";
 
     @XmlElement
     private List<XmlAdaptedAdmin> admins;

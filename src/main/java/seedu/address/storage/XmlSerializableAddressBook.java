@@ -10,7 +10,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.admin.Admin;
 import seedu.address.model.person.Person;
 import seedu.address.storage.admin.XmlAdaptedAdmin;
 
@@ -21,7 +20,6 @@ import seedu.address.storage.admin.XmlAdaptedAdmin;
 public class XmlSerializableAddressBook {
 
     public static final String MESSAGE_DUPLICATE_PERSON = "Persons list contains duplicate person(s).";
-    public static final String MESSAGE_DUPLICATE_ADMIN= "Admins list contains duplicate admin(s).";
 
     @XmlElement
     private List<XmlAdaptedPerson> persons;
