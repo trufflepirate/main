@@ -19,6 +19,8 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+//import seedu.address.model.machine.Machine;
+import seedu.address.ui.machine.MachineListPanel;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -36,6 +38,7 @@ public class MainWindow extends UiPart<Stage> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
+    private MachineListPanel machineListPanel;
     private Config config;
     private UserPrefs prefs;
     private HelpWindow helpWindow;
@@ -122,8 +125,21 @@ public class MainWindow extends UiPart<Stage> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
+        //TODO Completely remove the personListPanel, should not be needed in the future
+        /**
+         * Uncomment the two lines below to get the original code working again
+         */
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+
+        /**
+         * Comment out the 3 lines below to get the original code working again
+         */
+        /*
+        machineListPanel = new MachineListPanel(logic.getFilteredMachineList());
+        //TODO change the placeholder name to machine, must also change fxml file id for the placeholder
+        personListPanelPlaceholder.getChildren().add(machineListPanel.getRoot());
+        */
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
