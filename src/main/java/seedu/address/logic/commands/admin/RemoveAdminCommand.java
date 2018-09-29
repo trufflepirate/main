@@ -1,6 +1,8 @@
-package seedu.address.logic.commands;
+package seedu.address.logic.commands.admin;
 
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.admin.Admin;
@@ -54,8 +56,8 @@ public class RemoveAdminCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof seedu.address.logic.commands.RemoveAdminCommand // instanceof handles nulls
-                && username.equals(((seedu.address.logic.commands.RemoveAdminCommand) other).username)); // state check
+                || (other instanceof RemoveAdminCommand // instanceof handles nulls
+                && username.equals(((RemoveAdminCommand) other).username)); // state check
     }
 
 }

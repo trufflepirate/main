@@ -1,9 +1,9 @@
-package seedu.address.logic.parser;
+package seedu.address.logic.parser.admin;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import seedu.address.logic.commands.AddAdminCommand;
-import seedu.address.logic.commands.UpdatePasswordCommand;
+import seedu.address.logic.commands.admin.AddAdminCommand;
+import seedu.address.logic.commands.admin.UpdatePasswordCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.admin.Password;
 import seedu.address.model.admin.Username;
