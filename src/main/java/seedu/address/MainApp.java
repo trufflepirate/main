@@ -33,7 +33,7 @@ import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlAddressBookStorage;
-import seedu.address.storage.machine.XmlMakerManagerMachines;
+import seedu.address.storage.machine.XmlMakerManagerMachineStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 
@@ -76,7 +76,7 @@ public class MainApp extends Application {
 
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         AddressBookStorage makerManagerAddressBookStorage =
-                new XmlMakerManagerMachines(userPrefs.getMakerManagerAddressBookFilePath());
+                new XmlMakerManagerMachineStorage(userPrefs.getMakerManagerAddressBookFilePath());
 
 
 

@@ -23,13 +23,13 @@ import seedu.address.storage.XmlFileStorage;
 /**
  * A class to access makerManagerAddressBook data stored as xml file on the hard disk.
  */
-public class XmlMakerManagerMachines implements AddressBookStorage {
+public class XmlMakerManagerMachineStorage implements AddressBookStorage {
 
-    private static final Logger logger = LogsCenter.getLogger(XmlMakerManagerMachines.class);
+    private static final Logger logger = LogsCenter.getLogger(XmlMakerManagerMachineStorage.class);
 
     private Path filePath;
 
-    public XmlMakerManagerMachines(Path filePath) {
+    public XmlMakerManagerMachineStorage(Path filePath) {
         this.filePath = filePath;
     }
 
@@ -56,7 +56,7 @@ public class XmlMakerManagerMachines implements AddressBookStorage {
             return Optional.empty();
         }
 
-        logger.info("Filepath in XmlMakerManagerMachines class : " + filePath.toString());
+        logger.info("Filepath in XmlMakerManagerMachineStorage class : " + filePath.toString());
 
         XmlSerializableMakerManagerMachines xmlSerializableMakerManagerMachines =
                 XmlFileStorage.loadMakerManagerDataFromSaveFile(filePath);
