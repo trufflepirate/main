@@ -81,8 +81,6 @@ public class MainApp extends Application {
         AddressBookStorage makerManagerAdminStorage =
                 new XmlMakerManagerAdminStorage(userPrefs.getMakerManagerAdminsFilePath());
 
-
-
         //TODO: completely remove persons and integrate machines completely
         /**
          * Can change back to addressBookStorage here instead of makerManagerAddressBookStorage

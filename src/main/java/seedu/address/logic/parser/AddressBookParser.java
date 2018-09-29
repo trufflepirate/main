@@ -100,7 +100,7 @@ public class AddressBookParser {
 
         case LogoutCommand.COMMAND_WORD:
             return new LogoutCommand();
-        
+
         case AddMachineCommand.COMMAND_WORD:
             return new AddMachineCommandParser().parse(arguments);
 
