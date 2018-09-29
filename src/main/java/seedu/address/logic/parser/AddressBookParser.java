@@ -21,7 +21,9 @@ import seedu.address.logic.commands.LogoutCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.machine.AddMachineCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.parser.machine.AddMachineCommandParser;
 
 /**
  * Parses user input.
@@ -87,10 +89,12 @@ public class AddressBookParser {
             return new RedoCommand();
 
         case LoginCommand.COMMAND_WORD:
-            return new LoginCommandParser().parse(arguments);
 
         case LogoutCommand.COMMAND_WORD:
             return new LogoutCommand();
+        
+        case AddMachineCommand.COMMAND_WORD:
+            return new AddMachineCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
