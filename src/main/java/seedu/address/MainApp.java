@@ -33,6 +33,7 @@ import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlAddressBookStorage;
+import seedu.address.storage.admin.XmlMakerManagerAdminStorage;
 import seedu.address.storage.machine.XmlMakerManagerMachineStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
@@ -71,16 +72,18 @@ public class MainApp extends Application {
          * old path instead of the new one
          */
         //Path path = Paths.get("data", "makerManagerMachines.xml");
-        //userPrefs.setMakerManagerAddressBookFilePath(path);
-        //logger.info("Address book file for maker manager " + userPrefs.getMakerManagerAddressBookFilePath());
+        //userPrefs.setMakerManagerMachinesFilePath(path);
+        //logger.info("Address book file for maker manager " + userPrefs.getMakerManagerMachinesFilePath());
 
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
-        AddressBookStorage makerManagerAddressBookStorage =
-                new XmlMakerManagerMachineStorage(userPrefs.getMakerManagerAddressBookFilePath());
+        AddressBookStorage makerManagerMachineStorage =
+                new XmlMakerManagerMachineStorage(userPrefs.getMakerManagerMachinesFilePath());
+        AddressBookStorage makerManagerAdminStorage =
+                new XmlMakerManagerAdminStorage(userPrefs.getMakerManagerAdminsFilePath());
 
 
 
-        //TODO completely remove persons and integrate machines completely
+        //TODO: completely remove persons and integrate machines completely
         /**
          * Can change back to addressBookStorage here instead of makerManagerAddressBookStorage
          * Need to change MainWindow UI back also for initial addressbook app to work normally

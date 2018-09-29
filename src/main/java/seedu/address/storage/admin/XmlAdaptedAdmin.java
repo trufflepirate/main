@@ -1,4 +1,4 @@
-package seedu.address.storage;
+package seedu.address.storage.admin;
 
 import java.util.Objects;
 

@@ -13,7 +13,8 @@ public class UserPrefs {
 
     private GuiSettings guiSettings;
     private Path addressBookFilePath = Paths.get("data" , "addressbook.xml");
-    private Path makerManagerAddressBookFilePath = Paths.get("data", "makerManagerMachines.xml");
+    private Path makerManagerMachinesFilePath = Paths.get("data", "makerManagerMachines.xml");
+    private Path makerManagerAdminsFilePath = Paths.get("data", "makerManagerAdmins.xml");
 
     public UserPrefs() {
         setGuiSettings(500, 500, 0, 0);
@@ -39,12 +40,20 @@ public class UserPrefs {
         this.addressBookFilePath = addressBookFilePath;
     }
 
-    public Path getMakerManagerAddressBookFilePath() {
-        return makerManagerAddressBookFilePath;
+    public Path getMakerManagerMachinesFilePath() {
+        return makerManagerMachinesFilePath;
     }
 
-    public void setMakerManagerAddressBookFilePath(Path makerManagerAddressBookFilePath) {
-        this.makerManagerAddressBookFilePath = makerManagerAddressBookFilePath;
+    public void setMakerManagerMachinesFilePath(Path makerManagerMachinesFilePath) {
+        this.makerManagerMachinesFilePath = makerManagerMachinesFilePath;
+    }
+
+    public Path getMakerManagerAdminsFilePath() {
+        return makerManagerMachinesFilePath;
+    }
+
+    public void setMakerManagerAdminsFilePath(Path makerManagerAdminsFilePath) {
+        this.makerManagerAdminsFilePath = makerManagerAdminsFilePath;
     }
 
     @Override

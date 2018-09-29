@@ -12,6 +12,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.admin.Admin;
 import seedu.address.model.person.Person;
+import seedu.address.storage.admin.XmlAdaptedAdmin;
 
 /**
  * An Immutable AddressBook that is serializable to XML format
@@ -42,7 +43,6 @@ public class XmlSerializableAddressBook {
     public XmlSerializableAddressBook(ReadOnlyAddressBook src) {
         this();
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
-        admins.addAll(src.getAdminList().stream().map(XmlAdaptedAdmin::new).collect(Collectors.toList()));
     }
 
     /**
@@ -61,14 +61,6 @@ public class XmlSerializableAddressBook {
             addressBook.addPerson(person);
         }
 
-        for (XmlAdaptedAdmin a : admins) {
-            Admin admin = a.toModelType();
-            if (addressBook.hasAdmin(admin)) {
-                throw new IllegalValueException(MESSAGE_DUPLICATE_ADMIN);
-            }
-            addressBook.addAdmin(admin);
-        }
-
         return addressBook;
     }
 
@@ -81,7 +73,6 @@ public class XmlSerializableAddressBook {
         if (!(other instanceof XmlSerializableAddressBook)) {
             return false;
         }
-        return persons.equals(((XmlSerializableAddressBook) other).persons)
-                && admins.equals(((XmlSerializableAddressBook) other).admins);
+        return persons.equals(((XmlSerializableAddressBook) other).persons);
     }
 }
