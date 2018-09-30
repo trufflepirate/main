@@ -1,6 +1,8 @@
-package seedu.address.logic.commands;
+package seedu.address.logic.commands.admin;
 
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.admin.Admin;
@@ -15,7 +17,7 @@ public class LoginCommand extends Command {
     public static final String COMMAND_WORD = "login";
     public static final String MESSAGE_SUCCESS = "login success!";
     public static final String MESSAGE_WRONG_DETAILS = "Login failed! Wrong Username/Password.";
-    private static final String MESSAGE_ALREADY_LOGGED_IN = "Login failed! "
+    public static final String MESSAGE_ALREADY_LOGGED_IN = "Login failed! "
             + "Please Logout of current account before logging in again.";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + "Login used for admin access.\n"
@@ -33,13 +35,13 @@ public class LoginCommand extends Command {
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
-        if (!model.hasAdmin(toLogIn)) {
-            throw new CommandException(MESSAGE_WRONG_DETAILS);
-        } else if (model.isLoggedIn()) {
+        if (model.isLoggedIn()) {
             throw new CommandException(MESSAGE_ALREADY_LOGGED_IN);
+        } else if (!model.hasAdmin(toLogIn)) {
+            throw new CommandException(MESSAGE_WRONG_DETAILS);
         }
 
-        model.setLogin();
+        model.setLogin(username);
         model.commitAddressBook(); //TODO: not sure what this does;
 
         return new CommandResult(MESSAGE_SUCCESS);

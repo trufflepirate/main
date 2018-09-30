@@ -16,9 +16,9 @@ import seedu.address.model.machine.Machine;
 /**
  * Adds a machine to MakerManager address book
  */
-public class AddMachineCommand extends Command {
+public class  AddMachineCommand extends Command {
 
-    public static final String COMMAND_WORD = "add_machine";
+    public static final String COMMAND_WORD = "addMachine";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a machine to MakerManager address book. "
             + "Parameters: "
@@ -48,6 +48,7 @@ public class AddMachineCommand extends Command {
             throw new CommandException(MESSAGE_ACCESS_DENIED);
         }
 
+        //TODO: @JJ AddMachineCommand Incomplete
         return new CommandResult(String.format(MESSAGE_SUCCESS, machineToAdd));
     }
 
