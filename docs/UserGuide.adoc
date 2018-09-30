@@ -57,7 +57,7 @@ Give the user guidance as to what (s)he can do with makerManager +
 
     Format: help
 
-.. *Adding Print:*
+.. *[NOT IMPLEMENTED YET]Adding Print:*
 Add a print job to the queue. +
 
     Format: add_print n/PRINT_NAME m/MACHINE_NAME d/PRINT_DURATION [s/SPECIAL_NOTES] <p/PRIORITY>
@@ -66,7 +66,7 @@ Add a print job to the queue. +
     add_print n/myprint m/printer_1 d/13:00 s/use red filament p/1 +
     add_print n/myprint m/printer_2 d/2:00 s/use blue filament
 
-.. *Starting a Print:*
+.. *[NOT IMPLEMENTED YET]Starting a Print:*
 Starts an existing print in the queue. +
 
     Format: start INDEX
@@ -74,8 +74,8 @@ Starts an existing print in the queue. +
     Examples:
     START 1
 
-.. *Listing Prints:*
-Lists prints with optional filters. +
+.. *[WIP]Listing Prints:*
+Lists prints with optional filters. Currently lists persons. +
 
     Format: list [n/PRINT_NAME] [m/MACHINE_NAME] [s/SPECIAL_NOTES] [p/PRIORITY]
 
@@ -83,7 +83,7 @@ Lists prints with optional filters. +
     list n/myprint m/printer_1 s/red filament only p/1 +
     list p/1
 
-.. *Listing History of Prints:*
+.. *[NOT IMPLEMENTED YET]Listing History of Prints:*
 Lists all completed prints with optional filters. +
 
     Format: list_history [n/PRINT_NAME] [m/MACHINE_NAME] [s/SPECIAL_NOTES] [p/PRIORITY]
@@ -92,7 +92,7 @@ Lists all completed prints with optional filters. +
     list_history n/myprint m/printer_1 s/red filament only p/1 +
     list_history p/1
 
-.. *Editing a Print:*
+.. *[NOT IMPLEMENTED YET]Editing a Print:*
 Edits an existing print in the queue. +
 
     Format: edit INDEX [n/PRINT_NAME] [m/MACHINE_NAME] [s/SPECIAL_NOTES] <p/PRIORITY>
@@ -101,7 +101,7 @@ Edits an existing print in the queue. +
     edit 1 n/myprint m/printer_1 s/red filament only p/1 +
     edit 2 p/1
 
-.. *Deleting a Print:*
+.. *[NOT IMPLEMENTED YET]Deleting a Print:*
 deletes an existing print in the queue. +
 Format: del INDEX
 
@@ -117,8 +117,8 @@ Exits the program +
 .. *Saving Data:*
 Address book data are saved in the hard disk automatically after any command that changes the data.There is no need to save manually.
 
-.. *Admin specific commands:*
-The following commands will only work in admin mode.
+.. *[WIP]Admin specific commands:*
+The following commands will only work in admin mode. Admin accounts currently not saved across sessions.
 
 ... *Login:*
 Enables admin mode. +
@@ -140,18 +140,18 @@ Add another admin. +
 
 ... *Update Admin Password:*
 Add another admin. +
-    Format: updatePW USERNAME OLD_PW NEW_PW NEW_PW_VERIFY
+    Format: updatePassword USERNAME OLD_PW NEW_PW NEW_PW_VERIFY
 
-... *Add Machine:*
+... *[WIP]Add Machine:*
 Adds a new machine. All machine names must be unique. Status can only be either “enabled” or “disabled”. +
 
     Format:
-    add_machine n/MACHINE_NAME s/STATUS
+    add_machine n/MACHINE_NAME ms/STATUS
 
     Example:
-    add_machine n/my_machine s/enabled
+    add_machine n/my_machine ms/enabled
 
-... *Remove Machine:*
+... *[WIP]Remove Machine:*
 removes a machine.  +
 
     Format: remove_machine MACHINE_NAME
@@ -159,7 +159,7 @@ removes a machine.  +
     Example:
     remove_machine my_machine
 
-... *Change Device Status:*
+... *[WIP]Change Device Status:*
 Edits an existing machine. All machine names must be unique. Status can only be either “enabled” or “disabled”. At least one optional argument must be present. +
 
     Format: edit_machine MACHINE_NAME [n/MACHINE_NAME] [s/STATUS]

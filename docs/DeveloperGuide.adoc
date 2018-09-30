@@ -1099,7 +1099,7 @@ These instructions only provide a starting point for testers to work on; testers
 
 _{ more test cases ... }_
 
-=== Deleting a person
+=== Deleting a person [ Legacy: will be changed when jobs/machines are functional ]
 
 . Deleting a person while all persons are listed
 
