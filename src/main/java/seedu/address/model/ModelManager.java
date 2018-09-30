@@ -12,6 +12,10 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.admin.Admin;
+import seedu.address.model.admin.Password;
+import seedu.address.model.admin.Username;
+import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
 
 /**
@@ -22,6 +26,9 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final VersionedAddressBook versionedAddressBook;
     private final FilteredList<Person> filteredPersons;
+    private final FilteredList<Machine> filteredMachines;
+
+    private boolean loginStatus = false;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -30,10 +37,18 @@ public class ModelManager extends ComponentManager implements Model {
         super();
         requireAllNonNull(addressBook, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with address book: " + addressBook + " and user prefs "
+                + userPrefs + "and initial admin");
 
         versionedAddressBook = new VersionedAddressBook(addressBook);
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
+        filteredMachines = new FilteredList<>(versionedAddressBook.getMachineList());
+
+        //TODO: Move this to a proper place later
+        Username theFirstUn = new Username("admin");
+        Password theFirstPw = new Password("admin");
+        Admin theFirstAdmin = new Admin(theFirstUn, theFirstPw);
+        versionedAddressBook.addAdmin(theFirstAdmin);
     }
 
     public ModelManager() {
@@ -83,6 +98,44 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //TODO: Add command, add tests
+    @Override
+    public void addAdmin(Admin admin) {
+        indicateAddressBookChanged();
+    }
+
+    //TODO: Add command, add tests
+    @Override
+    public void removeAdmin(Admin admin) {
+        indicateAddressBookChanged();
+    }
+
+    //TODO: Add command, add tests
+    @Override
+    public void updateAdmin(Admin admin, Admin updatedAdmin) {
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void setLogin() {
+        this.loginStatus = true;
+    }
+
+    @Override
+    public void clearLogin() {
+        this.loginStatus = false;
+    }
+
+    @Override
+    public boolean isLoggedIn() {
+        return this.loginStatus;
+    }
+
+    @Override
+    public boolean hasAdmin(Admin admin) {
+        requireNonNull(admin);
+        return versionedAddressBook.hasAdmin(admin);
+    }
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -100,6 +153,23 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //=========== Filtered Machine List Accessors ============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Machine} backed by the internal list of
+     * {@code versionedAddressBook}
+     */
+
+    @Override
+    public ObservableList<Machine> getFilteredMachineList() {
+        return FXCollections.unmodifiableObservableList(filteredMachines);
+    }
+
+    @Override
+    public void updateFilteredMachineList(Predicate<Machine> predicate) {
+        requireNonNull(predicate);
+        filteredMachines.setPredicate(predicate);
+    }
     //=========== Undo/Redo =================================================================================
 
     @Override
@@ -144,7 +214,8 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return versionedAddressBook.equals(other.versionedAddressBook)
-                && filteredPersons.equals(other.filteredPersons);
+                && (filteredPersons.equals(other.filteredPersons)
+                    || filteredMachines.equals(other.filteredMachines));
     }
 
 }

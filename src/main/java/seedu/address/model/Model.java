@@ -3,6 +3,8 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.admin.Admin;
+import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
 
 /**
@@ -16,6 +18,8 @@ public interface Model {
     void resetData(ReadOnlyAddressBook newData);
 
     /** Returns the AddressBook */
+
+
     ReadOnlyAddressBook getAddressBook();
 
     /**
@@ -42,6 +46,50 @@ public interface Model {
      */
     void updatePerson(Person target, Person editedPerson);
 
+
+    /**
+     * Adds the given Admin
+     * admin must not exist
+     * @param admin
+     */
+    void addAdmin(Admin admin);
+
+    /**
+     * Removes the given Admin
+     * admin must exist in the database
+     * @param admin
+     */
+    void removeAdmin(Admin admin);
+
+    /**
+     * Updates the admin
+     * admin must be present in data
+     * updatedAdmin must be different from admin
+     * @param admin
+     * @param updatedAdmin
+     */
+    void updateAdmin(Admin admin, Admin updatedAdmin);
+
+    /**
+     * sets loginStatus to true
+     */
+    void setLogin();
+
+    /**
+     * sets loginStatus to false
+     */
+    void clearLogin();
+
+    /**
+     * Returns loginStatus
+     */
+    boolean isLoggedIn();
+
+    /**
+     * Returns true if an admin with the same identity as {@code admin} exists in the address book.
+     */
+    boolean hasAdmin(Admin admin);
+
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
 
@@ -50,6 +98,16 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+    /** Returns an unmodifiable view of the filtered machine list */
+    ObservableList<Machine> getFilteredMachineList();
+
+    /**
+     * Updates the filtere of the filtered machine list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+
+    void updateFilteredMachineList(Predicate<Machine> predicate);
 
     /**
      * Returns true if the model has previous address book states to restore.

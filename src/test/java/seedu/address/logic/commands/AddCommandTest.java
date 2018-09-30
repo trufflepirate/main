@@ -19,6 +19,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.admin.Admin;
+import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
 
@@ -119,12 +121,57 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addAdmin(Admin admin) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void removeAdmin(Admin admin) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateAdmin(Admin admin, Admin updatedAdmin) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setLogin() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void clearLogin() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean isLoggedIn() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean hasAdmin(Admin admin) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<Person> getFilteredPersonList() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Machine> getFilteredMachineList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredMachineList(Predicate<Machine> predicate) {
             throw new AssertionError("This method should not be called.");
         }
 

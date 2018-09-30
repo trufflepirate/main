@@ -14,7 +14,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: CS2113-AY1819S1-T09-1      Since: `Aug 2018`      Licence: `MIT`
 
 == Setting up
 
@@ -869,7 +869,7 @@ Priorities: High (must have) - ** * **, Medium (nice to have) - ** **, Low (unli
 
 [appendix]
 == Use Cases
-In all cases, System refers to printQ9000.
+In all cases, System refers to makerManager.
 
 *Actor: lab manager* +
 *Use case: reset the time remains if the printing job fails halfway* +

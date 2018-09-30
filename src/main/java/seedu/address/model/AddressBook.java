@@ -5,6 +5,10 @@ import static java.util.Objects.requireNonNull;
 import java.util.List;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.admin.Admin;
+import seedu.address.model.admin.UniqueAdminList;
+import seedu.address.model.machine.Machine;
+import seedu.address.model.machine.UniqueMachineList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 
@@ -15,6 +19,8 @@ import seedu.address.model.person.UniquePersonList;
 public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
+    private final UniqueAdminList admins;
+    private final UniqueMachineList machines;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -25,6 +31,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     {
         persons = new UniquePersonList();
+        admins = new UniqueAdminList();
+        machines = new UniqueMachineList();
     }
 
     public AddressBook() {}
@@ -48,12 +56,21 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Replaces the contents of the machine list with {@code machines}.
+     * {@code machines} must not contain duplicate machines
+     */
+    public void setMachines(List<Machine> machines) {
+        this.machines.setMachines(machines);
+    }
+
+    /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
 
         setPersons(newData.getPersonList());
+        setMachines(newData.getMachineList());
     }
 
     //// person-level operations
@@ -93,6 +110,36 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.remove(key);
     }
 
+    //// admin-level code
+
+    /**
+     * Adds an admin to the address book.
+     * The admin must not already exist in the address book.
+     */
+    public void addAdmin(Admin toAdd) {
+        admins.add(toAdd);
+    }
+
+    /**
+     * Removes an admin from the address book.
+     * The admin must already exist in the address book.
+     */
+    public void removeAdmin(Admin toRemove) {
+        admins.remove(toRemove);
+    }
+
+    /**
+     * updates an admin in the address book.
+     */
+    public void updateAdmin(Admin toRemove, Admin toAdd) {
+        admins.remove(toRemove);
+        admins.add(toAdd);
+    }
+
+    public boolean hasAdmin(Admin admin) {
+        return admins.contains(admin);
+    }
+
     //// util methods
 
     @Override
@@ -106,6 +153,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.asUnmodifiableObservableList();
     }
 
+
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -116,5 +165,28 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public int hashCode() {
         return persons.hashCode();
+    }
+
+    // Maker Manager Address Book machine functions below
+
+    @Override
+    public ObservableList<Machine> getMachineList() {
+        return machines.asUnmodifiableObservableList();
+    }
+
+    /**
+     * Returns true if a machine that matches the {@code machine}
+     */
+    public boolean hasMachine(Machine machine) {
+        requireNonNull(machine);
+        return machines.contains(machine);
+    }
+
+    /**
+     * Adds a machine if {@code machine} does not exist in the list
+     */
+    public void addMachine(Machine machine) {
+        requireNonNull(machine);
+        machines.add(machine);
     }
 }
