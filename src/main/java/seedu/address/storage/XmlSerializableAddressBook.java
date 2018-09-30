@@ -11,6 +11,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
+import seedu.address.storage.admin.XmlAdaptedAdmin;
 
 /**
  * An Immutable AddressBook that is serializable to XML format
@@ -22,12 +23,15 @@ public class XmlSerializableAddressBook {
 
     @XmlElement
     private List<XmlAdaptedPerson> persons;
+    private List<XmlAdaptedAdmin> admins;
 
     /**
      * Creates an empty XmlSerializableAddressBook.
      * This empty constructor is required for marshalling.
+     * TODO: What is marshalling?
      */
     public XmlSerializableAddressBook() {
+        admins = new ArrayList<>();
         persons = new ArrayList<>();
     }
 
@@ -54,6 +58,7 @@ public class XmlSerializableAddressBook {
             }
             addressBook.addPerson(person);
         }
+
         return addressBook;
     }
 

@@ -20,6 +20,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.admin.Admin;
+import seedu.address.model.admin.Username;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
@@ -136,7 +137,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void setLogin() {
+        public void setLogin(Username username) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -151,8 +152,23 @@ public class AddCommandTest {
         }
 
         @Override
+        public Username currentlyLoggedIn() {
+            return null;
+        }
+
+        @Override
         public boolean hasAdmin(Admin admin) {
             throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public Admin findAdmin(Username username) {
+            return null;
+        }
+
+        @Override
+        public int numAdmins() {
+            return 0;
         }
 
         @Override

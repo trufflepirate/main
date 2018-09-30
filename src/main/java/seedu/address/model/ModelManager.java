@@ -28,7 +28,9 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Machine> filteredMachines;
 
+    //TODO: Should these be inside versionedAddressBook?
     private boolean loginStatus = false;
+    private Username loggedInAdmin = null;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -98,32 +100,39 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    //TODO: Add command, add tests
+    //TODO: add tests
     @Override
     public void addAdmin(Admin admin) {
+        versionedAddressBook.addAdmin(admin);
         indicateAddressBookChanged();
     }
 
-    //TODO: Add command, add tests
+    //TODO: add tests
     @Override
     public void removeAdmin(Admin admin) {
+        versionedAddressBook.removeAdmin(admin);
         indicateAddressBookChanged();
     }
 
-    //TODO: Add command, add tests
+    //TODO: add tests
     @Override
     public void updateAdmin(Admin admin, Admin updatedAdmin) {
+        versionedAddressBook.updateAdmin(admin, updatedAdmin);
         indicateAddressBookChanged();
     }
 
     @Override
-    public void setLogin() {
+    public void setLogin(Username username) {
+        this.loggedInAdmin = username;
         this.loginStatus = true;
+        indicateAddressBookChanged();
     }
 
     @Override
     public void clearLogin() {
+        this.loggedInAdmin = null;
         this.loginStatus = false;
+        indicateAddressBookChanged();
     }
 
     @Override
@@ -132,10 +141,27 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public Username currentlyLoggedIn() {
+        return this.loggedInAdmin;
+    }
+
+    @Override
     public boolean hasAdmin(Admin admin) {
         requireNonNull(admin);
         return versionedAddressBook.hasAdmin(admin);
     }
+
+    @Override
+    public Admin findAdmin(Username username) {
+        requireNonNull(username);
+        return versionedAddressBook.findAdmin(username);
+    }
+
+    @Override
+    public int numAdmins() {
+        return versionedAddressBook.numAdmins();
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
