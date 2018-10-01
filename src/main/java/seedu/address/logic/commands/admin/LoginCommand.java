@@ -1,5 +1,7 @@
 package seedu.address.logic.commands.admin;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.AdminLoginEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
@@ -44,6 +46,7 @@ public class LoginCommand extends Command {
         model.setLogin(username);
         model.commitAddressBook(); //TODO: not sure what this does;
 
+        EventsCenter.getInstance().post(new AdminLoginEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
