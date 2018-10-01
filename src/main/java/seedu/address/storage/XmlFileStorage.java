@@ -9,6 +9,7 @@ import javax.xml.bind.JAXBException;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.XmlUtil;
+import seedu.address.storage.admin.XmlSerializableMakerManagerAdmins;
 import seedu.address.storage.machine.XmlSerializableMakerManagerMachines;
 
 /**
@@ -37,6 +38,32 @@ public class XmlFileStorage {
                                                                             FileNotFoundException {
         try {
             return XmlUtil.getDataFromFile(file, XmlSerializableAddressBook.class);
+        } catch (JAXBException e) {
+            throw new DataConversionException(e);
+        }
+    }
+
+    /**
+     * Saves the given maker manager admins data to the specified file
+     */
+    public static void saveMakerManagerAdminDataToFile(Path file, XmlSerializableMakerManagerAdmins addressBook)
+            throws FileNotFoundException {
+        try {
+            XmlUtil.saveDataToFile(file, addressBook);
+        } catch (JAXBException e) {
+            throw  new AssertionError("Unexpected exception" + e.getMessage(), e);
+        }
+    }
+    /**
+     * Returns makerManager admin_file in the file or an empty admin_file
+     */
+
+    public static XmlSerializableMakerManagerAdmins loadMakerManagerAdminDataFromSaveFile(Path file)
+            throws DataConversionException,
+            FileNotFoundException {
+        try {
+            logger.info("Getting serialized data from custom xml file");
+            return XmlUtil.getDataFromFile(file, XmlSerializableMakerManagerAdmins.class);
         } catch (JAXBException e) {
             throw new DataConversionException(e);
         }

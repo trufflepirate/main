@@ -16,12 +16,19 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.LoginCommand;
-import seedu.address.logic.commands.LogoutCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.admin.AddAdminCommand;
+import seedu.address.logic.commands.admin.LoginCommand;
+import seedu.address.logic.commands.admin.LogoutCommand;
+import seedu.address.logic.commands.admin.RemoveAdminCommand;
+import seedu.address.logic.commands.admin.UpdatePasswordCommand;
 import seedu.address.logic.commands.machine.AddMachineCommand;
+import seedu.address.logic.parser.admin.AddAdminCommandParser;
+import seedu.address.logic.parser.admin.LoginCommandParser;
+import seedu.address.logic.parser.admin.RemoveAdminCommandParser;
+import seedu.address.logic.parser.admin.UpdatePasswordCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.parser.machine.AddMachineCommandParser;
 
@@ -88,18 +95,23 @@ public class AddressBookParser {
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
 
-
-        // MakerManager commands below
-
-        case AddMachineCommand.COMMAND_WORD:
-            return new AddMachineCommandParser().parse(arguments);
-
         case LoginCommand.COMMAND_WORD:
             return new LoginCommandParser().parse(arguments);
 
         case LogoutCommand.COMMAND_WORD:
             return new LogoutCommand();
 
+        case AddMachineCommand.COMMAND_WORD:
+            return new AddMachineCommandParser().parse(arguments);
+
+        case AddAdminCommand.COMMAND_WORD:
+            return new AddAdminCommandParser().parse(arguments);
+
+        case RemoveAdminCommand.COMMAND_WORD:
+            return new RemoveAdminCommandParser().parse(arguments);
+
+        case UpdatePasswordCommand.COMMAND_WORD:
+            return new UpdatePasswordCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

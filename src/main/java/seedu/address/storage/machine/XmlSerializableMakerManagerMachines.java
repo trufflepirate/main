@@ -15,7 +15,7 @@ import seedu.address.model.machine.Machine;
 /**
  * An Immutable MakerManager AddressBook that is serializable to XML format
  */
-@XmlRootElement(name = "MakerManagerAddressBook")
+@XmlRootElement(name = "MakerManagerMachines")
 public class XmlSerializableMakerManagerMachines {
 
     public static final String MESSAGE_DUPLICATE_MACHINE = "Machines list contains duplicate machine(s)";

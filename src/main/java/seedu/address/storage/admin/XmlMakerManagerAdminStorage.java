@@ -1,4 +1,4 @@
-package seedu.address.storage.machine;
+package seedu.address.storage.admin;
 
 import static java.util.Objects.requireNonNull;
 
@@ -17,19 +17,16 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.XmlFileStorage;
 
-
-
-
 /**
- * A class to access makerManagerAddressBook data stored as xml file on the hard disk.
+ * A class to access AddressBook data stored as an xml file on the hard disk.
  */
-public class XmlMakerManagerMachineStorage implements AddressBookStorage {
+public class XmlMakerManagerAdminStorage implements AddressBookStorage {
 
-    private static final Logger logger = LogsCenter.getLogger(XmlMakerManagerMachineStorage.class);
+    private static final Logger logger = LogsCenter.getLogger(XmlMakerManagerAdminStorage.class);
 
     private Path filePath;
 
-    public XmlMakerManagerMachineStorage(Path filePath) {
+    public XmlMakerManagerAdminStorage(Path filePath) {
         this.filePath = filePath;
     }
 
@@ -39,29 +36,30 @@ public class XmlMakerManagerMachineStorage implements AddressBookStorage {
 
     @Override
     public Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException {
+        logger.info("Reading admin in XmlMakerManagerStorage class");
         return readAddressBook(filePath);
     }
 
     /**
      * Similar to {@link #readAddressBook()}
      * @param filePath location of the data. Cannot be null
-     * @throws DataConversionException if the file is not in the correct format
+     * @throws DataConversionException if the file is not in the correct format.
      */
-    public Optional<ReadOnlyAddressBook> readAddressBook(Path filePath) throws FileNotFoundException,
-            DataConversionException {
+    public Optional<ReadOnlyAddressBook> readAddressBook(Path filePath) throws DataConversionException,
+            FileNotFoundException {
         requireNonNull(filePath);
 
         if (!Files.exists(filePath)) {
-            logger.info("Machine file " + filePath + " not found");
+            logger.info("Admin file "  + filePath + " not found");
             return Optional.empty();
         }
+        logger.info("Filepath in XmlAddressBookStorage class : " + filePath.toString());
 
-        logger.info("Filepath in XmlMakerManagerMachineStorage class : " + filePath.toString());
+        XmlSerializableMakerManagerAdmins xmlAddressBook =
+                XmlFileStorage.loadMakerManagerAdminDataFromSaveFile(filePath);
 
-        XmlSerializableMakerManagerMachines xmlSerializableMakerManagerMachines =
-                XmlFileStorage.loadMakerManagerDataFromSaveFile(filePath);
         try {
-            return Optional.of(xmlSerializableMakerManagerMachines.toModelType());
+            return Optional.of(xmlAddressBook.toModelType());
         } catch (IllegalValueException ive) {
             logger.info("Illegal values found in " + filePath + ": " + ive.getMessage());
             throw new DataConversionException(ive);
@@ -82,6 +80,7 @@ public class XmlMakerManagerMachineStorage implements AddressBookStorage {
         requireNonNull(filePath);
 
         FileUtil.createIfMissing(filePath);
-        XmlFileStorage.saveMakerManagerDataToFile(filePath, new XmlSerializableMakerManagerMachines(addressBook));
+        XmlFileStorage.saveMakerManagerAdminDataToFile(filePath, new XmlSerializableMakerManagerAdmins(addressBook));
     }
+
 }
