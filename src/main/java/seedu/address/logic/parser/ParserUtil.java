@@ -135,7 +135,7 @@ public class ParserUtil {
         requireNonNull(machineName);
         String trimMachineName = machineName.trim();
         if (!MachineName.isValidName(machineName)) {
-           throw new ParseException(MachineName.MESSAGE_NAME_CONSTRAINTS);
+            throw new ParseException(Machine.MESSAGE_NAME_CONSTRAINTS);
         }
 
         return new MachineName(trimMachineName);
