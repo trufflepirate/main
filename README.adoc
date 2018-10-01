@@ -1,7 +1,7 @@
 = MakerManager
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 
-https://travis-ci.org/NUSCS2113-T09-1/main[image:https://travis-ci.org/NUSCS2113-T09-1/main.svg?branch=master[Build Status]]
+https://travis-ci.org/CS2113-AY1819S1-T09-1/main[image:https://travis-ci.org/CS2113-AY1819S1-T09-1/main.svg?branch=master[Build Status]]
 https://coveralls.io/github/NUSCS2113-T09-1/main?branch=master[image:https://coveralls.io/repos/github/NUSCS2113-T09-1/main/badge.svg?branch=master[Coverage Status]]
 
 

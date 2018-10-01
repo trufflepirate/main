@@ -14,7 +14,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: CS2113-AY1819S1-T09-1      Since: `Aug 2018`      Licence: `MIT`
 
 == Setting up
 
@@ -1099,7 +1099,7 @@ These instructions only provide a starting point for testers to work on; testers
 
 _{ more test cases ... }_
 
-=== Deleting a person
+=== Deleting a person [ Legacy: will be changed when jobs/machines are functional ]
 
 . Deleting a person while all persons are listed
 
