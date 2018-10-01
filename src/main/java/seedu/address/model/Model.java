@@ -4,6 +4,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.admin.Admin;
+import seedu.address.model.admin.Username;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
 
@@ -73,7 +74,7 @@ public interface Model {
     /**
      * sets loginStatus to true
      */
-    void setLogin();
+    void setLogin(Username username);
 
     /**
      * sets loginStatus to false
@@ -86,9 +87,18 @@ public interface Model {
     boolean isLoggedIn();
 
     /**
+     * Returns the current logged in admin
+     */
+    Username currentlyLoggedIn();
+
+    /**
      * Returns true if an admin with the same identity as {@code admin} exists in the address book.
      */
     boolean hasAdmin(Admin admin);
+
+    Admin findAdmin(Username username);
+
+    int numAdmins();
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
