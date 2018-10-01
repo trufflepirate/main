@@ -11,4 +11,5 @@
   </columnConstraints>
   <StatusBar styleClass="stack-pane" fx:id="syncStatus" />
   <StatusBar styleClass="stack-pane" fx:id="saveLocationStatus" GridPane.columnIndex="1" nodeOrientation="RIGHT_TO_LEFT" />
+  <StatusBar styleClass="stack-pane" fx:id="adminLoginStatus" GridPane.columnIndex="2" nodeOrientation="RIGHT_TO_LEFT" />
 </GridPane>
