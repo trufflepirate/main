@@ -37,7 +37,7 @@ public class AddMachineCommandParser implements Parser<AddMachineCommand> {
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMachineCommand.MESSAGE_USAGE));
         }
-        
+
         MachineName name = ParserUtil.parseMachineName(argMultimap.getValue(PREFIX_NAME).get());
         Boolean machineStatus = ParserUtil.parseMachineStatus(argMultimap.getValue(PREFIX_MACHINE_STATUS).get());
         ArrayList<Job> jobs = new ArrayList<>();

@@ -2,6 +2,7 @@ package seedu.address;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -87,7 +88,7 @@ public class MainApp extends Application {
          * Need to change MainWindow UI back also for initial addressbook app to work normally
          * App will function normally
          */
-        storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        storage = new StorageManager(makerManagerMachineStorage, userPrefsStorage);
 
         initLogging(config);
 
@@ -109,13 +110,14 @@ public class MainApp extends Application {
         Optional<ReadOnlyAddressBook> addressBookOptional;
         ReadOnlyAddressBook initialData;
         try {
-            addressBookOptional = storage.readAddressBook();
             logger.info("Reading address book from storage");
+            addressBookOptional = storage.readAddressBook();
             if (!addressBookOptional.isPresent()) {
                 logger.info("Data file not found. Will be starting with a sample AddressBook");
             }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
             //TODO Remove debugging here
+            logger.info(Integer.toString(initialData.getMachineList().size()));
             for (Machine machine : initialData.getMachineList()) {
                 logger.info("Machine full name : " + machine.getName().fullName);
             }
