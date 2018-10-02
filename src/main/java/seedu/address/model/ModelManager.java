@@ -95,8 +95,20 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void updatePerson(Person target, Person editedPerson) {
         requireAllNonNull(target, editedPerson);
-
         versionedAddressBook.updatePerson(target, editedPerson);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void addMachine(Machine machine) {
+        versionedAddressBook.addMachine(machine);
+        updateFilteredMachineList(PREDICATE_SHOW_ALL_MACHINES);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void removeMachine(Machine toRemove) {
+        versionedAddressBook.removeMachine(toRemove);
         indicateAddressBookChanged();
     }
 

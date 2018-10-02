@@ -122,6 +122,16 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addMachine(Machine machine) {
+            throw new AssertionError("This method should not be called");
+        }
+
+        @Override
+        public void removeMachine(Machine machine) {
+            throw new AssertionError("This method should not be called");
+        }
+
+        @Override
         public void addAdmin(Admin admin) {
             throw new AssertionError("This method should not be called.");
         }

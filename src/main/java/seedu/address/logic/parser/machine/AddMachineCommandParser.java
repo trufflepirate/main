@@ -13,6 +13,7 @@ import seedu.address.logic.commands.machine.AddMachineCommand;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.Parser;
+import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.job.Job;
@@ -41,11 +42,11 @@ public class AddMachineCommandParser implements Parser<AddMachineCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMachineCommand.MESSAGE_USAGE));
         }
 
-        //TODO Remove hardcoding
-        MachineName name = new MachineName("JJ's_Printer");
+        MachineName name = ParserUtil.parseMachineName(argMultimap.getValue(PREFIX_NAME).get());
+        Boolean machineStatus = ParserUtil.parseMachineStatus(argMultimap.getValue(PREFIX_MACHINE_STATUS).get());
         ArrayList<Job> jobs = new ArrayList<>();
         Set<Tag> tags = new HashSet<>();
-        Machine machine = new Machine(name, jobs, tags, true);
+        Machine machine = new Machine(name, jobs, tags, machineStatus);
 
         return new AddMachineCommand(machine);
     }

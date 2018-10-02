@@ -15,6 +15,9 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
+    /** {@code Predicate} that always eveluate to true for machines */
+    Predicate<Machine> PREDICATE_SHOW_ALL_MACHINES = unused -> true;
+
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
 
@@ -47,12 +50,24 @@ public interface Model {
      */
     void updatePerson(Person target, Person editedPerson);
 
+    /**
+     * Adds the given machine
+     * Machine must not exists
+     */
+    void addMachine(Machine machine);
 
+    /**
+     * Removes the given machine
+     * machine must exist in the database
+     */
+
+    void removeMachine(Machine machine);
     /**
      * Adds the given Admin
      * admin must not exist
      * @param admin
      */
+
     void addAdmin(Admin admin);
 
     /**
