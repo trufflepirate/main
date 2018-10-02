@@ -2,10 +2,7 @@ package seedu.address.model.job;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Name;
@@ -25,21 +22,21 @@ public class Job {
     private JobOwner owner;
 
     //Data field
-    private Set<JobNote> notes = new HashSet<>();
+    private JobNote note;
 
     /**
      * Every field must be present and not null.
      */
-    public Job(Name name, Machine machine, Person owner, Set<JobNote> notes) {
+    public Job(Name name, Machine machine, Person owner, JobNote notes) {
         requireAllNonNull(name, machine, owner, notes);
         this.name = (JobName) name;
         this.machine = (JobMachine) machine;
         this.owner = (JobOwner) owner;
-        this.notes.addAll(notes);
+        this.note = note;
 
         time = new TimeStamp();
     }
-    
+
     public Name getName() {
         return name;
     }
@@ -60,13 +57,17 @@ public class Job {
      * Returns an immutable note set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
-    public Set<JobNote> getNotes() {
-        return Collections.unmodifiableSet(notes);
+    public JobNote getNotes() {
+        return note;
     }
 
+    /*
+    * In case the function of adding new notes during the process in needed
+    * have to change the note to a set
     public void addNote(JobNote newNote) {
         notes.add(newNote);
     }
+    */
 
     public void setName(String newName) {
         name = new JobName(newName);
@@ -117,7 +118,7 @@ public class Job {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, machine, time, owner, notes);
+        return Objects.hash(name, machine, time, owner, note);
     }
 
 
