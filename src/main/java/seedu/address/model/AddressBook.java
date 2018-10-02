@@ -203,4 +203,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(machine);
         machines.add(machine);
     }
+
+    /**
+     * Removes a machine if {@code toRemove} exists in the list
+     */
+
+    public void removeMachine(Machine toRemove) {
+        requireNonNull(toRemove);
+        machines.remove(toRemove);
+    }
 }

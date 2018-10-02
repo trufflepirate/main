@@ -9,6 +9,8 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.machine.Machine;
+import seedu.address.model.machine.MachineName;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -120,5 +122,33 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses {@code String machineName} into {@code trimMachineName}
+     * Leading and trailing whitespace will be trimmed
+     *
+     * @throws ParseException if the given {@code machineName is invalid}
+     */
+
+    public static MachineName parseMachineName(String machineName) throws ParseException {
+        requireNonNull(machineName);
+        String trimMachineName = machineName.trim();
+        if (!MachineName.isValidName(machineName)) {
+            throw new ParseException(Machine.MESSAGE_NAME_CONSTRAINTS);
+        }
+
+        return new MachineName(trimMachineName);
+    }
+
+    /**
+     * Parses {@code String machineStatus} into {@code Boolean boolMachineStatus}
+     * depending if {@code machineStatus} equals true or false
+     */
+
+    public static Boolean parseMachineStatus(String machineStatus) throws ParseException {
+        requireNonNull(machineStatus);
+        String trimMachineStatus = machineStatus.trim();
+        return trimMachineStatus.equals("ENABLED");
     }
 }
