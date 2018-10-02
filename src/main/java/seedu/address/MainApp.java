@@ -25,6 +25,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.admin.Admin;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.AddressBookStorage;
@@ -115,6 +116,7 @@ public class MainApp extends Application {
                 logger.info("Data file not found. Will be starting with a sample AddressBook");
             }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+
             //TODO Remove debugging here
             for (Machine machine : initialData.getMachineList()) {
                 logger.info("Machine full name : " + machine.getName().fullName);
