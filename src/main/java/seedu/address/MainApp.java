@@ -109,13 +109,14 @@ public class MainApp extends Application {
         Optional<ReadOnlyAddressBook> addressBookOptional;
         ReadOnlyAddressBook initialData;
         try {
-            addressBookOptional = storage.readAddressBook();
             logger.info("Reading address book from storage");
+            addressBookOptional = storage.readAddressBook();
             if (!addressBookOptional.isPresent()) {
                 logger.info("Data file not found. Will be starting with a sample AddressBook");
             }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
             //TODO Remove debugging here
+            logger.info(Integer.toString(initialData.getMachineList().size()));
             for (Machine machine : initialData.getMachineList()) {
                 logger.info("Machine full name : " + machine.getName().fullName);
             }

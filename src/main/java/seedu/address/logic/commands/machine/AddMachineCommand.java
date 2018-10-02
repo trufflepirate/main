@@ -49,6 +49,8 @@ public class  AddMachineCommand extends Command {
         }
 
         //TODO: @JJ AddMachineCommand Incomplete
+        model.addMachine(machineToAdd);
+        model.commitAddressBook();
         return new CommandResult(String.format(MESSAGE_SUCCESS, machineToAdd));
     }
 
