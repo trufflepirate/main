@@ -39,10 +39,7 @@ public class Job {
 
         time = new TimeStamp();
     }
-
-    public Job(Name name, Machine machine, Person person, JobNote note) {
-    }
-
+    
     public Name getName() {
         return name;
     }
