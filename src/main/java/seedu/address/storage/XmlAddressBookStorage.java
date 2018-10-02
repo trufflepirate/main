@@ -14,6 +14,8 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.storage.admin.XmlSerializableMakerManagerAdmins;
+import seedu.address.storage.machine.XmlSerializableMakerManagerMachines;
 
 /**
  * A class to access AddressBook data stored as an xml file on the hard disk.
@@ -76,7 +78,15 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         requireNonNull(filePath);
 
         FileUtil.createIfMissing(filePath);
-        XmlFileStorage.saveDataToFile(filePath, new XmlSerializableAddressBook(addressBook));
+
+        //determines which file we're thinking about
+        if (addressBook.getPersonList().size() != 0) {
+            XmlFileStorage.saveDataToFile(filePath, new XmlSerializableAddressBook(addressBook));
+        } else if (addressBook.getMachineList().size() != 0) {
+            XmlFileStorage.saveDataToFile(filePath, new XmlSerializableMakerManagerMachines(addressBook));
+        } else if (addressBook.getAdminList().size() != 0) {
+            XmlFileStorage.saveDataToFile(filePath, new XmlSerializableMakerManagerAdmins(addressBook));
+        }
     }
 
 }
