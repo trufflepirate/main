@@ -12,6 +12,8 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.AdminListChangedEvent;
+import seedu.address.commons.events.model.MachineListChangedEvent;
 import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.Password;
 import seedu.address.model.admin.Username;
@@ -71,6 +73,16 @@ public class ModelManager extends ComponentManager implements Model {
     /** Raises an event to indicate the model has changed */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(versionedAddressBook));
+    }
+
+    /** Raises an event to indicate the model has changed */
+    private void indicateAdminListChanged() {
+        raise(new AdminListChangedEvent(versionedAddressBook));
+    }
+
+    /** Raises an event to indicate the model has changed */
+    private void indicateMachineListChanged() {
+        raise(new MachineListChangedEvent(versionedAddressBook));
     }
 
     @Override

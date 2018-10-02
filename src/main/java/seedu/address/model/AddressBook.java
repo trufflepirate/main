@@ -65,6 +65,14 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Replaces the contents of the admin list with {@code admins}.
+     * {@code admins} must not contain duplicate admins
+     */
+    public void setAdmins(List<Admin> admins) {
+        this.admins.setAdmins(admins);
+    }
+
+    /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
     public void resetData(ReadOnlyAddressBook newData) {
