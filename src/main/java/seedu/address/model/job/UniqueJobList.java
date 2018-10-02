@@ -79,9 +79,9 @@ public class UniqueJobList {
     public boolean isUnique() {
         boolean isUnique = true;
 
-        for(Job flagJob : internalList) {
-            for(Job pointerJob : internalList) {
-                if(flagJob.isSameJob(pointerJob)) {
+        for (Job flagJob : internalList) {
+            for (Job pointerJob : internalList) {
+                if (flagJob.isSameJob(pointerJob)) {
                     isUnique = false;
                 }
             }
