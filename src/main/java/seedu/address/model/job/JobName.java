@@ -12,6 +12,8 @@ public class JobName extends Name {
      * Construct a {@code JobName}.
      *
      * @param name A valid name as declared in the super class.
+     *
+     * Every field must be present and not null.
      */
     public JobName(String name) {
         super(name);

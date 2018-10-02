@@ -20,27 +20,28 @@ import seedu.address.model.tag.Tag;
 public class Job {
 
     //Identity field
-    private Name name;
-    private Machine machine;
+    private JobName name;
+    private JobMachine machine;
     private TimeStamp time;
-    private Person owner;
+    private JobOwner owner;
 
     //Data field
-    private final Set<Tag> tags = new HashSet<>();
-    private Set<Note> notes = new HashSet<>();
+    private Set<JobNote> notes = new HashSet<>();
 
     /**
      * Every field must be present and not null.
      */
-    public Job(Name name, Machine machine, Person owner, Set<Note> notes, Set<Tag> tags) {
-        requireAllNonNull(name, machine, owner, notes, tags);
-        this.name = name;
-        this.machine = machine;
-        this.owner = owner;
-        this.tags.addAll(tags);
+    public Job(Name name, Machine machine, Person owner, Set<JobNote> notes) {
+        requireAllNonNull(name, machine, owner, notes);
+        this.name = (JobName) name;
+        this.machine = (JobMachine) machine;
+        this.owner = (JobOwner) owner;
         this.notes.addAll(notes);
 
         time = new TimeStamp();
+    }
+
+    public Job(Name name, Machine machine, Person person, JobNote note) {
     }
 
     public Name getName() {
@@ -60,31 +61,23 @@ public class Job {
     }
 
     /**
-     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
-     * if modification is attempted.
-     */
-    public Set<Tag> getTags() {
-        return Collections.unmodifiableSet(tags);
-    }
-
-    /**
      * Returns an immutable note set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
-    public Set<Note> getNotes() {
+    public Set<JobNote> getNotes() {
         return Collections.unmodifiableSet(notes);
     }
 
-    public void addNote(Note newNote) {
+    public void addNote(JobNote newNote) {
         notes.add(newNote);
     }
 
     public void setName(String newName) {
-        name = new Name(newName);
+        name = new JobName(newName);
     }
 
     public void setMachine(Machine newMachine) {
-        machine = newMachine;
+        machine = (JobMachine) newMachine;
     }
 
     /**
@@ -122,14 +115,13 @@ public class Job {
                 && otherJob.getMachine().equals(getMachine())
                 && otherJob.getOwner().equals(getOwner())
                 && otherJob.getTime().equals(getTime())
-                && otherJob.getTags().equals(getTags())
                 && otherJob.getNotes().equals(getNotes());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, machine, time, owner, notes, tags);
+        return Objects.hash(name, machine, time, owner, notes);
     }
 
 

@@ -3,11 +3,11 @@ package seedu.address.model.job;
 /**
  * Represents a Note Object for Job.
  */
-public class Note {
+public class JobNote {
 
     private String value;
 
-    public Note(String note) {
+    public JobNote(String note) {
         this.value = note;
     }
 
