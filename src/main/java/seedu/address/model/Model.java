@@ -15,6 +15,7 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
+    //TODO Explain reason for using this code
     /** {@code Predicate} that always eveluate to true for machines */
     Predicate<Machine> PREDICATE_SHOW_ALL_MACHINES = unused -> true;
 
