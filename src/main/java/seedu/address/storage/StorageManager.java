@@ -2,6 +2,7 @@ package seedu.address.storage;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -10,6 +11,8 @@ import com.google.common.eventbus.Subscribe;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.AdminListChangedEvent;
+import seedu.address.commons.events.model.MachineListChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -86,6 +89,28 @@ public class StorageManager extends ComponentManager implements Storage {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
         try {
             saveAddressBook(event.data);
+        } catch (IOException e) {
+            raise(new DataSavingExceptionEvent(e));
+        }
+    }
+
+    @Override
+    @Subscribe
+    public void handleAdminListChangedEvent(AdminListChangedEvent event) {
+        try {
+            //TODO: change this hardcoded by going through userPrefs
+            saveAddressBook(event.data, Paths.get("data\\makerManagerAdmins.xml"));
+        } catch (IOException e) {
+            raise(new DataSavingExceptionEvent(e));
+        }
+    }
+
+    @Override
+    @Subscribe
+    public void handleMachineListChangedEvent(MachineListChangedEvent event) {
+        try {
+            //TODO: change this hardcoded by going through userPrefs
+            saveAddressBook(event.data, Paths.get("data\\makerManagerAdmins.xml"));
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }
