@@ -115,13 +115,13 @@ public class ModelManager extends ComponentManager implements Model {
     public void addMachine(Machine machine) {
         versionedAddressBook.addMachine(machine);
         updateFilteredMachineList(PREDICATE_SHOW_ALL_MACHINES);
-        indicateAddressBookChanged();
+        indicateMachineListChanged();
     }
 
     @Override
     public void removeMachine(Machine toRemove) {
         versionedAddressBook.removeMachine(toRemove);
-        indicateAddressBookChanged();
+        indicateAdminListChanged();
     }
 
     //TODO: add tests
