@@ -128,35 +128,33 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void addAdmin(Admin admin) {
         versionedAddressBook.addAdmin(admin);
-        indicateAddressBookChanged();
+        indicateAdminListChanged();
     }
 
     //TODO: add tests
     @Override
     public void removeAdmin(Admin admin) {
         versionedAddressBook.removeAdmin(admin);
-        indicateAddressBookChanged();
+        indicateAdminListChanged();
     }
 
     //TODO: add tests
     @Override
     public void updateAdmin(Admin admin, Admin updatedAdmin) {
         versionedAddressBook.updateAdmin(admin, updatedAdmin);
-        indicateAddressBookChanged();
+        indicateAdminListChanged();
     }
 
     @Override
     public void setLogin(Username username) {
         this.loggedInAdmin = username;
         this.loginStatus = true;
-        indicateAddressBookChanged();
     }
 
     @Override
     public void clearLogin() {
         this.loggedInAdmin = null;
         this.loginStatus = false;
-        indicateAddressBookChanged();
     }
 
     @Override
