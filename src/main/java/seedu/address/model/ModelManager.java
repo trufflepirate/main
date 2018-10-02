@@ -12,6 +12,8 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.AdminListChangedEvent;
+import seedu.address.commons.events.model.MachineListChangedEvent;
 import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.Password;
 import seedu.address.model.admin.Username;
@@ -73,6 +75,16 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(versionedAddressBook));
     }
 
+    /** Raises an event to indicate the model has changed */
+    private void indicateAdminListChanged() {
+        raise(new AdminListChangedEvent(versionedAddressBook));
+    }
+
+    /** Raises an event to indicate the model has changed */
+    private void indicateMachineListChanged() {
+        raise(new MachineListChangedEvent(versionedAddressBook));
+    }
+
     @Override
     public boolean hasPerson(Person person) {
         requireNonNull(person);
@@ -116,35 +128,33 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void addAdmin(Admin admin) {
         versionedAddressBook.addAdmin(admin);
-        indicateAddressBookChanged();
+        indicateAdminListChanged();
     }
 
     //TODO: add tests
     @Override
     public void removeAdmin(Admin admin) {
         versionedAddressBook.removeAdmin(admin);
-        indicateAddressBookChanged();
+        indicateAdminListChanged();
     }
 
     //TODO: add tests
     @Override
     public void updateAdmin(Admin admin, Admin updatedAdmin) {
         versionedAddressBook.updateAdmin(admin, updatedAdmin);
-        indicateAddressBookChanged();
+        indicateAdminListChanged();
     }
 
     @Override
     public void setLogin(Username username) {
         this.loggedInAdmin = username;
         this.loginStatus = true;
-        indicateAddressBookChanged();
     }
 
     @Override
     public void clearLogin() {
         this.loggedInAdmin = null;
         this.loginStatus = false;
-        indicateAddressBookChanged();
     }
 
     @Override
