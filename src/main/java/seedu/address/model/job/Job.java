@@ -10,7 +10,6 @@ import java.util.Set;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
-import seedu.address.model.tag.Tag;
 
 /**
  * Represents a Printing job in MakerManager.
