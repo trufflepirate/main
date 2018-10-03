@@ -10,7 +10,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.machine.MachineNameContainsKeywordsPredicate;
 
 /**
- * Parses input arguments and creates a new FindCommand object
+ * Parses input arguments and creates a new FindMachineCommand object
  */
 public class FindMachineCommandParser implements Parser<FindMachineCommand> {
 
