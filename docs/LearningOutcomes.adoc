@@ -1,4 +1,5 @@
 = Learning Outcomes
+:no-site-header:
 :site-section: LearningOutcomes
 :toc: macro
 :toc-title:

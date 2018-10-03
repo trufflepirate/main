@@ -133,13 +133,13 @@ public class MainWindow extends UiPart<Stage> {
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         /**
-         * Comment out the 3 lines below to get the original code working again
+         * Comment out the 2 lines below to get the original code working again
          */
-        /*
-        machineListPanel = new MachineListPanel(logic.getFilteredMachineList());
+
+        //machineListPanel = new MachineListPanel(logic.getFilteredMachineList());
         //TODO change the placeholder name to machine, must also change fxml file id for the placeholder
-        personListPanelPlaceholder.getChildren().add(machineListPanel.getRoot());
-        */
+        //personListPanelPlaceholder.getChildren().add(machineListPanel.getRoot());
+
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
