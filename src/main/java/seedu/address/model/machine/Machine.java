@@ -121,6 +121,8 @@ public class Machine {
         builder.append(" Jobs: ");
         getJobs().forEach(builder::append);
 
+        builder.append(" Status: ");
+        builder.append(getSringStatus());
         return builder.toString();
     }
 
@@ -135,5 +137,14 @@ public class Machine {
 
     public boolean getStatus() {
         return status;
+    }
+
+    private String getSringStatus() {
+        if (getStatus()) {
+            return "ENABLED";
+        }
+        else {
+            return "DISABLED";
+        }
     }
 }
