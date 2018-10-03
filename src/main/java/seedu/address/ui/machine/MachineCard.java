@@ -39,7 +39,7 @@ public class MachineCard extends UiPart<Region> {
         this.machine = machine;
         id.setText(displayIndex + ". ");
         machineName.setText(machine.getName().fullName);
-        status.setText(machine.getStatus() ? "True" : "False");
+        status.setText(machine.getStringStatus());
     }
 
     @Override
