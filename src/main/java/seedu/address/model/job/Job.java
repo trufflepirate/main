@@ -17,9 +17,9 @@ public class Job {
 
     //Identity field
     private JobName name;
-    private JobMachine machine;
+    private Machine machine;
     private TimeStamp time;
-    private JobOwner owner;
+    private Person owner;
 
     //Data field
     private JobNote note;
@@ -30,8 +30,8 @@ public class Job {
     public Job(Name name, Machine machine, Person owner, JobNote notes) {
         requireAllNonNull(name, machine, owner, notes);
         this.name = (JobName) name;
-        this.machine = (JobMachine) machine;
-        this.owner = (JobOwner) owner;
+        this.machine = machine;
+        this.owner = owner;
         this.note = note;
 
         time = new TimeStamp();
@@ -74,7 +74,11 @@ public class Job {
     }
 
     public void setMachine(Machine newMachine) {
-        machine = (JobMachine) newMachine;
+        machine = newMachine;
+    }
+
+    public void setOwner(Person newOwner) {
+        owner = newOwner;
     }
 
     /**
