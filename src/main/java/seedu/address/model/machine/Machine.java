@@ -122,7 +122,7 @@ public class Machine {
         getJobs().forEach(builder::append);
 
         builder.append(" Status: ");
-        builder.append(getSringStatus());
+        builder.append(getStringStatus());
         return builder.toString();
     }
 
@@ -139,7 +139,7 @@ public class Machine {
         return status;
     }
 
-    private String getSringStatus() {
+    public String getStringStatus() {
         if (getStatus()) {
             return "ENABLED";
         }
