@@ -50,6 +50,11 @@ public class MachineName {
     }
 
     @Override
+    public String toString() {
+        return fullName;
+    }
+
+    @Override
     public int hashCode() {
         return fullName.hashCode();
     }

@@ -149,6 +149,10 @@ public class ParserUtil {
     public static Boolean parseMachineStatus(String machineStatus) throws ParseException {
         requireNonNull(machineStatus);
         String trimMachineStatus = machineStatus.trim();
+        if ((!machineStatus.equals("ENABLED")) && (!machineStatus.equals("DISABLED"))) {
+            throw new ParseException(Machine.MESSAGE_WRONG_STATUS);
+        }
+
         return trimMachineStatus.equals("ENABLED");
     }
 }
