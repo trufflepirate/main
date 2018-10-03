@@ -1,7 +1,7 @@
 package seedu.address.model.machine.exceptions;
 
 /**
- * Signals that the oepration will result in duplicate Machine
+ * Signals that the operation will result in duplicate Machine
  * Machines are considered duplicates if they have the same machineName
  */
 

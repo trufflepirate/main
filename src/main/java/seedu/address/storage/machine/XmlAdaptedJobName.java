@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlValue;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.job.Job;
-import seedu.address.model.job.Note;
+import seedu.address.model.job.JobNote;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.MachineName;
 import seedu.address.model.person.Address;
@@ -58,7 +58,7 @@ public class XmlAdaptedJobName {
         //TODO Remove hardcoding
         Name name = new Name(jobName);
         Machine machine = new Machine(new MachineName("JJ's printer"), new ArrayList<>(), new HashSet<>(), true);
-        Note note = new Note("Empty note for now");
+        JobNote note = new JobNote("Empty note for now");
         Person person = new Person(new Name("JunJie"),
                 new Phone("81184502"),
                 new Email("teojunjie@gmail.com"),
