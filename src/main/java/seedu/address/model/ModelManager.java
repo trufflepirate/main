@@ -20,6 +20,7 @@ import seedu.address.model.admin.Username;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
 
+
 /**
  * Represents the in-memory model of the address book data.
  */

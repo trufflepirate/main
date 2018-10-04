@@ -11,6 +11,8 @@ import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.Password;
 import seedu.address.model.admin.Username;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 /**
  * Lets the admin login to MakerManager
  */
@@ -39,7 +41,7 @@ public class LoginCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         if (model.isLoggedIn()) {
             throw new CommandException(MESSAGE_ALREADY_LOGGED_IN);
-        } else if (!model.hasAdmin(toLogIn)) {
+        } else if (!BCrypt.checkpw(password.toString(), model.findAdmin(username).getPassword().toString())) {
             throw new CommandException(MESSAGE_WRONG_DETAILS);
         }
 

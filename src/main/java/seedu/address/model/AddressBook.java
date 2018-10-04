@@ -6,12 +6,15 @@ import java.util.List;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.admin.Admin;
+import seedu.address.model.admin.Password;
 import seedu.address.model.admin.UniqueAdminList;
 import seedu.address.model.admin.Username;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.UniqueMachineList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
+
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  * Wraps all data at the address-book level
@@ -126,7 +129,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * The admin must not already exist in the address book.
      */
     public void addAdmin(Admin toAdd) {
-        admins.add(toAdd);
+        admins.add(encryptedAdmin(toAdd));
     }
 
     /**
@@ -220,4 +223,17 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(toRemove);
         machines.remove(toRemove);
     }
+
+    /**
+     * Returns Admin with password hashed
+     * @param rawAdmin
+     * @return
+     */
+    private Admin encryptedAdmin(Admin rawAdmin) {
+        Password encryptedPassword = new Password(BCrypt.hashpw(rawAdmin.getPassword().toString(), BCrypt.gensalt()));
+        Admin protectedAdmin = new Admin(rawAdmin.getUsername(), encryptedPassword);
+        return protectedAdmin;
+    }
 }
+
+
