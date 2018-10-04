@@ -1,5 +1,7 @@
 package seedu.address.logic.commands.admin;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.AdminLoginEvent;
 import seedu.address.logic.CommandHistory;
@@ -11,7 +13,7 @@ import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.Password;
 import seedu.address.model.admin.Username;
 
-import org.mindrot.jbcrypt.BCrypt;
+
 
 /**
  * Lets the admin login to MakerManager
@@ -29,12 +31,10 @@ public class LoginCommand extends Command {
 
     private final Username username;
     private final Password password;
-    private final Admin toLogIn;
 
     public LoginCommand(Username username, Password password) {
         this.username = username;
         this.password = password;
-        this.toLogIn = new Admin(this.username, this.password);
     }
 
     @Override

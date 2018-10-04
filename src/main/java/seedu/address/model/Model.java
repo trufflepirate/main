@@ -107,12 +107,14 @@ public interface Model {
     Username currentlyLoggedIn();
 
     /**
-     * Returns true if an admin with the same identity as {@code admin} exists in the address book.
+     * returns the admin if username is found
+     * @param username
      */
-    boolean hasAdmin(Admin admin);
-
     Admin findAdmin(Username username);
 
+    /**
+     * returns number of admins in the makerManager
+     */
     int numAdmins();
 
     /** Returns an unmodifiable view of the filtered person list */

@@ -169,12 +169,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public boolean hasAdmin(Admin admin) {
-        requireNonNull(admin);
-        return versionedAddressBook.hasAdmin(admin);
-    }
-
-    @Override
     public Admin findAdmin(Username username) {
         requireNonNull(username);
         return versionedAddressBook.findAdmin(username);
