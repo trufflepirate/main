@@ -92,7 +92,9 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /** Raises an event to indicate the model has changed */
-    private void indicateJobListChanged() { raise(new JobListChangedEvent(versionedAddressBook)); }
+    private void indicateJobListChanged() {
+        raise(new JobListChangedEvent(versionedAddressBook));
+    }
 
     @Override
     public boolean hasPerson(Person person) {

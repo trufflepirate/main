@@ -13,7 +13,6 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 
-import com.google.common.eventbus.Subscribe;
 
 /**
  * API of the Storage component
