@@ -69,6 +69,14 @@ public class XmlMakerManagerMachineStorage implements AddressBookStorage {
         }
     }
 
+    /**
+     * Should not do anything
+     */
+    @Override
+    public Optional<ReadOnlyAddressBook> readAddressBook(UserPrefs userPrefs) throws DataConversionException, IOException {
+        return Optional.empty();
+    }
+
     @Override
     public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         saveAddressBook(addressBook, filePath);

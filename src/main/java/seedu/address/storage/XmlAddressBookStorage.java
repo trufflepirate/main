@@ -13,9 +13,12 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
+import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 
+import seedu.address.model.machine.Machine;
+import seedu.address.model.person.Person;
 import seedu.address.storage.admin.XmlSerializableMakerManagerAdmins;
 import seedu.address.storage.machine.XmlSerializableMakerManagerMachines;
 
@@ -44,13 +47,14 @@ public class XmlAddressBookStorage implements AddressBookStorage {
     @Override
     public Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException {
         logger.info("Reading address book in XmlAddressBookStorage class");
-        return readAddressBook(filePath);
+        return readAddressBook(userPrefs);
     }
 
     /**
      * Similar to {@link #readAddressBook()}
      * @param filePath location of the data. Cannot be null
      * @throws DataConversionException if the file is not in the correct format.
+     * Returns a single file addressbook that only consists of data from one xml file
      */
     public Optional<ReadOnlyAddressBook> readAddressBook(Path filePath) throws DataConversionException,
                                                                                  FileNotFoundException {
@@ -69,6 +73,73 @@ public class XmlAddressBookStorage implements AddressBookStorage {
             logger.info("Illegal values found in " + filePath + ": " + ive.getMessage());
             throw new DataConversionException(ive);
         }
+    }
+
+    /**
+     * Returns the full in memory addressbook that contains all the data from the xml files
+     */
+    public Optional<ReadOnlyAddressBook> readAddressBook(UserPrefs userPrefs) throws DataConversionException,
+                                                                                        FileNotFoundException {
+        requireNonNull(userPrefs);
+        logger.info("Debugging user preferences");
+
+        Path mainAddressBookFile = userPrefs.getAddressBookFilePath();
+        Path makerManagerMachinesFile = userPrefs.getMakerManagerMachinesFilePath();
+        Path makerManagerAdminsFile = userPrefs.getMakerManagerAdminsFilePath();
+
+        if (!Files.exists(mainAddressBookFile)) {
+            logger.info("AddressBook file "  + filePath + " not found");
+            return Optional.empty();
+        }
+
+        if (!Files.exists(makerManagerMachinesFile)) {
+            logger.info("AddressBook file "  + filePath + " not found");
+            return Optional.empty();
+        }
+
+        if (!Files.exists(makerManagerAdminsFile)) {
+            logger.info("AddressBook file "  + filePath + " not found");
+            return Optional.empty();
+        }
+
+        logger.info("Printing data from xml files 1 ");
+        XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(mainAddressBookFile);
+        logger.info("Printing data from xml files 2");
+        XmlSerializableMakerManagerMachines xmlMakerManagerMachinesAddressBook =
+                XmlFileStorage.loadMakerManagerDataFromSaveFile(makerManagerMachinesFile);
+
+
+        try {
+
+
+            AddressBook mainAddressBookData = xmlAddressBook.toModelType();
+            AddressBook machinesAddressBookData = xmlMakerManagerMachinesAddressBook.toModelType();
+            //AddressBook adminsAddressBookData = xmlMakerManagerAdminsAddressBook.toModelType();
+
+
+            logger.info(Integer.toString(mainAddressBookData.getPersonList().size()));
+            for (Person person : machinesAddressBookData.getPersonList()) {
+                logger.info("Person full name : " + person.getName());
+            }
+            logger.info(Integer.toString(machinesAddressBookData.getMachineList().size()));
+            for (Machine machine : machinesAddressBookData.getMachineList()) {
+                logger.info("Machine full name : " + machine.getName().fullName);
+            }
+            AddressBook fullAddressBookData = new AddressBook();
+            fullAddressBookData.setPersons(mainAddressBookData.getPersonList());
+            fullAddressBookData.setMachines(machinesAddressBookData.getMachineList());
+            //fullAddressBookData.setAdmins(adminsAddressBookData.getAdminList());
+            logger.info("DISPLAYING NEW FULL ADDRESSBOOK DATA");
+            logger.info(fullAddressBookData.toString());
+            return Optional.of(fullAddressBookData);
+
+        } catch (IllegalValueException ive) {
+            ive.printStackTrace();
+            logger.info("Illegal values found in " + filePath + ": " + ive.getMessage());
+            throw new DataConversionException(ive);
+        }
+
+
     }
 
     @Override
