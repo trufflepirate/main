@@ -86,6 +86,9 @@ public class XmlAddressBookStorage implements AddressBookStorage {
             XmlFileStorage.saveDataToFile(filePath, new XmlSerializableMakerManagerMachines(addressBook));
         } else if (addressBook.getAdminList().size() != 0) {
             XmlFileStorage.saveDataToFile(filePath, new XmlSerializableMakerManagerAdmins(addressBook));
+        } else if (addressBook.getJobList().size() != 0) {
+            //XmlFileStorage.saveDataToFile(filePath, new XmlSerializableMakerManagerJobs(addressBook));
+            //TODO: @TY make XmlSerializableMakerManagerJobs and Relevant classes 
         }
     }
 
