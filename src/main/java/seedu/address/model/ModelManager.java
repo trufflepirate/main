@@ -216,6 +216,24 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredMachines.setPredicate(predicate);
     }
+
+    //=========== Filtered Jobs List Accessors ============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Job} backed by the internal list of
+     * {@code versionedAddressBook}
+     */
+
+    @Override
+    public ObservableList<Job> getFilteredJobList() {
+        return FXCollections.unmodifiableObservableList(filteredJobs);
+    }
+
+    @Override
+    public void updateFilteredJobList(Predicate<Job> predicate) {
+        requireNonNull(predicate);
+        filteredJobs.setPredicate(predicate);
+    }
     //=========== Undo/Redo =================================================================================
 
     @Override

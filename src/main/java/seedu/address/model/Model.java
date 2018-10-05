@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.Username;
+import seedu.address.model.job.Job;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
 
@@ -135,6 +136,10 @@ public interface Model {
      */
 
     void updateFilteredMachineList(Predicate<Machine> predicate);
+
+    ObservableList<Job> getFilteredJobList();
+
+    void updateFilteredJobList(Predicate<Job> predicate);
 
     /**
      * Returns true if the model has previous address book states to restore.
