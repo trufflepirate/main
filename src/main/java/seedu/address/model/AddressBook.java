@@ -80,6 +80,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.admins.setAdmins(admins);
     }
 
+
+    /**
+     * Replaces the contents of the jobs list with {@code jobs}.
+     * {@code jobs} must not contain duplicate jobs
+     */
+    public void setJobs(ObservableList<Job> jobs) {
+        this.jobs.setJobs(jobs);
+    }
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -222,14 +231,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Returns true if a job that matches the {@code job}
-     */
-    public boolean hasJob(Job job) {
-        requireNonNull(job);
-        return jobs.contains(job);
-    }
-
-    /**
      * Returns the job, if present, according to JobName
      */
     public Job findJob(JobName name) {
@@ -240,7 +241,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Updates the job
      */
     public void updateJob(Job oldJob, Job updatedJob) {
-        jobs.setJob(oldJob, updatedJob);
+        jobs.updateJob(oldJob, updatedJob);
     }
 
     @Override
@@ -284,6 +285,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.asUnmodifiableObservableList().size() + " persons";
         // TODO: refine later
     }
+
 }
 
 

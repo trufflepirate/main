@@ -13,11 +13,13 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.AdminListChangedEvent;
+import seedu.address.commons.events.model.JobListChangedEvent;
 import seedu.address.commons.events.model.MachineListChangedEvent;
 import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.Password;
 import seedu.address.model.admin.Username;
 import seedu.address.model.job.Job;
+import seedu.address.model.job.JobName;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
 
@@ -89,6 +91,9 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new MachineListChangedEvent(versionedAddressBook));
     }
 
+    /** Raises an event to indicate the model has changed */
+    private void indicateJobListChanged() { raise(new JobListChangedEvent(versionedAddressBook)); }
+
     @Override
     public boolean hasPerson(Person person) {
         requireNonNull(person);
@@ -116,16 +121,43 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void addJob(Job job) {
+        requireAllNonNull(job);
+        versionedAddressBook.addJob(job);
+        indicateJobListChanged();
+    }
+
+    @Override
+    public void removeJob(Job job) {
+        requireAllNonNull(job);
+        versionedAddressBook.removeJob(job);
+        indicateJobListChanged();
+    }
+
+    @Override
+    public void updateJob(Job oldJob, Job updatedJob) {
+        requireAllNonNull(oldJob, updatedJob);
+        versionedAddressBook.updateJob(oldJob, updatedJob);
+        indicateJobListChanged();
+    }
+
+    @Override
+    public Job findJob(JobName name) {
+        requireAllNonNull(name);
+        return versionedAddressBook.findJob(name);
+    }
+
+    @Override
     public void addMachine(Machine machine) {
         versionedAddressBook.addMachine(machine);
         updateFilteredMachineList(PREDICATE_SHOW_ALL_MACHINES);
-        indicateAddressBookChanged();
+        indicateMachineListChanged();
     }
 
     @Override
     public void removeMachine(Machine toRemove) {
         versionedAddressBook.removeMachine(toRemove);
-        indicateAddressBookChanged();
+        indicateMachineListChanged();
     }
 
     //TODO: add tests
