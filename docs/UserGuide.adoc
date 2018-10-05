@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= MakerManager - User Guide
 :site-section: UserGuide
 :toc:
 :toc-title:
@@ -109,6 +109,22 @@ Format: del INDEX
     del 1
     del 2
 
+.. *Listing Machines:*
+Lists machines. +
+
+    Format: listMachines
+
+    Examples:
+    listMachines
+
+.. *Finding Machines:*
+Finds machines based on given keywords. +
+
+    Format: findMachines [machine name] [machine name 2]
+
+    Examples:
+    findMachine myMachine1
+
 .. *Exit the program:*
 Exits the program +
 
@@ -142,14 +158,14 @@ Add another admin. +
 Add another admin. +
     Format: updatePassword USERNAME OLD_PW NEW_PW NEW_PW_VERIFY
 
-... *[WIP]Add Machine:*
-Adds a new machine. All machine names must be unique. Status can only be either “enabled” or “disabled”. +
+... *Add Machine:*
+Adds a new machine. All machine names must be unique. Status can only be either “ENABLED” or “DISABLED”. +
 
     Format:
     add_machine n/MACHINE_NAME ms/STATUS
 
     Example:
-    add_machine n/my_machine ms/enabled
+    add_machine n/my_machine ms/ENABLED
 
 ... *[WIP]Remove Machine:*
 removes a machine.  +

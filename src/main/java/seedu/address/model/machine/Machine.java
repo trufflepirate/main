@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -25,7 +26,9 @@ public class Machine {
     public static final String MESSAGE_NAME_CONSTRAINTS =
             "Names should only contain alphanumeric characters and spaces, "
                     + "and it should not be blank";
-
+    public static final String MESSAGE_WRONG_STATUS =
+            "Status can only contain 'ENABLED' or 'DISABLED'"
+                    + "and should not be blank";
     // Identity fields
     private final MachineName machineName;
     //TODO make status be more diverse, like enum
@@ -33,7 +36,7 @@ public class Machine {
 
     // Data fields
     //Name is a placeholder. To be replaced by Job class in the future
-    private final ArrayList<Job> jobs = new ArrayList<>();
+    private final List<Job> jobs = new ArrayList<>();
     private final Set<Tag> tags = new HashSet<>();
 
 
@@ -56,8 +59,8 @@ public class Machine {
      * Returns an immutable Job List, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
-    public ArrayList<Job> getJobs() {
-        return (ArrayList<Job>) Collections.unmodifiableList(jobs);
+    public List<Job> getJobs() {
+        return Collections.unmodifiableList(jobs);
     }
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
@@ -118,6 +121,8 @@ public class Machine {
         builder.append(" Jobs: ");
         getJobs().forEach(builder::append);
 
+        builder.append(" Status: ");
+        builder.append(getStringStatus());
         return builder.toString();
     }
 
@@ -132,5 +137,13 @@ public class Machine {
 
     public boolean getStatus() {
         return status;
+    }
+
+    public String getStringStatus() {
+        if (getStatus()) {
+            return "ENABLED";
+        } else {
+            return "DISABLED";
+        }
     }
 }

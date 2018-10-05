@@ -20,6 +20,7 @@ import seedu.address.model.admin.Username;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
 
+
 /**
  * Represents the in-memory model of the address book data.
  */
@@ -165,12 +166,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public Username currentlyLoggedIn() {
         return this.loggedInAdmin;
-    }
-
-    @Override
-    public boolean hasAdmin(Admin admin) {
-        requireNonNull(admin);
-        return versionedAddressBook.hasAdmin(admin);
     }
 
     @Override

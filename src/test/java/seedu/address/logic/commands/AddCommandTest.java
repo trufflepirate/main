@@ -166,10 +166,6 @@ public class AddCommandTest {
             return null;
         }
 
-        @Override
-        public boolean hasAdmin(Admin admin) {
-            throw new AssertionError("This method should not be called.");
-        }
 
         @Override
         public Admin findAdmin(Username username) {
