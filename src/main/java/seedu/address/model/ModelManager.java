@@ -17,6 +17,7 @@ import seedu.address.commons.events.model.MachineListChangedEvent;
 import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.Password;
 import seedu.address.model.admin.Username;
+import seedu.address.model.job.Job;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
 
@@ -30,6 +31,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final VersionedAddressBook versionedAddressBook;
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Machine> filteredMachines;
+    private final FilteredList<Job> filteredJobs;
 
     //TODO: Should these be inside versionedAddressBook?
     private boolean loginStatus = false;
@@ -48,6 +50,7 @@ public class ModelManager extends ComponentManager implements Model {
         versionedAddressBook = new VersionedAddressBook(addressBook);
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
         filteredMachines = new FilteredList<>(versionedAddressBook.getMachineList());
+        filteredJobs = new FilteredList<>(versionedAddressBook.getJobList());
 
         //TODO: Move this to a proper place later
         Username theFirstUn = new Username("admin");

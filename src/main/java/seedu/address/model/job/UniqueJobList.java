@@ -96,4 +96,17 @@ public class UniqueJobList {
     public int size() {
         return internalList.size();
     }
+
+    /**
+     * Returns Job
+     * @param name
+     */
+    public Job findJob(JobName name) {
+        for (Job job : internalList) {
+            if (job.getName().equals(name)) {
+                return job;
+            }
+        }
+        return null;
+    }
 }
