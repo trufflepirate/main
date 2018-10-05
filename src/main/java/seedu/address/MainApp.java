@@ -17,6 +17,7 @@ import seedu.address.commons.core.Version;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
+import seedu.address.commons.util.JsonUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
@@ -75,11 +76,11 @@ public class MainApp extends Application {
         //userPrefs.setMakerManagerMachinesFilePath(path);
         //logger.info("Address book file for maker manager " + userPrefs.getMakerManagerMachinesFilePath());
 
-        AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
-        AddressBookStorage makerManagerMachineStorage =
-                new XmlMakerManagerMachineStorage(userPrefs.getMakerManagerMachinesFilePath());
-        AddressBookStorage makerManagerAdminStorage =
-                new XmlMakerManagerAdminStorage(userPrefs.getMakerManagerAdminsFilePath());
+        //AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
+        AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs);
+        logger.info("Reading addressBookFilePath");
+        logger.info(addressBookStorage.getAddressBookFilePath().toString());
+
 
         //TODO: completely remove persons and integrate machines completely
         /**
@@ -157,6 +158,7 @@ public class MainApp extends Application {
         try {
             Optional<Config> configOptional = ConfigUtil.readConfig(configFilePathUsed);
             initializedConfig = configOptional.orElse(new Config());
+
         } catch (DataConversionException e) {
             logger.warning("Config file at " + configFilePathUsed + " is not in the correct format. "
                     + "Using default config properties");
@@ -165,6 +167,8 @@ public class MainApp extends Application {
 
         //Update config file in case it was missing to begin with or there are new/unused fields
         try {
+            logger.info("Printing json config");
+            logger.info(JsonUtil.toJsonString(initializedConfig));
             ConfigUtil.saveConfig(initializedConfig, configFilePathUsed);
         } catch (IOException e) {
             logger.warning("Failed to save config file : " + StringUtil.getDetails(e));
@@ -196,6 +200,9 @@ public class MainApp extends Application {
 
         //Update prefs file in case it was missing to begin with or there are new/unused fields
         try {
+            logger.info("Printing json prefs");
+            logger.info(JsonUtil.toJsonString(initializedPrefs));
+            logger.info(initializedPrefs.getMakerManagerMachinesFilePath().toString());
             storage.saveUserPrefs(initializedPrefs);
         } catch (IOException e) {
             logger.warning("Failed to save config file : " + StringUtil.getDetails(e));

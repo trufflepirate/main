@@ -14,6 +14,8 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.UserPrefs;
+
 import seedu.address.storage.admin.XmlSerializableMakerManagerAdmins;
 import seedu.address.storage.machine.XmlSerializableMakerManagerMachines;
 
@@ -25,9 +27,14 @@ public class XmlAddressBookStorage implements AddressBookStorage {
     private static final Logger logger = LogsCenter.getLogger(XmlAddressBookStorage.class);
 
     private Path filePath;
+    private UserPrefs userPrefs;
 
     public XmlAddressBookStorage(Path filePath) {
         this.filePath = filePath;
+    }
+    public XmlAddressBookStorage(UserPrefs userPrefs) {
+        this.userPrefs = userPrefs;
+        this.filePath = userPrefs.getAddressBookFilePath();
     }
 
     public Path getAddressBookFilePath() {
@@ -78,15 +85,58 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         requireNonNull(filePath);
 
         FileUtil.createIfMissing(filePath);
+        logger.info("Printing out filePath to check for switch statement");
+        logger.info(filePath.toString());
 
-        //determines which file we're thinking about
-        if (addressBook.getPersonList().size() != 0) {
+        switch (filePath.toString()) {
+        case "data\\addressbook.xml" :
             XmlFileStorage.saveDataToFile(filePath, new XmlSerializableAddressBook(addressBook));
-        } else if (addressBook.getMachineList().size() != 0) {
+            break;
+        case "data\\makerManagerMachines.xml" :
             XmlFileStorage.saveDataToFile(filePath, new XmlSerializableMakerManagerMachines(addressBook));
-        } else if (addressBook.getAdminList().size() != 0) {
+            break;
+        case "data\\makerManagerAdmins.xml" :
             XmlFileStorage.saveDataToFile(filePath, new XmlSerializableMakerManagerAdmins(addressBook));
+            break;
+        default:
+            logger.info("No such file path available to save data in");
         }
+
+    }
+
+    @Override
+    public void saveAddressBook(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) throws IOException {
+        requireNonNull(addressBook);
+        requireNonNull(userPrefs);
+
+        Path mainAddressBookFile = userPrefs.getAddressBookFilePath();
+        Path makerManagerMachinesFile = userPrefs.getMakerManagerMachinesFilePath();
+        Path makerManagerAdminsFile = userPrefs.getMakerManagerAdminsFilePath();
+
+        //Debugging
+        logger.info(mainAddressBookFile.toString());
+        logger.info(makerManagerMachinesFile.toString());
+        logger.info(makerManagerAdminsFile.toString());
+
+        FileUtil.createIfMissing(mainAddressBookFile);
+        FileUtil.createIfMissing(makerManagerMachinesFile);
+        FileUtil.createIfMissing(makerManagerAdminsFile);
+
+        /**
+         * The serializable all has to be different classes as the formatting
+         * for each xml document is different since we saving to different files
+         * and not just one file
+         */
+        XmlFileStorage.saveDataToFile(mainAddressBookFile, new XmlSerializableAddressBook(addressBook));
+        XmlFileStorage.saveDataToFile(makerManagerMachinesFile, new XmlSerializableMakerManagerMachines(addressBook));
+        XmlFileStorage.saveDataToFile(makerManagerAdminsFile, new XmlSerializableMakerManagerMachines(addressBook));
+
+
+    }
+
+    @Override
+    public UserPrefs getUserPrefs() {
+        return userPrefs;
     }
 
 }

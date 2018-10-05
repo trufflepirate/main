@@ -14,6 +14,7 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.UserPrefs;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.XmlFileStorage;
 
@@ -83,5 +84,22 @@ public class XmlMakerManagerMachineStorage implements AddressBookStorage {
 
         FileUtil.createIfMissing(filePath);
         XmlFileStorage.saveMakerManagerDataToFile(filePath, new XmlSerializableMakerManagerMachines(addressBook));
+    }
+
+    /**
+     * Should not be used here
+     */
+    @Override
+    public void saveAddressBook(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) throws IOException {
+
+    }
+
+    /**
+     * Should not be used here
+     */
+
+    @Override
+    public UserPrefs getUserPrefs() {
+        return null;
     }
 }
