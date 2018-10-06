@@ -20,6 +20,7 @@ import org.junit.rules.ExpectedException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.admin.Admin;
+import seedu.address.model.job.Job;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -99,6 +100,7 @@ public class AddressBookTest {
     private static class AddressBookStub implements ReadOnlyAddressBook {
         private final ObservableList<Person> persons = FXCollections.observableArrayList();
         private final ObservableList<Admin> admins = FXCollections.observableArrayList();
+        private final ObservableList<Job> jobs = FXCollections.observableArrayList();
 
         AddressBookStub(Collection<Person> persons) {
             this.persons.setAll(persons);
@@ -112,6 +114,11 @@ public class AddressBookTest {
         @Override
         public ObservableList<Admin> getAdminList() {
             return admins;
+        }
+
+        @Override
+        public ObservableList<Job> getJobList() {
+            return jobs;
         }
 
         //TODO havent integrated this code properly yet

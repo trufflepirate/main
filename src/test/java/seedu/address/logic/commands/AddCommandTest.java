@@ -21,6 +21,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.Username;
+import seedu.address.model.job.Job;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
@@ -147,6 +148,21 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addJob(Job job) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void removeJob(Job job) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateJob(Job job, Job updatedJob) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void setLogin(Username username) {
             throw new AssertionError("This method should not be called.");
         }
@@ -198,6 +214,16 @@ public class AddCommandTest {
 
         @Override
         public void updateFilteredMachineList(Predicate<Machine> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Job> getFilteredJobList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredJobList(Predicate<Job> predicate) {
             throw new AssertionError("This method should not be called.");
         }
 
