@@ -1,20 +1,17 @@
 package seedu.address.commons.events.model;
 
 import seedu.address.commons.events.BaseEvent;
-import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 
-/** Indicates the AddressBook in the model has changed*/
+/**
+ * Indicates a changed in the admins list in the models addressbook
+ */
 public class AdminListChangedEvent extends BaseEvent {
 
     public final ReadOnlyAddressBook data;
 
     public AdminListChangedEvent(ReadOnlyAddressBook data) {
-
-        // Sending only the relevant data to StorageManager
-        AddressBook temp = new AddressBook();
-        temp.setAdmins(data.getAdminList());
-        this.data = temp;
+        this.data = data;
     }
 
     @Override
