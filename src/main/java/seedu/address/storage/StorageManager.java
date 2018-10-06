@@ -115,6 +115,7 @@ public class StorageManager extends ComponentManager implements Storage {
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
+        logger.info("PersonsListChangedEvent triggered");
         try {
             saveAddressBook(event.data, userPrefs.getAddressBookFilePath());
         } catch (IOException e) {
@@ -125,6 +126,7 @@ public class StorageManager extends ComponentManager implements Storage {
     @Override
     @Subscribe
     public void handleAdminListChangedEvent(AdminListChangedEvent event) {
+        logger.info("AdminListChangedEvent triggered");
         try {
             //TODO: change this hardcoded by going through userPrefs (DONE)
             saveAddressBook(event.data, userPrefs.getMakerManagerAdminsFilePath());
@@ -137,6 +139,7 @@ public class StorageManager extends ComponentManager implements Storage {
     @Subscribe
     public void handleMachineListChangedEvent(MachineListChangedEvent event) {
         try {
+            logger.info("MachineListChangedEvent triggered");
             //TODO: change this hardcoded by going through userPrefs (DONE)
             saveAddressBook(event.data, userPrefs.getMakerManagerMachinesFilePath());
         } catch (IOException e) {
@@ -148,6 +151,7 @@ public class StorageManager extends ComponentManager implements Storage {
     @Subscribe
     public void handleJobListChangedEvent(JobListChangedEvent event) {
         try {
+            logger.info("JobsListChangedEvent triggered");
             //TODO: change this hardcoded by going through userPrefs
             saveAddressBook(event.data, Paths.get("data\\makerManagerJobs.xml"));
         } catch (IOException e) {
