@@ -150,6 +150,8 @@ public class XmlAddressBookStorage implements AddressBookStorage {
     /**
      * Similar to {@link #saveAddressBook(ReadOnlyAddressBook)}
      * @param filePath location of the data. Cannot be null
+     * Saves the data to a single file depending on the file path
+     * specified
      */
     public void saveAddressBook(ReadOnlyAddressBook addressBook, Path filePath) throws IOException {
         requireNonNull(addressBook);
@@ -177,6 +179,9 @@ public class XmlAddressBookStorage implements AddressBookStorage {
 
     }
 
+    /**
+     * Saves all the data at once to all the files available
+     */
     @Override
     public void saveAddressBook(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) throws IOException {
         requireNonNull(addressBook);

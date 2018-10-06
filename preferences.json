@@ -9,5 +9,6 @@
   },
   "addressBookFilePath" : "data\\addressbook.xml",
   "makerManagerMachinesFilePath" : "data\\makerManagerMachines.xml",
-  "makerManagerAdminsFilePath" : "data\\makerManagerAdmins.xml"
+  "makerManagerAdminsFilePath" : "data\\makerManagerAdmins.xml",
+  "makerManagerJobsFilePath" : "data\\makerManagerJobs.xml"
 }

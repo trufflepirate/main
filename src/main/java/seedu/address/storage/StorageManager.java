@@ -83,6 +83,17 @@ public class StorageManager extends ComponentManager implements Storage {
         return addressBookStorage.readAddressBook(userPrefs);
     }
 
+    /**
+     * Saves the entire addressbook to each of the relevant file
+     * by marshalling the individual data correctly into its appropriate file
+     * So far it has not been employed in the app yet
+     * We have only been using saveAddressBook(ReadOnlyAddressBook addressBook, Path filePath)
+     * to save a data that is relevant to that file path
+     * i.e saveAddressBook(addressBook, 'makerManagerMachines.xml') will save
+     * the data accordingly but pulling the addressbook machines list and
+     * saving it to the makerManagerMachines.xml but marshalling the data
+     * through the format defined by XmlSerializableMakerManagerMachines.xml
+     */
     @Override
     public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         //saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath());
@@ -152,8 +163,8 @@ public class StorageManager extends ComponentManager implements Storage {
     public void handleJobListChangedEvent(JobListChangedEvent event) {
         try {
             logger.info("JobsListChangedEvent triggered");
-            //TODO: change this hardcoded by going through userPrefs
-            saveAddressBook(event.data, Paths.get("data\\makerManagerJobs.xml"));
+            //TODO: change this hardcoded by going through userPrefs(Done)
+            saveAddressBook(event.data, userPrefs.getMakerManagerJobsFilePath());
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }
