@@ -4,8 +4,8 @@ matrix:
     - jdk: oraclejdk9
 
 script: >-
-#    ./config/travis/run-checks.sh &&
-    travis_retry ./gradlew clean checkstyleMain checkstyleTest headless allTests coverage coveralls asciidoctor copyDummySearchPage
+    ./config/travis/run-checks.sh &&
+    travis_retry ./gradlew clean checkstyleMain checkstyleTest headless coverage coveralls asciidoctor copyDummySearchPage
 
 deploy:
   skip_cleanup: true
