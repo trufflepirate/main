@@ -87,30 +87,45 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         Path makerManagerMachinesFile = userPrefs.getMakerManagerMachinesFilePath();
         Path makerManagerAdminsFile = userPrefs.getMakerManagerAdminsFilePath();
 
-        if (!Files.exists(mainAddressBookFile)) {
-            logger.info("AddressBook file "  + filePath + " not found");
-            return Optional.empty();
-        }
-
-        if (!Files.exists(makerManagerMachinesFile)) {
-            logger.info("AddressBook file "  + filePath + " not found");
-            return Optional.empty();
-        }
-
-        if (!Files.exists(makerManagerAdminsFile)) {
-            logger.info("AddressBook file "  + filePath + " not found");
-            return Optional.empty();
-        }
-
-        logger.info("Printing data from xml files 1 ");
-        XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(mainAddressBookFile);
-        logger.info("Printing data from xml files 2");
-        XmlSerializableMakerManagerMachines xmlMakerManagerMachinesAddressBook =
-                XmlFileStorage.loadMakerManagerDataFromSaveFile(makerManagerMachinesFile);
+        logger.info(mainAddressBookFile.toString());
+        logger.info(makerManagerMachinesFile.toString());
+        logger.info(makerManagerAdminsFile.toString());
 
 
         try {
+            if (!Files.exists(mainAddressBookFile)) {
+                logger.info("AddressBook file " + mainAddressBookFile + " not found");
+                logger.info("Creating new " + mainAddressBookFile);
+                FileUtil.createIfMissing(mainAddressBookFile);
+            }
 
+            if (!Files.exists(makerManagerMachinesFile)) {
+                logger.info("AddressBook file "  + makerManagerMachinesFile + " not found");
+                logger.info("Creating new " + makerManagerMachinesFile);
+                FileUtil.createIfMissing(makerManagerMachinesFile);
+            }
+
+            if (!Files.exists(makerManagerAdminsFile)) {
+                logger.info("AddressBook file "  + makerManagerAdminsFile + " not found");
+                logger.info("Creating new " + makerManagerAdminsFile);
+                FileUtil.createIfMissing(makerManagerAdminsFile);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        logger.info("Printing data from xml files 1 ");
+        XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(mainAddressBookFile);
+        XmlSerializableMakerManagerMachines xmlMakerManagerMachinesAddressBook =
+                XmlFileStorage.loadMakerManagerDataFromSaveFile(makerManagerMachinesFile);
+
+        XmlSerializableMakerManagerAdmins xmlMakerManagerAdminsAddressBook =
+                XmlFileStorage.loadMakerManagerAdminDataFromSaveFile(makerManagerAdminsFile);
+
+
+        try {
 
             AddressBook mainAddressBookData = xmlAddressBook.toModelType();
             AddressBook machinesAddressBookData = xmlMakerManagerMachinesAddressBook.toModelType();
