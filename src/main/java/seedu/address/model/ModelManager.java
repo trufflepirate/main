@@ -15,6 +15,7 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.Password;
 import seedu.address.model.admin.Username;
+import seedu.address.model.job.Job;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
 
@@ -27,6 +28,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final VersionedAddressBook versionedAddressBook;
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Machine> filteredMachines;
+    private final FilteredList<Job> filteredJobs;
 
     //TODO: Should these be inside versionedAddressBook?
     private boolean loginStatus = false;
@@ -45,6 +47,7 @@ public class ModelManager extends ComponentManager implements Model {
         versionedAddressBook = new VersionedAddressBook(addressBook);
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
         filteredMachines = new FilteredList<>(versionedAddressBook.getMachineList());
+        filteredJobs = new FilteredList<>(versionedAddressBook.getJobList());
 
         //TODO: Move this to a proper place later
         Username theFirstUn = new Username("admin");
@@ -109,6 +112,26 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void removeMachine(Machine toRemove) {
         versionedAddressBook.removeMachine(toRemove);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void addJob(Job job) {
+        versionedAddressBook.addJob(job);
+        updateFilteredJobList(PREDICATE_SHOW_ALL_JOBS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void removeJob(Job toRemove) {
+        versionedAddressBook.removeJob(toRemove);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void updateJob(Job target, Job editedJob) {
+        requireAllNonNull(target, editedJob);
+        versionedAddressBook.updateJob(target, editedJob);
         indicateAddressBookChanged();
     }
 
@@ -208,6 +231,24 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredMachines.setPredicate(predicate);
     }
+
+    //=========== Filtered Job List Accessors ============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Job} backed by the internal list of
+     * {@code versionedAddressBook}
+     */
+
+    @Override
+    public ObservableList<Job> getFilteredJobList() {
+        return FXCollections.unmodifiableObservableList(filteredJobs);
+    }
+
+    @Override
+    public void updateFilteredJobList(Predicate<Job> predicate) {
+        requireNonNull(predicate);
+        filteredJobs.setPredicate(predicate);
+    }
     //=========== Undo/Redo =================================================================================
 
     @Override
@@ -253,7 +294,8 @@ public class ModelManager extends ComponentManager implements Model {
         ModelManager other = (ModelManager) obj;
         return versionedAddressBook.equals(other.versionedAddressBook)
                 && (filteredPersons.equals(other.filteredPersons)
-                    || filteredMachines.equals(other.filteredMachines));
+                    || filteredMachines.equals(other.filteredMachines)
+                    || filteredJobs.equals(other.filteredJobs));
     }
 
 }

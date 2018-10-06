@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.admin.Admin;
+import seedu.address.model.job.Job;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
 
@@ -30,4 +31,10 @@ public interface ReadOnlyAddressBook {
      */
     ObservableList<Machine> getMachineList();
 
+    /**
+     * Returns an unmodifiable view of the jobs list.
+     * This list will not contain any duplicate jobs.
+     *
+     */
+    ObservableList<Job> getJobList();
 }

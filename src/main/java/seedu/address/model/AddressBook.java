@@ -8,6 +8,8 @@ import javafx.collections.ObservableList;
 import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.UniqueAdminList;
 import seedu.address.model.admin.Username;
+import seedu.address.model.job.Job;
+import seedu.address.model.job.UniqueJobList;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.UniqueMachineList;
 import seedu.address.model.person.Person;
@@ -22,6 +24,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniquePersonList persons;
     private final UniqueAdminList admins;
     private final UniqueMachineList machines;
+    private final UniqueJobList jobs;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -34,6 +37,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons = new UniquePersonList();
         admins = new UniqueAdminList();
         machines = new UniqueMachineList();
+        jobs = new UniqueJobList();
     }
 
     public AddressBook() {}
@@ -45,8 +49,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         this();
         resetData(toBeCopied);
     }
-
-    //// list overwrite operations
 
     /**
      * Replaces the contents of the person list with {@code persons}.
@@ -65,6 +67,14 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Replaces the contents of the job list with {@code jobs}.
+     * {@code machines} must not contain duplicate jobs
+     */
+    public void setJobs(List<Job> jobs) {
+        this.jobs.setJobs(jobs);
+    }
+
+    /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
     public void resetData(ReadOnlyAddressBook newData) {
@@ -74,8 +84,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         setMachines(newData.getMachineList());
     }
 
-    //// person-level operations
-
     /**
      * Returns true if a person with the same identity as {@code person} exists in the address book.
      */
@@ -84,12 +92,56 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.contains(person);
     }
 
+    public boolean hasAdmin(Admin admin) {
+        return admins.contains(admin);
+    }
+
+    /**
+     * Returns true if a machine that matches the {@code machine}
+     */
+    public boolean hasMachine(Machine machine) {
+        requireNonNull(machine);
+        return machines.contains(machine);
+    }
+
+    /**
+     * Returns true if a machine that matches the {@code machine}
+     */
+    public boolean hasJob(Job job) {
+        requireNonNull(job);
+        return jobs.contains(job);
+    }
+
     /**
      * Adds a person to the address book.
      * The person must not already exist in the address book.
      */
     public void addPerson(Person p) {
         persons.add(p);
+    }
+
+    /**
+     * Adds an admin to the address book.
+     * The admin must not already exist in the address book.
+     */
+    public void addAdmin(Admin toAdd) {
+        admins.add(toAdd);
+    }
+
+    /**
+     * Adds a machine if {@code machine} does not exist in the list
+     */
+    public void addMachine(Machine machine) {
+        requireNonNull(machine);
+        machines.add(machine);
+    }
+
+    /**
+     * Adds a machine if {@code machine} does not exist in the list
+     */
+    public void addJob(Job job) {
+        requireNonNull(job);
+        jobs.add(job);
     }
 
     /**
@@ -104,6 +156,22 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * updates an admin in the address book.
+     */
+    public void updateAdmin(Admin toRemove, Admin toAdd) {
+        admins.remove(toRemove);
+        admins.add(toAdd);
+    }
+
+    /**
+     * updates an admin in the address book.
+     */
+    public void updateJob(Job toRemove, Job toAdd) {
+        jobs.remove(toRemove);
+        jobs.add(toAdd);
+    }
+
+    /**
      * Removes {@code key} from this {@code AddressBook}.
      * {@code key} must exist in the address book.
      */
@@ -111,15 +179,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.remove(key);
     }
 
-    //// admin-level code
-
-    /**
-     * Adds an admin to the address book.
-     * The admin must not already exist in the address book.
-     */
-    public void addAdmin(Admin toAdd) {
-        admins.add(toAdd);
-    }
 
     /**
      * Removes an admin from the address book.
@@ -130,15 +189,39 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * updates an admin in the address book.
+     * Removes a machine if {@code toRemove} exists in the list
      */
-    public void updateAdmin(Admin toRemove, Admin toAdd) {
-        admins.remove(toRemove);
-        admins.add(toAdd);
+    public void removeMachine(Machine toRemove) {
+        requireNonNull(toRemove);
+        machines.remove(toRemove);
     }
 
-    public boolean hasAdmin(Admin admin) {
-        return admins.contains(admin);
+    /**
+     * Removes a job from this AddressBook.
+     * The job must exist in the address book.
+     */
+    public void removeJob(Job key) {
+        jobs.remove(key);
+    }
+
+    @Override
+    public ObservableList<Person> getPersonList() {
+        return persons.asUnmodifiableObservableList();
+    }
+
+    @Override
+    public ObservableList<Admin> getAdminList() {
+        return admins.asUnmodifiableObservableList();
+    }
+
+    @Override
+    public ObservableList<Machine> getMachineList() {
+        return machines.asUnmodifiableObservableList();
+    }
+
+    @Override
+    public ObservableList<Job> getJobList() {
+        return jobs.asUnmodifiableObservableList();
     }
 
     public Admin findAdmin(Username username) {
@@ -149,24 +232,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         return admins.size();
     }
 
-    //// util methods
-
     @Override
     public String toString() {
         return persons.asUnmodifiableObservableList().size() + " persons";
         // TODO: refine later
-    }
-
-    @Override
-    public ObservableList<Person> getPersonList() {
-        return persons.asUnmodifiableObservableList();
-    }
-
-
-
-    @Override
-    public ObservableList<Admin> getAdminList() {
-        return admins.asUnmodifiableObservableList();
     }
 
     @Override
@@ -181,35 +250,4 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.hashCode();
     }
 
-    // Maker Manager Address Book machine functions below
-
-    @Override
-    public ObservableList<Machine> getMachineList() {
-        return machines.asUnmodifiableObservableList();
-    }
-
-    /**
-     * Returns true if a machine that matches the {@code machine}
-     */
-    public boolean hasMachine(Machine machine) {
-        requireNonNull(machine);
-        return machines.contains(machine);
-    }
-
-    /**
-     * Adds a machine if {@code machine} does not exist in the list
-     */
-    public void addMachine(Machine machine) {
-        requireNonNull(machine);
-        machines.add(machine);
-    }
-
-    /**
-     * Removes a machine if {@code toRemove} exists in the list
-     */
-
-    public void removeMachine(Machine toRemove) {
-        requireNonNull(toRemove);
-        machines.remove(toRemove);
-    }
 }

@@ -15,6 +15,8 @@ public class UserPrefs {
     private Path addressBookFilePath = Paths.get("data" , "addressbook.xml");
     private Path makerManagerMachinesFilePath = Paths.get("data", "makerManagerAdmins.xml");
     private Path makerManagerAdminsFilePath = Paths.get("data", "makerManagerAdmins.xml");
+    private Path makerManagerJobsFilePath = Paths.get("data", "makerManagerJobs.xml");
+
 
     public UserPrefs() {
         setGuiSettings(500, 500, 0, 0);
@@ -48,8 +50,16 @@ public class UserPrefs {
         this.makerManagerMachinesFilePath = makerManagerMachinesFilePath;
     }
 
+    public Path getMakerManagerJobsFilePath() {
+        return makerManagerJobsFilePath;
+    }
+
+    public void setMakerManagerJobsFilePath(Path makerManagerJobsFilePath) {
+        this.makerManagerJobsFilePath = makerManagerJobsFilePath;
+    }
+
     public Path getMakerManagerAdminsFilePath() {
-        return makerManagerMachinesFilePath;
+        return makerManagerAdminsFilePath;
     }
 
     public void setMakerManagerAdminsFilePath(Path makerManagerAdminsFilePath) {

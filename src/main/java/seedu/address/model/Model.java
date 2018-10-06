@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.Username;
+import seedu.address.model.job.Job;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
 
@@ -17,6 +18,9 @@ public interface Model {
 
     /** {@code Predicate} that always eveluate to true for machines */
     Predicate<Machine> PREDICATE_SHOW_ALL_MACHINES = unused -> true;
+
+    /** {@code Predicate} that always eveluate to true for jobs */
+    Predicate<Job> PREDICATE_SHOW_ALL_JOBS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
@@ -60,14 +64,32 @@ public interface Model {
      * Removes the given machine
      * machine must exist in the database
      */
-
     void removeMachine(Machine machine);
+
+    /**
+     * Adds the given job
+     * Job must not exists
+     */
+    void addJob(Job job);
+
+    /**
+     * Replaces the given job {@code target} with {@code editedJob}.
+     * {@code target} must exist in the address book.
+     * The job identity of {@code editedJob} must not be the same as another existing job in the address book.
+     */
+    void updateJob(Job target, Job editedJob);
+
+    /**
+     * Removes the given job
+     * Job must exist in the database
+     */
+    void removeJob(Job job);
+
     /**
      * Adds the given Admin
      * admin must not exist
      * @param admin
      */
-
     void addAdmin(Admin admin);
 
     /**
@@ -131,8 +153,16 @@ public interface Model {
      * Updates the filtere of the filtered machine list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
-
     void updateFilteredMachineList(Predicate<Machine> predicate);
+
+    /** Returns an unmodifiable view of the filtered job list */
+    ObservableList<Job> getFilteredJobList();
+
+    /**
+     * Updates the filtere of the filtered job list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredJobList(Predicate<Job> predicate);
 
     /**
      * Returns true if the model has previous address book states to restore.
