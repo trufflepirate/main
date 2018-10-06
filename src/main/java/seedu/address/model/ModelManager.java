@@ -13,10 +13,13 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.AdminListChangedEvent;
+import seedu.address.commons.events.model.JobListChangedEvent;
 import seedu.address.commons.events.model.MachineListChangedEvent;
 import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.Password;
 import seedu.address.model.admin.Username;
+import seedu.address.model.job.Job;
+import seedu.address.model.job.JobName;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
 
@@ -30,6 +33,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final VersionedAddressBook versionedAddressBook;
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Machine> filteredMachines;
+    private final FilteredList<Job> filteredJobs;
 
     //TODO: Should these be inside versionedAddressBook?
     private boolean loginStatus = false;
@@ -48,6 +52,7 @@ public class ModelManager extends ComponentManager implements Model {
         versionedAddressBook = new VersionedAddressBook(addressBook);
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
         filteredMachines = new FilteredList<>(versionedAddressBook.getMachineList());
+        filteredJobs = new FilteredList<>(versionedAddressBook.getJobList());
 
         //TODO: Move this to a proper place later
         Username theFirstUn = new Username("admin");
@@ -86,6 +91,11 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new MachineListChangedEvent(versionedAddressBook));
     }
 
+    /** Raises an event to indicate the model has changed */
+    private void indicateJobListChanged() {
+        raise(new JobListChangedEvent(versionedAddressBook));
+    }
+
     @Override
     public boolean hasPerson(Person person) {
         requireNonNull(person);
@@ -113,6 +123,33 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void addJob(Job job) {
+        requireAllNonNull(job);
+        versionedAddressBook.addJob(job);
+        indicateJobListChanged();
+    }
+
+    @Override
+    public void removeJob(Job job) {
+        requireAllNonNull(job);
+        versionedAddressBook.removeJob(job);
+        indicateJobListChanged();
+    }
+
+    @Override
+    public void updateJob(Job oldJob, Job updatedJob) {
+        requireAllNonNull(oldJob, updatedJob);
+        versionedAddressBook.updateJob(oldJob, updatedJob);
+        indicateJobListChanged();
+    }
+
+    @Override
+    public Job findJob(JobName name) {
+        requireAllNonNull(name);
+        return versionedAddressBook.findJob(name);
+    }
+
+    @Override
     public void addMachine(Machine machine) {
         versionedAddressBook.addMachine(machine);
         updateFilteredMachineList(PREDICATE_SHOW_ALL_MACHINES);
@@ -122,7 +159,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void removeMachine(Machine toRemove) {
         versionedAddressBook.removeMachine(toRemove);
-        indicateAdminListChanged();
+        indicateMachineListChanged();
     }
 
     //TODO: add tests
@@ -212,6 +249,24 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredMachineList(Predicate<Machine> predicate) {
         requireNonNull(predicate);
         filteredMachines.setPredicate(predicate);
+    }
+
+    //=========== Filtered Jobs List Accessors ============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Job} backed by the internal list of
+     * {@code versionedAddressBook}
+     */
+
+    @Override
+    public ObservableList<Job> getFilteredJobList() {
+        return FXCollections.unmodifiableObservableList(filteredJobs);
+    }
+
+    @Override
+    public void updateFilteredJobList(Predicate<Job> predicate) {
+        requireNonNull(predicate);
+        filteredJobs.setPredicate(predicate);
     }
     //=========== Undo/Redo =================================================================================
 

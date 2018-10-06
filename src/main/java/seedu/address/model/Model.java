@@ -5,6 +5,8 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.Username;
+import seedu.address.model.job.Job;
+import seedu.address.model.job.JobName;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
 
@@ -50,6 +52,14 @@ public interface Model {
      * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
      */
     void updatePerson(Person target, Person editedPerson);
+
+    void addJob(Job job);
+
+    void removeJob(Job job);
+
+    void updateJob(Job oldJob, Job updatedJob);
+
+    Job findJob(JobName name);
 
     /**
      * Adds the given machine
@@ -136,6 +146,10 @@ public interface Model {
      */
 
     void updateFilteredMachineList(Predicate<Machine> predicate);
+
+    ObservableList<Job> getFilteredJobList();
+
+    void updateFilteredJobList(Predicate<Job> predicate);
 
     /**
      * Returns true if the model has previous address book states to restore.

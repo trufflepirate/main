@@ -11,6 +11,9 @@ import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.Password;
 import seedu.address.model.admin.UniqueAdminList;
 import seedu.address.model.admin.Username;
+import seedu.address.model.job.Job;
+import seedu.address.model.job.JobName;
+import seedu.address.model.job.UniqueJobList;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.UniqueMachineList;
 import seedu.address.model.person.Person;
@@ -25,6 +28,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniquePersonList persons;
     private final UniqueAdminList admins;
     private final UniqueMachineList machines;
+    private final UniqueJobList jobs;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -37,6 +41,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons = new UniquePersonList();
         admins = new UniqueAdminList();
         machines = new UniqueMachineList();
+        jobs = new UniqueJobList();
     }
 
     public AddressBook() {}
@@ -73,6 +78,15 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void setAdmins(List<Admin> admins) {
         this.admins.setAdmins(admins);
+    }
+
+
+    /**
+     * Replaces the contents of the jobs list with {@code jobs}.
+     * {@code jobs} must not contain duplicate jobs
+     */
+    public void setJobs(ObservableList<Job> jobs) {
+        this.jobs.setJobs(jobs);
     }
 
     /**
@@ -122,7 +136,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.remove(key);
     }
 
-    //// admin-level code
+    //// Admin methods
 
     /**
      * Adds an admin to the address book.
@@ -160,44 +174,18 @@ public class AddressBook implements ReadOnlyAddressBook {
         return admins.size();
     }
 
-    //// util methods
-
-    @Override
-    public String toString() {
-        return persons.asUnmodifiableObservableList().size() + " persons";
-        // TODO: refine later
+    /**
+     * Returns Admin with password hashed
+     * @param rawAdmin
+     * @return
+     */
+    private Admin encryptedAdmin(Admin rawAdmin) {
+        Password encryptedPassword = new Password(BCrypt.hashpw(rawAdmin.getPassword().toString(), BCrypt.gensalt()));
+        Admin protectedAdmin = new Admin(rawAdmin.getUsername(), encryptedPassword);
+        return protectedAdmin;
     }
 
-    @Override
-    public ObservableList<Person> getPersonList() {
-        return persons.asUnmodifiableObservableList();
-    }
-
-
-
-    @Override
-    public ObservableList<Admin> getAdminList() {
-        return admins.asUnmodifiableObservableList();
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof AddressBook // instanceof handles nulls
-                && persons.equals(((AddressBook) other).persons));
-    }
-
-    @Override
-    public int hashCode() {
-        return persons.hashCode();
-    }
-
-    // Maker Manager Address Book machine functions below
-
-    @Override
-    public ObservableList<Machine> getMachineList() {
-        return machines.asUnmodifiableObservableList();
-    }
+    //// Machine Methods
 
     /**
      * Returns true if a machine that matches the {@code machine}
@@ -224,16 +212,80 @@ public class AddressBook implements ReadOnlyAddressBook {
         machines.remove(toRemove);
     }
 
+    //// Job Methods
+
     /**
-     * Returns Admin with password hashed
-     * @param rawAdmin
-     * @return
+     * Adds a job if {@code job} does not exist in the list
      */
-    private Admin encryptedAdmin(Admin rawAdmin) {
-        Password encryptedPassword = new Password(BCrypt.hashpw(rawAdmin.getPassword().toString(), BCrypt.gensalt()));
-        Admin protectedAdmin = new Admin(rawAdmin.getUsername(), encryptedPassword);
-        return protectedAdmin;
+    public void addJob(Job job) {
+        requireNonNull(job);
+        jobs.add(job);
     }
+
+    /**
+     * Removes a job if {@code job} does not exist in the list
+     */
+    public void removeJob(Job job) {
+        requireNonNull(job);
+        jobs.remove(job);
+    }
+
+    /**
+     * Returns the job, if present, according to JobName
+     */
+    public Job findJob(JobName name) {
+        return jobs.findJob(name);
+    }
+
+    /**
+     * Updates the job
+     */
+    public void updateJob(Job oldJob, Job updatedJob) {
+        jobs.updateJob(oldJob, updatedJob);
+    }
+
+    @Override
+    public ObservableList<Person> getPersonList() {
+        return persons.asUnmodifiableObservableList();
+    }
+
+    @Override
+    public ObservableList<Admin> getAdminList() {
+        return admins.asUnmodifiableObservableList();
+    }
+
+    @Override
+    public ObservableList<Job> getJobList() {
+        return jobs.asUnmodifiableObservableList();
+    }
+
+    @Override
+    public ObservableList<Machine> getMachineList() {
+        return machines.asUnmodifiableObservableList();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof AddressBook // instanceof handles nulls
+                && persons.equals(((AddressBook) other).persons));
+        //TODO: refine later
+    }
+
+    @Override
+    public int hashCode() {
+        //TODO: Refine later
+        return persons.hashCode();
+    }
+
+    //// util methods
+
+    @Override
+    public String toString() {
+        return persons.asUnmodifiableObservableList().size() + " persons";
+        // TODO: refine later
+    }
+
 }
 
 

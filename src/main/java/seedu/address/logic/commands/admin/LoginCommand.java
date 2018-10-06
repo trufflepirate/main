@@ -13,7 +13,6 @@ import seedu.address.model.admin.Password;
 import seedu.address.model.admin.Username;
 
 
-
 /**
  * Lets the admin login to MakerManager
  */

@@ -173,6 +173,8 @@ public class XmlAddressBookStorage implements AddressBookStorage {
             logger.info("No such file path available to save data in");
         }
 
+        //TODO: @TY make XmlSerializableMakerManagerJobs and Relevant classes
+
     }
 
     @Override
