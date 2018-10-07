@@ -32,6 +32,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final VersionedAddressBook versionedAddressBook;
     private final FilteredList<Person> filteredPersons;
+    private final FilteredList<Admin> filteredAdmins;
     private final FilteredList<Machine> filteredMachines;
     private final FilteredList<Job> filteredJobs;
 
@@ -52,6 +53,7 @@ public class ModelManager extends ComponentManager implements Model {
         versionedAddressBook = new VersionedAddressBook(addressBook);
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
         filteredMachines = new FilteredList<>(versionedAddressBook.getMachineList());
+        filteredAdmins = new FilteredList<>(versionedAddressBook.getAdminList());
         filteredJobs = new FilteredList<>(versionedAddressBook.getJobList());
 
         //TODO: Move this to a proper place later
@@ -96,6 +98,7 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new JobListChangedEvent(versionedAddressBook));
     }
 
+    // ============================== Person methods ======================================= //
     @Override
     public boolean hasPerson(Person person) {
         requireNonNull(person);
@@ -121,6 +124,8 @@ public class ModelManager extends ComponentManager implements Model {
         versionedAddressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
     }
+
+    // ============================== Job methods ======================================= //
 
     @Override
     public void addJob(Job job) {
@@ -149,6 +154,8 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedAddressBook.findJob(name);
     }
 
+    // ============================== Machine methods ======================================= //
+
     @Override
     public void addMachine(Machine machine) {
         versionedAddressBook.addMachine(machine);
@@ -161,6 +168,9 @@ public class ModelManager extends ComponentManager implements Model {
         versionedAddressBook.removeMachine(toRemove);
         indicateMachineListChanged();
     }
+
+
+    // ============================== Admin methods ======================================= //
 
     //TODO: add tests
     @Override
@@ -251,6 +261,20 @@ public class ModelManager extends ComponentManager implements Model {
         filteredMachines.setPredicate(predicate);
     }
 
+
+    //=========== Filtered Admins List Accessors ============================================================
+
+    @Override
+    public ObservableList<Admin> getFilteredAdminList() {
+        return FXCollections.unmodifiableObservableList(filteredAdmins);
+    }
+
+    @Override
+    public void updateFilteredAdminList(Predicate<Admin> predicate) {
+        requireNonNull(predicate);
+        filteredAdmins.setPredicate(predicate);
+    }
+
     //=========== Filtered Jobs List Accessors ============================================================
 
     /**
@@ -268,6 +292,8 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredJobs.setPredicate(predicate);
     }
+
+
     //=========== Undo/Redo =================================================================================
 
     @Override
