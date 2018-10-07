@@ -140,6 +140,15 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void addAdmin(Admin toAdd) {
         admins.add(encryptedAdmin(toAdd));
     }
+
+    /**
+     * Adds an admin from Files to Model
+     * The admin must not already exist in the address book.
+     */
+    public void addAdminWithoutRehash(Admin toAdd) {
+        admins.add(toAdd);
+    }
+
     /**
      * Removes an admin from the address book.
      * The admin must already exist in the address book.

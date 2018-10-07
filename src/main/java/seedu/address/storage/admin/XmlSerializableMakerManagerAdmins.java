@@ -55,7 +55,7 @@ public class XmlSerializableMakerManagerAdmins {
             if (addressBook.hasAdmin(admin)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_ADMIN);
             }
-            addressBook.addAdmin(admin);
+            addressBook.addAdminWithoutRehash(admin);
         }
 
         return addressBook;
