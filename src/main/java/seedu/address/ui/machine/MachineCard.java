@@ -47,11 +47,11 @@ public class MachineCard extends UiPart<Region> {
                 + "-fx-text-alignment: center");
         machineStatusLabel.setBackground(new Background(
                 new BackgroundFill(
-                        Paint.valueOf("#0ec10e"),
+                        Paint.valueOf(machine.getStatus() ? "#0ec10e" : "#dd0404"),
                         new CornerRadii(2),
                         new javafx.geometry.Insets(0))));
 
-        Label machineAvailabilityLabel = new Label(machine.getStringStatus().equals("Enabled") ? "Available" : "Unavailable");
+        Label machineAvailabilityLabel = new Label(machine.getStatus() ? "Available" : "Unavailable");
         machineAvailabilityLabel.setStyle("-fx-font: 12 arial;"
                 + "-fx-text-fill: black;"
                 + "-fx-padding: 2;"
@@ -59,7 +59,7 @@ public class MachineCard extends UiPart<Region> {
 
         machineAvailabilityLabel.setBackground(new Background(
                 new BackgroundFill(
-                        Paint.valueOf("#0ec10e"),
+                        Paint.valueOf(machine.getStatus() ? "#0ec10e" : "#dd0404"),
                         new CornerRadii(2),
                         new javafx.geometry.Insets(0))));
 
