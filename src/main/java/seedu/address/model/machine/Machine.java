@@ -141,9 +141,9 @@ public class Machine {
 
     public String getStringStatus() {
         if (getStatus()) {
-            return "ENABLED";
+            return "Enabled";
         } else {
-            return "DISABLED";
+            return "Disabled";
         }
     }
 }

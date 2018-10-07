@@ -209,6 +209,16 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<Admin> getFilteredAdminList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredAdminList(Predicate<Admin> predicate) {
+            throw new AssertionError("This method should not be called");
+        }
+
+        @Override
         public ObservableList<Machine> getFilteredMachineList() {
             throw new AssertionError("This method should not be called.");
         }
