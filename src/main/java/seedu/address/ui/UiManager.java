@@ -49,20 +49,12 @@ public class UiManager extends ComponentManager implements Ui {
     public void start(Stage primaryStage) {
         logger.info("Starting UI...");
 
-        logger.info("Debugging UI...");
-        logger.info(Integer.toString(logic.getFilteredMachineList().size()));
-        for (Machine machine : logic.getFilteredMachineList()) {
-            logger.info(machine.getName().fullName + " is " + (machine.getStatus() ? "ON" : "OFF"));
-        }
         //Set the application icon.
         primaryStage.getIcons().add(getImage(ICON_APPLICATION));
 
         try {
             mainWindow = new MainWindow(primaryStage, config, prefs, logic);
             mainWindow.show(); //This should be called before creating other UI parts\
-            for (Machine machine : logic.getFilteredMachineList()) {
-                logger.info(machine.getName().fullName + " is " + (machine.getStatus() ? "ON" : "OFF"));
-            }
             mainWindow.fillInnerParts();
 
         } catch (Throwable e) {
