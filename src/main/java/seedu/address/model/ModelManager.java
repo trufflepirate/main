@@ -16,7 +16,6 @@ import seedu.address.commons.events.model.AdminListChangedEvent;
 import seedu.address.commons.events.model.JobListChangedEvent;
 import seedu.address.commons.events.model.MachineListChangedEvent;
 import seedu.address.model.admin.Admin;
-import seedu.address.model.admin.Password;
 import seedu.address.model.admin.Username;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
@@ -57,10 +56,10 @@ public class ModelManager extends ComponentManager implements Model {
         filteredJobs = new FilteredList<>(versionedAddressBook.getJobList());
 
         //TODO: Move this to a proper place later
-        Username theFirstUn = new Username("admin");
+/*        Username theFirstUn = new Username("admin");
         Password theFirstPw = new Password("admin");
         Admin theFirstAdmin = new Admin(theFirstUn, theFirstPw);
-        versionedAddressBook.addAdmin(theFirstAdmin);
+        versionedAddressBook.addAdmin(theFirstAdmin);*/
     }
 
     public ModelManager() {

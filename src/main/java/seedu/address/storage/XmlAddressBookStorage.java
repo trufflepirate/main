@@ -114,9 +114,9 @@ public class XmlAddressBookStorage implements AddressBookStorage {
          */
 
         XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(mainAddressBookFile);
-        XmlSerializableMakerManagerMachines xmlMakerManagerMachinesAddressBook =
-                XmlFileStorage.loadMakerManagerDataFromSaveFile(makerManagerMachinesFile);
-        XmlSerializableMakerManagerAdmins xmlMakerManagerAdminsAddressBook =
+        XmlSerializableMakerManagerMachines xmlMakerManagerMachines =
+                XmlFileStorage.loadMakerManagerMachineDataFromSaveFile(makerManagerMachinesFile);
+        XmlSerializableMakerManagerAdmins xmlMakerManagerAdmins =
                 XmlFileStorage.loadMakerManagerAdminDataFromSaveFile(makerManagerAdminsFile);
 
         try {
@@ -126,8 +126,8 @@ public class XmlAddressBookStorage implements AddressBookStorage {
              * according to how it is translated in each xml serializable class
              */
             AddressBook mainAddressBookData = xmlAddressBook.toModelType();
-            AddressBook machinesAddressBookData = xmlMakerManagerMachinesAddressBook.toModelType();
-            AddressBook adminsAddressBookData = xmlMakerManagerAdminsAddressBook.toModelType();
+            AddressBook machinesAddressBookData = xmlMakerManagerMachines.toModelType();
+            AddressBook adminsData = xmlMakerManagerAdmins.toModelType();
 
             /**
              * fullAddressBookData will be contain all the data based on the converted
@@ -136,7 +136,7 @@ public class XmlAddressBookStorage implements AddressBookStorage {
             AddressBook fullAddressBookData = new AddressBook();
             fullAddressBookData.setPersons(mainAddressBookData.getPersonList());
             fullAddressBookData.setMachines(machinesAddressBookData.getMachineList());
-            fullAddressBookData.setAdmins(adminsAddressBookData.getAdminList());
+            fullAddressBookData.setAdmins(adminsData.getAdminList());
             return Optional.of(fullAddressBookData);
 
         } catch (IllegalValueException ive) {
