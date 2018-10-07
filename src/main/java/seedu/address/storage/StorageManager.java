@@ -2,7 +2,6 @@ package seedu.address.storage;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -64,22 +63,18 @@ public class StorageManager extends ComponentManager implements Storage {
 
     @Override
     public Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException {
-        //return readAddressBook(addressBookStorage.getAddressBookFilePath());
-        logger.info("Reading addressbook using user preferences instead");
         return readAddressBook(userPrefs);
     }
 
     @Override
     public Optional<ReadOnlyAddressBook> readAddressBook(Path filePath) throws DataConversionException, IOException {
         logger.fine("Attempting to read data from file: " + filePath);
-        logger.info("Attempting to read data from file: " + filePath);
         return addressBookStorage.readAddressBook(filePath);
     }
 
     @Override
     public Optional<ReadOnlyAddressBook> readAddressBook(UserPrefs userPrefs) throws DataConversionException,
                                                                                         IOException {
-        logger.info("Debugging reading addressbook through user preferences");
         return addressBookStorage.readAddressBook(userPrefs);
     }
 
@@ -137,9 +132,9 @@ public class StorageManager extends ComponentManager implements Storage {
     @Override
     @Subscribe
     public void handleAdminListChangedEvent(AdminListChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
         logger.info("AdminListChangedEvent triggered");
         try {
-            //TODO: change this hardcoded by going through userPrefs (DONE)
             saveAddressBook(event.data, userPrefs.getMakerManagerAdminsFilePath());
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
@@ -150,8 +145,8 @@ public class StorageManager extends ComponentManager implements Storage {
     @Subscribe
     public void handleMachineListChangedEvent(MachineListChangedEvent event) {
         try {
+            logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
             logger.info("MachineListChangedEvent triggered");
-            //TODO: change this hardcoded by going through userPrefs (DONE)
             saveAddressBook(event.data, userPrefs.getMakerManagerMachinesFilePath());
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
@@ -162,8 +157,8 @@ public class StorageManager extends ComponentManager implements Storage {
     @Subscribe
     public void handleJobListChangedEvent(JobListChangedEvent event) {
         try {
+            logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
             logger.info("JobsListChangedEvent triggered");
-            //TODO: change this hardcoded by going through userPrefs(Done)
             saveAddressBook(event.data, userPrefs.getMakerManagerJobsFilePath());
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));

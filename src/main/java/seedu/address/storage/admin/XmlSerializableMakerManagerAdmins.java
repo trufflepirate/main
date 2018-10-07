@@ -13,7 +13,8 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.admin.Admin;
 
 /**
- * An Immutable MakerManagerAdminw that is serializable to XML format
+ * An Immutable MakerManagerAdmins that is serializable to XML format
+ * meant specifically for admins
  */
 @XmlRootElement(name = "makermanager_admins")
 public class XmlSerializableMakerManagerAdmins {

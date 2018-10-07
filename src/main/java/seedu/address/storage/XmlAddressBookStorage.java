@@ -17,13 +17,11 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 
-import seedu.address.model.machine.Machine;
-import seedu.address.model.person.Person;
 import seedu.address.storage.admin.XmlSerializableMakerManagerAdmins;
 import seedu.address.storage.machine.XmlSerializableMakerManagerMachines;
 
 /**
- * A class to access AddressBook data stored as an xml file on the hard disk.
+ * A class to access AddressBook data stored as multiple xml files on the hard disk.
  */
 public class XmlAddressBookStorage implements AddressBookStorage {
 
@@ -46,7 +44,6 @@ public class XmlAddressBookStorage implements AddressBookStorage {
 
     @Override
     public Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException {
-        logger.info("Reading address book in XmlAddressBookStorage class");
         return readAddressBook(userPrefs);
     }
 
@@ -64,7 +61,6 @@ public class XmlAddressBookStorage implements AddressBookStorage {
             logger.info("AddressBook file "  + filePath + " not found");
             return Optional.empty();
         }
-        logger.info("Filepath in XmlAddressBookStorage class : " + filePath.toString());
 
         XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(filePath);
         try {
@@ -76,21 +72,16 @@ public class XmlAddressBookStorage implements AddressBookStorage {
     }
 
     /**
-     * Returns the full in memory addressbook that contains all the data from the xml files
+     * Returns the full in-memory addressbook that contains all the data from the xml files
+     * i.e addressbook will contain list of persons,admins,machines etc..
      */
     public Optional<ReadOnlyAddressBook> readAddressBook(UserPrefs userPrefs) throws DataConversionException,
                                                                                         FileNotFoundException {
         requireNonNull(userPrefs);
-        logger.info("Debugging user preferences");
 
         Path mainAddressBookFile = userPrefs.getAddressBookFilePath();
         Path makerManagerMachinesFile = userPrefs.getMakerManagerMachinesFilePath();
         Path makerManagerAdminsFile = userPrefs.getMakerManagerAdminsFilePath();
-
-        logger.info(mainAddressBookFile.toString());
-        logger.info(makerManagerMachinesFile.toString());
-        logger.info(makerManagerAdminsFile.toString());
-
 
         try {
             if (!Files.exists(mainAddressBookFile)) {
@@ -115,37 +106,37 @@ public class XmlAddressBookStorage implements AddressBookStorage {
             e.printStackTrace();
         }
 
+        /**
+         * Loads all the data into each individual temporary serializable xml address book
+         * by parsing the data accordingly through the correct marshalling format stated in XmlFileStorage
+         * Will throw dataConversionError when the file is empty
+         * or if incorrect format
+         */
 
-        logger.info("Printing data from xml files 1 ");
         XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(mainAddressBookFile);
         XmlSerializableMakerManagerMachines xmlMakerManagerMachinesAddressBook =
                 XmlFileStorage.loadMakerManagerDataFromSaveFile(makerManagerMachinesFile);
-
         XmlSerializableMakerManagerAdmins xmlMakerManagerAdminsAddressBook =
                 XmlFileStorage.loadMakerManagerAdminDataFromSaveFile(makerManagerAdminsFile);
 
-
         try {
 
+            /**
+             * Changes the data from an xml serializable object to the model type
+             * according to how it is translated in each xml serializable class
+             */
             AddressBook mainAddressBookData = xmlAddressBook.toModelType();
             AddressBook machinesAddressBookData = xmlMakerManagerMachinesAddressBook.toModelType();
-            //AddressBook adminsAddressBookData = xmlMakerManagerAdminsAddressBook.toModelType();
+            AddressBook adminsAddressBookData = xmlMakerManagerAdminsAddressBook.toModelType();
 
-
-            logger.info(Integer.toString(mainAddressBookData.getPersonList().size()));
-            for (Person person : machinesAddressBookData.getPersonList()) {
-                logger.info("Person full name : " + person.getName());
-            }
-            logger.info(Integer.toString(machinesAddressBookData.getMachineList().size()));
-            for (Machine machine : machinesAddressBookData.getMachineList()) {
-                logger.info("Machine full name : " + machine.getName().fullName);
-            }
+            /**
+             * fullAddressBookData will be contain all the data based on the converted
+             * xml data from all the different files above
+             */
             AddressBook fullAddressBookData = new AddressBook();
             fullAddressBookData.setPersons(mainAddressBookData.getPersonList());
             fullAddressBookData.setMachines(machinesAddressBookData.getMachineList());
-            //fullAddressBookData.setAdmins(adminsAddressBookData.getAdminList());
-            logger.info("DISPLAYING NEW FULL ADDRESSBOOK DATA");
-            logger.info(fullAddressBookData.toString());
+            fullAddressBookData.setAdmins(adminsAddressBookData.getAdminList());
             return Optional.of(fullAddressBookData);
 
         } catch (IllegalValueException ive) {
@@ -173,8 +164,6 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         requireNonNull(filePath);
 
         FileUtil.createIfMissing(filePath);
-        logger.info("Printing out filePath to check for switch statement");
-        logger.info(filePath.toString());
 
         switch (filePath.toString()) {
         case "data\\addressbook.xml" :
@@ -205,11 +194,6 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         Path mainAddressBookFile = userPrefs.getAddressBookFilePath();
         Path makerManagerMachinesFile = userPrefs.getMakerManagerMachinesFilePath();
         Path makerManagerAdminsFile = userPrefs.getMakerManagerAdminsFilePath();
-
-        //Debugging
-        logger.info(mainAddressBookFile.toString());
-        logger.info(makerManagerMachinesFile.toString());
-        logger.info(makerManagerAdminsFile.toString());
 
         FileUtil.createIfMissing(mainAddressBookFile);
         FileUtil.createIfMissing(makerManagerMachinesFile);

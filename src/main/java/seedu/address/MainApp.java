@@ -17,7 +17,6 @@ import seedu.address.commons.core.Version;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
-import seedu.address.commons.util.JsonUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
@@ -26,7 +25,6 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.machine.Machine;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
@@ -34,8 +32,6 @@ import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlAddressBookStorage;
-import seedu.address.storage.admin.XmlMakerManagerAdminStorage;
-import seedu.address.storage.machine.XmlMakerManagerMachineStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 
@@ -63,41 +59,14 @@ public class MainApp extends Application {
 
         AppParameters appParameters = AppParameters.parse(getParameters());
         config = initConfig(appParameters.getConfigPath());
-
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
-
-        /**
-         * Must manually add this in to change the userprefs path
-         * Paths is probably stored in some cache which takes the
-         * old path instead of the new one
-         */
-        //Path path = Paths.get("data", "makerManagerMachines.xml");
-        //userPrefs.setMakerManagerMachinesFilePath(path);
-        //logger.info("Address book file for maker manager " + userPrefs.getMakerManagerMachinesFilePath());
-
-        //AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs);
-        logger.info("Reading addressBookFilePath");
-        logger.info(addressBookStorage.getAddressBookFilePath().toString());
-
-
-        //TODO: completely remove persons and integrate machines completely
-        /**
-         * Can change back to addressBookStorage here instead of makerManagerAddressBookStorage
-         * Need to change MainWindow UI back also for initial addressbook app to work normally
-         * App will function normally
-         */
         storage = new StorageManager(addressBookStorage, userPrefsStorage);
-
         initLogging(config);
-
         model = initModelManager(storage, userPrefs);
-
         logic = new LogicManager(model);
-
         ui = new UiManager(logic, config, userPrefs);
-
         initEventsCenter();
     }
 
@@ -110,18 +79,11 @@ public class MainApp extends Application {
         Optional<ReadOnlyAddressBook> addressBookOptional;
         ReadOnlyAddressBook initialData;
         try {
-            logger.info("Reading address book from storage");
             addressBookOptional = storage.readAddressBook();
             if (!addressBookOptional.isPresent()) {
                 logger.info("Data file not found. Will be starting with a sample AddressBook");
             }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
-
-            //TODO Remove debugging here
-            logger.info(Integer.toString(initialData.getMachineList().size()));
-            for (Machine machine : initialData.getMachineList()) {
-                logger.info("Machine full name : " + machine.getName().fullName);
-            }
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
@@ -153,8 +115,6 @@ public class MainApp extends Application {
             configFilePathUsed = configFilePath;
         }
 
-        logger.info("Using config file : " + configFilePathUsed);
-
         try {
             Optional<Config> configOptional = ConfigUtil.readConfig(configFilePathUsed);
             initializedConfig = configOptional.orElse(new Config());
@@ -167,8 +127,6 @@ public class MainApp extends Application {
 
         //Update config file in case it was missing to begin with or there are new/unused fields
         try {
-            logger.info("Printing json config");
-            logger.info(JsonUtil.toJsonString(initializedConfig));
             ConfigUtil.saveConfig(initializedConfig, configFilePathUsed);
         } catch (IOException e) {
             logger.warning("Failed to save config file : " + StringUtil.getDetails(e));
@@ -183,7 +141,6 @@ public class MainApp extends Application {
      */
     protected UserPrefs initPrefs(UserPrefsStorage storage) {
         Path prefsFilePath = storage.getUserPrefsFilePath();
-        logger.info("Using prefs file : " + prefsFilePath);
 
         UserPrefs initializedPrefs;
         try {
@@ -200,9 +157,6 @@ public class MainApp extends Application {
 
         //Update prefs file in case it was missing to begin with or there are new/unused fields
         try {
-            logger.info("Printing json prefs");
-            logger.info(JsonUtil.toJsonString(initializedPrefs));
-            logger.info(initializedPrefs.getMakerManagerMachinesFilePath().toString());
             storage.saveUserPrefs(initializedPrefs);
         } catch (IOException e) {
             logger.warning("Failed to save config file : " + StringUtil.getDetails(e));
