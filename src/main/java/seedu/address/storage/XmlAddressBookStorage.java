@@ -19,6 +19,9 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 
+import seedu.address.model.admin.Admin;
+import seedu.address.model.admin.Password;
+import seedu.address.model.admin.Username;
 import seedu.address.storage.admin.XmlSerializableMakerManagerAdmins;
 import seedu.address.storage.machine.XmlSerializableMakerManagerMachines;
 
@@ -143,8 +146,16 @@ public class XmlAddressBookStorage implements AddressBookStorage {
                     XmlFileStorage.loadMakerManagerAdminDataFromSaveFile(makerManagerAdminsFile);
             AddressBook adminsData = xmlMakerManagerAdmins.toModelType();
             fullAddressBookData.setAdmins(adminsData.getAdminList());
+
         } catch (DataConversionException dce){
             logger.info("Admins conversion error");
+            Admin admin = new Admin(new Username("admin"), new Password("admin"));
+            AddressBook createNewAdminDataAddressBook = new AddressBook();
+            createNewAdminDataAddressBook.addAdmin(admin);
+            XmlFileStorage.saveDataToFile(userPrefs.getMakerManagerAdminsFilePath(),
+                    new XmlSerializableMakerManagerAdmins(createNewAdminDataAddressBook));
+            logger.info("Creating new admin since admin file is empty");
+
         } catch (IllegalValueException e) {
             e.printStackTrace();
         }
