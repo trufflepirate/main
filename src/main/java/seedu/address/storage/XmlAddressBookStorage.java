@@ -132,7 +132,7 @@ public class XmlAddressBookStorage implements AddressBookStorage {
                     XmlFileStorage.loadMakerManagerMachineDataFromSaveFile(makerManagerMachinesFile);
             AddressBook machinesAddressBookData = xmlMakerManagerMachines.toModelType();
             fullAddressBookData.setMachines(machinesAddressBookData.getMachineList());
-        } catch (DataMachinesConversionException dmce) {
+        } catch (DataConversionException dce) {
             logger.info("Machine conversion error");
         } catch (IllegalValueException e) {
             e.printStackTrace();
@@ -143,7 +143,7 @@ public class XmlAddressBookStorage implements AddressBookStorage {
                     XmlFileStorage.loadMakerManagerAdminDataFromSaveFile(makerManagerAdminsFile);
             AddressBook adminsData = xmlMakerManagerAdmins.toModelType();
             fullAddressBookData.setAdmins(adminsData.getAdminList());
-        } catch (DataAdminsConversionException dace){
+        } catch (DataConversionException dce){
             logger.info("Admins conversion error");
         } catch (IllegalValueException e) {
             e.printStackTrace();

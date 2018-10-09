@@ -85,13 +85,13 @@ public class XmlFileStorage {
      */
 
     public static XmlSerializableMakerManagerAdmins loadMakerManagerAdminDataFromSaveFile(Path file)
-            throws DataAdminsConversionException,
+            throws DataConversionException,
             FileNotFoundException {
         try {
             logger.info("Getting serialized ADMIN data from custom xml file");
             return XmlUtil.getDataFromFile(file, XmlSerializableMakerManagerAdmins.class);
         } catch (JAXBException e) {
-            throw new DataAdminsConversionException(e);
+            throw new DataConversionException(e);
         }
     }
 
@@ -113,13 +113,13 @@ public class XmlFileStorage {
      */
 
     public static XmlSerializableMakerManagerMachines loadMakerManagerMachineDataFromSaveFile(Path file)
-            throws DataMachinesConversionException,
+            throws DataConversionException,
             FileNotFoundException {
         try {
             logger.info("Getting serialized MACHINE data from custom xml file");
             return XmlUtil.getDataFromFile(file, XmlSerializableMakerManagerMachines.class);
         } catch (JAXBException e) {
-            throw new DataMachinesConversionException(e);
+            throw new DataConversionException(e);
         }
     }
 
