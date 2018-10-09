@@ -150,24 +150,17 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
             AddressBook adminsData = xmlMakerManagerAdmins.toModelType();
             fullAddressBookData.setAdmins(adminsData.getAdminList());
 
-        } catch (DataConversionException dce){
+        } catch (DataConversionException dce) {
             logger.info("Admins conversion error");
             Username username = new Username("admin");
             Password password = new Password("admin");
             Admin admin = new Admin(username, password);
-            AddressBook createNewAdminDataAddressBook = new AddressBook();
-            createNewAdminDataAddressBook.addAdmin(admin);
+            AddressBook newAdminData = new AddressBook();
+            newAdminData.addAdmin(admin);
             XmlFileStorage.saveDataToFile(userPrefs.getMakerManagerAdminsFilePath(),
-                    new XmlSerializableMakerManagerAdmins(createNewAdminDataAddressBook));
-            logger.info("Creating new admin since admin file is empty");
-
-            new Timer().schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    raise(new SetAdminChangedEvent(admin));
-                }
-            }, 2000);
-
+                    new XmlSerializableMakerManagerAdmins(newAdminData));
+            logger.info("Creating new admin file");
+            fullAddressBookData.setAdmins(newAdminData.getAdminList());
 
         } catch (IllegalValueException e) {
             e.printStackTrace();

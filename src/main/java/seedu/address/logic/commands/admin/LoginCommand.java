@@ -39,6 +39,8 @@ public class LoginCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         if (model.isLoggedIn()) {
             throw new CommandException(MESSAGE_ALREADY_LOGGED_IN);
+        } else if (model.findAdmin(username) == null) {
+            throw new CommandException(MESSAGE_WRONG_DETAILS);
         } else if (!BCrypt.checkpw(password.toString(), model.findAdmin(username).getPassword().toString())) {
             throw new CommandException(MESSAGE_WRONG_DETAILS);
         }
