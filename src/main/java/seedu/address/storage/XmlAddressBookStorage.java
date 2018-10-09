@@ -10,7 +10,9 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.exceptions.DataAdminsConversionException;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.exceptions.DataMachinesConversionException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.AddressBook;
@@ -106,6 +108,8 @@ public class XmlAddressBookStorage implements AddressBookStorage {
             e.printStackTrace();
         }
 
+        AddressBook fullAddressBookData = new AddressBook();
+
         /**
          * Loads all the data into each individual temporary serializable xml address book
          * by parsing the data accordingly through the correct marshalling format stated in XmlFileStorage
@@ -113,37 +117,40 @@ public class XmlAddressBookStorage implements AddressBookStorage {
          * or if incorrect format
          */
 
-        XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(mainAddressBookFile);
-        XmlSerializableMakerManagerMachines xmlMakerManagerMachines =
-                XmlFileStorage.loadMakerManagerMachineDataFromSaveFile(makerManagerMachinesFile);
-        XmlSerializableMakerManagerAdmins xmlMakerManagerAdmins =
-                XmlFileStorage.loadMakerManagerAdminDataFromSaveFile(makerManagerAdminsFile);
-
-        try {
-
-            /**
-             * Changes the data from an xml serializable object to the model type
-             * according to how it is translated in each xml serializable class
-             */
+        try{
+            XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(mainAddressBookFile);
             AddressBook mainAddressBookData = xmlAddressBook.toModelType();
-            AddressBook machinesAddressBookData = xmlMakerManagerMachines.toModelType();
-            AddressBook adminsData = xmlMakerManagerAdmins.toModelType();
-
-            /**
-             * fullAddressBookData will be contain all the data based on the converted
-             * xml data from all the different files above
-             */
-            AddressBook fullAddressBookData = new AddressBook();
             fullAddressBookData.setPersons(mainAddressBookData.getPersonList());
-            fullAddressBookData.setMachines(machinesAddressBookData.getMachineList());
-            fullAddressBookData.setAdmins(adminsData.getAdminList());
-            return Optional.of(fullAddressBookData);
-
-        } catch (IllegalValueException ive) {
-            ive.printStackTrace();
-            logger.info("Illegal values found in " + filePath + ": " + ive.getMessage());
-            throw new DataConversionException(ive);
+        } catch (DataConversionException dce) {
+            logger.info("Person conversion error");
+        } catch (IllegalValueException e) {
+            e.printStackTrace();
         }
+
+        try{
+            XmlSerializableMakerManagerMachines xmlMakerManagerMachines =
+                    XmlFileStorage.loadMakerManagerMachineDataFromSaveFile(makerManagerMachinesFile);
+            AddressBook machinesAddressBookData = xmlMakerManagerMachines.toModelType();
+            fullAddressBookData.setMachines(machinesAddressBookData.getMachineList());
+        } catch (DataMachinesConversionException dmce) {
+            logger.info("Machine conversion error");
+        } catch (IllegalValueException e) {
+            e.printStackTrace();
+        }
+
+        try{
+            XmlSerializableMakerManagerAdmins xmlMakerManagerAdmins =
+                    XmlFileStorage.loadMakerManagerAdminDataFromSaveFile(makerManagerAdminsFile);
+            AddressBook adminsData = xmlMakerManagerAdmins.toModelType();
+            fullAddressBookData.setAdmins(adminsData.getAdminList());
+        } catch (DataAdminsConversionException dace){
+            logger.info("Admins conversion error");
+        } catch (IllegalValueException e) {
+            e.printStackTrace();
+        }
+
+
+        return Optional.of(fullAddressBookData);
 
 
     }

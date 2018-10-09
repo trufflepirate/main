@@ -7,7 +7,9 @@ import java.util.logging.Logger;
 import javax.xml.bind.JAXBException;
 
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.exceptions.DataAdminsConversionException;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.exceptions.DataMachinesConversionException;
 import seedu.address.commons.util.XmlUtil;
 import seedu.address.storage.admin.XmlSerializableMakerManagerAdmins;
 import seedu.address.storage.machine.XmlSerializableMakerManagerMachines;
@@ -83,13 +85,13 @@ public class XmlFileStorage {
      */
 
     public static XmlSerializableMakerManagerAdmins loadMakerManagerAdminDataFromSaveFile(Path file)
-            throws DataConversionException,
+            throws DataAdminsConversionException,
             FileNotFoundException {
         try {
             logger.info("Getting serialized ADMIN data from custom xml file");
             return XmlUtil.getDataFromFile(file, XmlSerializableMakerManagerAdmins.class);
         } catch (JAXBException e) {
-            throw new DataConversionException(e);
+            throw new DataAdminsConversionException(e);
         }
     }
 
@@ -111,13 +113,13 @@ public class XmlFileStorage {
      */
 
     public static XmlSerializableMakerManagerMachines loadMakerManagerMachineDataFromSaveFile(Path file)
-            throws DataConversionException,
+            throws DataMachinesConversionException,
             FileNotFoundException {
         try {
             logger.info("Getting serialized MACHINE data from custom xml file");
             return XmlUtil.getDataFromFile(file, XmlSerializableMakerManagerMachines.class);
         } catch (JAXBException e) {
-            throw new DataConversionException(e);
+            throw new DataMachinesConversionException(e);
         }
     }
 
