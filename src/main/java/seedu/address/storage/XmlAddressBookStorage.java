@@ -7,12 +7,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Handler;
 import java.util.logging.Logger;
 
+import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.exceptions.DataAdminsConversionException;
+import seedu.address.commons.events.model.SetAdminChangedEvent;
 import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.commons.exceptions.DataMachinesConversionException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.AddressBook;
@@ -28,7 +31,7 @@ import seedu.address.storage.machine.XmlSerializableMakerManagerMachines;
 /**
  * A class to access AddressBook data stored as multiple xml files on the hard disk.
  */
-public class XmlAddressBookStorage implements AddressBookStorage {
+public class XmlAddressBookStorage extends ComponentManager implements AddressBookStorage {
 
     private static final Logger logger = LogsCenter.getLogger(XmlAddressBookStorage.class);
 
@@ -149,17 +152,26 @@ public class XmlAddressBookStorage implements AddressBookStorage {
 
         } catch (DataConversionException dce){
             logger.info("Admins conversion error");
-            Admin admin = new Admin(new Username("admin"), new Password("admin"));
+            Username username = new Username("admin");
+            Password password = new Password("admin");
+            Admin admin = new Admin(username, password);
             AddressBook createNewAdminDataAddressBook = new AddressBook();
             createNewAdminDataAddressBook.addAdmin(admin);
             XmlFileStorage.saveDataToFile(userPrefs.getMakerManagerAdminsFilePath(),
                     new XmlSerializableMakerManagerAdmins(createNewAdminDataAddressBook));
             logger.info("Creating new admin since admin file is empty");
 
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    raise(new SetAdminChangedEvent(admin));
+                }
+            }, 2000);
+
+
         } catch (IllegalValueException e) {
             e.printStackTrace();
         }
-
 
         return Optional.of(fullAddressBookData);
 
