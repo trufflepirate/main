@@ -11,6 +11,7 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.MachineName;
+import seedu.address.model.machine.MachineStatus;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -146,13 +147,19 @@ public class ParserUtil {
      * depending if {@code machineStatus} equals true or false
      */
 
-    public static Boolean parseMachineStatus(String machineStatus) throws ParseException {
+    public static MachineStatus parseMachineStatus(String machineStatus) throws ParseException {
         requireNonNull(machineStatus);
         String trimMachineStatus = machineStatus.trim();
-        if ((!machineStatus.equals("ENABLED")) && (!machineStatus.equals("DISABLED"))) {
+
+        switch (trimMachineStatus) {
+        case "ENABLED":
+            return MachineStatus.ENABLED;
+
+        case "DISABLED":
+            return MachineStatus.DISABLED;
+
+        default:
             throw new ParseException(Machine.MESSAGE_WRONG_STATUS);
         }
-
-        return trimMachineStatus.equals("ENABLED");
     }
 }

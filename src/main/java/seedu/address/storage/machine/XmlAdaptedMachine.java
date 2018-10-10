@@ -13,6 +13,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.job.Job;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.MachineName;
+import seedu.address.model.machine.MachineStatus;
 import seedu.address.model.tag.Tag;
 import seedu.address.storage.XmlAdaptedTag;
 
@@ -27,7 +28,7 @@ public class XmlAdaptedMachine {
     @XmlElement(required = true)
     private String machineName;
     @XmlElement(required = true)
-    private Boolean status;
+    private MachineStatus status;
 
     @XmlElement
     private List<XmlAdaptedJobName> jobs = new ArrayList<>();
@@ -44,7 +45,7 @@ public class XmlAdaptedMachine {
      * Constructs an {@code XmlAdaptedMachine} with the given machine details.
      */
     public XmlAdaptedMachine(String machineName,
-                             Boolean status,
+                             MachineStatus status,
                              List<XmlAdaptedJobName> jobs,
                              Set<XmlAdaptedTag> tags) {
         this.machineName = machineName;
