@@ -52,8 +52,13 @@ public class ModelManager extends ComponentManager implements Model {
         versionedAddressBook = new VersionedAddressBook(addressBook);
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
         filteredMachines = new FilteredList<>(versionedAddressBook.getMachineList());
-        filteredAdmins = new FilteredList<>(versionedAddressBook.getAdminList());
         filteredJobs = new FilteredList<>(versionedAddressBook.getJobList());
+
+        //TODO: Move this to a proper place later
+        Username theFirstUn = new Username("admin");
+        Password theFirstPw = new Password("admin");
+        Admin theFirstAdmin = new Admin(theFirstUn, theFirstPw);
+        versionedAddressBook.addAdmin(theFirstAdmin);
     }
 
     public ModelManager() {
@@ -162,8 +167,33 @@ public class ModelManager extends ComponentManager implements Model {
         indicateMachineListChanged();
     }
 
+    @Override
+    public void addJob(Job job) {
+        versionedAddressBook.addJob(job);
+        updateFilteredJobList(PREDICATE_SHOW_ALL_JOBS);
+        indicateAddressBookChanged();
+    }
 
-    // ============================== Admin methods ======================================= //
+    @Override
+    public void deleteJob(Job toRemove) {
+        versionedAddressBook.removeJob(toRemove);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void updateJob(Job target, Job editedJob) {
+        requireAllNonNull(target, editedJob);
+        versionedAddressBook.updateJob(target, editedJob);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public boolean hasJob(Job job) {
+        requireAllNonNull(job);
+        return versionedAddressBook.hasJob(job);
+    }
+
+    //TODO: add tests
 
     @Override
     public void addAdmin(Admin admin) {
@@ -253,21 +283,8 @@ public class ModelManager extends ComponentManager implements Model {
         filteredMachines.setPredicate(predicate);
     }
 
+    //=========== Filtered Job List Accessors ============================================================
 
-    //=========== Filtered Admins List Accessors ============================================================
-
-    @Override
-    public ObservableList<Admin> getFilteredAdminList() {
-        return FXCollections.unmodifiableObservableList(filteredAdmins);
-    }
-
-    @Override
-    public void updateFilteredAdminList(Predicate<Admin> predicate) {
-        requireNonNull(predicate);
-        filteredAdmins.setPredicate(predicate);
-    }
-
-    //=========== Filtered Jobs List Accessors ============================================================
 
     /**
      * Returns an unmodifiable view of the list of {@code Job} backed by the internal list of
@@ -284,8 +301,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredJobs.setPredicate(predicate);
     }
-
-
+  
     //=========== Undo/Redo =================================================================================
 
     @Override
@@ -331,7 +347,8 @@ public class ModelManager extends ComponentManager implements Model {
         ModelManager other = (ModelManager) obj;
         return versionedAddressBook.equals(other.versionedAddressBook)
                 && (filteredPersons.equals(other.filteredPersons)
-                    || filteredMachines.equals(other.filteredMachines));
+                    || filteredMachines.equals(other.filteredMachines)
+                    || filteredJobs.equals(other.filteredJobs));
     }
 
 }

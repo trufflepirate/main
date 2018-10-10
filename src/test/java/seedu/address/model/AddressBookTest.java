@@ -117,6 +117,11 @@ public class AddressBookTest {
             return admins;
         }
 
+        @Override
+        public ObservableList<Job> getJobList() {
+            return jobs;
+        }
+
         //TODO havent integrated this code properly yet
         @Override
         public ObservableList<Machine> getMachineList() {
