@@ -58,10 +58,10 @@ public class XmlAdaptedJobName {
 
         //TODO Remove hardcoding
         Name name = new Name(jobName);
-        Machine machine = new Machine(new MachineName("JJ's printer")
-                , new ArrayList<>()
-                , new HashSet<>()
-                , MachineStatus.ENABLED);
+        Machine machine = new Machine(new MachineName("JJ's printer"),
+                new ArrayList<>(),
+                new HashSet<>(),
+                MachineStatus.ENABLED);
         JobNote note = new JobNote("Empty note for now");
         Person person = new Person(new Name("JunJie"),
                 new Phone("81184502"),
