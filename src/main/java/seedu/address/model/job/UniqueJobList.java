@@ -47,11 +47,7 @@ public class UniqueJobList {
             throw new JobNotFoundException();
         }
     }
-
-    public void setJobs(UniqueJobList replacement) {
-        requireNonNull(replacement);
-        internalList.setAll(replacement.internalList);
-    }
+    
 
     /**
      * Replaces the contents of this list with {@code jobs}.
