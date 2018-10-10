@@ -7,14 +7,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.logging.Handler;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.model.SetAdminChangedEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
@@ -123,7 +119,7 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
          * or if incorrect format
          */
 
-        try{
+        try {
             XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(mainAddressBookFile);
             AddressBook mainAddressBookData = xmlAddressBook.toModelType();
             fullAddressBookData.setPersons(mainAddressBookData.getPersonList());
@@ -133,7 +129,7 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
             e.printStackTrace();
         }
 
-        try{
+        try {
             XmlSerializableMakerManagerMachines xmlMakerManagerMachines =
                     XmlFileStorage.loadMakerManagerMachineDataFromSaveFile(makerManagerMachinesFile);
             AddressBook machinesAddressBookData = xmlMakerManagerMachines.toModelType();
@@ -144,7 +140,7 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
             e.printStackTrace();
         }
 
-        try{
+        try {
             XmlSerializableMakerManagerAdmins xmlMakerManagerAdmins =
                     XmlFileStorage.loadMakerManagerAdminDataFromSaveFile(makerManagerAdminsFile);
             AddressBook adminsData = xmlMakerManagerAdmins.toModelType();

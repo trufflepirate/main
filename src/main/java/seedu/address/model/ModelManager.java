@@ -6,8 +6,6 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
-import com.google.common.eventbus.Subscribe;
-
 import javafx.collections.FXCollections;
 
 import javafx.collections.ObservableList;
@@ -18,7 +16,6 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.AdminListChangedEvent;
 import seedu.address.commons.events.model.JobListChangedEvent;
 import seedu.address.commons.events.model.MachineListChangedEvent;
-import seedu.address.commons.events.model.SetAdminChangedEvent;
 import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.Username;
 import seedu.address.model.job.Job;
@@ -173,12 +170,6 @@ public class ModelManager extends ComponentManager implements Model {
 
 
     // ============================== Admin methods ======================================= //
-
-    @Subscribe
-    void handleSetAdminChangeEvent(SetAdminChangedEvent event){
-        logger.info("Set admin change event triggered");
-        addAdmin(event.admin);
-    }
 
     @Override
     public void addAdmin(Admin admin) {
