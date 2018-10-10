@@ -58,7 +58,8 @@ public class MachineCard extends UiPart<Region> {
                         new CornerRadii(2),
                         new javafx.geometry.Insets(0))));
 
-        Label machineAvailabilityLabel = new Label(machine.getStatus().equals(MachineStatus.ENABLED) ? "Available" : "Unavailable");
+        Label machineAvailabilityLabel = new Label(
+                machine.getStatus().equals(MachineStatus.ENABLED) ? "Available" : "Unavailable");
         machineAvailabilityLabel.setStyle("-fx-font: 12 arial;"
                 + "-fx-text-fill: black;"
                 + "-fx-padding: 2;"
