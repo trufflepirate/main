@@ -86,6 +86,11 @@ public interface Model {
     void removeJob(Job job);
 
     /**
+     * Returns true if a job with the same identity as {@code job} exists in the address book.
+     */
+    boolean hasJob(Job job);
+
+    /**
      * Adds the given Admin
      * admin must not exist
      * @param admin
@@ -188,4 +193,5 @@ public interface Model {
      * Saves the current address book state for undo/redo.
      */
     void commitAddressBook();
+
 }
