@@ -215,6 +215,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void addJob(Job job) {
         requireNonNull(job);
+
         jobs.add(job);
     }
     /**
