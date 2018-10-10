@@ -123,7 +123,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void removeJob(Job toRemove) {
+    public void deleteJob(Job toRemove) {
         versionedAddressBook.removeJob(toRemove);
         indicateAddressBookChanged();
     }

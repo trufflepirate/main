@@ -80,7 +80,7 @@ public class XmlAdaptedMachine {
         }
 
         if (!Machine.isValidName(machineName)) {
-            throw new IllegalValueException(Machine.MESSAGE_NAME_CONSTRAINTS);
+            throw new IllegalValueException(Machine.MESSAGE_MACHINENAME_CONSTRAINTS);
         }
 
         final MachineName name = new MachineName(machineName);
