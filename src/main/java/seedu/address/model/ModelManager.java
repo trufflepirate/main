@@ -7,16 +7,22 @@ import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
+
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.AdminListChangedEvent;
+import seedu.address.commons.events.model.JobListChangedEvent;
+import seedu.address.commons.events.model.MachineListChangedEvent;
 import seedu.address.model.admin.Admin;
-import seedu.address.model.admin.Password;
 import seedu.address.model.admin.Username;
+import seedu.address.model.job.Job;
+import seedu.address.model.job.JobName;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
+
 
 /**
  * Represents the in-memory model of the address book data.
@@ -26,9 +32,10 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final VersionedAddressBook versionedAddressBook;
     private final FilteredList<Person> filteredPersons;
+    private final FilteredList<Admin> filteredAdmins;
     private final FilteredList<Machine> filteredMachines;
+    private final FilteredList<Job> filteredJobs;
 
-    //TODO: Should these be inside versionedAddressBook?
     private boolean loginStatus = false;
     private Username loggedInAdmin = null;
 
@@ -45,12 +52,8 @@ public class ModelManager extends ComponentManager implements Model {
         versionedAddressBook = new VersionedAddressBook(addressBook);
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
         filteredMachines = new FilteredList<>(versionedAddressBook.getMachineList());
-
-        //TODO: Move this to a proper place later
-        Username theFirstUn = new Username("admin");
-        Password theFirstPw = new Password("admin");
-        Admin theFirstAdmin = new Admin(theFirstUn, theFirstPw);
-        versionedAddressBook.addAdmin(theFirstAdmin);
+        filteredAdmins = new FilteredList<>(versionedAddressBook.getAdminList());
+        filteredJobs = new FilteredList<>(versionedAddressBook.getJobList());
     }
 
     public ModelManager() {
@@ -73,6 +76,22 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(versionedAddressBook));
     }
 
+    /** Raises an event to indicate the model has changed */
+    private void indicateAdminListChanged() {
+        raise(new AdminListChangedEvent(versionedAddressBook));
+    }
+
+    /** Raises an event to indicate the model has changed */
+    private void indicateMachineListChanged() {
+        raise(new MachineListChangedEvent(versionedAddressBook));
+    }
+
+    /** Raises an event to indicate the model has changed */
+    private void indicateJobListChanged() {
+        raise(new JobListChangedEvent(versionedAddressBook));
+    }
+
+    // ============================== Person methods ======================================= //
     @Override
     public boolean hasPerson(Person person) {
         requireNonNull(person);
@@ -99,52 +118,83 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    // ============================== Job methods ======================================= //
+
+    @Override
+    public void addJob(Job job) {
+        requireAllNonNull(job);
+        versionedAddressBook.addJob(job);
+        indicateJobListChanged();
+    }
+
+    @Override
+    public void removeJob(Job job) {
+        requireAllNonNull(job);
+        versionedAddressBook.removeJob(job);
+        indicateJobListChanged();
+    }
+
+    @Override
+    public void updateJob(Job oldJob, Job updatedJob) {
+        requireAllNonNull(oldJob, updatedJob);
+        versionedAddressBook.updateJob(oldJob, updatedJob);
+        indicateJobListChanged();
+    }
+
+    @Override
+    public Job findJob(JobName name) {
+        requireAllNonNull(name);
+        return versionedAddressBook.findJob(name);
+    }
+
+    // ============================== Machine methods ======================================= //
+
     @Override
     public void addMachine(Machine machine) {
         versionedAddressBook.addMachine(machine);
         updateFilteredMachineList(PREDICATE_SHOW_ALL_MACHINES);
-        indicateAddressBookChanged();
+        indicateMachineListChanged();
     }
 
     @Override
     public void removeMachine(Machine toRemove) {
         versionedAddressBook.removeMachine(toRemove);
-        indicateAddressBookChanged();
+        indicateMachineListChanged();
     }
 
-    //TODO: add tests
+
+    // ============================== Admin methods ======================================= //
+
     @Override
     public void addAdmin(Admin admin) {
         versionedAddressBook.addAdmin(admin);
-        indicateAddressBookChanged();
+        indicateAdminListChanged();
     }
 
     //TODO: add tests
     @Override
     public void removeAdmin(Admin admin) {
         versionedAddressBook.removeAdmin(admin);
-        indicateAddressBookChanged();
+        indicateAdminListChanged();
     }
 
     //TODO: add tests
     @Override
     public void updateAdmin(Admin admin, Admin updatedAdmin) {
         versionedAddressBook.updateAdmin(admin, updatedAdmin);
-        indicateAddressBookChanged();
+        indicateAdminListChanged();
     }
 
     @Override
     public void setLogin(Username username) {
         this.loggedInAdmin = username;
         this.loginStatus = true;
-        indicateAddressBookChanged();
     }
 
     @Override
     public void clearLogin() {
         this.loggedInAdmin = null;
         this.loginStatus = false;
-        indicateAddressBookChanged();
     }
 
     @Override
@@ -155,12 +205,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public Username currentlyLoggedIn() {
         return this.loggedInAdmin;
-    }
-
-    @Override
-    public boolean hasAdmin(Admin admin) {
-        requireNonNull(admin);
-        return versionedAddressBook.hasAdmin(admin);
     }
 
     @Override
@@ -208,6 +252,40 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredMachines.setPredicate(predicate);
     }
+
+
+    //=========== Filtered Admins List Accessors ============================================================
+
+    @Override
+    public ObservableList<Admin> getFilteredAdminList() {
+        return FXCollections.unmodifiableObservableList(filteredAdmins);
+    }
+
+    @Override
+    public void updateFilteredAdminList(Predicate<Admin> predicate) {
+        requireNonNull(predicate);
+        filteredAdmins.setPredicate(predicate);
+    }
+
+    //=========== Filtered Jobs List Accessors ============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Job} backed by the internal list of
+     * {@code versionedAddressBook}
+     */
+
+    @Override
+    public ObservableList<Job> getFilteredJobList() {
+        return FXCollections.unmodifiableObservableList(filteredJobs);
+    }
+
+    @Override
+    public void updateFilteredJobList(Predicate<Job> predicate) {
+        requireNonNull(predicate);
+        filteredJobs.setPredicate(predicate);
+    }
+
+
     //=========== Undo/Redo =================================================================================
 
     @Override
