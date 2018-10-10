@@ -133,7 +133,7 @@ public class MainWindow extends UiPart<Stage> {
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         /**
-         * Comment out the 3 lines below to get the original code working again
+         * Comment out the 2 lines below to get the original code working again
          */
 
         //machineListPanel = new MachineListPanel(logic.getFilteredMachineList());
