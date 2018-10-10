@@ -47,7 +47,6 @@ public class UniqueJobList {
             throw new JobNotFoundException();
         }
     }
-    
 
     /**
      * Replaces the contents of this list with {@code jobs}.
