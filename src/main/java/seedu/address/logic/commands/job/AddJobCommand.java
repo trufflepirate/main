@@ -3,6 +3,8 @@ package seedu.address.logic.commands.job;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_OWNER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_PRIORITY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MACHINE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MACHINE_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
@@ -23,7 +25,7 @@ public class AddJobCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a job to the address book. "
             + "Parameters: "
             + PREFIX_NAME + "JOB NAME "
-            + PREFIX_NAME + "MACHINE NAME "
+            + PREFIX_MACHINE + "MACHINE NAME "
             + PREFIX_JOB_OWNER + "JOB OWNER NAME "
             + PREFIX_JOB_PRIORITY + "JOB PRIORITY "
             + "[" + PREFIX_TAG + "TAG]...\n"

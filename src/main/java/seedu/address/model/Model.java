@@ -83,7 +83,7 @@ public interface Model {
      * Removes the given job
      * Job must exist in the database
      */
-    void removeJob(Job job);
+    void deleteJob(Job job);
 
     /**
      * Returns true if a job with the same identity as {@code job} exists in the address book.
