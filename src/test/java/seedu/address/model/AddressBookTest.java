@@ -100,6 +100,7 @@ public class AddressBookTest {
     private static class AddressBookStub implements ReadOnlyAddressBook {
         private final ObservableList<Person> persons = FXCollections.observableArrayList();
         private final ObservableList<Admin> admins = FXCollections.observableArrayList();
+        private final ObservableList<Machine> machines = FXCollections.observableArrayList();
         private final ObservableList<Job> jobs = FXCollections.observableArrayList();
 
         AddressBookStub(Collection<Person> persons) {
@@ -124,7 +125,12 @@ public class AddressBookTest {
         //TODO havent integrated this code properly yet
         @Override
         public ObservableList<Machine> getMachineList() {
-            return null;
+            return machines;
+        }
+
+        @Override
+        public ObservableList<Job> getJobList() {
+            return jobs;
         }
     }
 

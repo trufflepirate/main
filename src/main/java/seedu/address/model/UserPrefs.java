@@ -1,7 +1,6 @@
 package seedu.address.model;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Objects;
 
 import seedu.address.commons.core.GuiSettings;
@@ -25,27 +24,23 @@ public class UserPrefs {
     public GuiSettings getGuiSettings() {
         return guiSettings == null ? new GuiSettings() : guiSettings;
     }
-
     public void updateLastUsedGuiSetting(GuiSettings guiSettings) {
         this.guiSettings = guiSettings;
     }
-
     public void setGuiSettings(double width, double height, int x, int y) {
         guiSettings = new GuiSettings(width, height, x, y);
     }
 
+    // ================================ file path methods ================================= //
     public Path getAddressBookFilePath() {
         return addressBookFilePath;
     }
-
     public void setAddressBookFilePath(Path addressBookFilePath) {
         this.addressBookFilePath = addressBookFilePath;
     }
-
     public Path getMakerManagerMachinesFilePath() {
         return makerManagerMachinesFilePath;
     }
-
     public void setMakerManagerMachinesFilePath(Path makerManagerMachinesFilePath) {
         this.makerManagerMachinesFilePath = makerManagerMachinesFilePath;
     }
@@ -61,10 +56,18 @@ public class UserPrefs {
     public Path getMakerManagerAdminsFilePath() {
         return makerManagerAdminsFilePath;
     }
-
     public void setMakerManagerAdminsFilePath(Path makerManagerAdminsFilePath) {
         this.makerManagerAdminsFilePath = makerManagerAdminsFilePath;
     }
+    public Path getMakerManagerJobsFilePath() {
+        return makerManagerJobsFilePath;
+    }
+    public void setMakerManagerJobsFilePath(Path makerManagerJobsFilePath) {
+        this.makerManagerJobsFilePath = makerManagerJobsFilePath;
+    }
+
+
+    // ================================ others =========================================== //
 
     @Override
     public boolean equals(Object other) {
@@ -80,12 +83,10 @@ public class UserPrefs {
         return Objects.equals(guiSettings, o.guiSettings)
                 && Objects.equals(addressBookFilePath, o.addressBookFilePath);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(guiSettings, addressBookFilePath);
     }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -93,6 +94,7 @@ public class UserPrefs {
         sb.append("\nLocal data file location : " + addressBookFilePath);
         return sb.toString();
     }
+
 
 
 }

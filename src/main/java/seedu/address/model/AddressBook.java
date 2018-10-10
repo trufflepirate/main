@@ -4,11 +4,15 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import javafx.collections.ObservableList;
 import seedu.address.model.admin.Admin;
+import seedu.address.model.admin.Password;
 import seedu.address.model.admin.UniqueAdminList;
 import seedu.address.model.admin.Username;
 import seedu.address.model.job.Job;
+import seedu.address.model.job.JobName;
 import seedu.address.model.job.UniqueJobList;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.UniqueMachineList;
@@ -43,7 +47,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     public AddressBook() {}
 
     /**
-     * Creates an AddressBook using the Persons in the {@code toBeCopied}
+     * Creates an AddressBook using initial data in the {@code toBeCopied}
+     * i.e persons,admins,machines,jobs data etc.
      */
     public AddressBook(ReadOnlyAddressBook toBeCopied) {
         this();
@@ -57,13 +62,26 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setPersons(List<Person> persons) {
         this.persons.setPersons(persons);
     }
-
     /**
      * Replaces the contents of the machine list with {@code machines}.
      * {@code machines} must not contain duplicate machines
      */
     public void setMachines(List<Machine> machines) {
         this.machines.setMachines(machines);
+    }
+    /**
+     * Replaces the contents of the admin list with {@code admins}.
+     * {@code admins} must not contain duplicate admins
+     */
+    public void setAdmins(List<Admin> admins) {
+        this.admins.setAdmins(admins);
+    }
+    /**
+     * Replaces the contents of the jobs list with {@code jobs}.
+     * {@code jobs} must not contain duplicate jobs
+     */
+    public void setJobs(ObservableList<Job> jobs) {
+        this.jobs.setJobs(jobs);
     }
 
     /**
@@ -82,7 +100,9 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         setPersons(newData.getPersonList());
         setMachines(newData.getMachineList());
+        setAdmins(newData.getAdminList());
     }
+
 
     /**
      * Returns true if a person with the same identity as {@code person} exists in the address book.
@@ -119,7 +139,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void addPerson(Person p) {
         persons.add(p);
     }
-
     /**
      * Adds an admin to the address book.
      * The admin must not already exist in the address book.
@@ -154,7 +173,6 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         persons.setPerson(target, editedPerson);
     }
-
     /**
      * updates an admin in the address book.
      */
@@ -177,6 +195,17 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void removePerson(Person key) {
         persons.remove(key);
+      
+    public void addAdmin(Admin toAdd) {
+        admins.add(encryptedAdmin(toAdd));
+    }
+
+    /**
+     * Adds an admin from Files to Model
+     * The admin must not already exist in the address book.
+     */
+    public void addAdminWithoutRehash(Admin toAdd) {
+        admins.add(toAdd);
     }
 
 
@@ -187,7 +216,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void removeAdmin(Admin toRemove) {
         admins.remove(toRemove);
     }
-
     /**
      * Removes a machine if {@code toRemove} exists in the list
      */
@@ -212,13 +240,93 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Admin> getAdminList() {
         return admins.asUnmodifiableObservableList();
+      
+    public boolean hasAdmin(Admin admin) {
+        return admins.contains(admin);
     }
+      
+    public Admin findAdmin(Username username) {
+        return admins.findAdmin(username);
+    }
+      
+    public int numAdmins() {
+        return admins.size();
+    }
+      
+    /**
+     * Returns Admin with password hashed
+     * @param rawAdmin
+     * @return
+     */
+    private Admin encryptedAdmin(Admin rawAdmin) {
+        Password encryptedPassword = new Password(BCrypt.hashpw(rawAdmin.getPassword().toString(), BCrypt.gensalt()));
+        Admin protectedAdmin = new Admin(rawAdmin.getUsername(), encryptedPassword);
+        return protectedAdmin;
+    }
+
 
     @Override
     public ObservableList<Machine> getMachineList() {
         return machines.asUnmodifiableObservableList();
+
+  
+    //======================== machine methods ================================//
+
+    /**
+     * Returns true if a machine that matches the {@code machine}
+     */
+    public boolean hasMachine(Machine machine) {
+        requireNonNull(machine);
+        return machines.contains(machine);
+    }
+    /**
+     * Adds a machine if {@code machine} does not exist in the list
+     */
+    public void addMachine(Machine machine) {
+        requireNonNull(machine);
+        machines.add(machine);
+
+    }
+    /**
+     * Removes a machine if {@code toRemove} exists in the list
+     */
+    public void removeMachine(Machine toRemove) {
+        requireNonNull(toRemove);
+        machines.remove(toRemove);
     }
 
+    //======================== job methods ================================//
+
+    /**
+     * Adds a job if {@code job} does not exist in the list
+     */
+    public void addJob(Job job) {
+        requireNonNull(job);
+
+        jobs.add(job);
+    }
+    /**
+     * Removes a job if {@code job} does not exist in the list
+     */
+    public void removeJob(Job job) {
+        requireNonNull(job);
+        jobs.remove(job);
+    }
+    /**
+     * Returns the job, if present, according to JobName
+     */
+    public Job findJob(JobName name) {
+        return jobs.findJob(name);
+    }
+    /**
+     * Updates the job
+     */
+    public void updateJob(Job oldJob, Job updatedJob) {
+        jobs.updateJob(oldJob, updatedJob);
+    }
+
+
+    //======================== get lists methods ===========================//
     @Override
     public ObservableList<Job> getJobList() {
         return jobs.asUnmodifiableObservableList();
@@ -239,15 +347,28 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
+    public ObservableList<Job> getJobList() {
+        return jobs.asUnmodifiableObservableList();
+    }
+
+    @Override
+    public ObservableList<Machine> getMachineList() {
+        return machines.asUnmodifiableObservableList();
+    }
+
+
+    //======================== others ================================//
+    @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
                 && persons.equals(((AddressBook) other).persons));
+        //TODO: refine later
     }
 
     @Override
     public int hashCode() {
+        //TODO: Refine later
         return persons.hashCode();
     }
-
 }

@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.job.exceptions.JobNotFoundException;
+import seedu.address.model.machine.exceptions.DuplicateMachineException;
 
 /**
  * A list of Jobs whose elements are not repeated
@@ -88,5 +89,41 @@ public class UniqueJobList {
      */
     public int size() {
         return internalList.size();
+    }
+
+    /**
+     * Returns Job
+     * @param name
+     */
+    public Job findJob(JobName name) {
+        for (Job job : internalList) {
+            if (job.getName().equals(name)) {
+                return job;
+            }
+        }
+        return null;
+    }
+
+    public void setJobs(ObservableList<Job> jobs) {
+        requireNonNull(jobs);
+        if (!jobsAreUnique(jobs)) {
+            throw new DuplicateMachineException();
+        }
+
+        internalList.setAll(jobs);
+    }
+
+    /**
+     * Returns true if {@code jobs} contains only unique jobs
+     */
+    private boolean jobsAreUnique(List<Job> jobs) {
+        for (int i = 0; i < jobs.size() - 1; i++) {
+            for (int j = i + 1; j < jobs.size(); j++) {
+                if (jobs.get(i).isSameJob(jobs.get(j))) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

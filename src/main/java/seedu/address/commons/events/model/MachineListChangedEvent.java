@@ -3,17 +3,19 @@ package seedu.address.commons.events.model;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.ReadOnlyAddressBook;
 
-/** Indicates the person list in the model's addressbook has changed*/
-public class AddressBookChangedEvent extends BaseEvent {
+/**
+ * Indicates a changed in the model addressBook for machine list
+ */
+public class MachineListChangedEvent extends BaseEvent {
 
     public final ReadOnlyAddressBook data;
 
-    public AddressBookChangedEvent(ReadOnlyAddressBook data) {
+    public MachineListChangedEvent(ReadOnlyAddressBook data) {
         this.data = data;
     }
 
     @Override
     public String toString() {
-        return "number of persons " + data.getPersonList().size();
+        return "number of machines " + data.getMachineList().size();
     }
 }
