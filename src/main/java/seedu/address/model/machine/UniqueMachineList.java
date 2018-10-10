@@ -39,6 +39,7 @@ public class UniqueMachineList {
 
         internalList.setAll(machines);
     }
+
     /**
      * Adds the Machine to the list
      * The Machine must not exist in the list

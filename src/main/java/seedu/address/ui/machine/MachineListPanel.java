@@ -46,7 +46,7 @@ public class MachineListPanel extends UiPart<Region> {
         machineListView.getSelectionModel().selectedItemProperty()
                 .addListener(((observable, oldValue, newValue) -> {
                     if (newValue != null) {
-                        logger.fine("Selection in machine list panel changed to : " + newValue + "'");
+                        logger.info("Selection in machine list panel changed to : " + newValue + "'");
                         raise(new MachinePanelSelectiononChangedEvent(newValue));
                     }
                 }));
