@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -44,7 +45,7 @@ public class AddMachineCommandParser implements Parser<AddMachineCommand> {
 
         MachineName name = ParserUtil.parseMachineName(argMultimap.getValue(PREFIX_NAME).get());
         Boolean machineStatus = ParserUtil.parseMachineStatus(argMultimap.getValue(PREFIX_MACHINE_STATUS).get());
-        ArrayList<Job> jobs = new ArrayList<>();
+        List<Job> jobs = new ArrayList<>();
         Set<Tag> tags = new HashSet<>();
         Machine machine = new Machine(name, jobs, tags, machineStatus);
 

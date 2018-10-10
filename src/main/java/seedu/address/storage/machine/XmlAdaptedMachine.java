@@ -89,7 +89,7 @@ public class XmlAdaptedMachine {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "STATUS"));
         }
 
-        final ArrayList<Job> finalJobs = new ArrayList<>();
+        final List<Job> finalJobs = new ArrayList<>();
         for (XmlAdaptedJobName job : jobs) {
             finalJobs.add(job.toModelType());
         }

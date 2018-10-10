@@ -208,6 +208,16 @@ public class AddressBook implements ReadOnlyAddressBook {
         machines.remove(toRemove);
     }
 
+    /**
+     * Replaces the given Machine {@code target} in the list with {@code editedMachine}.
+     * {@code target} must exist in the address book.
+     * The Machine identity of {@code editedMachine} must not be the same as another existing Machine in the address book.
+     */
+    public void updateMachine(Machine target, Machine editedMachine) {
+        requireNonNull(editedMachine);
+
+        machines.setMachine(target, editedMachine);
+    }
     //======================== job methods ================================//
 
     /**

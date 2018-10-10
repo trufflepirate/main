@@ -68,12 +68,22 @@ public interface Model {
      */
     void removeMachine(Machine machine);
     /**
+     * Returns true if a Machine with the same identity as {@code person} exists in the address book.
+     */
+    boolean hasMachine(Machine machine);
+    /**
+     * Replaces the given machine {@code target} with {@code editedMachine}.
+     * {@code target} must exist in the Model.
+     * The machine identity of {@code editedMachine} must not be the same as another existing machine in the model.
+     */
+    void updateMachine(Machine target, Machine editedMachine);
+
+    // ============================== Admin methods ======================================= //
+    /**
      * Adds the given Admin
      * admin must not exist
      * @param admin
      */
-
-    // ============================== Admin methods ======================================= //
     void addAdmin(Admin admin);
     /**
      * Removes the given Admin

@@ -43,7 +43,7 @@ public class Machine {
     /**
      * Every field must be present and not null.
      */
-    public Machine(MachineName name, ArrayList<Job> jobs, Set<Tag> tags, boolean status) {
+    public Machine(MachineName name, List<Job> jobs, Set<Tag> tags, boolean status) {
         requireAllNonNull(name, jobs, tags);
         this.machineName = name;
         this.jobs.addAll(jobs);
