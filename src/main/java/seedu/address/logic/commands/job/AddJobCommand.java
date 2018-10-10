@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_OWNER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_PRIORITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MACHINE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MACHINE_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 

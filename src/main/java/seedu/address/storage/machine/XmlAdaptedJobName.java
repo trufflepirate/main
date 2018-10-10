@@ -68,7 +68,7 @@ public class XmlAdaptedJobName {
                 new Email("teojunjie@gmail.com"),
                 new Address("1 Rivervale Link #06-09"),
                 new HashSet<>());
-        Set<Tag> tags= new HashSet<>();
+        Set<Tag> tags = new HashSet<>();
 
         return new Job(name, machine, person, HIGH, tags);
 

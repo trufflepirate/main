@@ -204,9 +204,15 @@ public class ParserUtil {
             throw new ParseException(JobOwner.MESSAGE_OWNERNAME_CONSTRAINTS);
         }
 
-    return new JobOwner(new Name(trimJobOwner), new Phone("1"), new Email("1"), new Address("1"), new HashSet<>());
+        return new JobOwner(new Name(trimJobOwner), new Phone("1"), new Email("1"), new Address("1"), new HashSet<>());
     }
 
+    /**
+     * Parses {@code String jobPriority} into {@code trimJobPriority}
+     * Leading and trailing whitespace will be trimmed
+     *
+     * @throws ParseException if the given {@code jobPriority is invalid}
+     */
     public static JobPriority parseJobPriority(String jobPriority) {
         requireNonNull(jobPriority);
         String trimJobPriority = jobPriority.trim();

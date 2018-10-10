@@ -35,7 +35,8 @@ public class AddJobCommandParser implements Parser<AddJobCommand> {
      */
     public AddJobCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_MACHINE, PREFIX_JOB_OWNER, PREFIX_JOB_PRIORITY, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_MACHINE,
+                        PREFIX_JOB_OWNER, PREFIX_JOB_PRIORITY, PREFIX_TAG);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_NAME, PREFIX_JOB_OWNER, PREFIX_JOB_PRIORITY)
                 || !argMultimap.getPreamble().isEmpty()) {
@@ -43,12 +44,12 @@ public class AddJobCommandParser implements Parser<AddJobCommand> {
         }
 
         JobName name = ParserUtil.parseJobName(argMultimap.getValue(PREFIX_NAME).get());
-        Machine machine= ParserUtil.parseMachine(argMultimap.getValue(PREFIX_MACHINE).get());
+        Machine machine = ParserUtil.parseMachine(argMultimap.getValue(PREFIX_MACHINE).get());
         JobOwner jobOwner = ParserUtil.parseJobOwner(argMultimap.getValue(PREFIX_JOB_OWNER).get());
         JobPriority jobPriority = ParserUtil.parseJobPriority(argMultimap.getValue(PREFIX_JOB_PRIORITY).get());
         Set<Tag> tags = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        Job job= new Job(name, machine, jobOwner, jobPriority, tags);
+        Job job = new Job(name, machine, jobOwner, jobPriority, tags);
 
         return new AddJobCommand(job);
     }
