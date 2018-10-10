@@ -60,7 +60,7 @@ Give the user guidance as to what (s)he can do with makerManager +
 .. *[WIP]Adding Print:*
 Add a print job to the queue. +
 
-    Format: add_print n/PRINT_NAME m/MACHINE_NAME d/PRINT_DURATION [s/SPECIAL_NOTES] <p/PRIORITY>
+    Format: addJob n/PRINT_NAME m/MACHINE_NAME on/PRINT_OWNER pr/PRINT_PRIORITY [t/TAGS]
 
     Examples:  +
     add_print n/myprint m/printer_1 d/13:00 s/use red filament p/1 +
