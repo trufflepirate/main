@@ -17,6 +17,7 @@ public class ConfigTest {
                 + "Current log level : INFO\n"
                 + "Preference file Location : preferences.json";
 
+        //TODO Rewrite test here
         //assertEquals(defaultConfigAsString, new Config().toString());
     }
 
