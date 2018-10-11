@@ -22,6 +22,7 @@ import seedu.address.model.Model;
 import seedu.address.model.job.Job;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.MachineName;
+import seedu.address.model.machine.MachineStatus;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -93,7 +94,7 @@ public class EditMachineCommand extends Command {
         MachineName updatedName = editMachineDescriptor.getName().orElse(machineToEdit.getName());
         List<Job> updatedJobs = editMachineDescriptor.getJobs().orElse(machineToEdit.getJobs());
         Set<Tag> updatedTags = editMachineDescriptor.getTags().orElse(machineToEdit.getTags());
-        boolean updatedStatus = editMachineDescriptor.getStatus().orElse(machineToEdit.getStatus());
+        MachineStatus updatedStatus = editMachineDescriptor.getStatus().orElse(machineToEdit.getStatus());
 
         return new Machine(updatedName, updatedJobs, updatedTags, updatedStatus);
     }
@@ -124,7 +125,7 @@ public class EditMachineCommand extends Command {
         private MachineName name;
         private List<Job> jobs;
         private Set<Tag> tags;
-        private boolean status;
+        private MachineStatus status;
 
         public EditMachineDescriptor() {}
 
@@ -187,12 +188,12 @@ public class EditMachineCommand extends Command {
             return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
         }
 
-        public void setStatus(boolean status) {
+        public void setStatus(MachineStatus status) {
             this.status = status;
         }
 
-        public Optional<Address> getAddress() {
-            return Optional.ofNullable(address);
+        public Optional<MachineStatus> getStatus() {
+            return Optional.ofNullable(status);
         }
 
         @Override
@@ -203,18 +204,17 @@ public class EditMachineCommand extends Command {
             }
 
             // instanceof handles nulls
-            if (!(other instanceof EditPersonDescriptor)) {
+            if (!(other instanceof EditMachineDescriptor)) {
                 return false;
             }
 
             // state check
-            EditPersonDescriptor e = (EditPersonDescriptor) other;
+            EditMachineDescriptor e = (EditMachineDescriptor) other;
 
             return getName().equals(e.getName())
-                    && getPhone().equals(e.getPhone())
-                    && getEmail().equals(e.getEmail())
-                    && getAddress().equals(e.getAddress())
-                    && getTags().equals(e.getTags());
+                    && getJobs().equals(e.getJobs())
+                    && getTags().equals(e.getTags())
+                    && getStatus().equals(e.getStatus());
         }
     }
 }
