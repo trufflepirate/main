@@ -16,4 +16,5 @@ classes/
 /data/
 src/main/resources/docs/
 out/
-
+config.json
+preferences.json
