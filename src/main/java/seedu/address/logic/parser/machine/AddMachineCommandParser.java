@@ -20,6 +20,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.job.Job;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.MachineName;
+import seedu.address.model.machine.MachineStatus;
 import seedu.address.model.tag.Tag;
 
 
@@ -44,8 +45,8 @@ public class AddMachineCommandParser implements Parser<AddMachineCommand> {
         }
 
         MachineName name = ParserUtil.parseMachineName(argMultimap.getValue(PREFIX_NAME).get());
-        Boolean machineStatus = ParserUtil.parseMachineStatus(argMultimap.getValue(PREFIX_MACHINE_STATUS).get());
-        List<Job> jobs = new ArrayList<>();
+        MachineStatus machineStatus = ParserUtil.parseMachineStatus(argMultimap.getValue(PREFIX_MACHINE_STATUS).get());
+        ArrayList<Job> jobs = new ArrayList<>();
         Set<Tag> tags = new HashSet<>();
         Machine machine = new Machine(name, jobs, tags, machineStatus);
 
