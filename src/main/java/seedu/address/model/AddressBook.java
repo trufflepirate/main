@@ -36,9 +36,11 @@ public class AddressBook implements ReadOnlyAddressBook {
      * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
      *
      * Note that non-static init blocks are not recommended to use. There are other ways to avoid
-      * duplication
+     * duplication
      *   among constructors.
-     */ {
+     */
+
+    {
         persons = new UniquePersonList();
         admins = new UniqueAdminList();
         machines = new UniqueMachineList();
@@ -193,8 +195,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @return
      */
     private Admin encryptedAdmin(Admin rawAdmin) {
-        Password encryptedPassword = new Password(BCrypt.hashpw(rawAdmin.getPassword().toString()
-                , BCrypt.gensalt()));
+        Password encryptedPassword = new Password(
+            BCrypt.hashpw(rawAdmin.getPassword().toString(), BCrypt.gensalt()));
         Admin protectedAdmin = new Admin(rawAdmin.getUsername(), encryptedPassword);
         return protectedAdmin;
     }
@@ -297,8 +299,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof AddressBook // instanceof handles nulls
-                && persons.equals(((AddressBook) other).persons));
+            || (other instanceof AddressBook // instanceof handles nulls
+            && persons.equals(((AddressBook) other).persons));
         //TODO: refine later
     }
 
