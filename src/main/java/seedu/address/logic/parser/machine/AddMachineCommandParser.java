@@ -6,7 +6,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -24,7 +23,6 @@ import seedu.address.model.machine.MachineStatus;
 import seedu.address.model.tag.Tag;
 
 
-
 /**
  * Parses input arguments and creates a new AddMachineCommand object
  */
@@ -33,14 +31,15 @@ public class AddMachineCommandParser implements Parser<AddMachineCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the AddMachineCommand
      * and returns an AddMachineCommand object for execution
+     *
      * @throws ParseException if the user input does not conform the expected format
      */
 
     public AddMachineCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_MACHINE_STATUS);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_MACHINE_STATUS)
-                || !argMultimap.getPreamble().isEmpty()) {
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_MACHINE_STATUS) || !argMultimap.getPreamble()
+            .isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMachineCommand.MESSAGE_USAGE));
         }
 
