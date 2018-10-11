@@ -1,11 +1,7 @@
 package seedu.address.storage.machine;
 
-import static seedu.address.model.job.JobPriority.HIGH;
-
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
-
 import javax.xml.bind.annotation.XmlValue;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -19,7 +15,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.tag.Tag;
+
 
 
 /**
@@ -72,10 +68,8 @@ public class XmlAdaptedJobName {
                 new Email("teojunjie@gmail.com"),
                 new Address("1 Rivervale Link #06-09"),
                 new HashSet<>());
-        Set<Tag> tags = new HashSet<>();
 
-        return new Job(name, machine, person, HIGH, tags);
-
+        return new Job(name, machine, person, note);
     }
 
     @Override

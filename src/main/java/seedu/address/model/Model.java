@@ -21,9 +21,6 @@ public interface Model {
     /** {@code Predicate} that always eveluate to true for machines */
     Predicate<Machine> PREDICATE_SHOW_ALL_MACHINES = unused -> true;
 
-    /** {@code Predicate} that always eveluate to true for jobs */
-    Predicate<Job> PREDICATE_SHOW_ALL_JOBS = unused -> true;
-
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
 
@@ -70,37 +67,13 @@ public interface Model {
      * machine must exist in the database
      */
     void removeMachine(Machine machine);
-
-    /**
-     * Adds the given job
-     * Job must not exists
-     */
-    void addJob(Job job);
-
-    /**
-     * Replaces the given job {@code target} with {@code editedJob}.
-     * {@code target} must exist in the address book.
-     * The job identity of {@code editedJob} must not be the same as another existing job in the address book.
-     */
-    void updateJob(Job target, Job editedJob);
-
-    /**
-     * Removes the given job
-     * Job must exist in the database
-     */
-    void deleteJob(Job job);
-
-    /**
-     * Returns true if a job with the same identity as {@code job} exists in the address book.
-     */
-    boolean hasJob(Job job);
-
     /**
      * Adds the given Admin
      * admin must not exist
      * @param admin
      */
 
+    // ============================== Admin methods ======================================= //
     void addAdmin(Admin admin);
     /**
      * Removes the given Admin
@@ -165,15 +138,12 @@ public interface Model {
      */
     void updateFilteredMachineList(Predicate<Machine> predicate);
 
-    /** Returns an unmodifiable view of the filtered job list */
+    //=========== Filtered Job List Accessors =============================================================
     ObservableList<Job> getFilteredJobList();
-
-    /**
-     * Updates the filtere of the filtered job list to filter by the given {@code predicate}.
-     * @throws NullPointerException if {@code predicate} is null.
-     */
     void updateFilteredJobList(Predicate<Job> predicate);
 
+
+    //================================= AddressBook methods ===================================//
     /**
      * Returns true if the model has previous address book states to restore.
      */
@@ -194,5 +164,4 @@ public interface Model {
      * Saves the current address book state for undo/redo.
      */
     void commitAddressBook();
-
 }
