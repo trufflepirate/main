@@ -31,20 +31,22 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniqueJobList jobs;
 
     /*
-     * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
+     * The 'unusual' code block below is an non-static initialization block, sometimes used to
+     * avoid duplication
      * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
      *
-     * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
+     * Note that non-static init blocks are not recommended to use. There are other ways to avoid
+      * duplication
      *   among constructors.
-     */
-    {
+     */ {
         persons = new UniquePersonList();
         admins = new UniqueAdminList();
         machines = new UniqueMachineList();
         jobs = new UniqueJobList();
     }
 
-    public AddressBook() {}
+    public AddressBook() {
+    }
 
     /**
      * Creates an AddressBook using initial data in the {@code toBeCopied}
@@ -64,6 +66,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setPersons(List<Person> persons) {
         this.persons.setPersons(persons);
     }
+
     /**
      * Replaces the contents of the machine list with {@code machines}.
      * {@code machines} must not contain duplicate machines
@@ -71,6 +74,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setMachines(List<Machine> machines) {
         this.machines.setMachines(machines);
     }
+
     /**
      * Replaces the contents of the admin list with {@code admins}.
      * {@code admins} must not contain duplicate admins
@@ -78,6 +82,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setAdmins(List<Admin> admins) {
         this.admins.setAdmins(admins);
     }
+
     /**
      * Replaces the contents of the jobs list with {@code jobs}.
      * {@code jobs} must not contain duplicate jobs
@@ -106,6 +111,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(person);
         return persons.contains(person);
     }
+
     /**
      * Adds a person to the address book.
      * The person must not already exist in the address book.
@@ -113,16 +119,19 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void addPerson(Person p) {
         persons.add(p);
     }
+
     /**
      * Replaces the given person {@code target} in the list with {@code editedPerson}.
      * {@code target} must exist in the address book.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
+     * The person identity of {@code editedPerson} must not be the same as another existing
+     * person in the address book.
      */
     public void updatePerson(Person target, Person editedPerson) {
         requireNonNull(editedPerson);
 
         persons.setPerson(target, editedPerson);
     }
+
     /**
      * Removes {@code key} from this {@code AddressBook}.
      * {@code key} must exist in the address book.
@@ -156,6 +165,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void removeAdmin(Admin toRemove) {
         admins.remove(toRemove);
     }
+
     /**
      * updates an admin in the address book.
      */
@@ -163,22 +173,28 @@ public class AddressBook implements ReadOnlyAddressBook {
         admins.remove(toRemove);
         admins.add(toAdd);
     }
+
     public boolean hasAdmin(Admin admin) {
         return admins.contains(admin);
     }
+
     public Admin findAdmin(Username username) {
         return admins.findAdmin(username);
     }
+
     public int numAdmins() {
         return admins.size();
     }
+
     /**
      * Returns Admin with password hashed
+     *
      * @param rawAdmin
      * @return
      */
     private Admin encryptedAdmin(Admin rawAdmin) {
-        Password encryptedPassword = new Password(BCrypt.hashpw(rawAdmin.getPassword().toString(), BCrypt.gensalt()));
+        Password encryptedPassword = new Password(BCrypt.hashpw(rawAdmin.getPassword().toString()
+                , BCrypt.gensalt()));
         Admin protectedAdmin = new Admin(rawAdmin.getUsername(), encryptedPassword);
         return protectedAdmin;
     }
@@ -193,6 +209,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(machine);
         return machines.contains(machine);
     }
+
     /**
      * Adds a machine if {@code machine} does not exist in the list
      */
@@ -200,6 +217,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(machine);
         machines.add(machine);
     }
+
     /**
      * Removes a machine if {@code toRemove} exists in the list
      */
@@ -211,7 +229,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Replaces the given Machine {@code target} in the list with {@code editedMachine}.
      * {@code target} must exist in the address book.
-     * The Machine identity of {@code editedMachine} must not be the same as another existing Machine in the address book.
+     * The Machine identity of {@code editedMachine} must not be the same as another existing
+     * Machine in the address book.
      */
     public void updateMachine(Machine target, Machine editedMachine) {
         requireNonNull(editedMachine);
@@ -228,6 +247,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         jobs.add(job);
     }
+
     /**
      * Removes a job if {@code job} does not exist in the list
      */
@@ -235,12 +255,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(job);
         jobs.remove(job);
     }
+
     /**
      * Returns the job, if present, according to JobName
      */
     public Job findJob(JobName name) {
         return jobs.findJob(name);
     }
+
     /**
      * Updates the job
      */

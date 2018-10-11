@@ -2,7 +2,9 @@ package seedu.address.logic.parser.machine;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MACHINE_STATUS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -27,19 +29,21 @@ public class EditMachineCommandParser implements Parser<EditMachineCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the EditMachineCommand
      * and returns an EditMachineCommand object for execution.
+     *
      * @throws ParseException if the user input does not conform the expected format
      */
     public EditMachineCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_TAG, PREFIX_MACHINE_STATUS);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_TAG,
+                PREFIX_MACHINE_STATUS);
 
         Index index;
 
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditMachineCommand.MESSAGE_USAGE), pe);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    EditMachineCommand.MESSAGE_USAGE), pe);
         }
 
         EditMachineDescriptor editMachineDescriptor = new EditMachineDescriptor();
@@ -71,7 +75,8 @@ public class EditMachineCommandParser implements Parser<EditMachineCommand> {
         if (tags.isEmpty()) {
             return Optional.empty();
         }
-        Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
+        Collection<String> tagSet = tags.size() == 1 && tags.contains("") ?
+                Collections.emptySet() : tags;
         return Optional.of(ParserUtil.parseTags(tagSet));
     }
 
