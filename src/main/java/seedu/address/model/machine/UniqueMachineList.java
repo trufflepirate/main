@@ -40,7 +40,7 @@ public class UniqueMachineList {
 
         internalList.setAll(machines);
     }
-    
+
     /**
      * Replaces the person {@code target} in the list with {@code editedMachine}.
      * {@code target} must exist in the list.
