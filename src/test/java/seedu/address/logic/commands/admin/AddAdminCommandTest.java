@@ -1,5 +1,9 @@
 package seedu.address.logic.commands.admin;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -8,6 +12,7 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -19,7 +24,7 @@ import seedu.address.model.job.JobName;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
 
-public class LoginCommandTest {
+public class AddAdminCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -29,47 +34,77 @@ public class LoginCommandTest {
     @Test
     public void constructor_nullUsername_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new LoginCommand(null, new Password("123"));
+        new AddAdminCommand(null, new Password("dummy"), new Password("dummy"));
     }
 
     @Test
     public void constructor_nullPassword_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new LoginCommand(new Username("123"), null);
+        new AddAdminCommand(new Username("dummy"), null, new Password("dummy"));
     }
 
     @Test
-    public void execute_alreadyLoggedIn_throwsCommandException() throws Exception {
-        LoginCommand loginCommand = new LoginCommand(new Username("DummyName"), new Password("DummyPW"));
-        ModelStub modelStub = new ModelStub();
-        modelStub.setLogin(new Username("Notice how this is never made idiot proof"));
-        //TODO: make modelManager.setLogin idiotProof
-
-        thrown.expect(CommandException.class);
-        thrown.expectMessage(LoginCommand.MESSAGE_ALREADY_LOGGED_IN);
-        loginCommand.execute(modelStub, commandHistory);
+    public void constructor_nullVerify_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        new AddAdminCommand(new Username("dummy"), new Password("dummy"), null);
     }
 
     @Test
-    public void execute_wrongUsername_throwsCommandException() throws Exception {
-        LoginCommand loginCommand = new LoginCommand(new Username("wrongUsername"), new Password("dummyPW"));
+    public void execute_notLoggedIn_throwsCommandException() throws Exception {
         ModelStub modelStub = new ModelStub();
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(LoginCommand.MESSAGE_WRONG_DETAILS);
-        loginCommand.execute(modelStub, commandHistory);
+        thrown.expectMessage(AddAdminCommand.MESSAGE_NO_ACCESS);
+        new AddAdminCommand(new Username("dummy"), new Password("dummy"), new Password("dummy"))
+                .execute(modelStub, commandHistory);
     }
 
-    //TODO: test successful login by bypassing jBCrypt
-    //TODO: equals Method not tested
+    @Test
+    public void execute_passwordsNotMatching_throwsCommandException() throws Exception {
+        ModelStub modelStub = new ModelStub();
+        modelStub.setLogin(new Username("dummy"));
+
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(AddAdminCommand.MESSAGE_PASSWORDS_DONT_MATCH);
+        new AddAdminCommand(new Username("dummy"), new Password("dummy1"), new Password("dummy2"))
+                .execute(modelStub, commandHistory);
+    }
+
+    @Test
+    public void execute_alreadyExists_throwsCommandException() throws Exception {
+        ModelStub modelStub = new ModelStub();
+        modelStub.setLogin(new Username("dummyLogin"));
+        modelStub.addAdmin(new Admin(new Username("dummyUsername"), new Password("dummyPW")));
+
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(AddAdminCommand.MESSAGE_ADMIN_ALREADY_EXISTS);
+        new AddAdminCommand(new Username("dummyUsername"), new Password("dummyPW"), new Password("dummyPW"))
+                .execute(modelStub, commandHistory);
+    }
+
+    @Test
+    public void execute_addAdmin_success() throws Exception {
+        ModelStub modelStub = new ModelStub();
+        modelStub.setLogin(new Username("dummyLogin"));
+        Admin adminToAdd = new Admin(new Username("dummyUsername"), new Password("dummyPW"));
+
+        CommandResult commandResult = new AddAdminCommand(new Username("dummyUsername"),
+                new Password("dummyPW"), new Password("dummyPW"))
+                .execute(modelStub, commandHistory);
+
+        assertEquals(commandResult.feedbackToUser, AddAdminCommand.MESSAGE_SUCCESS);
+        assertEquals(modelStub.adminList, Arrays.asList(adminToAdd));
+    }
+
+    //TODO: equals not tested
 
     /**
      * A default model stub that has some methods failing
      */
     private class ModelStub implements Model {
-        private Admin firstAdmin = new Admin(new Username("firstAdmin"), new Password("rightPW"));
+        final ArrayList<Admin> adminList = new ArrayList<>();
 
-        private boolean loginStatus;
+        private boolean loginStatus = false;
 
         @Override
         public void addPerson(Person person) {
@@ -133,7 +168,7 @@ public class LoginCommandTest {
 
         @Override
         public void addAdmin(Admin admin) {
-            throw new AssertionError("This method should not be called.");
+            adminList.add(admin);
         }
 
         @Override
@@ -153,7 +188,7 @@ public class LoginCommandTest {
 
         @Override
         public void clearLogin() {
-            this.loginStatus = false;
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override
@@ -168,11 +203,12 @@ public class LoginCommandTest {
 
         @Override
         public Admin findAdmin(Username username) {
-            if (this.firstAdmin.getUsername().equals(username)) {
-                return firstAdmin;
-            } else {
-                return null;
+            for (Admin admin: adminList) {
+                if (admin.getUsername().equals(username)) {
+                    return admin;
+                }
             }
+            return null;
         }
 
         @Override

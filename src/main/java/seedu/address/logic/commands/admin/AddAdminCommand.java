@@ -1,5 +1,7 @@
 package seedu.address.logic.commands.admin;
 
+import static java.util.Objects.requireNonNull;
+
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
@@ -28,6 +30,10 @@ public class AddAdminCommand extends Command {
     private final Admin toAddIn;
 
     public AddAdminCommand(Username username, Password password, Password passwordVerify) {
+        requireNonNull(username);
+        requireNonNull(password);
+        requireNonNull(passwordVerify);
+
         this.username = username;
         this.password = password;
         this.passwordVerify = passwordVerify;
@@ -36,6 +42,8 @@ public class AddAdminCommand extends Command {
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
+        requireNonNull(model);
+
         if (!model.isLoggedIn()) {
             throw new CommandException(MESSAGE_NO_ACCESS);
         }
