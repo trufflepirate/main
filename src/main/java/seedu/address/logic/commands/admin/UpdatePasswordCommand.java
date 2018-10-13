@@ -1,5 +1,7 @@
 package seedu.address.logic.commands.admin;
 
+import static java.util.Objects.requireNonNull;
+
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
@@ -30,6 +32,11 @@ public class UpdatePasswordCommand extends Command {
 
     public UpdatePasswordCommand(Username username, Password oldPassword,
                                  Password newPassword, Password passwordVerify) {
+        requireNonNull(username);
+        requireNonNull(oldPassword);
+        requireNonNull(newPassword);
+        requireNonNull(passwordVerify);
+
         this.username = username;
         this.oldPassword = oldPassword;
         this.newPassword = newPassword;
@@ -40,6 +47,8 @@ public class UpdatePasswordCommand extends Command {
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
+        requireNonNull(model);
+
         if (!model.isLoggedIn()) {
             throw new CommandException(MESSAGE_NO_ACCESS);
         }
@@ -51,6 +60,7 @@ public class UpdatePasswordCommand extends Command {
         if (!username.equals(model.currentlyLoggedIn())) {
             throw new CommandException(MESSAGE_ONLY_CHANGE_YOUR_OWN_PW);
         }
+        // not verifying oldPW
 
         model.updateAdmin(toUpdate, updatedAdmin);
         model.commitAddressBook();  //TODO: not sure what this does;

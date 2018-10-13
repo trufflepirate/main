@@ -3,6 +3,7 @@ package seedu.address.logic.commands.admin;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -23,7 +24,7 @@ import seedu.address.model.job.JobName;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
 
-public class RemoveAdminCommandTest {
+public class UpdatePasswordCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -33,7 +34,25 @@ public class RemoveAdminCommandTest {
     @Test
     public void constructor_nullUsername_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new RemoveAdminCommand(null);
+        new UpdatePasswordCommand(null, new Password("oldPW"), new Password("newPW"), new Password("newPW"));
+    }
+
+    @Test
+    public void constructor_nullOldPassword_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        new UpdatePasswordCommand(new Username("username"), null, new Password("newPW"), new Password("newPW"));
+    }
+
+    @Test
+    public void constructor_nullNewPassword_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        new UpdatePasswordCommand(new Username("username"), new Password("oldPW"), null, new Password("newPW"));
+    }
+
+    @Test
+    public void constructor_nullNewPasswordVerify_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        new UpdatePasswordCommand(new Username("username"), new Password("oldPW"), new Password("newPW"), null);
     }
 
     @Test
@@ -41,62 +60,49 @@ public class RemoveAdminCommandTest {
         ModelStub modelStub = new ModelStub();
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(RemoveAdminCommand.MESSAGE_NO_ACCESS);
-        new RemoveAdminCommand(new Username("dummy")).execute(modelStub, commandHistory);
+        thrown.expectMessage(UpdatePasswordCommand.MESSAGE_NO_ACCESS);
+        new UpdatePasswordCommand(new Username("username"),
+                new Password("oldPW"), new Password("newPW"), new Password("newPW")).execute(modelStub, commandHistory);
     }
 
     @Test
-    public void execute_doesNotExists_throwsCommandException() throws Exception {
+    public void execute_passwordsDoNotMatch_throwsCommandException() throws Exception {
         ModelStub modelStub = new ModelStub();
-        modelStub.setLogin(new Username("dummyLogin"));
+        modelStub.setLogin(new Username("dummy"));
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(RemoveAdminCommand.MESSAGE_NO_SUCH_ADMIN);
-        new RemoveAdminCommand(new Username("noSuchUsername")).execute(modelStub, commandHistory);
+        thrown.expectMessage(UpdatePasswordCommand.MESSAGE_PASSWORDS_DONT_MATCH);
+        new UpdatePasswordCommand(new Username("username"),
+                new Password("oldPW"), new Password("newPW"), new Password("asdhb")).execute(modelStub, commandHistory);
     }
 
     @Test
-    public void execute_removeOnlyAdmin_throwsCommandException() throws Exception {
+    public void execute_notOwnAccount_throwsCommandException() throws Exception {
         ModelStub modelStub = new ModelStub();
-        modelStub.setLogin(new Username("dummyLogin"));
-        modelStub.addAdmin(new Admin(new Username("dummyLogin"), new Password("dummyPassword")));
+        modelStub.setLogin(new Username("dummy"));
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(RemoveAdminCommand.MESSAGE_CANT_DELETE_LAST_ADMIN);
-        new RemoveAdminCommand(new Username("dummyLogin")).execute(modelStub, commandHistory);
+        thrown.expectMessage(UpdatePasswordCommand.MESSAGE_ONLY_CHANGE_YOUR_OWN_PW);
+        new UpdatePasswordCommand(new Username("username"),
+                new Password("oldPW"), new Password("newPW"), new Password("newPW")).execute(modelStub, commandHistory);
     }
 
     @Test
-    public void execute_removeNotLoggedIn_success() throws Exception {
+    public void execute_updateAdmin_success() throws Exception {
         ModelStub modelStub = new ModelStub();
-        modelStub.setLogin(new Username("dummyLogin"));
-        modelStub.addAdmin(new Admin(new Username("dummyLogin"), new Password("dummyPW")));
-        modelStub.addAdmin(new Admin(new Username("dummyRemove"), new Password("dummyPW")));
+        modelStub.setLogin(new Username("dummy"));
+        modelStub.addAdmin(new Admin(new Username("dummy"), new Password("oldPW")));
 
-        CommandResult commandResult = new RemoveAdminCommand(new Username("dummyRemove"))
-                .execute(modelStub, commandHistory);
+        CommandResult commandResult = new UpdatePasswordCommand(new Username("dummy"),
+                new Password("oldPW"), new Password("newPW"), new Password("newPW")).execute(modelStub, commandHistory);
 
-        assertEquals(commandResult.feedbackToUser, RemoveAdminCommand.MESSAGE_SUCCESS);
-        assertEquals(modelStub.loggedInAdmin, new Username("dummyLogin"));
-        assertEquals(modelStub.loginStatus, true);
+        assertEquals(commandResult.feedbackToUser, UpdatePasswordCommand.MESSAGE_SUCCESS);
+        assertEquals(modelStub.isLoggedIn(), true);
+        assertEquals(modelStub.currentlyLoggedIn(), new Username("dummy"));
+        assertEquals(modelStub.adminList, Arrays.asList(new Admin(new Username("dummy"), new Password("newPW"))));
     }
 
-    @Test
-    public void execute_removeLoggedIn_success() throws Exception {
-        ModelStub modelStub = new ModelStub();
-        modelStub.setLogin(new Username("dummyLogin"));
-        modelStub.addAdmin(new Admin(new Username("dummyLogin"), new Password("dummyPW")));
-        modelStub.addAdmin(new Admin(new Username("dummyOther"), new Password("dummyPW")));
-
-        CommandResult commandResult = new RemoveAdminCommand(new Username("dummyLogin"))
-                .execute(modelStub, commandHistory);
-
-        assertEquals(commandResult.feedbackToUser, RemoveAdminCommand.MESSAGE_SUCCESS);
-        assertEquals(modelStub.loggedInAdmin, null);
-        assertEquals(modelStub.loginStatus, false);
-    }
-
-    //TODO: equals not tested
+    //NOTE: can't test wrong old password because jBcrypt
 
     /**
      * A default model stub that has some methods failing
@@ -179,7 +185,8 @@ public class RemoveAdminCommandTest {
 
         @Override
         public void updateAdmin(Admin admin, Admin updatedAdmin) {
-            throw new AssertionError("This method should not be called.");
+            removeAdmin(admin);
+            addAdmin(updatedAdmin);
         }
 
         @Override
