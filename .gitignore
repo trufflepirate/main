@@ -2,6 +2,8 @@ build/
 .gradle/
 .checkstyle
 .settings/
+config.json
+preferences.json
 .idea/
 lib/*
 *.iml
