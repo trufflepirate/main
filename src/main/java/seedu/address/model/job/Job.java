@@ -46,8 +46,8 @@ public class Job {
         time = new TimeStamp();
     }
 
-    public String getPriority() {
-        return priority.toString();
+    public JobPriority getPriority() {
+        return priority;
     }
 
     public Name getName() {

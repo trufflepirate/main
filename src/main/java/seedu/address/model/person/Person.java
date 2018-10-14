@@ -36,6 +36,13 @@ public class Person {
         this.tags.addAll(tags);
     }
 
+    public Person(Name name) {
+        this.name = name;
+        this.phone = new Phone("1");
+        this.email = new Email("1");
+        this.address = new Address("1");
+    }
+
     public Name getName() {
         return name;
     }

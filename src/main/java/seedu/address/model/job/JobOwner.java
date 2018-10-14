@@ -19,6 +19,8 @@ public class JobOwner extends Person {
     public static final String MESSAGE_OWNERNAME_CONSTRAINTS =
             "Owner names should only contain alphanumeric characters and spaces, "
                     + "and it should not be blank";
+    public static final String MESSAGE_JOBOWNER_CONSTRAINTS =
+            "Job owner's name should only contain alphanumeric characters and spaces, and it should not be blank";
 
     /**
      * Construct a {@code JobOwner}
@@ -35,6 +37,9 @@ public class JobOwner extends Person {
         super(name, phone, email, address, tags);
     }
 
+    public JobOwner(Name name) {
+        super(name);
+    }
 
 
     /**

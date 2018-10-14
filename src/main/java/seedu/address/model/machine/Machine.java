@@ -51,6 +51,11 @@ public class Machine {
         this.status = status;
     }
 
+    public Machine(String machineName) {
+        this.machineName = new MachineName(machineName);
+        this.status = true;
+    }
+
     /**
      * Returns true if a given string is a valid name.
      */
