@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
@@ -24,12 +25,17 @@ public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
-    private static final Pattern LOGIN_COMMAND_FORMAT = Pattern.compile("login(\\s+)(?<username>\\S+)(\\s)(?<password>\\S+)(?<arguments>.*)");
+    private static final Pattern LOGIN_COMMAND_FORMAT = Pattern
+        .compile("login(\\s+)(?<username>\\S+)(\\s)(?<password>\\S+)(?<arguments>.*)");
     private static final String PASSWORD_FORMAT = "\\S";
+    //TODO: remove this when the acutal password can be stored
+    private static final String PLACEHOLDER_PASSWORD = "SAIFBUTT";
+
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
+    //TODO: implement the actual storing of the passwords
     private String actualPassword;
 
     @FXML
@@ -76,18 +82,33 @@ public class CommandBox extends UiPart<Region> {
 
     private void loginCheck() {
         final Matcher matcher = LOGIN_COMMAND_FORMAT.matcher(commandTextField.getText());
-            if (matcher.matches()) {
-                handlePasswordKeypresses(matcher);
-            }
+        if (matcher.matches()) {
+            handlePasswordKeypresses(matcher);
+        }
         //return matcher.matches();
     }
 
     private void handlePasswordKeypresses(Matcher matcher) {
-        final String hiddenPassword = matcher.group("password").replaceAll(PASSWORD_FORMAT,"*");
+        final String hiddenPassword = matcher.group("password").replaceAll(PASSWORD_FORMAT, "*");
         String maskedCommandTextField = matcher.replaceAll("login$1$2$3" + hiddenPassword + "$5");
-        commandTextField.replaceText(0,commandTextField.getLength(), maskedCommandTextField);
+        commandTextField.replaceText(0, commandTextField.getLength(), maskedCommandTextField);
         commandTextField.positionCaret(commandTextField.getText().length());
     }
+
+    //TODO:Implement working password shower. PLEASE DISABLE FOR TESTING OF OTHER FEATURES.
+    @FXML
+    private void handleMouseEntered(MouseEvent mouseEvent) {
+        actualPassword = commandTextField.getText();
+        commandTextField.replaceText(0, commandTextField.getLength(), PLACEHOLDER_PASSWORD);
+        commandTextField.positionCaret(commandTextField.getText().length());
+    }
+
+    @FXML
+    private void handleMouseExited(MouseEvent mouseEvent) {
+        commandTextField.replaceText(0, commandTextField.getLength(), actualPassword);
+        commandTextField.positionCaret(commandTextField.getText().length());
+    }
+
     /**
      * Updates the text field with the previous input in {@code historySnapshot},
      * if there exists a previous input in {@code historySnapshot}
