@@ -1,6 +1,8 @@
 package seedu.address.ui;
 
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -22,10 +24,13 @@ public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
+    private static final Pattern LOGIN_COMMAND_FORMAT = Pattern.compile("login(\\s+)(?<username>\\S+)(\\s)(?<password>\\S+)(?<arguments>.*)");
+    private static final String PASSWORD_FORMAT = "\\S";
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
+    private String actualPassword;
 
     @FXML
     private TextField commandTextField;
@@ -55,11 +60,34 @@ public class CommandBox extends UiPart<Region> {
             keyEvent.consume();
             navigateToNextInput();
             break;
+        case ENTER:
+            keyEvent.consume();
+            handleCommandEntered();
+            break;
+        case SPACE:
+            //keyEvent.consume();
+            //loginCheck();
+            //break;
         default:
+            loginCheck();
             // let JavaFx handle the keypress
         }
     }
 
+    private void loginCheck() {
+        final Matcher matcher = LOGIN_COMMAND_FORMAT.matcher(commandTextField.getText());
+            if (matcher.matches()) {
+                handlePasswordKeypresses(matcher);
+            }
+        //return matcher.matches();
+    }
+
+    private void handlePasswordKeypresses(Matcher matcher) {
+        final String hiddenPassword = matcher.group("password").replaceAll(PASSWORD_FORMAT,"*");
+        String maskedCommandTextField = matcher.replaceAll("login$1$2$3" + hiddenPassword + "$5");
+        commandTextField.replaceText(0,commandTextField.getLength(), maskedCommandTextField);
+        commandTextField.positionCaret(commandTextField.getText().length());
+    }
     /**
      * Updates the text field with the previous input in {@code historySnapshot},
      * if there exists a previous input in {@code historySnapshot}
@@ -98,7 +126,6 @@ public class CommandBox extends UiPart<Region> {
     /**
      * Handles the Enter button pressed event.
      */
-    @FXML
     private void handleCommandEntered() {
         try {
             CommandResult commandResult = logic.execute(commandTextField.getText());
