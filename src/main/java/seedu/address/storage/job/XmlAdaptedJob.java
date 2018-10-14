@@ -1,6 +1,5 @@
 package seedu.address.storage.job;
 
-import java.security.acl.Owner;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -10,17 +9,13 @@ import java.util.stream.Collectors;
 
 import javax.xml.bind.annotation.XmlElement;
 
-import com.sun.xml.bind.v2.TODO;
-
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.job.JobName;
 import seedu.address.model.job.JobOwner;
 import seedu.address.model.job.JobPriority;
 import seedu.address.model.job.Job;
-import seedu.address.model.job.TimeStamp;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 import seedu.address.storage.XmlAdaptedTag;
 
@@ -94,7 +89,8 @@ public class XmlAdaptedJob{
         }
 
         if (name == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, JobName.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    JobName.class.getSimpleName()));
         }
         if (!JobName.isValidName(name)) {
             throw new IllegalValueException(JobName.MESSAGE_NAME_CONSTRAINTS);
@@ -102,7 +98,8 @@ public class XmlAdaptedJob{
         final JobName modelJobName = new JobName(name);
 
         if (machine == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Machine.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Machine.class.getSimpleName()));
         }
         if (!Machine.isValidMachine(machine)) {
             throw new IllegalValueException(Machine.MESSAGE_MACHINENAME_CONSTRAINTS);
@@ -110,7 +107,8 @@ public class XmlAdaptedJob{
         final Machine modelMachine = new Machine(machine);
 
         if (owner == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, JobOwner.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    JobOwner.class.getSimpleName()));
         }
         if (!JobOwner.isValidJobOwner(owner)) {
             throw new IllegalValueException(JobOwner.MESSAGE_OWNERNAME_CONSTRAINTS);
@@ -118,7 +116,8 @@ public class XmlAdaptedJob{
         final JobOwner modelJobOwner= new JobOwner(new Name(owner));
 
         if (priority == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, JobPriority.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    JobPriority.class.getSimpleName()));
         }
         if (!JobPriority.isValidPriority(priority)) {
             throw new IllegalValueException(JobPriority.MESSAGE_JOBPRIORITY_CONSTRAINTS);

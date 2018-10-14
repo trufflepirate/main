@@ -51,7 +51,7 @@ public class JobCard extends UiPart<Region> {
         jobMachine.setText(job.getMachine().getName().fullName);
         // TODO: 10-Oct-18 time to be displayed
         jobOwner.setText(job.getOwner().getName().fullName);
-        jobPriority.setText(job.getPriority());
+        jobPriority.setText(job.getPriority().toString());
     }
 
     @Override
