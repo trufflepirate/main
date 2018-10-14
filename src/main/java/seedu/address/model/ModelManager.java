@@ -162,7 +162,18 @@ public class ModelManager extends ComponentManager implements Model {
         indicateMachineListChanged();
     }
 
+    @Override
+    public boolean hasMachine(Machine machine) {
+        requireNonNull(machine);
+        return versionedAddressBook.hasMachine(machine);
+    }
 
+    @Override
+    public void updateMachine(Machine target, Machine editedMachine) {
+        requireAllNonNull(target, editedMachine);
+        versionedAddressBook.updateMachine(target, editedMachine);
+        indicateMachineListChanged();
+    }
     // ============================== Admin methods ======================================= //
 
     @Override
