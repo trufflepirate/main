@@ -10,10 +10,10 @@ import java.util.stream.Collectors;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
 import seedu.address.model.job.JobOwner;
 import seedu.address.model.job.JobPriority;
-import seedu.address.model.job.Job;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Name;
 import seedu.address.model.tag.Tag;
@@ -22,7 +22,7 @@ import seedu.address.storage.XmlAdaptedTag;
 /**
  * JAXB-friendly version of the Job.
  */
-public class XmlAdaptedJob{
+public class XmlAdaptedJob {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Job's %s field is missing!";
 
@@ -113,7 +113,7 @@ public class XmlAdaptedJob{
         if (!JobOwner.isValidJobOwner(owner)) {
             throw new IllegalValueException(JobOwner.MESSAGE_OWNERNAME_CONSTRAINTS);
         }
-        final JobOwner modelJobOwner= new JobOwner(new Name(owner));
+        final JobOwner modelJobOwner = new JobOwner(new Name(owner));
 
         if (priority == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,

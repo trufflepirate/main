@@ -4,6 +4,7 @@ package seedu.address.model.job;
  * Indicates three different types of job priority
  */
 public enum JobPriority {
+
     HIGH,
     MEDIUM,
     LOW;
@@ -13,7 +14,9 @@ public enum JobPriority {
 
     public static boolean isValidPriority(JobPriority priority) {
         boolean isValid = true;
-        if(priority!= HIGH || priority != MEDIUM || priority != LOW) isValid = false;
+        if(priority != HIGH || priority != MEDIUM || priority != LOW) {
+            isValid = false;
+        }
         return isValid;
     }
 }
