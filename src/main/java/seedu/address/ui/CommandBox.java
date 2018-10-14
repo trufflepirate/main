@@ -80,14 +80,19 @@ public class CommandBox extends UiPart<Region> {
         }
     }
 
+    /**
+     * Helper function to check if current text in textfield resembles the login command.
+     */
     private void loginCheck() {
         final Matcher matcher = LOGIN_COMMAND_FORMAT.matcher(commandTextField.getText());
         if (matcher.matches()) {
             handlePasswordKeypresses(matcher);
         }
-        //return matcher.matches();
     }
 
+    /**
+     * handler to handle keypresses when the function resembles a login command
+     */
     private void handlePasswordKeypresses(Matcher matcher) {
         final String hiddenPassword = matcher.group("password").replaceAll(PASSWORD_FORMAT, "*");
         String maskedCommandTextField = matcher.replaceAll("login$1$2$3" + hiddenPassword + "$5");
@@ -95,7 +100,12 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.positionCaret(commandTextField.getText().length());
     }
 
+
     //TODO:Implement working password shower. PLEASE DISABLE FOR TESTING OF OTHER FEATURES.
+
+    /**
+     * Handles the MouseEvent for the Cursor entering the text field, {@code mouseEvent}.
+     */
     @FXML
     private void handleMouseEntered(MouseEvent mouseEvent) {
         actualPassword = commandTextField.getText();
@@ -103,6 +113,9 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.positionCaret(commandTextField.getText().length());
     }
 
+    /**
+     * Handles the MouseEvent for the Cursor leaving the text field, {@code mouseEvent}.
+     */
     @FXML
     private void handleMouseExited(MouseEvent mouseEvent) {
         commandTextField.replaceText(0, commandTextField.getLength(), actualPassword);
