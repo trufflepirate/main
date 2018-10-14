@@ -2,15 +2,11 @@ package seedu.address.model.job;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
-import seedu.address.model.tag.Tag;
 
 /**
  * Represents a Printing job in MakerManager.
@@ -18,9 +14,6 @@ import seedu.address.model.tag.Tag;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Job {
-    public static final String MESSAGE_NAME_CONSTRAINTS =
-            "Job names should only contain alphanumeric characters and spaces, "
-                    + "and it should not be blank";
 
     //Identity field
     private JobName name;
@@ -29,25 +22,19 @@ public class Job {
     private Person owner;
 
     //Data field
-    private final Set<Tag> tags = new HashSet<>();
-    private JobPriority priority;
+    private JobNote note;
 
     /**
      * Every field must be present and not null.
      */
-    public Job(Name name, Machine machine, Person owner, JobPriority priority, Set<Tag> tags) {
-        requireAllNonNull(name, machine, owner, tags, priority);
+    public Job(Name name, Machine machine, Person owner, JobNote notes) {
+        requireAllNonNull(name, machine, owner, notes);
         this.name = (JobName) name;
         this.machine = machine;
         this.owner = owner;
-        this.tags.addAll(tags);
-        this.priority = priority;
+        this.note = note;
 
         time = new TimeStamp();
-    }
-
-    public String getPriority() {
-        return priority.toString();
     }
 
     public Name getName() {
@@ -67,11 +54,11 @@ public class Job {
     }
 
     /**
-     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
+     * Returns an immutable note set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
-    public Set<Tag> getTags() {
-        return Collections.unmodifiableSet(tags);
+    public JobNote getNotes() {
+        return note;
     }
 
     /*
@@ -129,13 +116,13 @@ public class Job {
                 && otherJob.getMachine().equals(getMachine())
                 && otherJob.getOwner().equals(getOwner())
                 && otherJob.getTime().equals(getTime())
-                && otherJob.getTags().equals(getTags());
+                && otherJob.getNotes().equals(getNotes());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, machine, time, owner, tags);
+        return Objects.hash(name, machine, time, owner, note);
     }
 
 

@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.job.exceptions.JobNotFoundException;
+import seedu.address.model.machine.exceptions.DuplicateMachineException;
 
 /**
  * A list of Jobs whose elements are not repeated
@@ -48,24 +49,25 @@ public class UniqueJobList {
         }
     }
 
-    public void setJobs(UniqueJobList replacement) {
-        requireNonNull(replacement);
-        internalList.setAll(replacement.internalList);
-    }
-
     /**
-     * Replaces the contents of this list with {@code jobs}.
-     * {@code jobs} must not contain duplicate jobs.
+     * Replaces the job {@code target} in the list with {@code editedJob}.
+     * {@code target} must exist in the list.
+     * The job identity of {@code editedJob} must not be the same as another existing job in the list.
      */
-    public void setJobs(List<Job> jobs) {
-        requireAllNonNull(jobs);
-        if (!jobsAreUnique(jobs)) {
+    public void updateJob(Job target, Job editedJob) {
+        requireAllNonNull(target, editedJob);
+
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new JobNotFoundException();
+        }
+
+        if (!target.isSameJob(editedJob) && contains(editedJob)) {
             throw new DuplicateJobException();
         }
 
-        internalList.setAll(jobs);
+        internalList.set(index, editedJob);
     }
-
 
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
@@ -77,7 +79,53 @@ public class UniqueJobList {
     /**
      * Returns true if the list has no repetition
      */
-    public boolean jobsAreUnique(List<Job> jobs) {
+    public boolean isUnique() {
+        boolean isUnique = true;
+
+        for (Job flagJob : internalList) {
+            for (Job pointerJob : internalList) {
+                if (flagJob.isSameJob(pointerJob)) {
+                    isUnique = false;
+                }
+            }
+        }
+
+        return isUnique;
+    }
+
+    /**
+     *Returns the number of distinct elements in the list
+     */
+    public int size() {
+        return internalList.size();
+    }
+
+    /**
+     * Returns Job
+     * @param name
+     */
+    public Job findJob(JobName name) {
+        for (Job job : internalList) {
+            if (job.getName().equals(name)) {
+                return job;
+            }
+        }
+        return null;
+    }
+
+    public void setJobs(ObservableList<Job> jobs) {
+        requireNonNull(jobs);
+        if (!jobsAreUnique(jobs)) {
+            throw new DuplicateMachineException();
+        }
+
+        internalList.setAll(jobs);
+    }
+
+    /**
+     * Returns true if {@code jobs} contains only unique jobs
+     */
+    private boolean jobsAreUnique(List<Job> jobs) {
         for (int i = 0; i < jobs.size() - 1; i++) {
             for (int j = i + 1; j < jobs.size(); j++) {
                 if (jobs.get(i).isSameJob(jobs.get(j))) {
@@ -86,12 +134,5 @@ public class UniqueJobList {
             }
         }
         return true;
-    }
-
-    /**
-     *Returns the number of distinct elements in the list
-     */
-    public int size() {
-        return internalList.size();
     }
 }
