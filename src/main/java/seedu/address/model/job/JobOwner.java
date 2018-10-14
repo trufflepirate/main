@@ -1,5 +1,7 @@
 package seedu.address.model.job;
 
+import static seedu.address.model.person.Name.NAME_VALIDATION_REGEX;
+
 import java.util.Set;
 
 import seedu.address.model.person.Address;
@@ -14,6 +16,9 @@ import seedu.address.model.tag.Tag;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class JobOwner extends Person {
+    public static final String MESSAGE_OWNERNAME_CONSTRAINTS =
+            "Owner names should only contain alphanumeric characters and spaces, "
+                    + "and it should not be blank";
 
     /**
      * Construct a {@code JobOwner}
@@ -30,4 +35,12 @@ public class JobOwner extends Person {
         super(name, phone, email, address, tags);
     }
 
+
+
+    /**
+     * Returns true if a given string is a valid name.
+     */
+    public static boolean isValidJobOwner(String test) {
+        return test.matches(NAME_VALIDATION_REGEX);
+    }
 }

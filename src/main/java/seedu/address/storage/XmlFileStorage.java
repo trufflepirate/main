@@ -32,30 +32,6 @@ public class XmlFileStorage {
     }
 
     /**
-     * Saves the given admins data to the specified file.
-     */
-    public static void saveDataToFile(Path file, XmlSerializableMakerManagerAdmins addressBook)
-            throws FileNotFoundException {
-        try {
-            XmlUtil.saveDataToFile(file, addressBook);
-        } catch (JAXBException e) {
-            throw new AssertionError("Unexpected exception " + e.getMessage(), e);
-        }
-    }
-
-    /**
-     * Saves the given admins data to the specified file.
-     */
-    public static void saveDataToFile(Path file, XmlSerializableMakerManagerMachines addressBook)
-            throws FileNotFoundException {
-        try {
-            XmlUtil.saveDataToFile(file, addressBook);
-        } catch (JAXBException e) {
-            throw new AssertionError("Unexpected exception " + e.getMessage(), e);
-        }
-    }
-
-    /**
      * Returns address book in the file or an empty address book
      */
     public static XmlSerializableAddressBook loadDataFromSaveFile(Path file) throws DataConversionException,
@@ -86,7 +62,7 @@ public class XmlFileStorage {
             throws DataConversionException,
             FileNotFoundException {
         try {
-            logger.info("Getting serialized ADMIN data from custom xml file");
+            logger.info("Getting serialized data from custom xml file");
             return XmlUtil.getDataFromFile(file, XmlSerializableMakerManagerAdmins.class);
         } catch (JAXBException e) {
             throw new DataConversionException(e);
@@ -110,11 +86,11 @@ public class XmlFileStorage {
      * Returns makerManager address book in the file or an empty address book
      */
 
-    public static XmlSerializableMakerManagerMachines loadMakerManagerMachineDataFromSaveFile(Path file)
+    public static XmlSerializableMakerManagerMachines loadMakerManagerDataFromSaveFile(Path file)
             throws DataConversionException,
             FileNotFoundException {
         try {
-            logger.info("Getting serialized MACHINE data from custom xml file");
+            logger.info("Getting serialized data from custom xml file");
             return XmlUtil.getDataFromFile(file, XmlSerializableMakerManagerMachines.class);
         } catch (JAXBException e) {
             throw new DataConversionException(e);
