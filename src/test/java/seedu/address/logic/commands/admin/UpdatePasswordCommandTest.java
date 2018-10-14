@@ -91,10 +91,11 @@ public class UpdatePasswordCommandTest {
     public void execute_updateAdmin_success() throws Exception {
         ModelStub modelStub = new ModelStub();
         modelStub.setLogin(new Username("dummy"));
-        modelStub.addAdmin(new Admin(new Username("dummy"), new Password("oldPW")));
+        modelStub.addAdmin(new Admin(new Username("dummy"), new Password("$2a$10$Cj1nZuVAdZIysLK24P8zBe9gRBK.hagqzZJ0zF7i0UFlxlplRCI7e")));
+        //weird string is hash for "admin2"
 
         CommandResult commandResult = new UpdatePasswordCommand(new Username("dummy"),
-                new Password("oldPW"), new Password("newPW"), new Password("newPW")).execute(modelStub, commandHistory);
+                new Password("admin2"), new Password("newPW"), new Password("newPW")).execute(modelStub, commandHistory);
 
         assertEquals(commandResult.feedbackToUser, UpdatePasswordCommand.MESSAGE_SUCCESS);
         assertEquals(modelStub.isLoggedIn(), true);
