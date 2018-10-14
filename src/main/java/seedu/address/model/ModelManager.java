@@ -181,7 +181,8 @@ public class ModelManager extends ComponentManager implements Model {
     //TODO: add tests
     @Override
     public void updateAdmin(Admin admin, Admin updatedAdmin) {
-        versionedAddressBook.updateAdmin(admin, updatedAdmin);
+        versionedAddressBook.addAdmin(updatedAdmin);
+        versionedAddressBook.removeAdmin(admin);
         indicateAdminListChanged();
     }
 

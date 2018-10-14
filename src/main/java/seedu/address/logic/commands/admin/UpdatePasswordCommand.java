@@ -2,6 +2,8 @@ package seedu.address.logic.commands.admin;
 
 import static java.util.Objects.requireNonNull;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
@@ -22,13 +24,12 @@ public class UpdatePasswordCommand extends Command {
             + "Example: udpatePassword USERNAME OLD_PW NEW_PW NEW_PW_VERIFY\n";
     public static final String MESSAGE_ONLY_CHANGE_YOUR_OWN_PW = "You can only change your own password.";
     public static final String MESSAGE_PASSWORDS_DONT_MATCH = "The two password fields don't match! Please try again.";
+    public static final String MESSAGE_WRONG_OLD_DETAILS = "Your old password doesn't match.";
 
     private final Username username;
     private final Password oldPassword;
     private final Password newPassword;
     private final Password passwordVerify;
-    private final Admin toUpdate;
-    private final Admin updatedAdmin;
 
     public UpdatePasswordCommand(Username username, Password oldPassword,
                                  Password newPassword, Password passwordVerify) {
@@ -41,8 +42,6 @@ public class UpdatePasswordCommand extends Command {
         this.oldPassword = oldPassword;
         this.newPassword = newPassword;
         this.passwordVerify = passwordVerify;
-        this.toUpdate = new Admin(username, oldPassword);
-        this.updatedAdmin = new Admin(username, newPassword);
     }
 
     @Override
@@ -59,8 +58,20 @@ public class UpdatePasswordCommand extends Command {
 
         if (!username.equals(model.currentlyLoggedIn())) {
             throw new CommandException(MESSAGE_ONLY_CHANGE_YOUR_OWN_PW);
+
         }
-        // not verifying oldPW
+
+        final Admin toUpdate;
+        final Admin updatedAdmin;
+
+        if (!BCrypt.checkpw(oldPassword.toString(), model.findAdmin(username).getPassword().toString())) {
+            throw new CommandException(MESSAGE_WRONG_OLD_DETAILS);
+        } else {
+            toUpdate = new Admin(username, model.findAdmin(username).getPassword());
+            updatedAdmin = new Admin(username, newPassword);
+        }
+
+
 
         model.updateAdmin(toUpdate, updatedAdmin);
         model.commitAddressBook();  //TODO: not sure what this does;

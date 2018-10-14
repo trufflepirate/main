@@ -156,13 +156,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void removeAdmin(Admin toRemove) {
         admins.remove(toRemove);
     }
-    /**
-     * updates an admin in the address book.
-     */
-    public void updateAdmin(Admin toRemove, Admin toAdd) {
-        admins.remove(toRemove);
-        admins.add(toAdd);
-    }
+
     public boolean hasAdmin(Admin admin) {
         return admins.contains(admin);
     }
