@@ -2,13 +2,11 @@ package seedu.address.model.admin;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.List;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import seedu.address.model.admin.exceptions.AdminNotFoundException;
 import seedu.address.model.admin.exceptions.DuplicateAdminException;
+
 
 /**
  * A list of admins that ensures uniqueness in Usernames
@@ -37,19 +35,6 @@ public class UniqueAdminList {
             }
         }
         return null;
-    }
-
-    /**
-     * Replaces the contents of this list with {@code admins}.
-     * {@code admins} must not contain duplicate admins.
-     */
-    public void setAdmins(List<Admin> admins) {
-        requireNonNull(admins);
-        if (!adminsAreUnique(admins)) {
-            throw new DuplicateAdminException();
-        }
-
-        internalList.setAll(admins);
     }
 
     /**
@@ -92,20 +77,4 @@ public class UniqueAdminList {
     public ObservableList<Admin> asUnmodifiableObservableList() {
         return FXCollections.unmodifiableObservableList(internalList);
     }
-
-
-    /**
-     * Returns true if {@code admins} contains only unique admins
-     */
-    private boolean adminsAreUnique(List<Admin> admins) {
-        for (int i = 0; i < admins.size() - 1; i++) {
-            for (int j = i + 1; j < admins.size(); j++) {
-                if (admins.get(i).equals(admins.get(j))) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
 }

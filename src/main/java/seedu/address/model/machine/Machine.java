@@ -23,8 +23,8 @@ public class Machine {
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String NAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
-    public static final String MESSAGE_NAME_CONSTRAINTS =
-            "Names should only contain alphanumeric characters and spaces, "
+    public static final String MESSAGE_MACHINENAME_CONSTRAINTS =
+            "Machine names should only contain alphanumeric characters and spaces, "
                     + "and it should not be blank";
     public static final String MESSAGE_WRONG_STATUS =
             "Status can only contain 'ENABLED' or 'DISABLED'"
@@ -32,7 +32,7 @@ public class Machine {
     // Identity fields
     private final MachineName machineName;
     //TODO make status be more diverse, like enum
-    private final MachineStatus status;
+    private final boolean status;
 
     // Data fields
     //Name is a placeholder. To be replaced by Job class in the future
@@ -43,12 +43,19 @@ public class Machine {
     /**
      * Every field must be present and not null.
      */
-    public Machine(MachineName name, List<Job> jobs, Set<Tag> tags, MachineStatus status) {
+    public Machine(MachineName name, ArrayList<Job> jobs, Set<Tag> tags, boolean status) {
         requireAllNonNull(name, jobs, tags);
         this.machineName = name;
         this.jobs.addAll(jobs);
         this.tags.addAll(tags);
         this.status = status;
+    }
+
+    /**
+     * Returns true if a given string is a valid name.
+     */
+    public static boolean isValidMachine(String test) {
+        return test.matches(NAME_VALIDATION_REGEX);
     }
 
     public MachineName getName() {
@@ -73,7 +80,7 @@ public class Machine {
 
     /**
      * Returns true if both persons of the same name and same list of Jobs.
-     * This defines a weaker notion of equality between two machines.
+     * This defines a weaker notion of equality between two persons.
      */
     public boolean isSameMachine(Machine otherMachine) {
         if (otherMachine == this) {
@@ -105,6 +112,16 @@ public class Machine {
                 && otherMachine.getTags().equals(getTags());
     }
 
+    /**
+     * this method is meant for compare if two machines have the same name
+     * two machines are treated as the same one once they have the same name
+     * @param machine
+     * @return boolean
+     */
+    public boolean sameMachine(Machine machine) {
+        return this.getName().equals(machine.getName());
+    }
+
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
@@ -122,7 +139,7 @@ public class Machine {
         getJobs().forEach(builder::append);
 
         builder.append(" Status: ");
-        builder.append(getStatus().toString());
+        builder.append(getStringStatus());
         return builder.toString();
     }
 
@@ -135,9 +152,15 @@ public class Machine {
 
 
 
-    public MachineStatus getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-
+    public String getStringStatus() {
+        if (getStatus()) {
+            return "ENABLED";
+        } else {
+            return "DISABLED";
+        }
+    }
 }
