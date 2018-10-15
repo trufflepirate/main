@@ -1,5 +1,7 @@
 package seedu.address.logic.commands.admin;
 
+import static java.util.Objects.requireNonNull;
+
 import org.mindrot.jbcrypt.BCrypt;
 
 import seedu.address.commons.core.EventsCenter;
@@ -31,12 +33,15 @@ public class LoginCommand extends Command {
     private final Password password;
 
     public LoginCommand(Username username, Password password) {
+        requireNonNull(username);
+        requireNonNull(password);
         this.username = username;
         this.password = password;
     }
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
+        requireNonNull(model);
         if (model.isLoggedIn()) {
             throw new CommandException(MESSAGE_ALREADY_LOGGED_IN);
         } else if (model.findAdmin(username) == null) {

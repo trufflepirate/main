@@ -157,6 +157,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * The admin must not already exist in the address book.
      */
     public void addAdminWithoutRehash(Admin toAdd) {
+        //TODO: Not idiot proof
         admins.add(toAdd);
     }
 
@@ -166,14 +167,6 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void removeAdmin(Admin toRemove) {
         admins.remove(toRemove);
-    }
-
-    /**
-     * updates an admin in the address book.
-     */
-    public void updateAdmin(Admin toRemove, Admin toAdd) {
-        admins.remove(toRemove);
-        admins.add(toAdd);
     }
 
     public boolean hasAdmin(Admin admin) {
@@ -200,7 +193,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         Admin protectedAdmin = new Admin(rawAdmin.getUsername(), encryptedPassword);
         return protectedAdmin;
     }
-
 
     //======================== machine methods ================================//
 
