@@ -83,13 +83,25 @@ public class AddAdminCommandTest {
     }
 
     @Test
+    public void execute_addAdminInvalidPassword_throwsCommandException() throws Exception {
+        ModelStub modelStub = new ModelStub();
+        modelStub.setLogin(new Username("dummyLogin"));
+
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(AddAdminCommand.MESSAGE_NOT_VALID_PASSWORD);
+        new AddAdminCommand(new Username("dummyUsername"),
+                new Password("invalidPW"), new Password("invalidPW"))
+                .execute(modelStub, commandHistory);
+    }
+
+    @Test
     public void execute_addAdmin_success() throws Exception {
         ModelStub modelStub = new ModelStub();
         modelStub.setLogin(new Username("dummyLogin"));
-        Admin adminToAdd = new Admin(new Username("dummyUsername"), new Password("dummyPW"));
+        Admin adminToAdd = new Admin(new Username("dummyUsername"), new Password("aaaAAA123$"));
 
         CommandResult commandResult = new AddAdminCommand(new Username("dummyUsername"),
-                new Password("dummyPW"), new Password("dummyPW"))
+                new Password("aaaAAA123$"), new Password("aaaAAA123$"))
                 .execute(modelStub, commandHistory);
 
         assertEquals(commandResult.feedbackToUser, AddAdminCommand.MESSAGE_SUCCESS);
