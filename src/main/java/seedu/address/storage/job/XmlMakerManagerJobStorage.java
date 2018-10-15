@@ -22,7 +22,7 @@ import seedu.address.storage.XmlFileStorage;
  */
 public class XmlMakerManagerJobStorage implements AddressBookStorage {
 
-    private static final Logger logger = LogsCenter.getLogger(seedu.address.storage.job.XmlMakerManagerJobStorage.class);
+    private static final Logger logger = LogsCenter.getLogger(XmlMakerManagerJobStorage.class);
 
     private Path filePath;
 

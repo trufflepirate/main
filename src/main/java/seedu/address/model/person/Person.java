@@ -38,9 +38,9 @@ public class Person {
 
     public Person(Name name) {
         this.name = name;
-        this.phone = new Phone("1");
-        this.email = new Email("1");
-        this.address = new Address("1");
+        this.phone = new Phone("000");
+        this.email = new Email("0@u.nus.edu");
+        this.address = new Address("000");
     }
 
     public Name getName() {

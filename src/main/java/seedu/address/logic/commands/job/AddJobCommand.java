@@ -32,7 +32,7 @@ public class AddJobCommand extends Command {
             + PREFIX_NAME + "iDCP project "
             + PREFIX_MACHINE + "PRINTER1 "
             + PREFIX_JOB_OWNER + "TIANYUAN "
-            + PREFIX_JOB_PRIORITY + "HIGH"
+            + PREFIX_JOB_PRIORITY + "HIGH "
             + PREFIX_TAG + "SATELLITE PROJECT";
 
 

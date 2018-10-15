@@ -204,7 +204,7 @@ public class ParserUtil {
             throw new ParseException(JobOwner.MESSAGE_OWNERNAME_CONSTRAINTS);
         }
 
-        return new JobOwner(new Name(trimJobOwner), new Phone("1"), new Email("1"), new Address("1"), new HashSet<>());
+        return new JobOwner(new Name(trimJobOwner));
     }
 
     /**
