@@ -11,7 +11,6 @@ import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.Password;
 import seedu.address.model.admin.Username;
 
-
 /**
  * Lets one admin add another admin
  */
@@ -58,7 +57,9 @@ public class AddAdminCommand extends Command {
             throw new CommandException(MESSAGE_ADMIN_ALREADY_EXISTS);
         }
 
-        if (!isValidPassword(this.password)) {
+        PasswordValidator pwVal = new PasswordValidator();
+
+        if (!pwVal.isValidPassword(this.password)) {
             throw new CommandException(MESSAGE_NOT_VALID_PASSWORD);
         }
 
@@ -66,21 +67,6 @@ public class AddAdminCommand extends Command {
         model.commitAddressBook();  //TODO: not sure what this does;
 
         return new CommandResult(MESSAGE_SUCCESS);
-    }
-
-    /**
-     * Returns whether the password provided is strong enough to be accepted
-     * @param password
-     */
-    private boolean isValidPassword(Password password) {
-        String pwd = password.toString();
-        String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}";
-        if (pwd.matches(pattern)) {
-            return true;
-        } else {
-            return false;
-        }
-
     }
 
     @Override

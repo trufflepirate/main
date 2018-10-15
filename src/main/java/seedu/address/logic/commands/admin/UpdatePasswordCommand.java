@@ -25,6 +25,8 @@ public class UpdatePasswordCommand extends Command {
     public static final String MESSAGE_ONLY_CHANGE_YOUR_OWN_PW = "You can only change your own password.";
     public static final String MESSAGE_PASSWORDS_DONT_MATCH = "The two password fields don't match! Please try again.";
     public static final String MESSAGE_WRONG_OLD_DETAILS = "Your old password doesn't match.";
+    public static final String MESSAGE_NOT_VALID_PASSWORD = "Password not valid! You need at least 8 chars, "
+            + "where you have at least 1 smaller case, 1 bigger case, 1 symbol, 1 number and no whitespace";
 
     private final Username username;
     private final Password oldPassword;
@@ -58,7 +60,12 @@ public class UpdatePasswordCommand extends Command {
 
         if (!username.equals(model.currentlyLoggedIn())) {
             throw new CommandException(MESSAGE_ONLY_CHANGE_YOUR_OWN_PW);
+        }
 
+        PasswordValidator pwVal = new PasswordValidator();
+
+        if (!pwVal.isValidPassword(this.newPassword)) {
+            throw new CommandException(MESSAGE_NOT_VALID_PASSWORD);
         }
 
         final Admin toUpdate;
