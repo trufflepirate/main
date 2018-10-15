@@ -15,7 +15,7 @@ import seedu.address.model.job.JobNameContainsKeywordsPredicate;
  */
 public class FindJobCommand extends Command {
 
-    public static final String COMMAND_WORD = "find";
+    public static final String COMMAND_WORD = "findJob";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all jobs whose names contain any of "
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"

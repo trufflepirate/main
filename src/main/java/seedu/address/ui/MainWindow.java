@@ -20,6 +20,7 @@ import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 //import seedu.address.model.machine.Machine;
+import seedu.address.ui.job.JobListPanel;
 import seedu.address.ui.machine.MachineListPanel;
 
 /**
@@ -39,6 +40,7 @@ public class MainWindow extends UiPart<Stage> {
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
     private MachineListPanel machineListPanel;
+    private JobListPanel jobListPanel;
     private Config config;
     private UserPrefs prefs;
     private HelpWindow helpWindow;
