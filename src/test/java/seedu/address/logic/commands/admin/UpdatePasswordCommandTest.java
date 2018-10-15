@@ -91,7 +91,8 @@ public class UpdatePasswordCommandTest {
     public void execute_updateAdmin_success() throws Exception {
         ModelStub modelStub = new ModelStub();
         modelStub.setLogin(new Username("dummy"));
-        modelStub.addAdmin(new Admin(new Username("dummy"), new Password("$2a$10$Cj1nZuVAdZIysLK24P8zBe9gRBK.hagqzZJ0zF7i0UFlxlplRCI7e")));
+        modelStub.addAdmin(new Admin(new Username("dummy"),
+                new Password("$2a$10$Cj1nZuVAdZIysLK24P8zBe9gRBK.hagqzZJ0zF7i0UFlxlplRCI7e")));
         //weird string is hash for "admin2"
 
         CommandResult commandResult = new UpdatePasswordCommand(new Username("dummy"),
@@ -172,6 +173,16 @@ public class UpdatePasswordCommandTest {
         @Override
         public void removeMachine(Machine machine) {
             throw new AssertionError("This method should not be called");
+        }
+
+        @Override
+        public boolean hasMachine(Machine machine) {
+            return false;
+        }
+
+        @Override
+        public void updateMachine(Machine target, Machine editedMachine) {
+
         }
 
         @Override

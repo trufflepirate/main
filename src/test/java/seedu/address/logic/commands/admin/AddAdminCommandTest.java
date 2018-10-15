@@ -167,6 +167,16 @@ public class AddAdminCommandTest {
         }
 
         @Override
+        public boolean hasMachine(Machine machine) {
+            return false;
+        }
+
+        @Override
+        public void updateMachine(Machine target, Machine editedMachine) {
+
+        }
+
+        @Override
         public void addAdmin(Admin admin) {
             adminList.add(admin);
         }
