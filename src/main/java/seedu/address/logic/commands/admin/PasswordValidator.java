@@ -4,6 +4,7 @@ import seedu.address.model.admin.Password;
 
 /**
  * Used for Validation on AddAdmin and UpdateAdmin
+ * Credits to this answer: https://stackoverflow.com/a/8148112
  */
 public class PasswordValidator {
     /**
