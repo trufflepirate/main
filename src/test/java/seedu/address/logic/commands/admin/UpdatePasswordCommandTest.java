@@ -40,19 +40,22 @@ public class UpdatePasswordCommandTest {
     @Test
     public void constructor_nullOldPassword_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new UpdatePasswordCommand(new Username("username"), null, new Password("newPW"), new Password("newPW"));
+        new UpdatePasswordCommand(new Username("username"),
+                null, new Password("newPW"), new Password("newPW"));
     }
 
     @Test
     public void constructor_nullNewPassword_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new UpdatePasswordCommand(new Username("username"), new Password("oldPW"), null, new Password("newPW"));
+        new UpdatePasswordCommand(new Username("username"), new Password("oldPW"),
+                null, new Password("newPW"));
     }
 
     @Test
     public void constructor_nullNewPasswordVerify_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new UpdatePasswordCommand(new Username("username"), new Password("oldPW"), new Password("newPW"), null);
+        new UpdatePasswordCommand(new Username("username"),
+                new Password("oldPW"), new Password("newPW"), null);
     }
 
     @Test
@@ -96,7 +99,8 @@ public class UpdatePasswordCommandTest {
         //weird string is hash for "admin2"
 
         CommandResult commandResult = new UpdatePasswordCommand(new Username("dummy"),
-                new Password("admin2"), new Password("newPW"), new Password("newPW")).execute(modelStub, commandHistory);
+                new Password("admin2"), new Password("newPW"),
+                new Password("newPW")).execute(modelStub, commandHistory);
 
         assertEquals(commandResult.feedbackToUser, UpdatePasswordCommand.MESSAGE_SUCCESS);
         assertEquals(modelStub.isLoggedIn(), true);
@@ -104,6 +108,7 @@ public class UpdatePasswordCommandTest {
         assertEquals(modelStub.adminList, Arrays.asList(new Admin(new Username("dummy"), new Password("newPW"))));
     }
 
+    //TODO: No checking second time for password validation
     //NOTE: can't test wrong old password because jBcrypt
 
     /**

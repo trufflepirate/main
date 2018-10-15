@@ -2,8 +2,6 @@ build/
 .gradle/
 .checkstyle
 .settings/
-config.json
-preferences.json
 .idea/
 lib/*
 *.iml
@@ -18,6 +16,6 @@ classes/
 /data/
 src/main/resources/docs/
 out/
-config.json
-preferences.json
 
+config\.json
+preferences\.json
