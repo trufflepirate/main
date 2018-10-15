@@ -23,6 +23,8 @@ public class AddAdminCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + "Used to add another admin.\n"
             + "Example: addAdmin USERNAME PASSWORD PASSWORD\n";
     public static final String MESSAGE_PASSWORDS_DONT_MATCH = "The two password fields don't match! Please try again.";
+    private static final String MESSAGE_NOT_VALID_PASSWORD = "Password not valid! You need at least 8 chars, " +
+            "where you have at least 1 smaller case, 1 bigger case, 1 symbol, 1 number and no whitespace";
 
     private final Username username;
     private final Password password;
@@ -56,10 +58,29 @@ public class AddAdminCommand extends Command {
             throw new CommandException(MESSAGE_ADMIN_ALREADY_EXISTS);
         }
 
+        if (!isValidPassword(this.password)) {
+            throw new CommandException(MESSAGE_NOT_VALID_PASSWORD);
+        }
+
         model.addAdmin(toAddIn);
         model.commitAddressBook();  //TODO: not sure what this does;
 
         return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    /**
+     * Returns whether the password provided is strong enough to be accepted
+     * @param password
+     */
+    private boolean isValidPassword(Password password) {
+        String pwd = password.toString();
+        String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}";
+        if (pwd.matches(pattern)) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     @Override

@@ -7,6 +7,7 @@ import java.util.List;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javafx.collections.ObservableList;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.Password;
 import seedu.address.model.admin.UniqueAdminList;
@@ -157,6 +158,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * The admin must not already exist in the address book.
      */
     public void addAdminWithoutRehash(Admin toAdd) {
+        //TODO: Not idiot proof
         admins.add(toAdd);
     }
 
@@ -192,7 +194,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         Admin protectedAdmin = new Admin(rawAdmin.getUsername(), encryptedPassword);
         return protectedAdmin;
     }
-
 
     //======================== machine methods ================================//
 
