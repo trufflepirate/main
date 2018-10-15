@@ -7,7 +7,6 @@ import java.util.List;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javafx.collections.ObservableList;
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.Password;
 import seedu.address.model.admin.UniqueAdminList;
