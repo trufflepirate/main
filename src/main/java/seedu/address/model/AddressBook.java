@@ -92,10 +92,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.contains(person);
     }
 
-    public boolean hasAdmin(Admin admin) {
-        return admins.contains(admin);
-    }
-
     /**
      * Returns true if a machine that matches the {@code machine}
      */
@@ -136,6 +132,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         machines.add(machine);
     }
 
+    public void addAdminWithoutRehash(Admin toAdd) {
+        //TODO: Not idiot proof
+        admins.add(toAdd);
+    }
+
     /**
      * Adds a machine if {@code machine} does not exist in the list
      */
@@ -163,6 +164,18 @@ public class AddressBook implements ReadOnlyAddressBook {
         admins.add(toAdd);
     }
 
+    public boolean hasAdmin(Admin admin) {
+        return admins.contains(admin);
+    }
+
+    public Admin findAdmin(Username username) {
+        return admins.findAdmin(username);
+    }
+
+    public int numAdmins() {
+        return admins.size();
+    }
+
     /**
      * updates an admin in the address book.
      */
@@ -170,6 +183,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         jobs.remove(toRemove);
         jobs.add(toAdd);
     }
+
+    //======================== machine methods ================================//
 
     /**
      * Removes {@code key} from this {@code AddressBook}.
@@ -222,14 +237,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Job> getJobList() {
         return jobs.asUnmodifiableObservableList();
-    }
-
-    public Admin findAdmin(Username username) {
-        return admins.findAdmin(username);
-    }
-
-    public int numAdmins() {
-        return admins.size();
     }
 
     @Override

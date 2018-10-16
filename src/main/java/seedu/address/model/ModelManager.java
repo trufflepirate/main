@@ -160,6 +160,9 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateAdmin(Admin admin, Admin updatedAdmin) {
         versionedAddressBook.updateAdmin(admin, updatedAdmin);
         indicateAddressBookChanged();
+        versionedAddressBook.addAdmin(updatedAdmin);
+        versionedAddressBook.removeAdmin(admin);
+        indicateAdminListChanged();
     }
 
     @Override
