@@ -33,9 +33,9 @@ public class AddJobCommand extends Command {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "iDCP project "
             + PREFIX_MACHINE + "PRINTER1 "
-            + PREFIX_JOB_OWNER + "TIANYUAN "
+            + PREFIX_JOB_OWNER + "TIAN YUAN "
             + PREFIX_JOB_PRIORITY + "HIGH "
-            + PREFIX_JOB_NOTE + "This is for the iDCP project. "
+            + PREFIX_JOB_NOTE + "This is for the iDCP project "
             + PREFIX_TAG + "iDCP";
 
 
