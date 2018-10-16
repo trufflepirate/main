@@ -71,7 +71,7 @@ public class XmlAdaptedJobName {
                 new Address("1 Rivervale Link #06-09"),
                 new HashSet<>());
 
-        return new Job(name, machine, person, JobPriority.HIGH, new HashSet<>());
+        return new Job(name, machine, person, JobPriority.HIGH, note, new HashSet<>());
     }
 
     @Override

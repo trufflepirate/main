@@ -22,6 +22,10 @@ public class Job {
             "Job names should only contain alphanumeric characters and spaces, "
                     + "and it should not be blank";
 
+    public static final String MESSAGE_NOTE_CONSTRAINTS =
+            "Job notes should only contain alphanumeric characters and spaces, "
+                    + "and it should not be blank";
+
     //Identity field
     private JobName name;
     private Machine machine;
@@ -30,20 +34,30 @@ public class Job {
 
     //Data field
     private final Set<Tag> tags = new HashSet<>();
+    private JobNote jobNote;
     private JobPriority priority;
 
     /**
      * Every field must be present and not null.
      */
-    public Job(Name name, Machine machine, Person owner, JobPriority priority, Set<Tag> tags) {
+    public Job(Name name, Machine machine, Person owner, JobPriority priority, JobNote jobNote, Set<Tag> tags) {
         requireAllNonNull(name, machine, owner, tags, priority);
         this.name = (JobName) name;
         this.machine = machine;
         this.owner = owner;
         this.tags.addAll(tags);
         this.priority = priority;
+        this.jobNote = jobNote;
 
         time = new TimeStamp();
+    }
+
+    public JobNote getJobNote() {
+        return this.jobNote;
+    }
+
+    public void setJobNote(String jobNote) {
+        this.jobNote.changeNote(jobNote);
     }
 
     public JobPriority getPriority() {

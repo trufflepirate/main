@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
+import seedu.address.model.job.JobNote;
 import seedu.address.model.job.JobOwner;
 import seedu.address.model.job.JobPriority;
 import seedu.address.model.machine.Machine;
@@ -40,6 +41,9 @@ public class XmlAdaptedJob {
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
+    @XmlElement(required = true)
+    private String note;
+
     /**
      * Constructs an XmlAdaptedJob.
      * This is the no-arg constructor that is required by JAXB.
@@ -50,7 +54,7 @@ public class XmlAdaptedJob {
      * Constructs an {@code XmlAdaptedJob} with the given job details.
      */
     public XmlAdaptedJob(String name, String machine, String time, String owner,
-                         JobPriority priority, List<XmlAdaptedTag> tagged) {
+                         JobPriority priority, String note, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.machine = machine;
         this.time = time;
@@ -59,6 +63,7 @@ public class XmlAdaptedJob {
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
+        this.note = note;
     }
 
     /**
@@ -75,6 +80,7 @@ public class XmlAdaptedJob {
         tagged = source.getTags().stream()
                 .map(XmlAdaptedTag::new)
                 .collect(Collectors.toList());
+        note = source.getJobNote().toString();
     }
 
     /**
@@ -125,7 +131,17 @@ public class XmlAdaptedJob {
         final JobPriority modelPriority = priority;
 
         final Set<Tag> modelTags = new HashSet<>(jobTags);
-        return new Job(modelJobName, modelMachine, modelJobOwner, modelPriority, modelTags);
+
+        if (note == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    JobNote.class.getSimpleName()));
+        }
+        if (!JobNote.isValidNote(note)) {
+            throw new IllegalValueException(JobNote.MESSAGE_NOTE_CONSTRAINTS);
+        }
+        final JobNote modelJobNote = new JobNote(note);
+
+        return new Job(modelJobName, modelMachine, modelJobOwner, modelPriority, modelJobNote, modelTags);
     }
 
     @Override

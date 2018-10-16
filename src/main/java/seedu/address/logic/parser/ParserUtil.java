@@ -12,6 +12,7 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
+import seedu.address.model.job.JobNote;
 import seedu.address.model.job.JobOwner;
 import seedu.address.model.job.JobPriority;
 import seedu.address.model.machine.Machine;
@@ -222,10 +223,27 @@ public class ParserUtil {
      *
      * @throws ParseException if the given {@code jobPriority is invalid}
      */
-    public static JobPriority parseJobPriority(String jobPriority) {
+    public static JobPriority parseJobPriority(String jobPriority) throws ParseException {
         requireNonNull(jobPriority);
         String trimJobPriority = jobPriority.trim();
 
         return JobPriority.valueOf(trimJobPriority);
     }
+
+    /**
+     * Parses {@code String jobNote} into {@code trimJobNote}
+     * Leading and trailing whitespace will be trimmed
+     *
+     * @throws ParseException if the given {@code jobNote is invalid}
+     */
+    public static JobNote parseJobNote(String jobNote) throws ParseException {
+        requireNonNull(jobNote);
+        String trimJobNote = jobNote.trim();
+        if (!JobNote.isValidNote(jobNote)) {
+            throw new ParseException(Job.MESSAGE_NOTE_CONSTRAINTS);
+        }
+
+        return new JobNote(trimJobNote);
+    }
+
 }

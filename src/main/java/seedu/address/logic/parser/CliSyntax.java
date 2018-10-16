@@ -16,5 +16,6 @@ public class CliSyntax {
     public static final Prefix PREFIX_MACHINE = new Prefix("m/");
     public static final Prefix PREFIX_JOB_OWNER = new Prefix("on/");
     public static final Prefix PREFIX_JOB_PRIORITY = new Prefix("pr/");
+    public static final Prefix PREFIX_JOB_NOTE = new Prefix("jn/");
 
 }
