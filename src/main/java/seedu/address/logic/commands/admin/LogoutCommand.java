@@ -1,5 +1,7 @@
 package seedu.address.logic.commands.admin;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.AdminLogoutEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
@@ -13,7 +15,7 @@ public class LogoutCommand extends Command {
 
     public static final String COMMAND_WORD = "logout";
     public static final String MESSAGE_SUCCESS = "logout successful!";
-    private static final String MESSAGE_NO_CURRENT_SESSION = "Logout failed! No one is currently logged in.";
+    public static final String MESSAGE_NO_CURRENT_SESSION = "Logout failed! No one is currently logged in.";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + "Logout used to get out of admin mode.\n"
             + "Example: logout\n";
@@ -28,6 +30,7 @@ public class LogoutCommand extends Command {
         model.clearLogin();
         model.commitAddressBook(); //TODO: Not sure what this does
 
+        EventsCenter.getInstance().post(new AdminLogoutEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

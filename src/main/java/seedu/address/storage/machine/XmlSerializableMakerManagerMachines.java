@@ -14,6 +14,7 @@ import seedu.address.model.machine.Machine;
 
 /**
  * An Immutable MakerManager AddressBook that is serializable to XML format
+ * mean specifically for machines
  */
 @XmlRootElement(name = "MakerManagerMachines")
 public class XmlSerializableMakerManagerMachines {
