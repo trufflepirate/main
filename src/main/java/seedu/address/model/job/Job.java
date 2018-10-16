@@ -37,6 +37,10 @@ public class Job {
         time = new TimeStamp();
     }
 
+    public JobPriority getPriority() {
+        return priority;
+    }
+
     public Name getName() {
         return name;
     }

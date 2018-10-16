@@ -161,5 +161,20 @@ public class ParserUtil {
         default:
             throw new ParseException(Machine.MESSAGE_WRONG_STATUS);
         }
+
+        return new JobOwner(new Name(trimJobOwner));
+    }
+
+    /**
+     * Parses {@code String jobPriority} into {@code trimJobPriority}
+     * Leading and trailing whitespace will be trimmed
+     *
+     * @throws ParseException if the given {@code jobPriority is invalid}
+     */
+    public static JobPriority parseJobPriority(String jobPriority) {
+        requireNonNull(jobPriority);
+        String trimJobPriority = jobPriority.trim();
+
+        return JobPriority.valueOf(trimJobPriority);
     }
 }
