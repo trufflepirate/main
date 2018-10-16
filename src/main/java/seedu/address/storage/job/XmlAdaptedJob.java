@@ -67,7 +67,7 @@ public class XmlAdaptedJob {
      * @param source future changes to this will not affect the created XmlAdaptedJob
      */
     public XmlAdaptedJob(Job source) {
-        name = source.getName().fullName;
+        name = source.getJobName().fullName;
         machine = source.getMachine().toString();
         time = source.getTime().toString();
         owner = source.getOwner().toString();
@@ -102,7 +102,7 @@ public class XmlAdaptedJob {
                     Machine.class.getSimpleName()));
         }
         if (!Machine.isValidMachine(machine)) {
-            throw new IllegalValueException(Machine.MESSAGE_MACHINENAME_CONSTRAINTS);
+            throw new IllegalValueException(Machine.MESSAGE_NAME_CONSTRAINTS);
         }
         final Machine modelMachine = new Machine(machine);
 

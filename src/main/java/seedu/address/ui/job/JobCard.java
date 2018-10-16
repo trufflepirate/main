@@ -47,7 +47,7 @@ public class JobCard extends UiPart<Region> {
         super(FXML);
         this.job = job;
         id.setText(displayIndex + ". ");
-        jobName.setText(job.getName().fullName);
+        jobName.setText(job.getJobName().fullName);
         jobMachine.setText(job.getMachine().getName().fullName);
         // TODO: 10-Oct-18 time to be displayed
         jobOwner.setText(job.getOwner().getName().fullName);

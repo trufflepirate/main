@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -9,6 +10,10 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.job.Job;
+import seedu.address.model.job.JobName;
+import seedu.address.model.job.JobOwner;
+import seedu.address.model.job.JobPriority;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.MachineName;
 import seedu.address.model.machine.MachineStatus;
@@ -146,20 +151,66 @@ public class ParserUtil {
      * Parses {@code String machineStatus} into {@code Boolean boolMachineStatus}
      * depending if {@code machineStatus} equals true or false
      */
-
     public static MachineStatus parseMachineStatus(String machineStatus) throws ParseException {
         requireNonNull(machineStatus);
         String trimMachineStatus = machineStatus.trim();
 
         switch (trimMachineStatus) {
-        case "ENABLED":
-            return MachineStatus.ENABLED;
+            case "ENABLED":
+                return MachineStatus.ENABLED;
 
-        case "DISABLED":
-            return MachineStatus.DISABLED;
+            case "DISABLED":
+                return MachineStatus.DISABLED;
 
-        default:
-            throw new ParseException(Machine.MESSAGE_WRONG_STATUS);
+            default:
+                throw new ParseException(Machine.MESSAGE_WRONG_STATUS);
+        }
+    }
+
+    /**
+     * Parses {@code String jobName} into {@code trimJobName}
+     * Leading and trailing whitespace will be trimmed
+     *
+     * @throws ParseException if the given {@code jobName is invalid}
+     */
+    public static JobName parseJobName(String jobName) throws ParseException {
+        requireNonNull(jobName);
+        String trimJobName = jobName.trim();
+        if (!JobName.isValidName(jobName)) {
+            throw new ParseException(Job.MESSAGE_NAME_CONSTRAINTS);
+        }
+
+        return new JobName(trimJobName);
+    }
+
+    /**
+     * Parses a {@code String machine} into a {@code machine}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code machine} is invalid.
+     */
+    public static Machine parseMachine(String machine) throws ParseException {
+        requireNonNull(machine);
+        String trimmedMachine = machine.trim();
+        if (!Machine.isValidMachine(trimmedMachine)) {
+            throw new ParseException(Machine.MESSAGE_NAME_CONSTRAINTS);
+        }
+        return new Machine(new MachineName(trimmedMachine), new ArrayList<Job>(),
+            new HashSet<>(), MachineStatus.ENABLED);
+    }
+
+    // TODO: 10-Oct-18 hardcoded: should find a better way or modify the JobOwner
+    /**
+     * Parses {@code String jobOwner} into {@code trimJobOwner}
+     * Leading and trailing whitespace will be trimmed
+     *
+     * @throws ParseException if the given {@code jobOwner is invalid}
+     */
+    public static JobOwner parseJobOwner(String jobOwner) throws ParseException {
+        requireNonNull(jobOwner);
+        String trimJobOwner = jobOwner.trim();
+        if (!JobOwner.isValidJobOwner(jobOwner)) {
+            throw new ParseException(JobOwner.MESSAGE_OWNERNAME_CONSTRAINTS);
         }
 
         return new JobOwner(new Name(trimJobOwner));

@@ -53,7 +53,7 @@ public class Machine {
 
     public Machine(String machineName) {
         this.machineName = new MachineName(machineName);
-        this.status = true;
+        this.status = MachineStatus.ENABLED;
     }
 
     /**
