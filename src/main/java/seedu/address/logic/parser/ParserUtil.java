@@ -156,14 +156,14 @@ public class ParserUtil {
         String trimMachineStatus = machineStatus.trim();
 
         switch (trimMachineStatus) {
-            case "ENABLED":
-                return MachineStatus.ENABLED;
+        case "ENABLED":
+            return MachineStatus.ENABLED;
 
-            case "DISABLED":
-                return MachineStatus.DISABLED;
+        case "DISABLED":
+            return MachineStatus.DISABLED;
 
-            default:
-                throw new ParseException(Machine.MESSAGE_WRONG_STATUS);
+        default:
+            throw new ParseException(Machine.MESSAGE_WRONG_STATUS);
         }
     }
 

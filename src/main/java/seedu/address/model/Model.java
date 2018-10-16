@@ -22,7 +22,7 @@ public interface Model {
     Predicate<Machine> PREDICATE_SHOW_ALL_MACHINES = unused -> true;
 
     /** {@code Predicate} that always eveluate to true for jobs */
-    Predicate<Job> PREDICATE_SHOW_ALL_JOBS= unused -> true;
+    Predicate<Job> PREDICATE_SHOW_ALL_JOBS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);

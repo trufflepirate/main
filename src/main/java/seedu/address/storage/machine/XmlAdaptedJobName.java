@@ -2,7 +2,6 @@ package seedu.address.storage.machine;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
 
 import javax.xml.bind.annotation.XmlValue;
 
