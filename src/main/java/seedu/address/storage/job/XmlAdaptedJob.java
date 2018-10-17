@@ -1,10 +1,8 @@
 package seedu.address.storage.job;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -13,15 +11,12 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.job.Job;
-import seedu.address.model.job.JobName;
-import seedu.address.model.job.JobNote;
-import seedu.address.model.job.JobOwner;
 import seedu.address.model.job.JobPriority;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Name;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.person.Person;
 import seedu.address.storage.XmlAdaptedTag;
-import seedu.address.storage.XmlAddressBookStorage;
+import seedu.address.storage.machine.XmlAdaptedMachine;
 
 /**
  * JAXB-friendly version of the Job.
@@ -35,7 +30,7 @@ public class XmlAdaptedJob {
     @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)
-    private String machine;
+    private XmlAdaptedMachine machine;
     @XmlElement(required = true)
     private String time;
     @XmlElement(required = true)
@@ -49,6 +44,8 @@ public class XmlAdaptedJob {
     @XmlElement(required = true)
     private String note;
 
+    private Job job;
+
     /**
      * Constructs an XmlAdaptedJob.
      * This is the no-arg constructor that is required by JAXB.
@@ -58,7 +55,7 @@ public class XmlAdaptedJob {
     /**
      * Constructs an {@code XmlAdaptedJob} with the given job details.
      */
-    public XmlAdaptedJob(String name, String machine, String time, String owner,
+    public XmlAdaptedJob(String name, XmlAdaptedMachine machine, String time, String owner,
                          JobPriority priority, String note, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.machine = machine;
@@ -77,8 +74,9 @@ public class XmlAdaptedJob {
      * @param source future changes to this will not affect the created XmlAdaptedJob
      */
     public XmlAdaptedJob(Job source) {
+        job = source;
         name = source.getJobName().fullName;
-        machine = source.getMachine().toString();
+        machine = new XmlAdaptedMachine(source.getMachine());
         time = source.getTime().toString();
         owner = source.getOwner().toString();
         priority = source.getPriority();
@@ -94,66 +92,10 @@ public class XmlAdaptedJob {
      * @throws IllegalValueException if there were any data constraints violated in the adapted job
      */
     public Job toModelType() throws IllegalValueException {
-        final List<Tag> jobTags = new ArrayList<>();
 
-        logger.info("Printing out model for job");
-        logger.info(name);
-        logger.info(machine);
-        logger.info(time);
-        logger.info(owner);
-
-        for (XmlAdaptedTag tag : tagged) {
-            jobTags.add(tag.toModelType());
-        }
-
-        if (name == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    JobName.class.getSimpleName()));
-        }
-        if (!JobName.isValidName(name)) {
-            throw new IllegalValueException(JobName.MESSAGE_NAME_CONSTRAINTS);
-        }
-        final JobName modelJobName = new JobName(name);
-
-        if (machine == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    Machine.class.getSimpleName()));
-        }
-        if (!Machine.isValidMachine(machine)) {
-            throw new IllegalValueException(Machine.MESSAGE_NAME_CONSTRAINTS);
-        }
-        final Machine modelMachine = new Machine(machine);
-
-        if (owner == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    JobOwner.class.getSimpleName()));
-        }
-        if (!JobOwner.isValidJobOwner(owner)) {
-            throw new IllegalValueException(JobOwner.MESSAGE_OWNERNAME_CONSTRAINTS);
-        }
-        final JobOwner modelJobOwner = new JobOwner(new Name(owner));
-
-        if (priority == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    JobPriority.class.getSimpleName()));
-        }
-        if (!JobPriority.isValidPriority(priority)) {
-            throw new IllegalValueException(JobPriority.MESSAGE_JOBPRIORITY_CONSTRAINTS);
-        }
-        final JobPriority modelPriority = priority;
-
-        final Set<Tag> modelTags = new HashSet<>(jobTags);
-
-        if (note == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    JobNote.class.getSimpleName()));
-        }
-        if (!JobNote.isValidNote(note)) {
-            throw new IllegalValueException(JobNote.MESSAGE_NOTE_CONSTRAINTS);
-        }
-        final JobNote modelJobNote = new JobNote(note);
-
-        return new Job(modelJobName, modelMachine, modelJobOwner, modelPriority, modelJobNote, modelTags);
+        logger.info(job.getJobName().fullName);
+        logger.info(job.getMachine().getName().fullName);
+        return job;
     }
 
     @Override

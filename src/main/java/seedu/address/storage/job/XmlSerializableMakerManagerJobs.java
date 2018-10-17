@@ -2,21 +2,26 @@ package seedu.address.storage.job;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.job.Job;
+import seedu.address.storage.XmlFileStorage;
 
 /**
  * An Immutable MakerManager AddressBook that is serializable to XML format
  */
 @XmlRootElement(name = "MakerManagerJobs")
 public class XmlSerializableMakerManagerJobs {
+
+    private static final Logger logger = LogsCenter.getLogger(XmlSerializableMakerManagerJobs.class);
 
     public static final String MESSAGE_DUPLICATE_MACHINE = "Jobs list contains duplicate job(s)";
 
@@ -47,8 +52,10 @@ public class XmlSerializableMakerManagerJobs {
      */
     public AddressBook toModelType() throws IllegalValueException {
         AddressBook addressBook = new AddressBook();
+        logger.info("Size of jobs " + Integer.toString(jobs.size()));
         for (XmlAdaptedJob m : jobs) {
             Job job = m.toModelType();
+            logger.info(job.getJobName().fullName);
             if (addressBook.hasJob(job)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_MACHINE);
             }
