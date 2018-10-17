@@ -243,6 +243,12 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         machines.setMachine(target, editedMachine);
     }
+
+    public Machine getMachineByName (String machineName) {
+        requireNonNull(machineName);
+        return machines.get(machineName);
+    }
+
     //======================== job methods ================================//
 
     /**
@@ -286,6 +292,16 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(updatedJob);
         jobs.updateJob(oldJob, updatedJob);
     }
+
+    /**
+     * Gets a job by name
+     */
+
+    public Job getJobByName(String jobName) {
+        requireNonNull(jobName);
+        return jobs.get(jobName);
+    }
+
 
 
     //======================== get lists methods ===========================//

@@ -66,6 +66,21 @@ public class UniqueJobList {
         internalList.setAll(jobs);
     }
 
+    /**
+     * Returns a job by name
+     */
+
+    public Job get(String jobName) {
+        requireNonNull(jobName);
+        for (Job j : internalList) {
+            if (j.getJobName().equals(jobName)) {
+                return j;
+            }
+        }
+        return null;
+    }
+
+
 
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.

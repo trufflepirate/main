@@ -245,7 +245,7 @@ public class AddAdminCommandTest {
         }
 
         @Override
-        public ModelMessageResult addJobToMachine(Machine machine, Job job) {
+        public ModelMessageResult addJobToMachine(String machineName, String jobName) {
             return null;
         }
 

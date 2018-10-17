@@ -139,7 +139,7 @@ public interface Model {
      * 3) machine already has the print job in its own queue
     \ */
 
-    ModelMessageResult addJobToMachine(Machine machine, Job job);
+    ModelMessageResult addJobToMachine(String machineName, String jobName);
 
 
 

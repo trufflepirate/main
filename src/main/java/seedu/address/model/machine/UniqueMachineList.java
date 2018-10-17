@@ -106,6 +106,17 @@ public class UniqueMachineList {
         }
     }
 
+    public Machine get(String machineName) {
+        requireNonNull(machineName);
+        for (Machine m : internalList) {
+            if (m.getName().equals(machineName)) {
+                return m;
+            }
+        }
+        return null;
+    }
+
+
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}
      */

@@ -30,8 +30,8 @@ public class AddJobToMachineQueueCommand extends Command {
     public static final String MESSAGE_SUCCESS = "New print job added: %l$s";
     public static final String MESSAGE_DUPLICATE_JOB = "This print job has already been added to machine queue";
 
-    private final Machine chosenMachine;
-    private final Job jobToAdd;
+    private final String chosenMachine;
+    private final String jobToAdd;
 
     /**
      * Creates an AddJobToMachineQueueCommand with two
@@ -40,7 +40,7 @@ public class AddJobToMachineQueueCommand extends Command {
      * to be added to its queue
      */
 
-    public AddJobToMachineQueueCommand(Machine chosenMachine, Job jobToAdd) {
+    public AddJobToMachineQueueCommand(String chosenMachine, String jobToAdd) {
         requireNonNull(chosenMachine);
         requireNonNull(jobToAdd);
         this.chosenMachine = chosenMachine;

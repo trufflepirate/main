@@ -197,9 +197,10 @@ public class LoginCommandTest {
         }
 
         @Override
-        public ModelMessageResult addJobToMachine(Machine machine, Job job) {
+        public ModelMessageResult addJobToMachine(String machineName, String jobName) {
             return null;
         }
+
 
         @Override
         public ObservableList<Person> getFilteredPersonList() {

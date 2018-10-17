@@ -235,12 +235,18 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedAddressBook.numAdmins();
     }
 
+
+
+    // ============================== Queue methods ======================================= //
+
     @Override
-    public ModelMessageResult addJobToMachine(Machine machine, Job job) {
-        if (!hasMachine(machine)) {
+    public ModelMessageResult addJobToMachine(String machineName, String jobName) {
+        Machine machine = versionedAddressBook.getMachineByName(machineName);
+        Job job = versionedAddressBook.getJobByName(jobName);
+        if (machine != null && !hasMachine(machine)) {
             return new ModelMessageResult(false , "No such machine available");
         }
-        if (!hasJob(job)) {
+        if (job != null && !hasJob(job)) {
             return new ModelMessageResult(false, "No such job available");
         }
         if (machine.hasJob(job)) {
@@ -251,9 +257,6 @@ public class ModelManager extends ComponentManager implements Model {
         indicateMachineListChanged();
         return new ModelMessageResult(true, "Model exectution successful for addJobToMachine");
     }
-
-    // ============================== Queue methods ======================================= //
-
 
 
     //=========== Filtered Person List Accessors =============================================================
