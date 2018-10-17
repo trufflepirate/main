@@ -51,6 +51,18 @@ public class Machine {
         this.status = status;
     }
 
+    public Machine(String machineName) {
+        this.machineName = new MachineName(machineName);
+        this.status = MachineStatus.ENABLED;
+    }
+
+    /**
+     * Returns true if a given string is a valid name.
+     */
+    public static boolean isValidMachine(String test) {
+        return test.matches(NAME_VALIDATION_REGEX);
+    }
+
     public MachineName getName() {
         return machineName;
     }

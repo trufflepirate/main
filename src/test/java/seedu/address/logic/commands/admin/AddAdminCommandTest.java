@@ -1,9 +1,6 @@
-package seedu.address.logic.commands;
+package seedu.address.logic.commands.admin;
 
-import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,21 +12,19 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.admin.Admin;
+import seedu.address.model.admin.Password;
 import seedu.address.model.admin.Username;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
-import seedu.address.testutil.PersonBuilder;
 
-public class AddCommandTest {
-
-    private static final CommandHistory EMPTY_COMMAND_HISTORY = new CommandHistory();
+public class AddAdminCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -37,62 +32,92 @@ public class AddCommandTest {
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test
-    public void constructor_nullPerson_throwsNullPointerException() {
+    public void constructor_nullUsername_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new AddCommand(null);
+        new AddAdminCommand(null, new Password("dummy"), new Password("dummy"));
     }
 
     @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Person validPerson = new PersonBuilder().build();
-
-        CommandResult commandResult = new AddCommand(validPerson).execute(modelStub, commandHistory);
-
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validPerson), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
-        assertEquals(EMPTY_COMMAND_HISTORY, commandHistory);
+    public void constructor_nullPassword_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        new AddAdminCommand(new Username("dummy"), null, new Password("dummy"));
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() throws Exception {
-        Person validPerson = new PersonBuilder().build();
-        AddCommand addCommand = new AddCommand(validPerson);
-        ModelStub modelStub = new ModelStubWithPerson(validPerson);
+    public void constructor_nullVerify_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        new AddAdminCommand(new Username("dummy"), new Password("dummy"), null);
+    }
+
+    @Test
+    public void execute_notLoggedIn_throwsCommandException() throws Exception {
+        ModelStub modelStub = new ModelStub();
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
-        addCommand.execute(modelStub, commandHistory);
+        thrown.expectMessage(AddAdminCommand.MESSAGE_NO_ACCESS);
+        new AddAdminCommand(new Username("dummy"), new Password("dummy"), new Password("dummy"))
+                .execute(modelStub, commandHistory);
     }
 
     @Test
-    public void equals() {
-        Person alice = new PersonBuilder().withName("Alice").build();
-        Person bob = new PersonBuilder().withName("Bob").build();
-        AddCommand addAliceCommand = new AddCommand(alice);
-        AddCommand addBobCommand = new AddCommand(bob);
+    public void execute_passwordsNotMatching_throwsCommandException() throws Exception {
+        ModelStub modelStub = new ModelStub();
+        modelStub.setLogin(new Username("dummy"));
 
-        // same object -> returns true
-        assertTrue(addAliceCommand.equals(addAliceCommand));
-
-        // same values -> returns true
-        AddCommand addAliceCommandCopy = new AddCommand(alice);
-        assertTrue(addAliceCommand.equals(addAliceCommandCopy));
-
-        // different types -> returns false
-        assertFalse(addAliceCommand.equals(1));
-
-        // null -> returns false
-        assertFalse(addAliceCommand.equals(null));
-
-        // different person -> returns false
-        assertFalse(addAliceCommand.equals(addBobCommand));
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(AddAdminCommand.MESSAGE_PASSWORDS_DONT_MATCH);
+        new AddAdminCommand(new Username("dummy"), new Password("dummy1"), new Password("dummy2"))
+                .execute(modelStub, commandHistory);
     }
 
+    @Test
+    public void execute_alreadyExists_throwsCommandException() throws Exception {
+        ModelStub modelStub = new ModelStub();
+        modelStub.setLogin(new Username("dummyLogin"));
+        modelStub.addAdmin(new Admin(new Username("dummyUsername"), new Password("dummyPW")));
+
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(AddAdminCommand.MESSAGE_ADMIN_ALREADY_EXISTS);
+        new AddAdminCommand(new Username("dummyUsername"), new Password("dummyPW"), new Password("dummyPW"))
+                .execute(modelStub, commandHistory);
+    }
+
+    @Test
+    public void execute_addAdminInvalidPassword_throwsCommandException() throws Exception {
+        ModelStub modelStub = new ModelStub();
+        modelStub.setLogin(new Username("dummyLogin"));
+
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(AddAdminCommand.MESSAGE_NOT_VALID_PASSWORD);
+        new AddAdminCommand(new Username("dummyUsername"),
+                new Password("invalidPW"), new Password("invalidPW"))
+                .execute(modelStub, commandHistory);
+    }
+
+    @Test
+    public void execute_addAdmin_success() throws Exception {
+        ModelStub modelStub = new ModelStub();
+        modelStub.setLogin(new Username("dummyLogin"));
+        Admin adminToAdd = new Admin(new Username("dummyUsername"), new Password("aaaAAA123$"));
+
+        CommandResult commandResult = new AddAdminCommand(new Username("dummyUsername"),
+                new Password("aaaAAA123$"), new Password("aaaAAA123$"))
+                .execute(modelStub, commandHistory);
+
+        assertEquals(commandResult.feedbackToUser, AddAdminCommand.MESSAGE_SUCCESS);
+        assertEquals(modelStub.adminList, Arrays.asList(adminToAdd));
+    }
+
+    //TODO: equals not tested
+
     /**
-     * A default model stub that have all of the methods failing.
+     * A default model stub that has some methods failing
      */
     private class ModelStub implements Model {
+        final ArrayList<Admin> adminList = new ArrayList<>();
+
+        private boolean loginStatus = false;
+
         @Override
         public void addPerson(Person person) {
             throw new AssertionError("This method should not be called.");
@@ -140,7 +165,7 @@ public class AddCommandTest {
 
         @Override
         public void updateJob(Job oldJob, Job updatedJob) {
-
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override
@@ -154,22 +179,23 @@ public class AddCommandTest {
         }
 
         @Override
-        public void updateMachine(Machine target, Machine editedMachine) {
+        public void removeMachine(Machine machine) {
             throw new AssertionError("This method should not be called");
         }
 
         @Override
-        public void removeMachine(Machine machine) {
-            throw new AssertionError("This method should not be called");
-        }
-        @Override
         public boolean hasMachine(Machine machine) {
-            throw new AssertionError("This method should not be called");
+            return false;
+        }
+
+        @Override
+        public void updateMachine(Machine target, Machine editedMachine) {
+
         }
 
         @Override
         public void addAdmin(Admin admin) {
-            throw new AssertionError("This method should not be called.");
+            adminList.add(admin);
         }
 
         @Override
@@ -184,7 +210,7 @@ public class AddCommandTest {
 
         @Override
         public void setLogin(Username username) {
-            throw new AssertionError("This method should not be called.");
+            this.loginStatus = true;
         }
 
         @Override
@@ -194,7 +220,7 @@ public class AddCommandTest {
 
         @Override
         public boolean isLoggedIn() {
-            throw new AssertionError("This method should not be called.");
+            return this.loginStatus;
         }
 
         @Override
@@ -204,6 +230,11 @@ public class AddCommandTest {
 
         @Override
         public Admin findAdmin(Username username) {
+            for (Admin admin: adminList) {
+                if (admin.getUsername().equals(username)) {
+                    return admin;
+                }
+            }
             return null;
         }
 
@@ -249,7 +280,7 @@ public class AddCommandTest {
 
         @Override
         public void updateFilteredJobList(Predicate<Job> predicate) {
-
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override
@@ -274,55 +305,7 @@ public class AddCommandTest {
 
         @Override
         public void commitAddressBook() {
-            throw new AssertionError("This method should not be called.");
+            return;
         }
     }
-
-    /**
-     * A Model stub that contains a single person.
-     */
-    private class ModelStubWithPerson extends ModelStub {
-        private final Person person;
-
-        ModelStubWithPerson(Person person) {
-            requireNonNull(person);
-            this.person = person;
-        }
-
-        @Override
-        public boolean hasPerson(Person person) {
-            requireNonNull(person);
-            return this.person.isSamePerson(person);
-        }
-    }
-
-    /**
-     * A Model stub that always accept the person being added.
-     */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Person> personsAdded = new ArrayList<>();
-
-        @Override
-        public boolean hasPerson(Person person) {
-            requireNonNull(person);
-            return personsAdded.stream().anyMatch(person::isSamePerson);
-        }
-
-        @Override
-        public void addPerson(Person person) {
-            requireNonNull(person);
-            personsAdded.add(person);
-        }
-
-        @Override
-        public void commitAddressBook() {
-            // called by {@code AddCommand#execute()}
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
-        }
-    }
-
 }

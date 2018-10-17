@@ -157,6 +157,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * The admin must not already exist in the address book.
      */
     public void addAdminWithoutRehash(Admin toAdd) {
+        //TODO: Not idiot proof
         admins.add(toAdd);
     }
 
@@ -166,14 +167,6 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void removeAdmin(Admin toRemove) {
         admins.remove(toRemove);
-    }
-
-    /**
-     * updates an admin in the address book.
-     */
-    public void updateAdmin(Admin toRemove, Admin toAdd) {
-        admins.remove(toRemove);
-        admins.add(toAdd);
     }
 
     public boolean hasAdmin(Admin admin) {
@@ -200,7 +193,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         Admin protectedAdmin = new Admin(rawAdmin.getUsername(), encryptedPassword);
         return protectedAdmin;
     }
-
 
     //======================== machine methods ================================//
 
@@ -242,6 +234,14 @@ public class AddressBook implements ReadOnlyAddressBook {
     //======================== job methods ================================//
 
     /**
+     * Returns true if a job with the same identity as {@code job} exists in the address book.
+     */
+    public boolean hasJob(Job job) {
+        requireNonNull(job);
+        return jobs.contains(job);
+    }
+
+    /**
      * Adds a job if {@code job} does not exist in the list
      */
     public void addJob(Job job) {
@@ -262,6 +262,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Returns the job, if present, according to JobName
      */
     public Job findJob(JobName name) {
+        requireNonNull(name);
         return jobs.findJob(name);
     }
 
@@ -269,6 +270,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Updates the job
      */
     public void updateJob(Job oldJob, Job updatedJob) {
+        requireNonNull(oldJob);
+        requireNonNull(updatedJob);
         jobs.updateJob(oldJob, updatedJob);
     }
 

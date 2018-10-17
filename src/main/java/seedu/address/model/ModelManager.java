@@ -121,6 +121,11 @@ public class ModelManager extends ComponentManager implements Model {
     // ============================== Job methods ======================================= //
 
     @Override
+    public boolean hasJob(Job job) {
+        requireNonNull(job);
+        return versionedAddressBook.hasJob(job);
+    }
+    @Override
     public void addJob(Job job) {
         requireAllNonNull(job);
         versionedAddressBook.addJob(job);
@@ -128,7 +133,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void removeJob(Job job) {
+    public void deleteJob(Job job) {
         requireAllNonNull(job);
         versionedAddressBook.removeJob(job);
         indicateJobListChanged();
@@ -192,7 +197,8 @@ public class ModelManager extends ComponentManager implements Model {
     //TODO: add tests
     @Override
     public void updateAdmin(Admin admin, Admin updatedAdmin) {
-        versionedAddressBook.updateAdmin(admin, updatedAdmin);
+        versionedAddressBook.addAdmin(updatedAdmin);
+        versionedAddressBook.removeAdmin(admin);
         indicateAdminListChanged();
     }
 
