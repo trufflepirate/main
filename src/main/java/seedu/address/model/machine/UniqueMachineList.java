@@ -8,6 +8,7 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import seedu.address.model.job.Job;
 import seedu.address.model.machine.exceptions.DuplicateMachineException;
 import seedu.address.model.machine.exceptions.MachineNotFoundException;
 
@@ -42,7 +43,7 @@ public class UniqueMachineList {
     }
 
     /**
-     * Replaces the person {@code target} in the list with {@code editedMachine}.
+     * Replaces the machine {@code target} in the list with {@code editedMachine}.
      * {@code target} must exist in the list.
      * The person identity of {@code editedMachine} must not be the same as another existing person in the list.
      */
@@ -59,6 +60,25 @@ public class UniqueMachineList {
         }
 
         internalList.set(index, editedMachine);
+    }
+
+    /**
+     * Adds a job the machine {@code target} jobs list
+     */
+    public void addJobToMachineList(Machine target, Job job) {
+        requireAllNonNull(target, job);
+
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new MachineNotFoundException();
+        }
+
+        Machine updatedMachine = internalList.get(index);
+        updatedMachine.addJob(job);
+
+        internalList.set(index, updatedMachine);
+
+
     }
 
     /**

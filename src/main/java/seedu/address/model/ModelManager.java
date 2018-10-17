@@ -247,7 +247,8 @@ public class ModelManager extends ComponentManager implements Model {
             return new ModelMessageResult(false, "Machine already has job in its print queue");
         }
 
-        machine.addJob(job);
+        versionedAddressBook.addJobToMachineList(machine, job);
+        indicateMachineListChanged();
         return new ModelMessageResult(true, "Model exectution successful for addJobToMachine");
     }
 

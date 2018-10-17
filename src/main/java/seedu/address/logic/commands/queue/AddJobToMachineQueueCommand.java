@@ -40,9 +40,9 @@ public class AddJobToMachineQueueCommand extends Command {
      * to be added to its queue
      */
 
-    public AddJobToMachineQueueCommand(Machine machine, Job job, Machine chosenMachine, Job jobToAdd) {
-        requireNonNull(machine);
-        requireNonNull(job);
+    public AddJobToMachineQueueCommand(Machine chosenMachine, Job jobToAdd) {
+        requireNonNull(chosenMachine);
+        requireNonNull(jobToAdd);
         this.chosenMachine = chosenMachine;
         this.jobToAdd = jobToAdd;
     }

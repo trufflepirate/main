@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.List;
 
@@ -102,6 +103,17 @@ public class AddressBook implements ReadOnlyAddressBook {
         setPersons(newData.getPersonList());
         setMachines(newData.getMachineList());
         setAdmins(newData.getAdminList());
+    }
+
+    //======================== queue methods ================================//
+
+    /**
+     * Adds a job to the chosen machine list
+     */
+
+    public void addJobToMachineList(Machine targetMachine , Job jobToAdd) {
+        requireAllNonNull(targetMachine, jobToAdd);
+        machines.addJobToMachineList(targetMachine, jobToAdd);
     }
 
     //======================== person methods ================================//
