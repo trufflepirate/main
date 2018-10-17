@@ -249,6 +249,10 @@ public class ModelManager extends ComponentManager implements Model {
         if (job != null && !hasJob(job)) {
             return new ModelMessageResult(false, "No such job available");
         }
+
+        logger.info("Machine and job found");
+        logger.info(machine.getName().fullName);
+        logger.info(job.getJobName().fullName);
         if (machine.hasJob(job)) {
             return new ModelMessageResult(false, "Machine already has job in its print queue");
         }

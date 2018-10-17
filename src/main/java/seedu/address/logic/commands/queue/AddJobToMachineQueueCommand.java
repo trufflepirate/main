@@ -5,12 +5,11 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_MACHINE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.job.Job;
-import seedu.address.model.machine.Machine;
 
 
 
@@ -21,13 +20,13 @@ public class AddJobToMachineQueueCommand extends Command {
     public static final String COMMAND_WORD = "addJobToMachine";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Adds a job to the machine's queue"
-            + "Paramaters: "
+            + " Parameters: "
             + PREFIX_NAME  + "JOB NAME "
             + PREFIX_MACHINE + "MACHINE NAME "
-            + "EXAMPLE: " + COMMAND_WORD + " "
-            + PREFIX_NAME + "iDCP project "
-            + PREFIX_MACHINE + "PRINTER 1 ";
-    public static final String MESSAGE_SUCCESS = "New print job added: %l$s";
+            + "\nEXAMPLE: \n" + COMMAND_WORD + " "
+            + PREFIX_NAME + "iDCP_project "
+            + PREFIX_MACHINE + "PRINTER_1 ";
+    public static final String MESSAGE_SUCCESS = "New print job added: %1$s";
     public static final String MESSAGE_DUPLICATE_JOB = "This print job has already been added to machine queue";
 
     private final String chosenMachine;
@@ -51,6 +50,16 @@ public class AddJobToMachineQueueCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
-        return new CommandResult("Hello");
+        model.addJobToMachine(chosenMachine, jobToAdd);
+        model.commitAddressBook();
+        return new CommandResult(String.format(MESSAGE_SUCCESS, chosenMachine + " " + jobToAdd));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof AddJobToMachineQueueCommand // instanceof handles nulls
+                && jobToAdd.equals(((AddJobToMachineQueueCommand) other).jobToAdd)
+                && chosenMachine.equals(((AddJobToMachineQueueCommand) other).chosenMachine));
     }
 }
