@@ -82,6 +82,23 @@ public class Machine {
         return Collections.unmodifiableSet(tags);
     }
 
+    /**
+     * Returns true if the machine contains
+     * {@code job} in its list;
+     */
+
+    public boolean hasJob(Job job) {
+        return jobs.contains(job);
+    }
+
+    /**
+     * Adds a job to the machine job list
+     */
+
+    public void addJob(Job job) {
+        jobs.add(job);
+    }
+
 
     /**
      * Returns true if both persons of the same name and same list of Jobs.

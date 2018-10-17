@@ -235,6 +235,26 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedAddressBook.numAdmins();
     }
 
+    @Override
+    public ModelMessageResult addJobToMachine(Machine machine, Job job) {
+        if (!hasMachine(machine)) {
+            return new ModelMessageResult(false , "No such machine available");
+        }
+        if (!hasJob(job)) {
+            return new ModelMessageResult(false, "No such job available");
+        }
+        if (machine.hasJob(job)) {
+            return new ModelMessageResult(false, "Machine already has job in its print queue");
+        }
+
+        machine.addJob(job);
+        return new ModelMessageResult(true, "Model exectution successful for addJobToMachine");
+    }
+
+    // ============================== Queue methods ======================================= //
+
+
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**

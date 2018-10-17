@@ -129,6 +129,19 @@ public interface Model {
      */
     int numAdmins();
 
+    // ============================== Queue methods ======================================= //
+
+    /**
+     * returns true if job is successfully added to machine
+     * false otherwise if any of the conditions below does not check out
+     * 1) machine does not exist
+     * 2) job does not exist
+     * 3) machine already has the print job in its own queue
+    \ */
+
+    ModelMessageResult addJobToMachine(Machine machine, Job job);
+
+
 
     //=========== Filtered Person List Accessors =============================================================
     /** Returns an unmodifiable view of the filtered person list */

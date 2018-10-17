@@ -14,6 +14,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.ModelMessageResult;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.Password;
@@ -232,6 +233,11 @@ public class RemoveAdminCommandTest {
         @Override
         public int numAdmins() {
             return adminList.size();
+        }
+
+        @Override
+        public ModelMessageResult addJobToMachine(Machine machine, Job job) {
+            return null;
         }
 
         @Override
