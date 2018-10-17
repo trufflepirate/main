@@ -1,11 +1,14 @@
 package seedu.address.ui;
 
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
@@ -22,10 +25,18 @@ public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
+    private static final Pattern LOGIN_COMMAND_FORMAT = Pattern
+        .compile("login(\\s+)(?<username>\\S+)(\\s)(?<password>\\S+)(?<arguments>.*)");
+    private static final String PASSWORD_FORMAT = "\\S";
+    //TODO: remove this when the acutal password can be stored
+    private static final String PLACEHOLDER_PASSWORD = "SAIFBUTT";
+
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
+    //TODO: implement the actual storing of the passwords
+    private String actualPassword;
 
     @FXML
     private TextField commandTextField;
@@ -55,9 +66,60 @@ public class CommandBox extends UiPart<Region> {
             keyEvent.consume();
             navigateToNextInput();
             break;
+        case ENTER:
+            keyEvent.consume();
+            handleCommandEntered();
+            break;
+        case SPACE:
+            //keyEvent.consume();
+            //loginCheck();
+            //break;
         default:
+            loginCheck();
             // let JavaFx handle the keypress
         }
+    }
+
+    /**
+     * Helper function to check if current text in textfield resembles the login command.
+     */
+    private void loginCheck() {
+        final Matcher matcher = LOGIN_COMMAND_FORMAT.matcher(commandTextField.getText());
+        if (matcher.matches()) {
+            handlePasswordKeypresses(matcher);
+        }
+    }
+
+    /**
+     * handler to handle keypresses when the function resembles a login command
+     */
+    private void handlePasswordKeypresses(Matcher matcher) {
+        final String hiddenPassword = matcher.group("password").replaceAll(PASSWORD_FORMAT, "*");
+        String maskedCommandTextField = matcher.replaceAll("login$1$2$3" + hiddenPassword + "$5");
+        commandTextField.replaceText(0, commandTextField.getLength(), maskedCommandTextField);
+        commandTextField.positionCaret(commandTextField.getText().length());
+    }
+
+
+    //TODO:Implement working password shower. PLEASE DISABLE FOR TESTING OF OTHER FEATURES.
+
+    /**
+     * Handles the MouseEvent for the Cursor entering the text field, {@code mouseEvent}.
+     */
+    @FXML
+    private void handleMouseEntered(MouseEvent mouseEvent) {
+        actualPassword = commandTextField.getText();
+        commandTextField.replaceText(0, commandTextField.getLength(), PLACEHOLDER_PASSWORD);
+        commandTextField.positionCaret(commandTextField.getText().length());
+    }
+
+    /**
+     * Handles the MouseEvent for the Cursor leaving the text field, {@code mouseEvent}.
+     */
+    @FXML
+    private void handleMouseExited(MouseEvent mouseEvent) {
+        commandTextField.replaceText(0, commandTextField.getLength(), actualPassword);
+        commandTextField.positionCaret(commandTextField.getText().length());
     }
 
     /**
@@ -98,7 +160,6 @@ public class CommandBox extends UiPart<Region> {
     /**
      * Handles the Enter button pressed event.
      */
-    @FXML
     private void handleCommandEntered() {
         try {
             CommandResult commandResult = logic.execute(commandTextField.getText());
