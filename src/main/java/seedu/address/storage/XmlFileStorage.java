@@ -57,6 +57,19 @@ public class XmlFileStorage {
     }
 
     /**
+     * Saves the given jobs data to the specified file
+     */
+
+    public static void saveDataToFile(Path file, XmlSerializableMakerManagerJobs addressBook)
+            throws FileNotFoundException {
+        try {
+            XmlUtil.saveDataToFile(file, addressBook);
+        } catch (JAXBException e) {
+            throw new AssertionError("Unexpected exception " + e.getMessage(), e);
+        }
+    }
+
+    /**
      * Returns address book in the file or an empty address book
      */
     public static XmlSerializableAddressBook loadDataFromSaveFile(Path file) throws DataConversionException,

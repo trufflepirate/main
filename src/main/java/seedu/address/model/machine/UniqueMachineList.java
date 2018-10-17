@@ -4,10 +4,13 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.ModelManager;
 import seedu.address.model.job.Job;
 import seedu.address.model.machine.exceptions.DuplicateMachineException;
 import seedu.address.model.machine.exceptions.MachineNotFoundException;
@@ -19,6 +22,7 @@ import seedu.address.model.machine.exceptions.MachineNotFoundException;
  * A list of machines that ensures uniqueness in Machine names
  */
 public class UniqueMachineList {
+    private static final Logger logger = LogsCenter.getLogger(UniqueMachineList.class);
     private final ObservableList<Machine> internalList = FXCollections.observableArrayList();
 
     /**
@@ -108,8 +112,11 @@ public class UniqueMachineList {
 
     public Machine get(String machineName) {
         requireNonNull(machineName);
+        logger.info("Doing for loop");
         for (Machine m : internalList) {
-            if (m.getName().equals(machineName)) {
+            logger.info(m.getName().fullName);
+            if (m.getName().fullName.equals(machineName)) {
+                logger.info("Machine name matches!!");
                 return m;
             }
         }

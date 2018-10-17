@@ -5,10 +5,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.xml.bind.annotation.XmlElement;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
@@ -19,6 +21,7 @@ import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Name;
 import seedu.address.model.tag.Tag;
 import seedu.address.storage.XmlAdaptedTag;
+import seedu.address.storage.XmlAddressBookStorage;
 
 /**
  * JAXB-friendly version of the Job.
@@ -26,6 +29,8 @@ import seedu.address.storage.XmlAdaptedTag;
 public class XmlAdaptedJob {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Job's %s field is missing!";
+
+    private static final Logger logger = LogsCenter.getLogger(XmlAdaptedJob.class);
 
     @XmlElement(required = true)
     private String name;
@@ -90,6 +95,13 @@ public class XmlAdaptedJob {
      */
     public Job toModelType() throws IllegalValueException {
         final List<Tag> jobTags = new ArrayList<>();
+
+        logger.info("Printing out model for job");
+        logger.info(name);
+        logger.info(machine);
+        logger.info(time);
+        logger.info(owner);
+
         for (XmlAdaptedTag tag : tagged) {
             jobTags.add(tag.toModelType());
         }

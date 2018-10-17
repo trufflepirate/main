@@ -241,6 +241,10 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public ModelMessageResult addJobToMachine(String machineName, String jobName) {
+        versionedAddressBook.listCurrentVersionData();
+        logger.info("Inputs are : ");
+        logger.info(machineName);
+        logger.info(jobName);
         Machine machine = versionedAddressBook.getMachineByName(machineName);
         Job job = versionedAddressBook.getJobByName(jobName);
         if (machine != null && !hasMachine(machine)) {

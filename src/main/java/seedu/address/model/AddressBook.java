@@ -4,10 +4,12 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.mindrot.jbcrypt.BCrypt;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.Password;
 import seedu.address.model.admin.UniqueAdminList;
@@ -26,10 +28,13 @@ import seedu.address.model.person.UniquePersonList;
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
+    private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
+
     private final UniquePersonList persons;
     private final UniqueAdminList admins;
     private final UniqueMachineList machines;
     private final UniqueJobList jobs;
+
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to
@@ -346,6 +351,32 @@ public class AddressBook implements ReadOnlyAddressBook {
     public String toString() {
         return persons.asUnmodifiableObservableList().size() + " persons";
         // TODO: refine later
+    }
+
+    /**
+     * list all the current's version data for addressbook
+     */
+    public void listCurrentVersionData(){
+        logger.info("Listing current version data");
+        logger.info("-----------------------Machine data---------------------");
+        for (Machine m : machines.asUnmodifiableObservableList()) {
+            logger.info(m.getName().fullName);
+        }
+
+        logger.info("-----------------------Jobs data-----------------------");
+        for (Job j : jobs.asUnmodifiableObservableList()) {
+            logger.info(j.getJobName().fullName);
+        }
+
+        logger.info("----------------------Admins data----------------------");
+        for (Admin a : admins.asUnmodifiableObservableList()) {
+            logger.info(a.getUsername().toString());
+        }
+
+        logger.info("-----------------------Persons data---------------------");
+        for (Person p : persons.asUnmodifiableObservableList()) {
+            logger.info(p.getName().fullName);
+        }
     }
 
 }
