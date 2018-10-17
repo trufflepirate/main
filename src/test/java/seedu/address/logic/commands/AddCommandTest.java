@@ -124,12 +124,17 @@ public class AddCommandTest {
         }
 
         @Override
+        public boolean hasJob(Job job) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void addJob(Job job) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void removeJob(Job job) {
+        public void deleteJob(Job job) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -149,7 +154,16 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateMachine(Machine target, Machine editedMachine) {
+            throw new AssertionError("This method should not be called");
+        }
+
+        @Override
         public void removeMachine(Machine machine) {
+            throw new AssertionError("This method should not be called");
+        }
+        @Override
+        public boolean hasMachine(Machine machine) {
             throw new AssertionError("This method should not be called");
         }
 

@@ -48,6 +48,10 @@ public class  AddMachineCommand extends Command {
             throw new CommandException(MESSAGE_ACCESS_DENIED);
         }
 
+        if (model.hasMachine(machineToAdd)) {
+            throw new CommandException(MESSAGE_DUPLICATE_MACHINE);
+        }
+
         model.addMachine(machineToAdd);
         model.commitAddressBook();
         return new CommandResult(String.format(MESSAGE_SUCCESS, machineToAdd));

@@ -32,7 +32,7 @@ public class Machine {
     // Identity fields
     private final MachineName machineName;
     //TODO make status be more diverse, like enum
-    private final boolean status;
+    private final MachineStatus status;
 
     // Data fields
     //Name is a placeholder. To be replaced by Job class in the future
@@ -43,12 +43,24 @@ public class Machine {
     /**
      * Every field must be present and not null.
      */
-    public Machine(MachineName name, ArrayList<Job> jobs, Set<Tag> tags, boolean status) {
+    public Machine(MachineName name, List<Job> jobs, Set<Tag> tags, MachineStatus status) {
         requireAllNonNull(name, jobs, tags);
         this.machineName = name;
         this.jobs.addAll(jobs);
         this.tags.addAll(tags);
         this.status = status;
+    }
+
+    public Machine(String machineName) {
+        this.machineName = new MachineName(machineName);
+        this.status = MachineStatus.ENABLED;
+    }
+
+    /**
+     * Returns true if a given string is a valid name.
+     */
+    public static boolean isValidMachine(String test) {
+        return test.matches(NAME_VALIDATION_REGEX);
     }
 
     public MachineName getName() {
@@ -122,7 +134,7 @@ public class Machine {
         getJobs().forEach(builder::append);
 
         builder.append(" Status: ");
-        builder.append(getStringStatus());
+        builder.append(getStatus().toString());
         return builder.toString();
     }
 
@@ -135,15 +147,9 @@ public class Machine {
 
 
 
-    public boolean getStatus() {
+    public MachineStatus getStatus() {
         return status;
     }
 
-    public String getStringStatus() {
-        if (getStatus()) {
-            return "Enabled";
-        } else {
-            return "Disabled";
-        }
-    }
+
 }

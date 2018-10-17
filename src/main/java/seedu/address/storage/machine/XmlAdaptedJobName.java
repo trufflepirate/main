@@ -2,13 +2,16 @@ package seedu.address.storage.machine;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+
 import javax.xml.bind.annotation.XmlValue;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobNote;
+import seedu.address.model.job.JobPriority;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.MachineName;
+import seedu.address.model.machine.MachineStatus;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -57,7 +60,10 @@ public class XmlAdaptedJobName {
 
         //TODO Remove hardcoding
         Name name = new Name(jobName);
-        Machine machine = new Machine(new MachineName("JJ's printer"), new ArrayList<>(), new HashSet<>(), true);
+        Machine machine = new Machine(new MachineName("JJ's printer"),
+                new ArrayList<>(),
+                new HashSet<>(),
+                MachineStatus.ENABLED);
         JobNote note = new JobNote("Empty note for now");
         Person person = new Person(new Name("JunJie"),
                 new Phone("81184502"),
@@ -65,7 +71,7 @@ public class XmlAdaptedJobName {
                 new Address("1 Rivervale Link #06-09"),
                 new HashSet<>());
 
-        return new Job(name, machine, person, note);
+        return new Job(name, machine, person, JobPriority.HIGH, note, new HashSet<>());
     }
 
     @Override

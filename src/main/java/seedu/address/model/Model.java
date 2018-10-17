@@ -21,6 +21,9 @@ public interface Model {
     /** {@code Predicate} that always eveluate to true for machines */
     Predicate<Machine> PREDICATE_SHOW_ALL_MACHINES = unused -> true;
 
+    /** {@code Predicate} that always eveluate to true for jobs */
+    Predicate<Job> PREDICATE_SHOW_ALL_JOBS = unused -> true;
+
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
 
@@ -52,9 +55,10 @@ public interface Model {
     // ============================== Job methods ======================================= //
 
     void addJob(Job job);
-    void removeJob(Job job);
+    void deleteJob(Job job);
     void updateJob(Job oldJob, Job updatedJob);
     Job findJob(JobName name);
+    boolean hasJob(Job job);
 
     // ============================== Machine methods ======================================= //
     /**
@@ -68,12 +72,22 @@ public interface Model {
      */
     void removeMachine(Machine machine);
     /**
+     * Returns true if a Machine with the same identity as {@code person} exists in the address book.
+     */
+    boolean hasMachine(Machine machine);
+    /**
+     * Replaces the given machine {@code target} with {@code editedMachine}.
+     * {@code target} must exist in the Model.
+     * The machine identity of {@code editedMachine} must not be the same as another existing machine in the model.
+     */
+    void updateMachine(Machine target, Machine editedMachine);
+
+    // ============================== Admin methods ======================================= //
+    /**
      * Adds the given Admin
      * admin must not exist
      * @param admin
      */
-
-    // ============================== Admin methods ======================================= //
     void addAdmin(Admin admin);
     /**
      * Removes the given Admin

@@ -2,11 +2,15 @@ package seedu.address.model.job;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.Tag;
 
 /**
  * Represents a Printing job in MakerManager.
@@ -14,6 +18,13 @@ import seedu.address.model.person.Person;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Job {
+    public static final String MESSAGE_NAME_CONSTRAINTS =
+            "Job names should only contain alphanumeric characters and spaces, "
+                    + "and it should not be blank";
+
+    public static final String MESSAGE_NOTE_CONSTRAINTS =
+            "Job notes should only contain alphanumeric characters and spaces, "
+                    + "and it should not be blank";
 
     //Identity field
     private JobName name;
@@ -22,22 +33,38 @@ public class Job {
     private Person owner;
 
     //Data field
-    private JobNote note;
+    private final Set<Tag> tags = new HashSet<>();
+    private JobNote jobNote;
+    private JobPriority priority;
 
     /**
      * Every field must be present and not null.
      */
-    public Job(Name name, Machine machine, Person owner, JobNote notes) {
-        requireAllNonNull(name, machine, owner, notes);
+    public Job(Name name, Machine machine, Person owner, JobPriority priority, JobNote jobNote, Set<Tag> tags) {
+        requireAllNonNull(name, machine, owner, tags, priority);
         this.name = (JobName) name;
         this.machine = machine;
         this.owner = owner;
-        this.note = note;
+        this.tags.addAll(tags);
+        this.priority = priority;
+        this.jobNote = jobNote;
 
         time = new TimeStamp();
     }
 
-    public Name getName() {
+    public JobNote getJobNote() {
+        return this.jobNote;
+    }
+
+    public void setJobNote(String jobNote) {
+        this.jobNote.changeNote(jobNote);
+    }
+
+    public JobPriority getPriority() {
+        return priority;
+    }
+
+    public JobName getJobName() {
         return name;
     }
 
@@ -54,11 +81,11 @@ public class Job {
     }
 
     /**
-     * Returns an immutable note set, which throws {@code UnsupportedOperationException}
+     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
-    public JobNote getNotes() {
-        return note;
+    public Set<Tag> getTags() {
+        return Collections.unmodifiableSet(tags);
     }
 
     /*
@@ -91,7 +118,7 @@ public class Job {
         }
 
         return otherJob != null
-                && otherJob.getName().equals(getName())
+                && otherJob.getJobName().equals(getJobName())
                 && (otherJob.getMachine().equals(getMachine())
                 || otherJob.getTime().equals(getTime())
                 || otherJob.getOwner().equals(getOwner()));
@@ -112,17 +139,17 @@ public class Job {
         }
 
         Job otherJob = (Job) other;
-        return otherJob.getName().equals(getName())
+        return otherJob.getJobName().equals(getJobName())
                 && otherJob.getMachine().equals(getMachine())
                 && otherJob.getOwner().equals(getOwner())
                 && otherJob.getTime().equals(getTime())
-                && otherJob.getNotes().equals(getNotes());
+                && otherJob.getTags().equals(getTags());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, machine, time, owner, note);
+        return Objects.hash(name, machine, time, owner, tags);
     }
 
 
