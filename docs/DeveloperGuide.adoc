@@ -209,13 +209,8 @@ The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
-* exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* exposes unmodifiable `ObservableList<Person>`, `ObservableList<Admin>`, `ObservableList<Machine>`, `ObservableList<Job>` which can be 'observed' e.g. the UI can be bound to these lists so that the UI automatically updates when the data in the lists change.
 * does not depend on any of the other three components.
-
-[NOTE]
-As a more OOP model, we can store a `Tag` list in `Address Book`, which `Person` can reference. This would allow `Address Book` to only require one `Tag` object per unique `Tag`, instead of each `Person` needing their own `Tag` object. An example of how such a model may look like is given below. +
- +
-image:ModelClassBetterOopDiagram.png[width="800"]
 
 [[Design-Storage]]
 === Storage component
@@ -229,6 +224,7 @@ The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
+* can segregate different data into separate files
 
 [[Design-Commons]]
 === Common classes
@@ -320,10 +316,20 @@ image::UndoRedoActivityDiagram.png[width="650"]
 // end::undoredo[]
 
 // tag::dataencryption[]
-=== [Proposed] Data Encryption
+=== Password Encryption
+==== Current Implementation
+The password is encrypted using salting and hashing. The low-level implementation of this is handled by the popular open
+source library jBcrypt. The library was chosen for having a fairly simple API for generating hashes and comparing
+passwords to stored hashes.
 
-_{Explain here how the data encryption feature will be implemented}_
-
+==== Design Considerations
+===== Aspect: Where to encrypt
+* **Alternative 1 (current choice):** Encrypt it as it is being added to in-Memory address book.
+** Pros: Hashing needs to be done only once, after going through ModelManager. Storage Manager does not change. Able to do password validation and prevent unnecessary computations.
+** Cons: The password information is unprotected as it passes through UI and Logic.
+* **Alternative 2:** Encrypt it in UI
+** Pros: More secure transfer of passwords through the pipeline.
+** Cons: UI is heavy, and may become slower if hashing is too taxing on the system.
 // end::dataencryption[]
 
 === Logging
