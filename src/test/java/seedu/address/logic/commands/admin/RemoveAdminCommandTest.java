@@ -143,7 +143,12 @@ public class RemoveAdminCommandTest {
         }
 
         @Override
-        public void removeJob(Job job) {
+        public boolean hasJob(Job job) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void deleteJob(Job job) {
             throw new AssertionError("This method should not be called.");
         }
 

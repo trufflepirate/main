@@ -234,6 +234,14 @@ public class AddressBook implements ReadOnlyAddressBook {
     //======================== job methods ================================//
 
     /**
+     * Returns true if a job with the same identity as {@code job} exists in the address book.
+     */
+    public boolean hasJob(Job job) {
+        requireNonNull(job);
+        return jobs.contains(job);
+    }
+
+    /**
      * Adds a job if {@code job} does not exist in the list
      */
     public void addJob(Job job) {
@@ -254,6 +262,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Returns the job, if present, according to JobName
      */
     public Job findJob(JobName name) {
+        requireNonNull(name);
         return jobs.findJob(name);
     }
 
@@ -261,6 +270,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Updates the job
      */
     public void updateJob(Job oldJob, Job updatedJob) {
+        requireNonNull(oldJob);
+        requireNonNull(updatedJob);
         jobs.updateJob(oldJob, updatedJob);
     }
 
