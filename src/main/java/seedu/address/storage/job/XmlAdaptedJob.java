@@ -1,8 +1,10 @@
 package seedu.address.storage.job;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -11,10 +13,13 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.job.Job;
+import seedu.address.model.job.JobName;
+import seedu.address.model.job.JobNote;
 import seedu.address.model.job.JobPriority;
 import seedu.address.model.machine.Machine;
-import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.Tag;
+import seedu.address.storage.XmlAdaptedPerson;
 import seedu.address.storage.XmlAdaptedTag;
 import seedu.address.storage.machine.XmlAdaptedMachine;
 
@@ -34,7 +39,7 @@ public class XmlAdaptedJob {
     @XmlElement(required = true)
     private String time;
     @XmlElement(required = true)
-    private String owner;
+    private XmlAdaptedPerson owner;
     @XmlElement(required = true)
     private JobPriority priority;
 
@@ -44,7 +49,6 @@ public class XmlAdaptedJob {
     @XmlElement(required = true)
     private String note;
 
-    private Job job;
 
     /**
      * Constructs an XmlAdaptedJob.
@@ -55,7 +59,7 @@ public class XmlAdaptedJob {
     /**
      * Constructs an {@code XmlAdaptedJob} with the given job details.
      */
-    public XmlAdaptedJob(String name, XmlAdaptedMachine machine, String time, String owner,
+    public XmlAdaptedJob(String name, XmlAdaptedMachine machine, String time, XmlAdaptedPerson owner,
                          JobPriority priority, String note, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.machine = machine;
@@ -74,11 +78,10 @@ public class XmlAdaptedJob {
      * @param source future changes to this will not affect the created XmlAdaptedJob
      */
     public XmlAdaptedJob(Job source) {
-        job = source;
         name = source.getJobName().fullName;
         machine = new XmlAdaptedMachine(source.getMachine());
         time = source.getTime().toString();
-        owner = source.getOwner().toString();
+        owner = new XmlAdaptedPerson(source.getOwner());
         priority = source.getPriority();
         tagged = source.getTags().stream()
                 .map(XmlAdaptedTag::new)
@@ -92,11 +95,27 @@ public class XmlAdaptedJob {
      * @throws IllegalValueException if there were any data constraints violated in the adapted job
      */
     public Job toModelType() throws IllegalValueException {
+        //TODO handle exceptions properly here
 
-        logger.info(job.getJobName().fullName);
-        logger.info(job.getMachine().getName().fullName);
-        return job;
+        JobName jobName = new JobName(name);
+        Machine jobMachine = machine.toModelType();
+        Person jobOwner = owner.toModelType();
+        JobPriority jobPriority = priority;
+        JobNote jobNote = new JobNote(note);
+        Set<Tag> tags = new HashSet<>();
+        for (XmlAdaptedTag tag : tagged) {
+            tags.add(tag.toModelType());
+        }
+
+        return new Job(jobName,
+                jobMachine,
+                jobOwner,
+                jobPriority,
+                jobNote,
+                tags);
+
     }
+
 
     @Override
     public boolean equals(Object other) {

@@ -55,7 +55,6 @@ public class XmlSerializableMakerManagerJobs {
         logger.info("Size of jobs " + Integer.toString(jobs.size()));
         for (XmlAdaptedJob m : jobs) {
             Job job = m.toModelType();
-            logger.info(job.getJobName().fullName);
             if (addressBook.hasJob(job)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_MACHINE);
             }
