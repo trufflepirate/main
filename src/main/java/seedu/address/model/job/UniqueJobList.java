@@ -76,12 +76,19 @@ public class UniqueJobList {
 
     public Job get(String jobName) {
         requireNonNull(jobName);
+        logger.info("Jobs size : " + Integer.toString(internalList.size()));
         logger.info("Doing for loop for jobs");
         for (Job j : internalList) {
             logger.info(j.getJobName().fullName);
             if (j.getJobName().fullName.equals(jobName)) {
                 logger.info("Job name matches!!");
-                return j;
+                Job changedJob = new Job(j.getJobName(),
+                                        j.getMachine(),
+                                        j.getOwner(),
+                                        j.getPriority(),
+                                        j.getJobNote(),
+                                        j.getTags());
+                return changedJob;
             }
         }
         return null;

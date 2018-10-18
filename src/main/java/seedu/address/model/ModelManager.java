@@ -243,14 +243,14 @@ public class ModelManager extends ComponentManager implements Model {
     public ModelMessageResult addJobToMachine(String machineName, String jobName) {
         versionedAddressBook.listCurrentVersionData();
         logger.info("Inputs are : ");
-        logger.info(machineName);
         logger.info(jobName);
+        logger.info(machineName);
         Machine machine = versionedAddressBook.getMachineByName(machineName);
         Job job = versionedAddressBook.getJobByName(jobName);
-        if (machine != null && !hasMachine(machine)) {
+        if (machine == null || !hasMachine(machine)) {
             return new ModelMessageResult(false , "No such machine available");
         }
-        if (job != null && !hasJob(job)) {
+        if (job == null || !hasJob(job)) {
             return new ModelMessageResult(false, "No such job available");
         }
 
@@ -263,7 +263,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         versionedAddressBook.addJobToMachineList(machine, job);
         indicateMachineListChanged();
-        return new ModelMessageResult(true, "Model exectution successful for addJobToMachine");
+        return new ModelMessageResult(true, "Model execution successful for addJobToMachine");
     }
 
 

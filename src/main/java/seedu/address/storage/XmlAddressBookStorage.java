@@ -109,6 +109,12 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
                 FileUtil.createIfMissing(makerManagerAdminsFile);
             }
 
+            if (!Files.exists(makerManagerJobsFile)) {
+                logger.info("AddressBook file " + makerManagerJobsFile + " not found");
+                logger.info("Create new " + makerManagerJobsFile);
+                FileUtil.createIfMissing(makerManagerJobsFile);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -148,6 +154,7 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
                     XmlFileStorage.loadMakerManagerJobDataFromSaveFile(makerManagerJobsFile);
             AddressBook jobsAddressBookData = xmlMakerManagerJobs.toModelType();
             fullAddressBookData.setJobs(jobsAddressBookData.getJobList());
+            logger.info("Full addressbook data jobs size : " + fullAddressBookData.getJobList().size());
         } catch (IllegalValueException e) {
             e.printStackTrace();
         } catch (DataConversionException dce) {

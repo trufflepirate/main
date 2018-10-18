@@ -112,12 +112,17 @@ public class UniqueMachineList {
 
     public Machine get(String machineName) {
         requireNonNull(machineName);
+
         logger.info("Doing for loop");
         for (Machine m : internalList) {
             logger.info(m.getName().fullName);
             if (m.getName().fullName.equals(machineName)) {
                 logger.info("Machine name matches!!");
-                return m;
+                Machine changedMachine = new Machine(m.getName(),
+                                                    m.getJobs(),
+                                                    m.getTags(),
+                                                    m.getStatus());
+                return changedMachine;
             }
         }
         return null;

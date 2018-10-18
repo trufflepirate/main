@@ -60,6 +60,7 @@ public class XmlSerializableMakerManagerJobs {
             }
             addressBook.addJob(job);
         }
+        logger.info("Address book jobs size : " + Integer.toString(addressBook.getJobList().size()));
         return addressBook;
     }
 

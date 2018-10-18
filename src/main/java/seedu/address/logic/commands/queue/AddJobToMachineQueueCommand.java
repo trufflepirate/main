@@ -10,7 +10,7 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-
+import seedu.address.model.ModelMessageResult;
 
 
 /**
@@ -50,7 +50,8 @@ public class AddJobToMachineQueueCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
-        model.addJobToMachine(chosenMachine, jobToAdd);
+        ModelMessageResult modelMessageResult = model.addJobToMachine(chosenMachine, jobToAdd);
+        modelMessageResult.printResult();
         model.commitAddressBook();
         return new CommandResult(String.format(MESSAGE_SUCCESS, chosenMachine + " " + jobToAdd));
     }
