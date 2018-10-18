@@ -45,7 +45,7 @@ public class MainWindow extends UiPart<Stage> {
     private HelpWindow helpWindow;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane displayMachineDetailsPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -55,6 +55,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane machineListPanelPlaceholder;
+
+    @FXML
+    private StackPane jobsListPlaceHolder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -123,11 +126,15 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
+        //TODO change browser panel to displayMachineDetails
         browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        displayMachineDetailsPlaceholder.getChildren().add(browserPanel.getRoot());
 
         machineListPanel = new MachineListPanel(logic.getFilteredMachineList());
         machineListPanelPlaceholder.getChildren().add(machineListPanel.getRoot());
+
+        jobListPanel = new JobListPanel(logic.getFilteredJobList());
+        jobsListPlaceHolder.getChildren().add(jobListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());

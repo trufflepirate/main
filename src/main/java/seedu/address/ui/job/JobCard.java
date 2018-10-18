@@ -26,7 +26,7 @@ public class JobCard extends UiPart<Region> {
 
     public final Job job;
 
-    @javafx.fxml.FXML
+    @FXML
     private HBox cardPane;
     @FXML
     private Label id;
@@ -48,10 +48,10 @@ public class JobCard extends UiPart<Region> {
         this.job = job;
         id.setText(displayIndex + ". ");
         jobName.setText(job.getJobName().fullName);
-        jobMachine.setText(job.getMachine().getName().fullName);
+        // jobMachine.setText(job.getMachine().getName().fullName);
         // TODO: 10-Oct-18 time to be displayed
-        jobOwner.setText(job.getOwner().getName().fullName);
-        jobPriority.setText(job.getPriority().toString());
+        // jobOwner.setText(job.getOwner().getName().fullName);
+        // jobPriority.setText(job.getPriority().toString());
     }
 
     @Override
