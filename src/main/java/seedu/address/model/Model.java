@@ -54,7 +54,7 @@ public interface Model {
 
     // ============================== Job methods ======================================= //
 
-    void addJob(Job job);
+    ModelMessageResult addJob(Job job);
     void deleteJob(Job job);
     void updateJob(Job oldJob, Job updatedJob);
     Job findJob(JobName name);

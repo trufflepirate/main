@@ -139,7 +139,7 @@ public class RemoveAdminCommandTest {
         }
 
         @Override
-        public void addJob(Job job) {
+        public ModelMessageResult addJob(Job job) {
             throw new AssertionError("This method should not be called.");
         }
 

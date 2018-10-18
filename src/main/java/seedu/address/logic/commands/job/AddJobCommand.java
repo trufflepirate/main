@@ -13,6 +13,7 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.ModelMessageResult;
 import seedu.address.model.job.Job;
 
 /**
@@ -40,6 +41,7 @@ public class AddJobCommand extends Command {
 
 
     public static final String MESSAGE_SUCCESS = "New job added: %1$s";
+    public static final String MESSAGE_FAILURE = "New job NOT added: %1$s";
     public static final String MESSAGE_DUPLICATE_JOB = "This job already exists in the address book";
 
     private final Job jobToAdd;
@@ -60,9 +62,15 @@ public class AddJobCommand extends Command {
             throw new CommandException(MESSAGE_DUPLICATE_JOB);
         }
 
-        model.addJob(jobToAdd);
-        model.commitAddressBook();
-        return new CommandResult(String.format(MESSAGE_SUCCESS, jobToAdd));
+        ModelMessageResult modelMessageResult = model.addJob(jobToAdd);
+        if (modelMessageResult.modelExecutionResult) {
+            model.commitAddressBook();
+            return new CommandResult(String.format(MESSAGE_SUCCESS, jobToAdd));
+        } else {
+            return new CommandResult(String.format(MESSAGE_FAILURE, modelMessageResult.feedbackToUser));
+        }
+
+
     }
 
     @Override

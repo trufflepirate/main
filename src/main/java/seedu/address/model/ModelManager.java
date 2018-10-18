@@ -126,10 +126,18 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedAddressBook.hasJob(job);
     }
     @Override
-    public void addJob(Job job) {
+    public ModelMessageResult addJob(Job job) {
         requireAllNonNull(job);
-        versionedAddressBook.addJob(job);
-        indicateJobListChanged();
+        //TODO find another way to check if the printer exist before adding job
+        for (Machine m : filteredMachines) {
+            if (job.getMachine().getName().fullName.equals(m.getName().fullName)) {
+                versionedAddressBook.addJob(job);
+                indicateJobListChanged();
+                return new ModelMessageResult(true, "Job added successfully");
+            }
+        }
+
+        return new ModelMessageResult(false, "Machine does not exist");
     }
 
     @Override
