@@ -11,6 +11,7 @@ import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
@@ -37,7 +38,7 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+    private ViewInfoPanel viewInfoPanel;
     private MachineListPanel machineListPanel;
     private JobListPanel jobListPanel;
     private Config config;
@@ -127,8 +128,8 @@ public class MainWindow extends UiPart<Stage> {
      */
     void fillInnerParts() {
         //TODO change browser panel to displayMachineDetails
-        browserPanel = new BrowserPanel();
-        displayMachineDetailsPlaceholder.getChildren().add(browserPanel.getRoot());
+        viewInfoPanel = new ViewInfoPanel();
+        displayMachineDetailsPlaceholder.getChildren().add(viewInfoPanel.getRoot());
 
         machineListPanel = new MachineListPanel(logic.getFilteredMachineList());
         machineListPanelPlaceholder.getChildren().add(machineListPanel.getRoot());
@@ -199,9 +200,7 @@ public class MainWindow extends UiPart<Stage> {
     }
 
 
-    void releaseResources() {
-        browserPanel.freeResources();
-    }
+
 
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
