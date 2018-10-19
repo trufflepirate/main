@@ -29,4 +29,13 @@ public class JobNote {
         this.note = newNote;
     }
 
+    /**
+     * Adding to existing note
+     * @param addition
+     */
+    public void addNote(String addition) {
+        String newNote = this.note + "; \n" + addition;
+        changeNote(newNote);
+    }
+
 }

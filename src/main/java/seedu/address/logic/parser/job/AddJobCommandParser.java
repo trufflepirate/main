@@ -22,7 +22,7 @@ import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
 import seedu.address.model.job.JobNote;
 import seedu.address.model.job.JobOwner;
-import seedu.address.model.job.JobPriority;
+import seedu.address.model.job.Priority;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.tag.Tag;
 
@@ -48,11 +48,11 @@ public class AddJobCommandParser implements Parser<AddJobCommand> {
         JobName name = ParserUtil.parseJobName(argMultimap.getValue(PREFIX_NAME).get());
         Machine machine = ParserUtil.parseMachine(argMultimap.getValue(PREFIX_MACHINE).get());
         JobOwner jobOwner = ParserUtil.parseJobOwner(argMultimap.getValue(PREFIX_JOB_OWNER).get());
-        JobPriority jobPriority = ParserUtil.parseJobPriority(argMultimap.getValue(PREFIX_JOB_PRIORITY).get());
+        Priority priority = ParserUtil.parseJobPriority(argMultimap.getValue(PREFIX_JOB_PRIORITY).get());
         JobNote note = ParserUtil.parseJobNote(argMultimap.getValue(PREFIX_JOB_NOTE).get());
         Set<Tag> tags = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        Job job = new Job(name, machine, jobOwner, jobPriority, note, tags);
+        Job job = new Job(name, machine, jobOwner, priority, note, tags);
 
         return new AddJobCommand(job);
     }

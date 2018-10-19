@@ -1,23 +1,23 @@
 package seedu.address.model.job;
 
 /**
- * Indicates three different types of job priority
+ * Indicates different types of job priority
  */
-public enum JobPriority {
+public enum Priority {
 
+    URGENT,
     HIGH,
-    MEDIUM,
-    LOW;
+    NORMAL;
 
-    public static final String MESSAGE_JOBPRIORITY_CONSTRAINTS =
-            "Job priority should only be specified as HIGH, MEDIUM or LOW";
+    public static final String MESSAGE_PRIORITY_CONSTRAINTS =
+            "Job priority should only be specified as URGENT, HIGH or NORMAL";
 
     /**
      *checks if the input priority is a acceptable priority for the job
      */
-    public static boolean isValidPriority(JobPriority priority) {
+    public static boolean isValidPriority(Priority priority) {
         boolean isValid = true;
-        if (priority != HIGH || priority != MEDIUM || priority != LOW) {
+        if (priority != URGENT || priority != HIGH || priority != NORMAL) {
             isValid = false;
         }
         return isValid;
