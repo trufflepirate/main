@@ -231,6 +231,19 @@ public class ParserUtil {
     }
 
     /**
+     * Parses {@code String jobPriority} into {@code trimJobPriority}
+     * Leading and trailing whitespace will be trimmed
+     *
+     * @throws ParseException if the given {@code jobPriority is invalid}
+     */
+    public static float parseDuration(String duration) throws ParseException {
+        requireNonNull(duration);
+        String trimDuration = duration.trim();
+
+        return Float.valueOf(trimDuration);
+    }
+
+    /**
      * Parses {@code String jobNote} into {@code trimJobNote}
      * Leading and trailing whitespace will be trimmed
      *

@@ -58,7 +58,7 @@ public class XmlAdaptedJobName {
             throw new IllegalValueException((Name.MESSAGE_NAME_CONSTRAINTS));
         }
 
-        //TODO Remove hardcoding
+        //TODO:  Remove hardcoding
         Name name = new Name(jobName);
         Machine machine = new Machine(new MachineName("JJ's printer"),
                 new ArrayList<>(),
@@ -71,7 +71,7 @@ public class XmlAdaptedJobName {
                 new Address("1 Rivervale Link #06-09"),
                 new HashSet<>());
 
-        return new Job(name, machine, person, Priority.HIGH, note, new HashSet<>());
+        return new Job(name, machine, person, Priority.HIGH, 2, note, new HashSet<>());
     }
 
     @Override
