@@ -275,6 +275,32 @@ public class AddressBook implements ReadOnlyAddressBook {
         jobs.updateJob(oldJob, updatedJob);
     }
 
+    /**
+     * Starts the job
+     * @param name
+     */
+    public void startJob(JobName name) {
+        requireNonNull(name);
+        jobs.startJob(name);
+    }
+
+    /**
+     * Cancels the job
+     * @param name
+     */
+    public void cancelJob(JobName name) {
+        requireNonNull(name);
+        jobs.cancelJob(name);
+    }
+
+    /**
+     * Restarts the job
+     * @param name
+     */
+    public void restartJob(JobName name) {
+        requireNonNull(name);
+        jobs.restartJob(name);
+    }
 
     //======================== get lists methods ===========================//
     @Override
