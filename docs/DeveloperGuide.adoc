@@ -209,13 +209,8 @@ The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
-* exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* exposes unmodifiable `ObservableList<Person>`, `ObservableList<Admin>`, `ObservableList<Machine>`, `ObservableList<Job>` which can be 'observed' e.g. the UI can be bound to these lists so that the UI automatically updates when the data in the lists change.
 * does not depend on any of the other three components.
-
-[NOTE]
-As a more OOP model, we can store a `Tag` list in `Address Book`, which `Person` can reference. This would allow `Address Book` to only require one `Tag` object per unique `Tag`, instead of each `Person` needing their own `Tag` object. An example of how such a model may look like is given below. +
- +
-image:ModelClassBetterOopDiagram.png[width="800"]
 
 [[Design-Storage]]
 === Storage component
@@ -229,6 +224,7 @@ The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
+* can segregate different data into separate files
 
 [[Design-Commons]]
 === Common classes
@@ -319,11 +315,45 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
+// tag::addMachines[]
+=== Add Machines feature
+==== Current Implementation
+
+Adding machines is facilitated by `addMachineCommand`. It extends command with the instantiation of a new `machine`, and addition of the new `machine` to the model. Additionally, the class contains all the static information that describes the command word and syntax, proper use of the command, and syntax error messages.
+
+The main feature of the `addMachineCommand` class is `execute(Model, CommandHistory)`.
+
+The following describes a main success case of the `addMachineCommand`, from the user input to command execution, assuming that the app has already initialized:
+
+Step 1. User keys in addMachine command and presses enter. The `commandBox` object will call `execute()` of the `LogicManager` object, passing the user input as a parameter.
+
+Step 2. `LogicManager.execute()` calls the `parseCommand()` method of `AddressBookParser` object, passing the user input as a parameter.
+
+Step 3. `parseCommand()` will then compare the command word of the user input using regex, and instantiate the appropriate `commandParser`. In this case, the `addMachineCommandParser` will be instantiated. `parseCommand()` will then return `addMachineCommandParser.parse()`, with the user input being passed in as parameters of `parse()`.
+
+Step 4. `Parse()` will split the user input into is component tokens using `ArgumentTokenizer()`. It will then create new instances of `MachineName` object, `MachineStatus` object, an `Arraylist` of `Jobs`, a `Set` of `Tags`. The pointers to these objects will be passed into the constructor for a new `Machine` object. Finally, `Parse()` will then instantiate and return a new `AddMachineCommand` object, passing the `Machine` object into its constructor.
+
+Step 5.  This `addMachineCommand` is the returned to `LogicManager.execute()`, with in turn calls and returns `addMachineCommand.execute()`, passing the pointer to the `Model`, and the new `Machine` object as parameters.
+
+Step 6. `addMachineCommand.execute()` adds the new `Machine` object into the model via `model.addMachine()`. It then returns a new `CommandResult` containing pointers to the Success Message and the Machine object.
+
+// end::addMachines[]
+
 // tag::dataencryption[]
-=== [Proposed] Data Encryption
+=== Password Encryption
+==== Current Implementation
+The password is encrypted using salting and hashing. The low-level implementation of this is handled by the popular open
+source library jBcrypt. The library was chosen for having a fairly simple API for generating hashes and comparing
+passwords to stored hashes.
 
-_{Explain here how the data encryption feature will be implemented}_
-
+==== Design Considerations
+===== Aspect: Where to encrypt
+* **Alternative 1 (current choice):** Encrypt it as it is being added to in-Memory address book.
+** Pros: Hashing needs to be done only once, after going through ModelManager. Storage Manager does not change. Able to do password validation and prevent unnecessary computations.
+** Cons: The password information is unprotected as it passes through UI and Logic.
+* **Alternative 2:** Encrypt it in UI
+** Pros: More secure transfer of passwords through the pipeline.
+** Cons: UI is heavy, and may become slower if hashing is too taxing on the system.
 // end::dataencryption[]
 
 === Logging
