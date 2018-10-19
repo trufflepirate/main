@@ -17,5 +17,5 @@ public class CliSyntax {
     public static final Prefix PREFIX_JOB_OWNER = new Prefix("on/");
     public static final Prefix PREFIX_JOB_PRIORITY = new Prefix("pr/");
     public static final Prefix PREFIX_JOB_NOTE = new Prefix("jn/");
-
+    public static final Prefix PREFIX_JOB_DURATION =  new Prefix("d/");
 }

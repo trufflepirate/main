@@ -1,6 +1,7 @@
 package seedu.address.logic.parser.job;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_DURATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_NOTE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_OWNER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_PRIORITY;
@@ -38,10 +39,10 @@ public class AddJobCommandParser implements Parser<AddJobCommand> {
     public AddJobCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_MACHINE,
-                        PREFIX_JOB_OWNER, PREFIX_JOB_PRIORITY, PREFIX_JOB_NOTE, PREFIX_TAG);
+                        PREFIX_JOB_OWNER, PREFIX_JOB_PRIORITY, PREFIX_JOB_DURATION, PREFIX_JOB_NOTE, PREFIX_TAG);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_MACHINE, PREFIX_JOB_OWNER, PREFIX_JOB_PRIORITY,
-                PREFIX_JOB_NOTE, PREFIX_TAG) || !argMultimap.getPreamble().isEmpty()) {
+                PREFIX_JOB_DURATION, PREFIX_JOB_NOTE, PREFIX_TAG) || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddJobCommand.MESSAGE_USAGE));
         }
 
@@ -49,10 +50,11 @@ public class AddJobCommandParser implements Parser<AddJobCommand> {
         Machine machine = ParserUtil.parseMachine(argMultimap.getValue(PREFIX_MACHINE).get());
         JobOwner jobOwner = ParserUtil.parseJobOwner(argMultimap.getValue(PREFIX_JOB_OWNER).get());
         Priority priority = ParserUtil.parseJobPriority(argMultimap.getValue(PREFIX_JOB_PRIORITY).get());
+        Float duration = ParserUtil.parseDuration(argMultimap.getValue(PREFIX_JOB_DURATION).get());
         JobNote note = ParserUtil.parseJobNote(argMultimap.getValue(PREFIX_JOB_NOTE).get());
         Set<Tag> tags = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        Job job = new Job(name, machine, jobOwner, priority, note, tags);
+        Job job = new Job(name, machine, jobOwner, priority, duration, note, tags);
 
         return new AddJobCommand(job);
     }

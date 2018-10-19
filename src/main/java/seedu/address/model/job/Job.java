@@ -29,7 +29,7 @@ public class Job {
     //Identity field
     private JobName name;
     private Machine machine;
-    private TimeStamp time;
+    private TimeStamp startTime;
     private Person owner;
 
     //Data field
@@ -37,11 +37,13 @@ public class Job {
     private JobNote jobNote;
     private Priority priority;
     private Status status;
+    private float duration;
 
     /**
      * Every field must be present and not null.
+     * TODO: Need to validate all these somewhere
      */
-    public Job(Name name, Machine machine, Person owner, Priority priority, JobNote jobNote, Set<Tag> tags) {
+    public Job(Name name, Machine machine, Person owner, Priority priority, float duration, JobNote jobNote, Set<Tag> tags) {
         requireAllNonNull(name, machine, owner, tags);
         this.name = (JobName) name;
         this.machine = machine;
@@ -50,12 +52,44 @@ public class Job {
         this.priority = priority;
         this.status = Status.QUEUED;
         this.jobNote = jobNote;
+        this.duration = duration;
 
-        time = new TimeStamp();
+        startTime = null;
     }
 
     public JobNote getJobNote() {
         return this.jobNote;
+    }
+
+    public float getDuration() {
+        return this.duration;
+    }
+
+    public void setDuration(float duration) {
+        this.duration = duration;
+    }
+
+    /**
+     * Used to start a job
+     */
+    public void startJob() {
+        this.status = Status.ONGOING;
+        this.startTime = new TimeStamp();
+    }
+
+    /**
+     * Used in case of failed prints
+     */
+    public void restartJob() {
+        this.startJob();
+    }
+
+    public void cancelJob() {
+        this.status = Status.CANCELLED;
+    }
+
+    public void finishJob() {
+        this.status = Status.FINISHED;
     }
 
     public void setJobNote(String jobNote) {
@@ -86,8 +120,8 @@ public class Job {
         return machine;
     }
 
-    public TimeStamp getTime() {
-        return time;
+    public TimeStamp getStartTime() {
+        return startTime;
     }
 
     public Person getOwner() {
@@ -122,6 +156,7 @@ public class Job {
     /**
      * Returns true if both jobs of the same name have at least one other identity field that is the same.
      * This defines a weaker notion of equality between two jobs.
+     * //TODO: Modify to match new class
      */
     public boolean isSameJob(Job otherJob) {
         if (otherJob == this) {
@@ -131,7 +166,7 @@ public class Job {
         return otherJob != null
                 && otherJob.getJobName().equals(getJobName())
                 && (otherJob.getMachine().equals(getMachine())
-                || otherJob.getTime().equals(getTime())
+                || otherJob.getStartTime().equals(getStartTime())
                 || otherJob.getOwner().equals(getOwner()));
     }
 
@@ -153,14 +188,14 @@ public class Job {
         return otherJob.getJobName().equals(getJobName())
                 && otherJob.getMachine().equals(getMachine())
                 && otherJob.getOwner().equals(getOwner())
-                && otherJob.getTime().equals(getTime())
+                && otherJob.getStartTime().equals(getStartTime())
                 && otherJob.getTags().equals(getTags());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, machine, time, owner, tags);
+        return Objects.hash(name, machine, startTime, owner, tags);
     }
 
 
