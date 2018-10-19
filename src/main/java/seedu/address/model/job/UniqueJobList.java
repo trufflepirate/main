@@ -4,9 +4,12 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.ModelManager;
 import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.job.exceptions.JobNotFoundException;
 
@@ -15,6 +18,7 @@ import seedu.address.model.job.exceptions.JobNotFoundException;
  */
 public class UniqueJobList {
 
+    private static final Logger logger = LogsCenter.getLogger(UniqueJobList.class);
     private final ObservableList<Job> internalList = FXCollections.observableArrayList();
 
     /**
@@ -65,6 +69,31 @@ public class UniqueJobList {
 
         internalList.setAll(jobs);
     }
+
+    /**
+     * Returns a job by name
+     */
+
+    public Job get(String jobName) {
+        requireNonNull(jobName);
+        logger.info("Jobs size : " + Integer.toString(internalList.size()));
+        logger.info("Doing for loop for jobs");
+        for (Job j : internalList) {
+            logger.info(j.getJobName().fullName);
+            if (j.getJobName().fullName.equals(jobName)) {
+                logger.info("Job name matches!!");
+                Job changedJob = new Job(j.getJobName(),
+                                        j.getMachine(),
+                                        j.getOwner(),
+                                        j.getPriority(),
+                                        j.getJobNote(),
+                                        j.getTags());
+                return changedJob;
+            }
+        }
+        return null;
+    }
+
 
 
     /**

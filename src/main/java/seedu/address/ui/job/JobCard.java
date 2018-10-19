@@ -26,32 +26,39 @@ public class JobCard extends UiPart<Region> {
 
     public final Job job;
 
-    @javafx.fxml.FXML
-    private HBox cardPane;
     @FXML
-    private Label id;
+    private HBox cardPane;
     @FXML
     private Label jobName;
     @FXML
-    private Label jobMachine;
-    @FXML
-    private Label time;
-    @FXML
-    private Label jobOwner;
-    @FXML
-    private Label jobPriority;
+    private FlowPane details;
     @FXML
     private FlowPane tags;
+    @FXML
+    private Label jobDescription;
 
     public JobCard(Job job, int displayIndex) {
         super(FXML);
         this.job = job;
-        id.setText(displayIndex + ". ");
         jobName.setText(job.getJobName().fullName);
-        jobMachine.setText(job.getMachine().getName().fullName);
+
+        Label machineNameLabel = new Label(job.getMachine().getName().fullName);
+        //TODO Tianyuan change the way timestamp is given
+        //Label timeStampLabel = new Label(job.getTime().toString());
+        Label ownerNameLabel = new Label(job.getOwner().getName().fullName);
+        Label priorityLabel = new Label(job.getPriority().toString());
+
+        details.getChildren().add(machineNameLabel);
+        details.getChildren().add(ownerNameLabel);
+        details.setHgap(4);
+
+        tags.getChildren().add(priorityLabel);
+
+        jobDescription.setText(job.getJobNote().toString());
+
+
+
         // TODO: 10-Oct-18 time to be displayed
-        jobOwner.setText(job.getOwner().getName().fullName);
-        jobPriority.setText(job.getPriority().toString());
     }
 
     @Override
@@ -68,7 +75,6 @@ public class JobCard extends UiPart<Region> {
 
         // state check
         JobCard jobCard = (JobCard) other;
-        return id.getText().equals(jobCard.id.getText())
-                && job.equals(jobCard.job);
+        return job.equals(jobCard.job);
     }
 }

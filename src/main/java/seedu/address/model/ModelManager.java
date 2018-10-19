@@ -126,10 +126,18 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedAddressBook.hasJob(job);
     }
     @Override
-    public void addJob(Job job) {
+    public ModelMessageResult addJob(Job job) {
         requireAllNonNull(job);
-        versionedAddressBook.addJob(job);
-        indicateJobListChanged();
+        //TODO find another way to check if the printer exist before adding job
+        for (Machine m : filteredMachines) {
+            if (job.getMachine().getName().fullName.equals(m.getName().fullName)) {
+                versionedAddressBook.addJob(job);
+                indicateJobListChanged();
+                return new ModelMessageResult(true, "Job added successfully");
+            }
+        }
+
+        return new ModelMessageResult(false, "Machine does not exist");
     }
 
     @Override
@@ -234,6 +242,38 @@ public class ModelManager extends ComponentManager implements Model {
     public int numAdmins() {
         return versionedAddressBook.numAdmins();
     }
+
+
+
+    // ============================== Queue methods ======================================= //
+
+    @Override
+    public ModelMessageResult addJobToMachine(String machineName, String jobName) {
+        versionedAddressBook.listCurrentVersionData();
+        logger.info("Inputs are : ");
+        logger.info(jobName);
+        logger.info(machineName);
+        Machine machine = versionedAddressBook.getMachineByName(machineName);
+        Job job = versionedAddressBook.getJobByName(jobName);
+        if (machine == null || !hasMachine(machine)) {
+            return new ModelMessageResult(false , "No such machine available");
+        }
+        if (job == null || !hasJob(job)) {
+            return new ModelMessageResult(false, "No such job available");
+        }
+
+        logger.info("Machine and job found");
+        logger.info(machine.getName().fullName);
+        logger.info(job.getJobName().fullName);
+        if (machine.hasJob(job)) {
+            return new ModelMessageResult(false, "Machine already has job in its print queue");
+        }
+
+        versionedAddressBook.addJobToMachineList(machine, job);
+        indicateMachineListChanged();
+        return new ModelMessageResult(true, "Model execution successful for addJobToMachine");
+    }
+
 
     //=========== Filtered Person List Accessors =============================================================
 

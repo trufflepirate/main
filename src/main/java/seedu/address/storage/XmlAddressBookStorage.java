@@ -22,6 +22,7 @@ import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.Password;
 import seedu.address.model.admin.Username;
 import seedu.address.storage.admin.XmlSerializableMakerManagerAdmins;
+import seedu.address.storage.job.XmlSerializableMakerManagerJobs;
 import seedu.address.storage.machine.XmlSerializableMakerManagerMachines;
 
 /**
@@ -86,6 +87,7 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
         Path mainAddressBookFile = userPrefs.getAddressBookFilePath();
         Path makerManagerMachinesFile = userPrefs.getMakerManagerMachinesFilePath();
         Path makerManagerAdminsFile = userPrefs.getMakerManagerAdminsFilePath();
+        Path makerManagerJobsFile = userPrefs.getMakerManagerJobsFilePath();
 
         try {
             if (!Files.exists(mainAddressBookFile)) {
@@ -104,6 +106,12 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
                 logger.info("AddressBook file "  + makerManagerAdminsFile + " not found");
                 logger.info("Creating new " + makerManagerAdminsFile);
                 FileUtil.createIfMissing(makerManagerAdminsFile);
+            }
+
+            if (!Files.exists(makerManagerJobsFile)) {
+                logger.info("AddressBook file " + makerManagerJobsFile + " not found");
+                logger.info("Create new " + makerManagerJobsFile);
+                FileUtil.createIfMissing(makerManagerJobsFile);
             }
 
         } catch (IOException e) {
@@ -138,6 +146,18 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
             logger.info("Machine conversion error");
         } catch (IllegalValueException e) {
             e.printStackTrace();
+        }
+
+        try {
+            XmlSerializableMakerManagerJobs xmlMakerManagerJobs =
+                    XmlFileStorage.loadMakerManagerJobDataFromSaveFile(makerManagerJobsFile);
+            AddressBook jobsAddressBookData = xmlMakerManagerJobs.toModelType();
+            fullAddressBookData.setJobs(jobsAddressBookData.getJobList());
+            logger.info("Full addressbook data jobs size : " + fullAddressBookData.getJobList().size());
+        } catch (IllegalValueException e) {
+            e.printStackTrace();
+        } catch (DataConversionException dce) {
+            logger.info("Jobs conversion error");
         }
 
         try {
@@ -194,11 +214,12 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
         case "data\\makerManagerAdmins.xml" :
             XmlFileStorage.saveDataToFile(filePath, new XmlSerializableMakerManagerAdmins(addressBook));
             break;
+        case "data\\makerManagerJobs.xml" :
+            XmlFileStorage.saveDataToFile(filePath, new XmlSerializableMakerManagerJobs(addressBook));
+            break;
         default:
             logger.info("No such file path available to save data in");
         }
-
-        //TODO: @TY make XmlSerializableMakerManagerJobs and Relevant classes
 
     }
 

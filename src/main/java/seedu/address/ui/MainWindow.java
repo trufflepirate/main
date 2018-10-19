@@ -11,6 +11,7 @@ import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
@@ -37,7 +38,7 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+    private ViewInfoPanel viewInfoPanel;
     private MachineListPanel machineListPanel;
     private JobListPanel jobListPanel;
     private Config config;
@@ -45,7 +46,7 @@ public class MainWindow extends UiPart<Stage> {
     private HelpWindow helpWindow;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane displayMachineDetailsPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -55,6 +56,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane machineListPanelPlaceholder;
+
+    @FXML
+    private StackPane jobsListPlaceHolder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -123,11 +127,15 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        //TODO change browser panel to displayMachineDetails
+        viewInfoPanel = new ViewInfoPanel();
+        displayMachineDetailsPlaceholder.getChildren().add(viewInfoPanel.getRoot());
 
         machineListPanel = new MachineListPanel(logic.getFilteredMachineList());
         machineListPanelPlaceholder.getChildren().add(machineListPanel.getRoot());
+
+        jobListPanel = new JobListPanel(logic.getFilteredJobList());
+        jobsListPlaceHolder.getChildren().add(jobListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -192,9 +200,7 @@ public class MainWindow extends UiPart<Stage> {
     }
 
 
-    void releaseResources() {
-        browserPanel.freeResources();
-    }
+
 
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {

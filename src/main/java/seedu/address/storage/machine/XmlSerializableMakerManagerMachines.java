@@ -2,14 +2,17 @@ package seedu.address.storage.machine;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.machine.Machine;
+import seedu.address.storage.StorageManager;
 
 
 /**
@@ -19,6 +22,7 @@ import seedu.address.model.machine.Machine;
 @XmlRootElement(name = "MakerManagerMachines")
 public class XmlSerializableMakerManagerMachines {
 
+    private static final Logger logger = LogsCenter.getLogger(XmlSerializableMakerManagerMachines.class);
     public static final String MESSAGE_DUPLICATE_MACHINE = "Machines list contains duplicate machine(s)";
 
     @XmlElement
@@ -48,6 +52,7 @@ public class XmlSerializableMakerManagerMachines {
      */
     public AddressBook toModelType() throws IllegalValueException {
         AddressBook addressBook = new AddressBook();
+        logger.info("No. of machines stored :" + Integer.toString(machines.size()));
         for (XmlAdaptedMachine m : machines) {
             Machine machine = m.toModelType();
             if (addressBook.hasMachine(machine)) {

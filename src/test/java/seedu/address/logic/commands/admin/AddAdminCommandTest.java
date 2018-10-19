@@ -15,6 +15,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.ModelMessageResult;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.Password;
@@ -154,7 +155,7 @@ public class AddAdminCommandTest {
         }
 
         @Override
-        public void addJob(Job job) {
+        public ModelMessageResult addJob(Job job) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -241,6 +242,11 @@ public class AddAdminCommandTest {
         @Override
         public int numAdmins() {
             return 0;
+        }
+
+        @Override
+        public ModelMessageResult addJobToMachine(String machineName, String jobName) {
+            return null;
         }
 
         @Override

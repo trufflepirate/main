@@ -54,7 +54,7 @@ public interface Model {
 
     // ============================== Job methods ======================================= //
 
-    void addJob(Job job);
+    ModelMessageResult addJob(Job job);
     void deleteJob(Job job);
     void updateJob(Job oldJob, Job updatedJob);
     Job findJob(JobName name);
@@ -128,6 +128,19 @@ public interface Model {
      * returns number of admins in the makerManager
      */
     int numAdmins();
+
+    // ============================== Queue methods ======================================= //
+
+    /**
+     * returns true if job is successfully added to machine
+     * false otherwise if any of the conditions below does not check out
+     * 1) machine does not exist
+     * 2) job does not exist
+     * 3) machine already has the print job in its own queue
+    \ */
+
+    ModelMessageResult addJobToMachine(String machineName, String jobName);
+
 
 
     //=========== Filtered Person List Accessors =============================================================

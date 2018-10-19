@@ -1,14 +1,14 @@
 {
-  "guiSettings" : {
-    "windowWidth" : 1070.857177734375,
-    "windowHeight" : 714.2857055664062,
-    "windowCoordinates" : {
-      "x" : 161,
-      "y" : 18
+  "guiSettings": {
+    "windowWidth": 1616.0,
+    "windowHeight": 876.0,
+    "windowCoordinates": {
+      "x": -8,
+      "y": -8
     }
   },
-  "addressBookFilePath" : "data\\addressbook.xml",
-  "makerManagerMachinesFilePath" : "data\\makerManagerMachines.xml",
-  "makerManagerAdminsFilePath" : "data\\makerManagerAdmins.xml",
-  "makerManagerJobsFilePath" : "data\\makerManagerJobs.xml"
+  "addressBookFilePath": "data\\addressbook.xml",
+  "makerManagerMachinesFilePath": "data\\makerManagerMachines.xml",
+  "makerManagerAdminsFilePath": "data\\makerManagerAdmins.xml",
+  "makerManagerJobsFilePath": "data\\makerManagerJobs.xml"
 }
