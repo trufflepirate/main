@@ -153,7 +153,8 @@ public class XmlAdaptedJob {
         }
         final JobNote modelJobNote = new JobNote(note);
 
-        return new Job(modelJobName, modelMachine, modelJobOwner, modelPriority, modelDuration, modelJobNote, modelTags);
+        return new Job(modelJobName, modelMachine, modelJobOwner, modelPriority,
+                modelDuration, modelJobNote, modelTags);
     }
 
     //TODO: redo equals
