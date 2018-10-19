@@ -60,6 +60,21 @@ public interface Model {
     Job findJob(JobName name);
     boolean hasJob(Job job);
 
+    /**
+     * Starts the job given
+     */
+    void startJob(JobName name);
+
+    /**
+     * Cancels the job given
+     */
+    void cancelJob(JobName name);
+
+    /**
+     * Restarts the job given
+     */
+    void restartJob(JobName name);
+
     // ============================== Machine methods ======================================= //
     /**
      * Adds the given machine
@@ -178,4 +193,5 @@ public interface Model {
      * Saves the current address book state for undo/redo.
      */
     void commitAddressBook();
+
 }
