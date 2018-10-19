@@ -147,15 +147,15 @@ Disable admin mode. +
 	Format: logout
 
 ... *Add Admin:*
-Add another admin. Note that PASSWORD has to match some specific validation criteria. +
+Add another admin. +
     Format: addAdmin USERNAME PASSWORD VERIFY_PASSWORD
 
 ... *Remove Admin:*
-Removing another admin. +
+Add another admin. +
     Format: removeAdmin USERNAME
 
 ... *Update Admin Password:*
-Updating your own account's password. Note that NEW_PW has to match some specific validation criteria. +
+Add another admin. +
     Format: updatePassword USERNAME OLD_PW NEW_PW NEW_PW_VERIFY
 
 ... *Add Machine:*
