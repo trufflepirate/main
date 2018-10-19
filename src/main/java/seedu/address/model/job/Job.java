@@ -35,18 +35,20 @@ public class Job {
     //Data field
     private final Set<Tag> tags = new HashSet<>();
     private JobNote jobNote;
-    private JobPriority priority;
+    private Priority priority;
+    private Status status;
 
     /**
      * Every field must be present and not null.
      */
-    public Job(Name name, Machine machine, Person owner, JobPriority priority, JobNote jobNote, Set<Tag> tags) {
-        requireAllNonNull(name, machine, owner, tags, priority);
+    public Job(Name name, Machine machine, Person owner, Priority priority, JobNote jobNote, Set<Tag> tags) {
+        requireAllNonNull(name, machine, owner, tags);
         this.name = (JobName) name;
         this.machine = machine;
         this.owner = owner;
         this.tags.addAll(tags);
         this.priority = priority;
+        this.status = Status.QUEUED;
         this.jobNote = jobNote;
 
         time = new TimeStamp();
@@ -60,8 +62,20 @@ public class Job {
         this.jobNote.changeNote(jobNote);
     }
 
-    public JobPriority getPriority() {
+    public Priority getPriority() {
         return priority;
+    }
+
+    public void setPriority(Priority priority) {
+        this.priority = priority;
+    }
+
+    public Status getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public JobName getJobName() {
@@ -88,13 +102,10 @@ public class Job {
         return Collections.unmodifiableSet(tags);
     }
 
-    /*
-    * In case the function of adding new notes during the process in needed
-    * have to change the note to a set
-    public void addNote(JobNote newNote) {
-        notes.add(newNote);
+    public void addNote(String addition) {
+        this.jobNote.addNote(addition);
     }
-    */
+
 
     public void setName(String newName) {
         name = new JobName(newName);
@@ -110,7 +121,7 @@ public class Job {
 
     /**
      * Returns true if both jobs of the same name have at least one other identity field that is the same.
-     * This defines a weaker notion of equality between two persons.
+     * This defines a weaker notion of equality between two jobs.
      */
     public boolean isSameJob(Job otherJob) {
         if (otherJob == this) {

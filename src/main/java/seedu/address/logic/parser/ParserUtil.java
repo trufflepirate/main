@@ -14,7 +14,7 @@ import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
 import seedu.address.model.job.JobNote;
 import seedu.address.model.job.JobOwner;
-import seedu.address.model.job.JobPriority;
+import seedu.address.model.job.Priority;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.MachineName;
 import seedu.address.model.machine.MachineStatus;
@@ -223,11 +223,11 @@ public class ParserUtil {
      *
      * @throws ParseException if the given {@code jobPriority is invalid}
      */
-    public static JobPriority parseJobPriority(String jobPriority) throws ParseException {
+    public static Priority parseJobPriority(String jobPriority) throws ParseException {
         requireNonNull(jobPriority);
         String trimJobPriority = jobPriority.trim();
 
-        return JobPriority.valueOf(trimJobPriority);
+        return Priority.valueOf(trimJobPriority);
     }
 
     /**

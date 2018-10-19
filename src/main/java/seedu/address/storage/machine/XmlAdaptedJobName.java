@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlValue;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobNote;
-import seedu.address.model.job.JobPriority;
+import seedu.address.model.job.Priority;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.MachineName;
 import seedu.address.model.machine.MachineStatus;
@@ -71,7 +71,7 @@ public class XmlAdaptedJobName {
                 new Address("1 Rivervale Link #06-09"),
                 new HashSet<>());
 
-        return new Job(name, machine, person, JobPriority.HIGH, note, new HashSet<>());
+        return new Job(name, machine, person, Priority.HIGH, note, new HashSet<>());
     }
 
     @Override
