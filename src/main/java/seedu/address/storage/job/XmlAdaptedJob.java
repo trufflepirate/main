@@ -80,9 +80,9 @@ public class XmlAdaptedJob {
      */
     public XmlAdaptedJob(Job source) {
         name = source.getJobName().fullName;
-        machine = source.getMachine().toString();
+        machine = source.getMachine().getName().toString();
         startTime = source.getStartTime().toString();
-        owner = source.getOwner().toString();
+        owner = source.getOwner().getName().toString();
         priority = source.getPriority();
         status = source.getStatus();
         duration = source.getDuration();
@@ -134,9 +134,9 @@ public class XmlAdaptedJob {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     Priority.class.getSimpleName()));
         }
-        if (!Priority.isValidPriority(priority)) {
-            throw new IllegalValueException(Priority.MESSAGE_PRIORITY_CONSTRAINTS);
-        }
+
+        //TODO: no validation on priority
+
         final Priority modelPriority = priority;
 
         //TODO: no validation on duration yet

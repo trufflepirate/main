@@ -54,7 +54,7 @@ public class Job {
         this.jobNote = jobNote;
         this.duration = duration;
 
-        startTime = null;
+        startTime = new TimeStamp();
     }
 
     public JobNote getJobNote() {
