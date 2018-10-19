@@ -357,7 +357,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * list all the current's version data for addressbook
      */
-    public void listCurrentVersionData(){
+    public void listCurrentVersionData() {
         logger.info("Listing current version data");
         logger.info("-----------------------Machine data---------------------");
         for (Machine m : machines.asUnmodifiableObservableList()) {

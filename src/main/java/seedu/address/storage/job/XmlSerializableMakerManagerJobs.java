@@ -13,7 +13,6 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.job.Job;
-import seedu.address.storage.XmlFileStorage;
 
 /**
  * An Immutable MakerManager AddressBook that is serializable to XML format

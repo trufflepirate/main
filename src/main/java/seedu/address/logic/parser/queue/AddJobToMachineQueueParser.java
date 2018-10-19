@@ -32,14 +32,16 @@ public class AddJobToMachineQueueParser implements Parser<AddJobToMachineQueueCo
 
         if (!arePrefixesPresent(argMultiMap, PREFIX_NAME, PREFIX_MACHINE)
                 || !argMultiMap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddJobToMachineQueueCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                AddJobToMachineQueueCommand.MESSAGE_USAGE));
         }
 
         Optional<String> machineName = argMultiMap.getValue(PREFIX_MACHINE);
         Optional<String> jobName = argMultiMap.getValue(PREFIX_NAME);
 
         if (!machineName.isPresent() || !jobName.isPresent()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddJobToMachineQueueCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                AddJobToMachineQueueCommand.MESSAGE_USAGE));
         }
         return new AddJobToMachineQueueCommand(machineName.get(), jobName.get());
     }
