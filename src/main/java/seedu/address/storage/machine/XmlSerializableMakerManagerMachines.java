@@ -22,7 +22,7 @@ import seedu.address.model.machine.Machine;
 public class XmlSerializableMakerManagerMachines {
 
     private static final Logger logger = LogsCenter.getLogger(XmlSerializableMakerManagerMachines.class);
-    public static final String MESSAGE_DUPLICATE_MACHINE = "Machines list contains duplicate machine(s)";
+    private static final String MESSAGE_DUPLICATE_MACHINE = "Machines list contains duplicate machine(s)";
 
     @XmlElement
     private List<XmlAdaptedMachine> machines;
