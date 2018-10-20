@@ -59,7 +59,6 @@ public class XmlFileStorage {
     /**
      * Saves the given jobs data to the specified file
      */
-
     public static void saveDataToFile(Path file, XmlSerializableMakerManagerJobs addressBook)
             throws FileNotFoundException {
         try {

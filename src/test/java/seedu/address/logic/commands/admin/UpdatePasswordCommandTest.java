@@ -175,6 +175,19 @@ public class UpdatePasswordCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
+        public void startJob(JobName name) {
+
+        }
+
+        @Override
+        public void cancelJob(JobName name) {
+
+        }
+
+        @Override
+        public void restartJob(JobName name) {
+        }
+
         @Override
         public void deleteJob(Job job) {
             throw new AssertionError("This method should not be called.");

@@ -87,6 +87,7 @@ public class XmlAdaptedMachine {
 
         final MachineName name = new MachineName(machineName);
 
+        //TODO: no validation on status
         if (status == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "STATUS"));
         }

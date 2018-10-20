@@ -160,6 +160,27 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedAddressBook.findJob(name);
     }
 
+    @Override
+    public void startJob(JobName name) {
+        requireNonNull(name);
+        versionedAddressBook.startJob(name);
+        indicateJobListChanged();
+    }
+
+    @Override
+    public void cancelJob(JobName name) {
+        requireAllNonNull();
+        versionedAddressBook.cancelJob(name);
+        indicateJobListChanged();
+    }
+
+    @Override
+    public void restartJob(JobName name) {
+        requireAllNonNull();
+        versionedAddressBook.restartJob(name);
+        indicateJobListChanged();
+    }
+
     // ============================== Machine methods ======================================= //
 
     @Override

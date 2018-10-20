@@ -15,7 +15,9 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
 import seedu.address.model.job.JobNote;
-import seedu.address.model.job.JobPriority;
+import seedu.address.model.job.Priority;
+import seedu.address.model.job.Status;
+
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
@@ -37,35 +39,43 @@ public class XmlAdaptedJob {
     @XmlElement(required = true)
     private XmlAdaptedMachine machine;
     @XmlElement(required = true)
-    private String time;
+    private String startTime;
     @XmlElement(required = true)
     private XmlAdaptedPerson owner;
     @XmlElement(required = true)
-    private JobPriority priority;
+    private Priority priority;
+    @XmlElement(required = true)
+    private float duration;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
-    @XmlElement(required = true)
+    @XmlElement
     private String note;
+
+    @XmlElement
+    private Status status;
 
 
     /**
      * Constructs an XmlAdaptedJob.
      * This is the no-arg constructor that is required by JAXB.
      */
-    public XmlAdaptedJob() {}
+    public XmlAdaptedJob() {
+    }
 
     /**
      * Constructs an {@code XmlAdaptedJob} with the given job details.
      */
+
     public XmlAdaptedJob(String name, XmlAdaptedMachine machine, String time, XmlAdaptedPerson owner,
-                         JobPriority priority, String note, List<XmlAdaptedTag> tagged) {
+                         Priority priority, float duration, String note, List<XmlAdaptedTag> tagged){
         this.name = name;
         this.machine = machine;
-        this.time = time;
+        this.startTime = time;
         this.owner = owner;
         this.priority = priority;
+        this.duration = duration;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -77,12 +87,16 @@ public class XmlAdaptedJob {
      *
      * @param source future changes to this will not affect the created XmlAdaptedJob
      */
-    public XmlAdaptedJob(Job source) {
+    public XmlAdaptedJob(Job source){
         name = source.getJobName().fullName;
         machine = new XmlAdaptedMachine(source.getMachine());
-        time = source.getTime().toString();
         owner = new XmlAdaptedPerson(source.getOwner());
+
+        startTime = source.getStartTime().toString();
+
         priority = source.getPriority();
+        status = source.getStatus();
+        duration = source.getDuration();
         tagged = source.getTags().stream()
                 .map(XmlAdaptedTag::new)
                 .collect(Collectors.toList());
@@ -97,41 +111,28 @@ public class XmlAdaptedJob {
     public Job toModelType() throws IllegalValueException {
         //TODO handle exceptions properly here
 
-        JobName jobName = new JobName(name);
-        Machine jobMachine = machine.toModelType();
-        Person jobOwner = owner.toModelType();
-        JobPriority jobPriority = priority;
-        JobNote jobNote = new JobNote(note);
-        Set<Tag> tags = new HashSet<>();
+        JobName modelJobName = new JobName(name);
+        Machine modelJobMachine = machine.toModelType();
+        Person modelJobOwner = owner.toModelType();
+        final Priority modelPriority = priority;
+        //TODO: no validation on duration yet
+        final float modelDuration = duration;
+        JobNote modelJobNote = new JobNote(note);
+        Set<Tag> modelTags = new HashSet<>();
         for (XmlAdaptedTag tag : tagged) {
-            tags.add(tag.toModelType());
+
+            modelTags.add(tag.toModelType());
         }
 
-        return new Job(jobName,
-                jobMachine,
-                jobOwner,
-                jobPriority,
-                jobNote,
-                tags);
+        return new Job(modelJobName,
+                modelJobMachine,
+                modelJobOwner,
+                modelPriority,
+                modelDuration,
+                modelJobNote,
+                modelTags);
 
-    }
-
-
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-
-        if (!(other instanceof seedu.address.storage.job.XmlAdaptedJob)) {
-            return false;
-        }
-
-        seedu.address.storage.job.XmlAdaptedJob otherJob = (seedu.address.storage.job.XmlAdaptedJob) other;
-        return Objects.equals(name, otherJob.name)
-                && Objects.equals(machine, otherJob.machine)
-                && Objects.equals(owner, otherJob.owner)
-                && Objects.equals(priority, otherJob.priority)
-                && tagged.equals(otherJob.tagged);
     }
 }
+
+

@@ -33,6 +33,8 @@ public class JobCard extends UiPart<Region> {
     @FXML
     private FlowPane details;
     @FXML
+    private Label status;
+    @FXML
     private FlowPane tags;
     @FXML
     private Label jobDescription;
@@ -59,6 +61,13 @@ public class JobCard extends UiPart<Region> {
 
 
         // TODO: 10-Oct-18 time to be displayed
+
+        /* TODO Saif code leaving it here for now
+        jobOwner.setText(job.getOwner().getName().fullName);
+        jobPriority.setText(job.getPriority().toString());
+        status.setText(job.getStatus().toString());
+        */
+
     }
 
     @Override

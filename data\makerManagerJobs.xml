@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<MakerManagerJobs>
+    <jobs>
+        <name>iDCP project</name>
+        <machine>
+            <machineName>JJPrinter</machineName>
+            <status>ENABLED</status>
+        </machine>
+        <startTime>seedu.address.model.job.TimeStamp@2665eadf</startTime>
+        <owner>
+            <name>TIAN YUAN</name>
+            <phone>000</phone>
+            <email>0@u.nus.edu</email>
+            <address>000</address>
+        </owner>
+        <priority>HIGH</priority>
+        <duration>2.0</duration>
+        <tagged>iDCP</tagged>
+        <note>This is for the iDCP project</note>
+        <status>QUEUED</status>
+    </jobs>
+    <jobs>
+        <name>iDCP</name>
+        <machine>
+            <machineName>JJPrinter</machineName>
+            <status>ENABLED</status>
+        </machine>
+        <startTime>seedu.address.model.job.TimeStamp@41a824f6</startTime>
+        <owner>
+            <name>JUN JIE</name>
+            <phone>000</phone>
+            <email>0@u.nus.edu</email>
+            <address>000</address>
+        </owner>
+        <priority>NORMAL</priority>
+        <duration>3.0</duration>
+        <tagged>saif</tagged>
+        <note>Testing to see if saif code still works</note>
+        <status>ONGOING</status>
+    </jobs>
+</MakerManagerJobs>
