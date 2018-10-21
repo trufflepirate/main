@@ -14,7 +14,8 @@ import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
 import seedu.address.model.job.JobNote;
 import seedu.address.model.job.JobOwner;
-import seedu.address.model.job.JobPriority;
+import seedu.address.model.job.Priority;
+import seedu.address.model.job.Status;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Name;
 import seedu.address.model.tag.Tag;
@@ -32,17 +33,22 @@ public class XmlAdaptedJob {
     @XmlElement(required = true)
     private String machine;
     @XmlElement(required = true)
-    private String time;
+    private String startTime;
     @XmlElement(required = true)
     private String owner;
     @XmlElement(required = true)
-    private JobPriority priority;
+    private Priority priority;
+    @XmlElement (required = true)
+    private float duration;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
-    @XmlElement(required = true)
+    @XmlElement
     private String note;
+
+    @XmlElement
+    private Status status;
 
     /**
      * Constructs an XmlAdaptedJob.
@@ -54,12 +60,13 @@ public class XmlAdaptedJob {
      * Constructs an {@code XmlAdaptedJob} with the given job details.
      */
     public XmlAdaptedJob(String name, String machine, String time, String owner,
-                         JobPriority priority, String note, List<XmlAdaptedTag> tagged) {
+                         Priority priority, float duration, String note, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.machine = machine;
-        this.time = time;
+        this.startTime = time;
         this.owner = owner;
         this.priority = priority;
+        this.duration = duration;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -73,10 +80,12 @@ public class XmlAdaptedJob {
      */
     public XmlAdaptedJob(Job source) {
         name = source.getJobName().fullName;
-        machine = source.getMachine().toString();
-        time = source.getTime().toString();
-        owner = source.getOwner().toString();
+        machine = source.getMachine().getName().toString();
+        startTime = source.getStartTime().toString();
+        owner = source.getOwner().getName().toString();
         priority = source.getPriority();
+        status = source.getStatus();
+        duration = source.getDuration();
         tagged = source.getTags().stream()
                 .map(XmlAdaptedTag::new)
                 .collect(Collectors.toList());
@@ -123,12 +132,15 @@ public class XmlAdaptedJob {
 
         if (priority == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    JobPriority.class.getSimpleName()));
+                    Priority.class.getSimpleName()));
         }
-        if (!JobPriority.isValidPriority(priority)) {
-            throw new IllegalValueException(JobPriority.MESSAGE_JOBPRIORITY_CONSTRAINTS);
-        }
-        final JobPriority modelPriority = priority;
+
+        //TODO: no validation on priority
+
+        final Priority modelPriority = priority;
+
+        //TODO: no validation on duration yet
+        final float modelDuration = duration;
 
         final Set<Tag> modelTags = new HashSet<>(jobTags);
 
@@ -141,9 +153,11 @@ public class XmlAdaptedJob {
         }
         final JobNote modelJobNote = new JobNote(note);
 
-        return new Job(modelJobName, modelMachine, modelJobOwner, modelPriority, modelJobNote, modelTags);
+        return new Job(modelJobName, modelMachine, modelJobOwner, modelPriority,
+                modelDuration, modelJobNote, modelTags);
     }
 
+    //TODO: redo equals
     @Override
     public boolean equals(Object other) {
         if (other == this) {

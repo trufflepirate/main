@@ -1,6 +1,7 @@
 package seedu.address.logic.commands.job;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_DURATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_NOTE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_OWNER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_JOB_PRIORITY;
@@ -28,6 +29,7 @@ public class AddJobCommand extends Command {
             + PREFIX_MACHINE + "MACHINE NAME "
             + PREFIX_JOB_OWNER + "JOB OWNER NAME "
             + PREFIX_JOB_PRIORITY + "JOB PRIORITY "
+            + PREFIX_JOB_DURATION + "2 "
             + PREFIX_JOB_NOTE + "JOB NOTE "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "

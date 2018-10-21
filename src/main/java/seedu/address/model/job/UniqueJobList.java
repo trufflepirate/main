@@ -128,4 +128,28 @@ public class UniqueJobList {
 
         internalList.set(index, editedJob);
     }
+
+    /**
+     * Starts the Job
+     */
+    public void startJob(JobName name) {
+        requireAllNonNull();
+        findJob(name).startJob();
+    }
+
+    /**
+     * Cancels the Job
+     */
+    public void cancelJob(JobName name) {
+        requireAllNonNull();
+        findJob(name).cancelJob();;
+    }
+
+    /**
+     * Restarts the Job
+     */
+    public void restartJob(JobName name) {
+        requireAllNonNull();
+        findJob(name).restartJob();
+    }
 }
