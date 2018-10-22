@@ -111,7 +111,6 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
             if (!Files.exists(makerManagerJobsFile)) {
                 logger.info("AddressBook file " + makerManagerJobsFile + " not found");
                 logger.info("Creating new " + makerManagerJobsFile);
-
                 FileUtil.createIfMissing(makerManagerJobsFile);
             }
 

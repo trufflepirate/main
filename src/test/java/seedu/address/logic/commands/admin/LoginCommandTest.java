@@ -108,7 +108,6 @@ public class LoginCommandTest {
         }
 
         @Override
-
         public ModelMessageResult addJob(Job job) {
             throw new AssertionError("This method should not be called.");
         }
