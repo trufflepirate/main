@@ -34,7 +34,7 @@ import seedu.address.model.person.UniquePersonList;
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
-    private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
+    private static final Logger logger = LogsCenter.getLogger(AddressBook.class);
 
     private final UniquePersonList persons;
     private final UniqueAdminList admins;
@@ -117,7 +117,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         @Override
         public int compare(Job j1, Job j2) {
-            return j1.getPriority().compareTo(j2.getPriority());
+            return j2.hasHigherPriority(j1);
         }
     }
 
