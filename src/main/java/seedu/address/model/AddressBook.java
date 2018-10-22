@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.logging.Logger;
 
+import javafx.collections.ObservableSet;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javafx.collections.ObservableList;
@@ -156,6 +157,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Replaces the contents of the queue list with {@code queue}
+     */
+
+    public void setQueue(TreeSet<Job> queue) {
+        this.jobs.setQueue(queue);
+    }
+    /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
     public void resetData(ReadOnlyAddressBook newData) {
@@ -165,6 +173,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         setMachines(newData.getMachineList());
         setAdmins(newData.getAdminList());
         setJobs(newData.getJobList());
+        setQueue(queue);
     }
 
     //======================== queue methods ================================//
@@ -405,6 +414,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Job> getJobList() {
         return jobs.asUnmodifiableObservableList();
+    }
+
+    @Override
+    public ObservableSet<Job> getQueueList() {
+        return jobs.asUnmodifiableObservableQueueSet();
     }
 
     @Override
