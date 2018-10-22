@@ -6,7 +6,7 @@
             <machineName>JJPrinter</machineName>
             <status>ENABLED</status>
         </machine>
-        <startTime>seedu.address.model.job.TimeStamp@5c2c4f48</startTime>
+        <startTime>seedu.address.model.job.TimeStamp@3cff8627</startTime>
         <owner>
             <name>TIAN YUAN</name>
             <phone>000</phone>
@@ -25,7 +25,7 @@
             <machineName>JJPrinter</machineName>
             <status>ENABLED</status>
         </machine>
-        <startTime>seedu.address.model.job.TimeStamp@690b1e5b</startTime>
+        <startTime>seedu.address.model.job.TimeStamp@c3f582f</startTime>
         <owner>
             <name>JUN JIE</name>
             <phone>000</phone>
@@ -44,7 +44,7 @@
             <machineName>TYPrinter</machineName>
             <status>ENABLED</status>
         </machine>
-        <startTime>seedu.address.model.job.TimeStamp@50bfefae</startTime>
+        <startTime>seedu.address.model.job.TimeStamp@2980a25</startTime>
         <owner>
             <name>TY</name>
             <phone>000</phone>
@@ -63,7 +63,7 @@
             <machineName>SaifPrinter</machineName>
             <status>ENABLED</status>
         </machine>
-        <startTime>seedu.address.model.job.TimeStamp@6ed7bcfe</startTime>
+        <startTime>seedu.address.model.job.TimeStamp@42167aef</startTime>
         <owner>
             <name>JJproject</name>
             <phone>000</phone>
@@ -74,6 +74,25 @@
         <duration>2.0</duration>
         <tagged>JJpetproject</tagged>
         <note>This is my project</note>
+        <status>QUEUED</status>
+    </jobs>
+    <jobs>
+        <name>starbucks project</name>
+        <machine>
+            <machineName>SaifPrinter</machineName>
+            <status>ENABLED</status>
+        </machine>
+        <startTime>seedu.address.model.job.TimeStamp@3d7e10ea</startTime>
+        <owner>
+            <name>Starbuckstime</name>
+            <phone>000</phone>
+            <email>0@u.nus.edu</email>
+            <address>000</address>
+        </owner>
+        <priority>NORMAL</priority>
+        <duration>4.0</duration>
+        <tagged>sb</tagged>
+        <note>This is for the starbucks commit</note>
         <status>QUEUED</status>
     </jobs>
 </MakerManagerJobs>
