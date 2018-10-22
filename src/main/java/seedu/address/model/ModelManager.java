@@ -132,6 +132,7 @@ public class ModelManager extends ComponentManager implements Model {
         for (Machine m : filteredMachines) {
             if (job.getMachine().getName().fullName.equals(m.getName().fullName)) {
                 versionedAddressBook.addJob(job);
+                versionedAddressBook.addJobToQueue(job);
                 indicateJobListChanged();
                 return new ModelMessageResult(true, "Job added successfully");
             }
@@ -293,6 +294,14 @@ public class ModelManager extends ComponentManager implements Model {
         versionedAddressBook.addJobToMachineList(machine, job);
         indicateMachineListChanged();
         return new ModelMessageResult(true, "Model execution successful for addJobToMachine");
+    }
+
+    @Override
+    public ModelMessageResult addJobToQueue(String jobName) {
+        Job job = versionedAddressBook.getJobByName(jobName);
+        versionedAddressBook.addJobToQueue(job);
+        return new ModelMessageResult(true, "Job added to queue");
+
     }
 
 

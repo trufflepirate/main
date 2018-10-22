@@ -25,7 +25,7 @@ public class  AddMachineCommand extends Command {
             + PREFIX_NAME + "MACHINE NAME "
             + PREFIX_MACHINE_STATUS + "MACHINE STATUS "
             + "\nExample: " + COMMAND_WORD + " "
-            + PREFIX_NAME + "JJPrinter"
+            + PREFIX_NAME + "JJPrinter "
             + PREFIX_MACHINE_STATUS + "ENABLED"
             + "\n"
             + "Names should only contain alphanumeric "

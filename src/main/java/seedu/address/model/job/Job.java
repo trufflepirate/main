@@ -172,6 +172,28 @@ public class Job {
     }
 
     /**
+     * Compares priority between two jobs
+     */
+
+    public int hasHigherPriority(Job comparedJob ) {
+        if (Priority.isHigherPriority(this.getPriority(), comparedJob.getPriority())) {
+            return 1;
+        }
+        if (TimeStamp.compareTimeStamp(this.startTime, comparedJob.startTime)) {
+            return 1;
+        }
+        if (this.getJobName().fullName.compareTo(comparedJob.getJobName().fullName) <= 0) {
+            return 1;
+        }
+        if (this.equals(comparedJob)) {
+            return 0;
+        }
+
+        return -1;
+
+    }
+
+    /**
      * Returns true if both jobs have the same identity and data fields.
      * This defines a stronger notion of equality between two jobs.
      */
@@ -199,5 +221,11 @@ public class Job {
         return Objects.hash(name, machine, startTime, owner, tags);
     }
 
+    @Override
+    public String toString() {
+        return "Job name " + this.getJobName().fullName
+                + "\nJob machine " + this.getMachine()
+                + "\nJob Priority " + this.getPriority();
 
+    }
 }
