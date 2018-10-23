@@ -43,7 +43,7 @@ public class UniqueJobList {
             throw new DuplicateJobException();
         }
         internalList.add(toAdd);
-        sortJobs(internalList);
+        sortJobs(internalList );
     }
 
     /**
