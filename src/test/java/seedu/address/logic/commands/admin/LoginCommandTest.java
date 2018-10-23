@@ -2,6 +2,7 @@ package seedu.address.logic.commands.admin;
 
 import java.util.function.Predicate;
 
+import javafx.collections.ObservableSet;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -256,6 +257,7 @@ public class LoginCommandTest {
         public void updateFilteredJobList(Predicate<Job> predicate) {
             throw new AssertionError("This method should not be called.");
         }
+
 
         @Override
         public boolean canUndoAddressBook() {

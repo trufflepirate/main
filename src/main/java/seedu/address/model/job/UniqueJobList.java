@@ -3,6 +3,7 @@ package seedu.address.model.job;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.TreeSet;
 import java.util.logging.Logger;
@@ -21,7 +22,6 @@ public class UniqueJobList {
 
     private static final Logger logger = LogsCenter.getLogger(UniqueJobList.class);
     private final ObservableList<Job> internalList = FXCollections.observableArrayList();
-    private final ObservableSet<Job> queue = FXCollections.observableSet();
 
 
     /**
@@ -61,11 +61,6 @@ public class UniqueJobList {
         internalList.setAll(replacement.internalList);
     }
 
-
-    public void setQueue(TreeSet<Job> queue) {
-        requireNonNull(queue);
-        internalList.setAll(queue);
-    }
     /**
      * Replaces the contents of this list with {@code jobs}.
      * {@code jobs} must not contain duplicate jobs.
@@ -103,9 +98,6 @@ public class UniqueJobList {
         }
         return null;
     }
-
-
-
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
@@ -114,13 +106,13 @@ public class UniqueJobList {
     }
 
     /**
-     * Returns the queue as an unmodifiable {@code ObservableSet}.
+     * Returns a sorted list based on custom comparator
      */
 
-    public ObservableSet<Job> asUnmodifiableObservableQueueSet() {
-        return FXCollections.unmodifiableObservableSet(queue);
+    public ObservableList<Job> asUnmodifiableObservableSortedList() {
+        FXCollections.sort(internalList, new JobComparator());
+        return FXCollections.unmodifiableObservableList(internalList);
     }
-
     /**
      * Returns true if the list has no repetition
      */
@@ -198,5 +190,18 @@ public class UniqueJobList {
     public void restartJob(JobName name) {
         requireAllNonNull();
         findJob(name).restartJob();
+    }
+
+    //============================= queue operations =======================================//
+
+    /**
+     * Queue comparator for job
+     */
+    class JobComparator implements Comparator<Job> {
+
+        @Override
+        public int compare(Job j1, Job j2) {
+            return j2.hasHigherPriority(j1);
+        }
     }
 }

@@ -3,6 +3,7 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
 import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.Username;
 import seedu.address.model.job.Job;
@@ -155,9 +156,6 @@ public interface Model {
     \ */
 
     ModelMessageResult addJobToMachine(String machineName, String jobName);
-
-    ModelMessageResult addJobToQueue(String jobName);
-
 
 
     //=========== Filtered Person List Accessors =============================================================

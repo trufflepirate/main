@@ -3,12 +3,15 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import javax.sql.rowset.FilteredRowSet;
+import java.util.TreeSet;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
@@ -53,7 +56,8 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
         filteredMachines = new FilteredList<>(versionedAddressBook.getMachineList());
         filteredAdmins = new FilteredList<>(versionedAddressBook.getAdminList());
-        filteredJobs = new FilteredList<>(versionedAddressBook.getJobList());
+        //Queue list is the sorted list of jobs based on custom comparator
+        filteredJobs = new FilteredList<>(versionedAddressBook.getQueueList());
     }
 
     public ModelManager() {
@@ -132,7 +136,6 @@ public class ModelManager extends ComponentManager implements Model {
         for (Machine m : filteredMachines) {
             if (job.getMachine().getName().fullName.equals(m.getName().fullName)) {
                 versionedAddressBook.addJob(job);
-                versionedAddressBook.addJobToQueue(job);
                 indicateJobListChanged();
                 return new ModelMessageResult(true, "Job added successfully");
             }
@@ -294,14 +297,6 @@ public class ModelManager extends ComponentManager implements Model {
         versionedAddressBook.addJobToMachineList(machine, job);
         indicateMachineListChanged();
         return new ModelMessageResult(true, "Model execution successful for addJobToMachine");
-    }
-
-    @Override
-    public ModelMessageResult addJobToQueue(String jobName) {
-        Job job = versionedAddressBook.getJobByName(jobName);
-        versionedAddressBook.addJobToQueue(job);
-        return new ModelMessageResult(true, "Job added to queue");
-
     }
 
 
