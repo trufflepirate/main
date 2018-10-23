@@ -156,6 +156,8 @@ public interface Model {
 
     ModelMessageResult addJobToMachine(String machineName, String jobName);
 
+    ModelMessageResult addJobToQueue(String jobName);
+
 
 
     //=========== Filtered Person List Accessors =============================================================

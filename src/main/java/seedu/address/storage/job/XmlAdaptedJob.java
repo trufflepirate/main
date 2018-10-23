@@ -16,7 +16,6 @@ import seedu.address.model.job.JobName;
 import seedu.address.model.job.JobNote;
 import seedu.address.model.job.Priority;
 import seedu.address.model.job.Status;
-
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
@@ -55,7 +54,6 @@ public class XmlAdaptedJob {
     @XmlElement
     private Status status;
 
-
     /**
      * Constructs an XmlAdaptedJob.
      * This is the no-arg constructor that is required by JAXB.
@@ -66,7 +64,6 @@ public class XmlAdaptedJob {
     /**
      * Constructs an {@code XmlAdaptedJob} with the given job details.
      */
-
     public XmlAdaptedJob(String name, XmlAdaptedMachine machine, String time, XmlAdaptedPerson owner,
                          Priority priority, float duration, String note, List<XmlAdaptedTag> tagged) {
         this.name = name;
@@ -130,7 +127,6 @@ public class XmlAdaptedJob {
                 modelDuration,
                 modelJobNote,
                 modelTags);
-
     }
 }
 

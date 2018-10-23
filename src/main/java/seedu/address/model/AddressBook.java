@@ -3,9 +3,16 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.logging.Logger;
 
+import javafx.collections.ObservableSet;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javafx.collections.ObservableList;
@@ -28,13 +35,14 @@ import seedu.address.model.person.UniquePersonList;
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
-    private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
+    private static final Logger logger = LogsCenter.getLogger(AddressBook.class);
 
     private final UniquePersonList persons;
     private final UniqueAdminList admins;
     private final UniqueMachineList machines;
     private final UniqueJobList jobs;
 
+    private TreeSet<Job> queue;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to
@@ -51,6 +59,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         admins = new UniqueAdminList();
         machines = new UniqueMachineList();
         jobs = new UniqueJobList();
+        queue = new TreeSet<>(new JobComparator());
     }
 
     public AddressBook() {
@@ -63,6 +72,54 @@ public class AddressBook implements ReadOnlyAddressBook {
     public AddressBook(ReadOnlyAddressBook toBeCopied) {
         this();
         resetData(toBeCopied);
+        addJobsToQueue(toBeCopied);
+    }
+
+    //============================= queue operations =======================================//
+
+    /**
+     * Adds the initial data {@code toBeCopied} to the queue with
+     * custom comparator using with priority hierachy as below
+     * 1) JobPriority
+     * 2) TimeStamp
+     * 3) JobName
+     */
+    public void addJobsToQueue(ReadOnlyAddressBook toBeCopied) {
+        List<Job> jobs = toBeCopied.getJobList();
+        queue.addAll(jobs);
+        printPQJobs(queue);
+    }
+
+    /**
+     * Adds a job to the priority queue
+     */
+
+    public void addJobToQueue(Job job) {
+        queue.add(job);
+        printPQJobs(queue);
+    }
+
+    /**
+     * Debugging statement to log out pq jobs
+     */
+    public void printPQJobs(TreeSet<Job> queue) {
+        logger.info("Printing priority queue");
+        Iterator iterator = queue.iterator();
+        while (iterator.hasNext()) {
+            logger.info(iterator.next().toString());
+        }
+    }
+
+    /**
+     * Queue comparator for pq
+     */
+
+    class JobComparator implements Comparator<Job>{
+
+        @Override
+        public int compare(Job j1, Job j2) {
+            return j2.hasHigherPriority(j1);
+        }
     }
 
     //============================= list overwrite operations ==============================//
@@ -100,6 +157,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Replaces the contents of the queue list with {@code queue}
+     */
+
+    public void setQueue(TreeSet<Job> queue) {
+        this.jobs.setQueue(queue);
+    }
+    /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
     public void resetData(ReadOnlyAddressBook newData) {
@@ -109,6 +173,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         setMachines(newData.getMachineList());
         setAdmins(newData.getAdminList());
         setJobs(newData.getJobList());
+        setQueue(queue);
     }
 
     //======================== queue methods ================================//
@@ -349,6 +414,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Job> getJobList() {
         return jobs.asUnmodifiableObservableList();
+    }
+
+    @Override
+    public ObservableSet<Job> getQueueList() {
+        return jobs.asUnmodifiableObservableQueueSet();
     }
 
     @Override

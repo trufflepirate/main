@@ -176,7 +176,6 @@ Removing another admin. +
 ... *Update Admin Password:*
 Updating your own account's password. Note that NEW_PW has to match some specific validation criteria. +
 
-
     Format: updatePassword USERNAME OLD_PW NEW_PW NEW_PW_VERIFY
 
 ... *Add Machine:*

@@ -18,4 +18,14 @@ public class TimeStamp {
         return createdTimeStamp.getTime();
     }
 
+    /**
+     * Compares two timestamps and returns true
+     * if {@code timestamp1} is earlier than
+     * {@code timestamp2}
+     */
+    public static boolean compareTimeStamp(TimeStamp timeStamp1, TimeStamp timeStamp2) {
+        return timeStamp1.getTime() < timeStamp2.getTime();
+    }
+
+
 }

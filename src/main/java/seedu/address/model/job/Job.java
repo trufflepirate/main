@@ -6,7 +6,10 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.ModelManager;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -25,6 +28,8 @@ public class Job {
     public static final String MESSAGE_NOTE_CONSTRAINTS =
             "Job notes should only contain alphanumeric characters and spaces, "
                     + "and it should not be blank";
+
+    private static final Logger logger = LogsCenter.getLogger(Job.class);
 
     //Identity field
     private JobName name;
@@ -172,6 +177,41 @@ public class Job {
     }
 
     /**
+     * Compares priority between two jobs
+     */
+
+    public int hasHigherPriority(Job comparedJob ) {
+        //TODO clean up code to make it neater for comparison
+        if (this.equals(comparedJob)) {
+            //logger.info(this.toString() + " \n==\n"  + comparedJob.toString());
+            //logger.info("Jobs are equal");
+            return 0;
+        }
+
+        if (Priority.isHigherPriority(this.getPriority(), comparedJob.getPriority()) != 0) {
+            //logger.info(this.toString() + " \n>\n"  + comparedJob.toString());
+            //logger.info("Job Has higher priority");
+            return Priority.isHigherPriority(this.getPriority(), comparedJob.getPriority());
+        }
+        if (TimeStamp.compareTimeStamp(this.startTime, comparedJob.startTime)) {
+            //logger.info(this.toString() + " \n>\n"  + comparedJob.toString());
+            //logger.info("Job was created earlier");
+            return 1;
+        }
+        if (this.getJobName().fullName.compareTo(comparedJob.getJobName().fullName) <= 0) {
+            //logger.info(this.toString() + " \n>\n"  + comparedJob.toString());
+            //logger.info("Job is lexicographically earlier");
+            return 1;
+        }
+        //logger.info("Job is of lower priority");
+        //logger.info(this.toString() + " \n>\n"  + comparedJob.toString());
+
+
+        return -1;
+
+    }
+
+    /**
      * Returns true if both jobs have the same identity and data fields.
      * This defines a stronger notion of equality between two jobs.
      */
@@ -199,5 +239,11 @@ public class Job {
         return Objects.hash(name, machine, startTime, owner, tags);
     }
 
+    @Override
+    public String toString() {
+        return "Job name " + this.getJobName().fullName
+                + "\nJob machine " + this.getMachine()
+                + "\nJob Priority " + this.getPriority();
 
+    }
 }

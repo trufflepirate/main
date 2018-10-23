@@ -6,7 +6,7 @@
             <machineName>JJPrinter</machineName>
             <status>ENABLED</status>
         </machine>
-        <startTime>seedu.address.model.job.TimeStamp@2665eadf</startTime>
+        <startTime>seedu.address.model.job.TimeStamp@3cff8627</startTime>
         <owner>
             <name>TIAN YUAN</name>
             <phone>000</phone>
@@ -25,7 +25,7 @@
             <machineName>JJPrinter</machineName>
             <status>ENABLED</status>
         </machine>
-        <startTime>seedu.address.model.job.TimeStamp@41a824f6</startTime>
+        <startTime>seedu.address.model.job.TimeStamp@c3f582f</startTime>
         <owner>
             <name>JUN JIE</name>
             <phone>000</phone>
@@ -36,6 +36,63 @@
         <duration>3.0</duration>
         <tagged>saif</tagged>
         <note>Testing to see if saif code still works</note>
-        <status>ONGOING</status>
+        <status>QUEUED</status>
+    </jobs>
+    <jobs>
+        <name>DCP project</name>
+        <machine>
+            <machineName>TYPrinter</machineName>
+            <status>ENABLED</status>
+        </machine>
+        <startTime>seedu.address.model.job.TimeStamp@2980a25</startTime>
+        <owner>
+            <name>TY</name>
+            <phone>000</phone>
+            <email>0@u.nus.edu</email>
+            <address>000</address>
+        </owner>
+        <priority>HIGH</priority>
+        <duration>2.0</duration>
+        <tagged>iDCP</tagged>
+        <note>This is for the iDCP project</note>
+        <status>QUEUED</status>
+    </jobs>
+    <jobs>
+        <name>JJ project</name>
+        <machine>
+            <machineName>SaifPrinter</machineName>
+            <status>ENABLED</status>
+        </machine>
+        <startTime>seedu.address.model.job.TimeStamp@42167aef</startTime>
+        <owner>
+            <name>JJproject</name>
+            <phone>000</phone>
+            <email>0@u.nus.edu</email>
+            <address>000</address>
+        </owner>
+        <priority>URGENT</priority>
+        <duration>2.0</duration>
+        <tagged>JJpetproject</tagged>
+        <note>This is my project</note>
+        <status>QUEUED</status>
+    </jobs>
+    <jobs>
+        <name>starbucks project</name>
+        <machine>
+            <machineName>SaifPrinter</machineName>
+            <status>ENABLED</status>
+        </machine>
+        <startTime>seedu.address.model.job.TimeStamp@3d7e10ea</startTime>
+        <owner>
+            <name>Starbuckstime</name>
+            <phone>000</phone>
+            <email>0@u.nus.edu</email>
+            <address>000</address>
+        </owner>
+        <priority>NORMAL</priority>
+        <duration>4.0</duration>
+        <tagged>sb</tagged>
+        <note>This is for the starbucks commit</note>
+        <status>QUEUED</status>
     </jobs>
 </MakerManagerJobs>

@@ -4,10 +4,12 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.List;
+import java.util.TreeSet;
 import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.job.exceptions.JobNotFoundException;
@@ -19,6 +21,8 @@ public class UniqueJobList {
 
     private static final Logger logger = LogsCenter.getLogger(UniqueJobList.class);
     private final ObservableList<Job> internalList = FXCollections.observableArrayList();
+    private final ObservableSet<Job> queue = FXCollections.observableSet();
+
 
     /**
      * Returns true if the list contains an equivalent job as the given argument.
@@ -26,6 +30,7 @@ public class UniqueJobList {
     public boolean contains(Job toCheck) {
         requireNonNull(toCheck);
         return internalList.stream().anyMatch(toCheck::isSameJob);
+
     }
 
     /**
@@ -56,6 +61,11 @@ public class UniqueJobList {
         internalList.setAll(replacement.internalList);
     }
 
+
+    public void setQueue(TreeSet<Job> queue) {
+        requireNonNull(queue);
+        internalList.setAll(queue);
+    }
     /**
      * Replaces the contents of this list with {@code jobs}.
      * {@code jobs} must not contain duplicate jobs.
@@ -101,6 +111,14 @@ public class UniqueJobList {
      */
     public ObservableList<Job> asUnmodifiableObservableList() {
         return FXCollections.unmodifiableObservableList(internalList);
+    }
+
+    /**
+     * Returns the queue as an unmodifiable {@code ObservableSet}.
+     */
+
+    public ObservableSet<Job> asUnmodifiableObservableQueueSet() {
+        return FXCollections.unmodifiableObservableSet(queue);
     }
 
     /**
