@@ -165,6 +165,11 @@ public class RemoveAdminCommandTest {
         }
 
         @Override
+        public ModelMessageResult swapJobs(JobName jobname1, JobName jobName2) {
+            return null;
+        }
+
+        @Override
         public void deleteJob(Job job) {
             throw new AssertionError("This method should not be called.");
         }

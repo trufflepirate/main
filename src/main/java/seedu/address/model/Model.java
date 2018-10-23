@@ -76,6 +76,12 @@ public interface Model {
      */
     void restartJob(JobName name);
 
+    /**
+     * Swaps two jobs based on the given names
+     */
+
+    ModelMessageResult swapJobs(JobName jobname1, JobName jobName2);
+
     // ============================== Machine methods ======================================= //
     /**
      * Adds the given machine

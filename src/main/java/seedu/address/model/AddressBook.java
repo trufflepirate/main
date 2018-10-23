@@ -337,6 +337,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         jobs.restartJob(name);
     }
 
+    /**
+     * Only admin can do this
+     * Swaps the jobs with the given jobnames
+     */
+
+    public void swapJobs(JobName jobName1, JobName jobName2) {
+        jobs.swapQueueNumber(jobName1, jobName2);
+    }
+
     //======================== get lists methods ===========================//
     @Override
     public ObservableList<Person> getPersonList() {

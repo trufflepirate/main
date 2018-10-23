@@ -127,6 +127,11 @@ public class LoginCommandTest {
 
         }
 
+        @Override
+        public ModelMessageResult swapJobs(JobName jobname1, JobName jobName2) {
+            return null;
+        }
+
 
         @Override
         public void deleteJob(Job job) {
