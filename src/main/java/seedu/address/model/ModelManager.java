@@ -125,6 +125,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(job);
         return versionedAddressBook.hasJob(job);
     }
+
     @Override
     public ModelMessageResult addJob(Job job) {
         requireAllNonNull(job);
