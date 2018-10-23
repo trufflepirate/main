@@ -3,6 +3,7 @@ package seedu.address.logic;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.Command;
@@ -62,7 +63,6 @@ public class LogicManager extends ComponentManager implements Logic {
     public ObservableList<Job> getFilteredJobList() {
         return model.getFilteredJobList();
     }
-
 
     @Override
     public ListElementPointer getHistorySnapshot() {

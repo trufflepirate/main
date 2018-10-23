@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import javafx.collections.ObservableSet;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -127,6 +128,13 @@ public class AddressBookTest {
         public ObservableList<Job> getJobList() {
             return jobs;
         }
+
+        @Override
+        public ObservableList<Job> getQueueList() {
+            return jobs;
+        }
+
+
     }
 
 }

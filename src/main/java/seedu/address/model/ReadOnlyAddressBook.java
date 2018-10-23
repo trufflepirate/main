@@ -43,5 +43,6 @@ public interface ReadOnlyAddressBook {
      * This list should contain the highest priority job in descending order
      */
 
-    ObservableSet<Job> getQueueList();
+    ObservableList<Job> getQueueList();
+
 }

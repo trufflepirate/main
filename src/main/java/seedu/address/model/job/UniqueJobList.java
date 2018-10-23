@@ -3,6 +3,8 @@ package seedu.address.model.job;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.TreeSet;
 import java.util.logging.Logger;
@@ -21,7 +23,6 @@ public class UniqueJobList {
 
     private static final Logger logger = LogsCenter.getLogger(UniqueJobList.class);
     private final ObservableList<Job> internalList = FXCollections.observableArrayList();
-    private final ObservableSet<Job> queue = FXCollections.observableSet();
 
 
     /**
@@ -43,6 +44,7 @@ public class UniqueJobList {
             throw new DuplicateJobException();
         }
         internalList.add(toAdd);
+        sortJobs(internalList );
     }
 
     /**
@@ -61,11 +63,6 @@ public class UniqueJobList {
         internalList.setAll(replacement.internalList);
     }
 
-
-    public void setQueue(TreeSet<Job> queue) {
-        requireNonNull(queue);
-        internalList.setAll(queue);
-    }
     /**
      * Replaces the contents of this list with {@code jobs}.
      * {@code jobs} must not contain duplicate jobs.
@@ -103,9 +100,6 @@ public class UniqueJobList {
         }
         return null;
     }
-
-
-
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
@@ -114,13 +108,23 @@ public class UniqueJobList {
     }
 
     /**
-     * Returns the queue as an unmodifiable {@code ObservableSet}.
+     * Returns a sorted list based on custom comparator
      */
 
-    public ObservableSet<Job> asUnmodifiableObservableQueueSet() {
-        return FXCollections.unmodifiableObservableSet(queue);
+    public ObservableList<Job> asUnmodifiableObservableSortedList() {
+        FXCollections.sort(internalList, new JobComparator());
+        return FXCollections.unmodifiableObservableList(internalList);
     }
 
+    /**
+     * Sorts the internal list based on custom comparator
+     * Primarily used for when a new job is added so that
+     * ui can be updated with new sorted list
+     */
+
+    public void sortJobs(ObservableList<Job> jobslist) {
+        FXCollections.sort(jobslist, new JobComparator());
+    }
     /**
      * Returns true if the list has no repetition
      */
@@ -169,7 +173,7 @@ public class UniqueJobList {
             throw new JobNotFoundException();
         }
 
-        if (!target.isSameJob(editedJob) && contains(editedJob)) {
+        if (target.isSameJob(editedJob) && contains(editedJob)) {
             throw new DuplicateJobException();
         }
 
@@ -198,5 +202,44 @@ public class UniqueJobList {
     public void restartJob(JobName name) {
         requireAllNonNull();
         findJob(name).restartJob();
+    }
+
+
+    //============================= swap queue number operations =======================================//
+
+    /**
+     * Swaps job with @param jobname1 and job with @param jobname2
+     * in the queue and updates it
+     */
+    public void swapQueueNumber(JobName jobname1, JobName jobname2) {
+        Job job1 = findJob(jobname1);
+        Job job2 = findJob(jobname2);
+
+        int index1 = internalList.indexOf(job1);
+        int index2 = internalList.indexOf(job2);
+
+        if (index1 == -1 || index2 == -1) {
+            throw new JobNotFoundException();
+        }
+
+        if (job1.isSameJob(job2)) {
+            throw new DuplicateJobException();
+        }
+
+        Collections.swap(internalList, index1, index2);
+
+    }
+
+    //============================= queue operations =======================================//
+
+    /**
+     * Queue comparator for job
+     */
+    class JobComparator implements Comparator<Job> {
+
+        @Override
+        public int compare(Job j1, Job j2) {
+            return j2.hasHigherPriority(j1);
+        }
     }
 }

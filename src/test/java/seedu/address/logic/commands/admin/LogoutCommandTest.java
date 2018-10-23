@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.function.Predicate;
 
+import javafx.collections.ObservableSet;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -109,6 +110,11 @@ public class LogoutCommandTest {
         @Override
         public void restartJob(JobName name) {
 
+        }
+
+        @Override
+        public ModelMessageResult swapJobs(JobName jobname1, JobName jobName2) {
+            return null;
         }
 
 
@@ -237,6 +243,7 @@ public class LogoutCommandTest {
         public void updateFilteredJobList(Predicate<Job> predicate) {
 
         }
+
 
         @Override
         public boolean canUndoAddressBook() {
