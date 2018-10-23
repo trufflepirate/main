@@ -48,10 +48,10 @@ public class Job {
      * Every field must be present and not null.
      * TODO: Need to validate all these somewhere
      */
-    public Job(Name name, Machine machine, Person owner, Priority priority, float duration,
+    public Job(JobName name, Machine machine, Person owner, Priority priority, float duration,
                JobNote jobNote, Set<Tag> tags) {
         requireAllNonNull(name, machine, owner, tags);
-        this.name = (JobName) name;
+        this.name = name;
         this.machine = machine;
         this.owner = owner;
         this.tags.addAll(tags);

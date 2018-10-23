@@ -177,7 +177,7 @@ public class ParserUtil {
     public static JobName parseJobName(String jobName) throws ParseException {
         requireNonNull(jobName);
         String trimJobName = jobName.trim();
-        if (!JobName.isValidName(jobName)) {
+        if (!JobName.isValidJobName(jobName)) {
             throw new ParseException(Job.MESSAGE_NAME_CONSTRAINTS);
         }
 

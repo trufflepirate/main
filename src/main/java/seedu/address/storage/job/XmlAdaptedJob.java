@@ -116,7 +116,6 @@ public class XmlAdaptedJob {
         JobNote modelJobNote = new JobNote(note);
         Set<Tag> modelTags = new HashSet<>();
         for (XmlAdaptedTag tag : tagged) {
-
             modelTags.add(tag.toModelType());
         }
 
