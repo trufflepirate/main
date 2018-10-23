@@ -22,7 +22,7 @@ public class XmlSerializableMakerManagerJobs {
 
     private static final Logger logger = LogsCenter.getLogger(XmlSerializableMakerManagerJobs.class);
 
-    private static final String MESSAGE_DUPLICATE_MACHINE = "Jobs list contains duplicate job(s)";
+    private static final String MESSAGE_DUPLICATE_JOB = "Jobs list contains duplicate job(s)";
 
     @XmlElement
     private List<XmlAdaptedJob> jobs;
@@ -55,7 +55,7 @@ public class XmlSerializableMakerManagerJobs {
         for (XmlAdaptedJob m : jobs) {
             Job job = m.toModelType();
             if (addressBook.hasJob(job)) {
-                throw new IllegalValueException(MESSAGE_DUPLICATE_MACHINE);
+                throw new IllegalValueException(MESSAGE_DUPLICATE_JOB);
             }
             addressBook.addJob(job);
         }

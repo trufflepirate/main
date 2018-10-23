@@ -8,7 +8,6 @@ import seedu.address.commons.core.LogsCenter;
  */
 public enum Priority {
 
-
     URGENT,
     HIGH,
     NORMAL;
