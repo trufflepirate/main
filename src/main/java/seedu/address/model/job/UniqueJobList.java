@@ -3,6 +3,7 @@ package seedu.address.model.job;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.TreeSet;
@@ -172,7 +173,7 @@ public class UniqueJobList {
             throw new JobNotFoundException();
         }
 
-        if (!target.isSameJob(editedJob) && contains(editedJob)) {
+        if (target.isSameJob(editedJob) && contains(editedJob)) {
             throw new DuplicateJobException();
         }
 
@@ -201,6 +202,32 @@ public class UniqueJobList {
     public void restartJob(JobName name) {
         requireAllNonNull();
         findJob(name).restartJob();
+    }
+
+
+    //============================= swap queue number operations =======================================//
+
+    /**
+     * Swaps job with @param jobname1 and job with @param jobname2
+     * in the queue and updates it
+     */
+    public void swapQueueNumber(JobName jobname1, JobName jobname2) {
+        Job job1 = findJob(jobname1);
+        Job job2 = findJob(jobname2);
+
+        int index1 = internalList.indexOf(job1);
+        int index2 = internalList.indexOf(job2);
+
+        if (index1 == -1 || index2 == -1) {
+            throw new JobNotFoundException();
+        }
+
+        if (job1.isSameJob(job2)) {
+            throw new DuplicateJobException();
+        }
+
+        Collections.swap(internalList, index1, index2);
+
     }
 
     //============================= queue operations =======================================//
