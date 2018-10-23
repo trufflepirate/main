@@ -43,6 +43,7 @@ public class UniqueJobList {
             throw new DuplicateJobException();
         }
         internalList.add(toAdd);
+        sortJobs(internalList);
     }
 
     /**
@@ -112,6 +113,16 @@ public class UniqueJobList {
     public ObservableList<Job> asUnmodifiableObservableSortedList() {
         FXCollections.sort(internalList, new JobComparator());
         return FXCollections.unmodifiableObservableList(internalList);
+    }
+
+    /**
+     * Sorts the internal list based on custom comparator
+     * Primarily used for when a new job is added so that
+     * ui can be updated with new sorted list
+     */
+
+    public void sortJobs(ObservableList<Job> jobslist) {
+        FXCollections.sort(jobslist, new JobComparator());
     }
     /**
      * Returns true if the list has no repetition

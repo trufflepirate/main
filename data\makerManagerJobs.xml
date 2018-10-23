@@ -6,7 +6,7 @@
             <machineName>SaifPrinter</machineName>
             <status>ENABLED</status>
         </machine>
-        <startTime>seedu.address.model.job.TimeStamp@160d5455</startTime>
+        <startTime>seedu.address.model.job.TimeStamp@7216715a</startTime>
         <owner>
             <name>JJproject</name>
             <phone>000</phone>
@@ -20,12 +20,50 @@
         <status>QUEUED</status>
     </jobs>
     <jobs>
+        <name>angelineproject</name>
+        <machine>
+            <machineName>TYPrinter</machineName>
+            <status>ENABLED</status>
+        </machine>
+        <startTime>seedu.address.model.job.TimeStamp@44cb893a</startTime>
+        <owner>
+            <name>ANGELINE</name>
+            <phone>000</phone>
+            <email>0@u.nus.edu</email>
+            <address>000</address>
+        </owner>
+        <priority>URGENT</priority>
+        <duration>3.0</duration>
+        <tagged>angeline</tagged>
+        <note>This is for the angeline test project</note>
+        <status>QUEUED</status>
+    </jobs>
+    <jobs>
+        <name>iDCPrb</name>
+        <machine>
+            <machineName>JJPrinter</machineName>
+            <status>ENABLED</status>
+        </machine>
+        <startTime>seedu.address.model.job.TimeStamp@6b424853</startTime>
+        <owner>
+            <name>Rou b</name>
+            <phone>000</phone>
+            <email>0@u.nus.edu</email>
+            <address>000</address>
+        </owner>
+        <priority>URGENT</priority>
+        <duration>3.0</duration>
+        <tagged>rb</tagged>
+        <note>This my rb project</note>
+        <status>QUEUED</status>
+    </jobs>
+    <jobs>
         <name>DCP project</name>
         <machine>
             <machineName>TYPrinter</machineName>
             <status>ENABLED</status>
         </machine>
-        <startTime>seedu.address.model.job.TimeStamp@14221fb2</startTime>
+        <startTime>seedu.address.model.job.TimeStamp@1b317dcb</startTime>
         <owner>
             <name>TY</name>
             <phone>000</phone>
@@ -44,7 +82,7 @@
             <machineName>JJPrinter</machineName>
             <status>ENABLED</status>
         </machine>
-        <startTime>seedu.address.model.job.TimeStamp@7bf36a2d</startTime>
+        <startTime>seedu.address.model.job.TimeStamp@5aec4356</startTime>
         <owner>
             <name>TIAN YUAN</name>
             <phone>000</phone>
@@ -63,7 +101,7 @@
             <machineName>JJPrinter</machineName>
             <status>ENABLED</status>
         </machine>
-        <startTime>seedu.address.model.job.TimeStamp@72036fa</startTime>
+        <startTime>seedu.address.model.job.TimeStamp@72d69748</startTime>
         <owner>
             <name>JUN JIE</name>
             <phone>000</phone>
@@ -82,7 +120,7 @@
             <machineName>SaifPrinter</machineName>
             <status>ENABLED</status>
         </machine>
-        <startTime>seedu.address.model.job.TimeStamp@2bf157af</startTime>
+        <startTime>seedu.address.model.job.TimeStamp@629963fc</startTime>
         <owner>
             <name>Starbuckstime</name>
             <phone>000</phone>
@@ -96,22 +134,22 @@
         <status>QUEUED</status>
     </jobs>
     <jobs>
-        <name>iDCPrb</name>
+        <name>alexproject</name>
         <machine>
-            <machineName>JJPrinter</machineName>
+            <machineName>TYPrinter</machineName>
             <status>ENABLED</status>
         </machine>
-        <startTime>seedu.address.model.job.TimeStamp@2faa12ec</startTime>
+        <startTime>seedu.address.model.job.TimeStamp@baf46be</startTime>
         <owner>
-            <name>Rou b</name>
+            <name>Alex</name>
             <phone>000</phone>
             <email>0@u.nus.edu</email>
             <address>000</address>
         </owner>
-        <priority>URGENT</priority>
-        <duration>3.0</duration>
-        <tagged>rb</tagged>
-        <note>This my rb project</note>
+        <priority>NORMAL</priority>
+        <duration>1.0</duration>
+        <tagged>alex</tagged>
+        <note>This is for the alex test project</note>
         <status>QUEUED</status>
     </jobs>
 </MakerManagerJobs>
