@@ -28,6 +28,9 @@ public class SwapJobsCommand extends Command {
             + PREFIX_NAME_2 + "iDCP";
 
     public static final String MESSAGE_SUCCESS = "Jobs swapped: %1$s";
+    private static final String MESSAGE_ACCESS_DENIED =
+            "Non admin user is not allowed to swap jobs";
+
 
     private final JobName jobName1;
     private final JobName jobName2;
@@ -48,6 +51,10 @@ public class SwapJobsCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
+        if (!model.isLoggedIn()) {
+            throw new CommandException(MESSAGE_ACCESS_DENIED);
+        }
+
         ModelMessageResult modelMessageResult = model.swapJobs(jobName1, jobName2);
         modelMessageResult.printResult();
         model.commitAddressBook();
