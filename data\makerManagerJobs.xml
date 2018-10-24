@@ -1,31 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <MakerManagerJobs>
     <jobs>
-        <name>JJ project</name>
-        <machine>
-            <machineName>SaifPrinter</machineName>
-            <status>ENABLED</status>
-        </machine>
-        <startTime>seedu.address.model.job.TimeStamp@7216715a</startTime>
-        <owner>
-            <name>JJproject</name>
-            <phone>000</phone>
-            <email>0@u.nus.edu</email>
-            <address>000</address>
-        </owner>
-        <priority>URGENT</priority>
-        <duration>2.0</duration>
-        <tagged>JJpetproject</tagged>
-        <note>This is my project</note>
-        <status>QUEUED</status>
-    </jobs>
-    <jobs>
         <name>angelineproject</name>
         <machine>
             <machineName>TYPrinter</machineName>
             <status>ENABLED</status>
         </machine>
-        <startTime>seedu.address.model.job.TimeStamp@44cb893a</startTime>
+        <startTime>seedu.address.model.job.TimeStamp@1c8bafcc</startTime>
         <owner>
             <name>ANGELINE</name>
             <phone>000</phone>
@@ -39,12 +20,31 @@
         <status>QUEUED</status>
     </jobs>
     <jobs>
+        <name>JJ project</name>
+        <machine>
+            <machineName>SaifPrinter</machineName>
+            <status>ENABLED</status>
+        </machine>
+        <startTime>seedu.address.model.job.TimeStamp@2944ebe2</startTime>
+        <owner>
+            <name>JJproject</name>
+            <phone>000</phone>
+            <email>0@u.nus.edu</email>
+            <address>000</address>
+        </owner>
+        <priority>URGENT</priority>
+        <duration>2.0</duration>
+        <tagged>JJpetproject</tagged>
+        <note>This is my project</note>
+        <status>QUEUED</status>
+    </jobs>
+    <jobs>
         <name>iDCPrb</name>
         <machine>
             <machineName>JJPrinter</machineName>
             <status>ENABLED</status>
         </machine>
-        <startTime>seedu.address.model.job.TimeStamp@6b424853</startTime>
+        <startTime>seedu.address.model.job.TimeStamp@6e3c0ddf</startTime>
         <owner>
             <name>Rou b</name>
             <phone>000</phone>
@@ -63,7 +63,7 @@
             <machineName>TYPrinter</machineName>
             <status>ENABLED</status>
         </machine>
-        <startTime>seedu.address.model.job.TimeStamp@1b317dcb</startTime>
+        <startTime>seedu.address.model.job.TimeStamp@2f882a1b</startTime>
         <owner>
             <name>TY</name>
             <phone>000</phone>
@@ -82,7 +82,7 @@
             <machineName>JJPrinter</machineName>
             <status>ENABLED</status>
         </machine>
-        <startTime>seedu.address.model.job.TimeStamp@5aec4356</startTime>
+        <startTime>seedu.address.model.job.TimeStamp@267b7cc6</startTime>
         <owner>
             <name>TIAN YUAN</name>
             <phone>000</phone>
@@ -101,7 +101,7 @@
             <machineName>JJPrinter</machineName>
             <status>ENABLED</status>
         </machine>
-        <startTime>seedu.address.model.job.TimeStamp@72d69748</startTime>
+        <startTime>seedu.address.model.job.TimeStamp@286e9810</startTime>
         <owner>
             <name>JUN JIE</name>
             <phone>000</phone>
@@ -120,7 +120,7 @@
             <machineName>SaifPrinter</machineName>
             <status>ENABLED</status>
         </machine>
-        <startTime>seedu.address.model.job.TimeStamp@629963fc</startTime>
+        <startTime>seedu.address.model.job.TimeStamp@26323a37</startTime>
         <owner>
             <name>Starbuckstime</name>
             <phone>000</phone>
@@ -139,7 +139,7 @@
             <machineName>TYPrinter</machineName>
             <status>ENABLED</status>
         </machine>
-        <startTime>seedu.address.model.job.TimeStamp@baf46be</startTime>
+        <startTime>seedu.address.model.job.TimeStamp@48041418</startTime>
         <owner>
             <name>Alex</name>
             <phone>000</phone>

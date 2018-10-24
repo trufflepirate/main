@@ -58,6 +58,8 @@ public class ModelManager extends ComponentManager implements Model {
         filteredAdmins = new FilteredList<>(versionedAddressBook.getAdminList());
         //Queue list is the sorted list of jobs based on custom comparator
         filteredJobs = new FilteredList<>(versionedAddressBook.getQueueList());
+        //TODO find a better way to change the data according to sorted jobs based on comparator
+        indicateJobListChanged();
     }
 
     public ModelManager() {
@@ -188,6 +190,9 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public ModelMessageResult swapJobs(JobName jobName1, JobName jobName2) {
         versionedAddressBook.swapJobs(jobName1, jobName2);
+        versionedAddressBook.commit();
+        indicateJobListChanged();
+
         //TODO to determine in the future whether should the data be sorted according to priority also?
         //TODO if so then we need to indicateJobListChanged() here also
 

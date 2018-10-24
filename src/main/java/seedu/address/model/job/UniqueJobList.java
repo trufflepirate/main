@@ -61,6 +61,7 @@ public class UniqueJobList {
     public void setJobs(UniqueJobList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
+        sortJobs(internalList);
     }
 
     /**
@@ -74,6 +75,7 @@ public class UniqueJobList {
         }
 
         internalList.setAll(jobs);
+        sortJobs(internalList);
     }
 
     /**
