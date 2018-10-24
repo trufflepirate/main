@@ -4,6 +4,7 @@ package seedu.address.logic.commands.queue;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME_2;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
@@ -20,11 +21,11 @@ public class SwapJobsCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Swaps jobs with jobname1 and jobname2"
             + " Parameters: "
-            + PREFIX_NAME + "JOB NAME 1"
-            + PREFIX_NAME + "JOB NAME 2"
+            + PREFIX_NAME + "JOB NAME 1" + " "
+            + PREFIX_NAME_2 + "JOB NAME 2"
             + "\nEXAMPLE: \n" + COMMAND_WORD + " "
-            + PREFIX_NAME + "iDCP project"
-            + PREFIX_NAME + "iDCP";
+            + PREFIX_NAME + "iDCP project" + " "
+            + PREFIX_NAME_2 + "iDCP";
 
     public static final String MESSAGE_SUCCESS = "Jobs swapped: %1$s";
 
