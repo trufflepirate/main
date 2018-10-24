@@ -85,7 +85,7 @@ public class Job {
                 + 1 / 60 * deviation[3] + 1 / 3600 * deviation[4];
 
             return runningTime > this.duration;
-        }else {
+        } else {
             throw new JobNotStartedException();
         }
     }
