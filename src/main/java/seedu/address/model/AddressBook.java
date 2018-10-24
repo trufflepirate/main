@@ -113,6 +113,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         setMachines(newData.getMachineList());
         setAdmins(newData.getAdminList());
         setJobs(newData.getJobList());
+
     }
 
     //======================== queue methods ================================//
