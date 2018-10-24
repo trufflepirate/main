@@ -68,11 +68,9 @@ public class TimeStamp {
         for (int i = 0; i < 5; i++) {
             if (deviation[i] == 0) {
                 continue;
-            }
-            else if (deviation[i] < 0) {
+            }else if (deviation[i] < 0) {
                 return true;
-            }
-            else {
+            }else {
                 return false;
             }
         }

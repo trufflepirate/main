@@ -72,7 +72,7 @@ public class Job {
      */
     public boolean isFinished() throws JobNotStartedException {
 
-        if(this.status == ONGOING) {
+        if (this.status == ONGOING) {
             Integer[] current = new TimeStamp().getTime();
             Integer[] start = startTime.getTime();
             Integer[] deviation = new Integer[start.length];
@@ -85,9 +85,7 @@ public class Job {
                 + 1 / 60 * deviation[3] + 1 / 3600 * deviation[4];
 
             return runningTime > this.duration;
-        }
-
-        else {
+        }else {
             throw new JobNotStartedException();
         }
     }

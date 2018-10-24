@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME_2;
 import java.util.Optional;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
+
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.queue.SwapJobsCommand;
 import seedu.address.logic.parser.ArgumentMultimap;
