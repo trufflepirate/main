@@ -2,6 +2,7 @@ package seedu.address.model.job;
 
 import static java.util.concurrent.TimeUnit.HOURS;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.model.job.Status.ONGOING;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -11,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.job.exceptions.JobNotStartedException;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
@@ -62,11 +64,14 @@ public class Job {
 
         startTime = new TimeStamp();
     }
-
-    public boolean isFinished() {
+    /*
+    public boolean isFinished() throws JobNotStartedException {
         TimeStamp currentTime = new TimeStamp();
-        return (currentTime.getTime() - startTime.getTime()) > TimeUnit.MILLISECONDS.convert((long) duration, HOURS);
+        if(this.status == ONGOING)
+            return (currentTime.getTime() - startTime.getTime()) > TimeUnit.MILLISECONDS.convert((long)getDuration(), HOURS);
+        else throw new JobNotStartedException();
     }
+    */
 
     public JobNote getJobNote() {
         return this.jobNote;
@@ -84,7 +89,7 @@ public class Job {
      * Used to start a job
      */
     public void startJob() {
-        this.status = Status.ONGOING;
+        this.status = ONGOING;
         this.startTime = new TimeStamp();
     }
 
