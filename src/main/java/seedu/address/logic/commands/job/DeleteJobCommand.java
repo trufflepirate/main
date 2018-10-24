@@ -44,7 +44,7 @@ public class DeleteJobCommand extends Command {
         Job jobToDelete = lastShownList.get(targetIndex.getZeroBased());
         model.deleteJob(jobToDelete);
         model.commitAddressBook();
-        return new CommandResult(String.format(MESSAGE_DELETE_JOB_SUCCESS, jobToDelete));
+        return new CommandResult(String.format(MESSAGE_DELETE_JOB_SUCCESS, jobToDelete.getJobName()));
     }
 
     @Override

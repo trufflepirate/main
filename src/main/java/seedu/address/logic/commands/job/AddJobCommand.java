@@ -68,7 +68,7 @@ public class AddJobCommand extends Command {
         ModelMessageResult modelMessageResult = model.addJob(jobToAdd);
         if (modelMessageResult.modelExecutionResult) {
             model.commitAddressBook();
-            return new CommandResult(String.format(MESSAGE_SUCCESS, jobToAdd));
+            return new CommandResult(String.format(MESSAGE_SUCCESS, jobToAdd.getJobName()));
         } else {
             return new CommandResult(String.format(MESSAGE_FAILURE, modelMessageResult.feedbackToUser));
         }

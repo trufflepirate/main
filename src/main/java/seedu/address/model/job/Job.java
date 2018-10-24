@@ -2,6 +2,7 @@ package seedu.address.model.job;
 
 import static java.util.concurrent.TimeUnit.HOURS;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.model.job.Status.ONGOING;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -11,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.job.exceptions.JobNotStartedException;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
@@ -36,6 +38,7 @@ public class Job {
     private Machine machine;
     private TimeStamp startTime;
     private Person owner;
+    private final String addedTime;
 
     //Data field
     private final Set<Tag> tags = new HashSet<>();
@@ -63,15 +66,30 @@ public class Job {
         this.requestDeletion = false;
 
         startTime = new TimeStamp();
+        addedTime = startTime.showTime();
     }
 
-    /**
+      /**
      * checks if a job has been finished
      */
-    public boolean isFinished() {
-        TimeStamp currentTime = new TimeStamp();
-        return (currentTime.getTime() - startTime.getTime()) > TimeUnit.MILLISECONDS.convert((long) duration, HOURS);
+
+    public boolean isFinished() throws JobNotStartedException {
+        if (this.status == ONGOING) {
+            Integer[] current = new TimeStamp().getTime();
+            Integer[] start = startTime.getTime();
+            Integer[] deviation = new Integer[start.length];
+
+            for (int i = 0; i < start.length; i++) {
+                deviation[i] = current[i] - start[i];
+            }
+
+            double runningTime = 30.0 * 24.0 * deviation[0] + 24.0 * deviation[1] + deviation[2]
+                + 1 / 60 * deviation[3] + 1 / 3600 * deviation[4];
+            return runningTime > this.duration;
+        }
+        else throw new JobNotStartedException();
     }
+
 
     public JobNote getJobNote() {
         return this.jobNote;
@@ -89,7 +107,7 @@ public class Job {
      * Used to start a job
      */
     public void startJob() {
-        this.status = Status.ONGOING;
+        this.status = ONGOING;
         this.startTime = new TimeStamp();
     }
 
@@ -136,8 +154,8 @@ public class Job {
         return machine;
     }
 
-    public TimeStamp getStartTime() {
-        return startTime;
+    public String getAddedTime() {
+        return addedTime;
     }
 
     public Person getOwner() {
@@ -190,7 +208,7 @@ public class Job {
         return otherJob != null
                 && otherJob.getJobName().equals(getJobName())
                 && (otherJob.getMachine().equals(getMachine())
-                || otherJob.getStartTime().equals(getStartTime())
+                || otherJob.getAddedTime().equals(getAddedTime())
                 || otherJob.getOwner().equals(getOwner()));
     }
 
@@ -211,7 +229,7 @@ public class Job {
             //logger.info("Job Has higher priority");
             return Priority.isHigherPriority(this.getPriority(), comparedJob.getPriority());
         }
-        if (TimeStamp.compareTimeStamp(this.startTime, comparedJob.startTime)) {
+        if (TimeStamp.compareTime(this.addedTime, comparedJob.addedTime)) {
             //logger.info(this.toString() + " \n>\n"  + comparedJob.toString());
             //logger.info("Job was created earlier");
             return 1;
@@ -235,6 +253,8 @@ public class Job {
      */
     @Override
     public boolean equals(Object other) {
+        Job otherJob = (Job) other;
+
         if (other == this) {
             return true;
         }
@@ -243,11 +263,11 @@ public class Job {
             return false;
         }
 
-        Job otherJob = (Job) other;
+
         return otherJob.getJobName().equals(getJobName())
                 && otherJob.getMachine().equals(getMachine())
                 && otherJob.getOwner().equals(getOwner())
-                && otherJob.getStartTime().equals(getStartTime())
+                && otherJob.getAddedTime().equals(getAddedTime())
                 && otherJob.getTags().equals(getTags());
     }
 
