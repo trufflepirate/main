@@ -6,7 +6,7 @@
             <machineName>JJPrinter</machineName>
             <status>ENABLED</status>
         </machine>
-        <startTime>seedu.address.model.job.TimeStamp@5c337abf</startTime>
+        <startTime>seedu.address.model.job.TimeStamp@226358ca</startTime>
         <owner>
             <name>JUN JIE</name>
             <phone>000</phone>
@@ -18,6 +18,7 @@
         <tagged>JJ</tagged>
         <note>This is my own project</note>
         <status>QUEUED</status>
+        <requestDeletion>true</requestDeletion>
     </jobs>
     <jobs>
         <name>iDCP</name>
@@ -25,7 +26,7 @@
             <machineName>TYPrinter</machineName>
             <status>ENABLED</status>
         </machine>
-        <startTime>seedu.address.model.job.TimeStamp@1dd0eb23</startTime>
+        <startTime>seedu.address.model.job.TimeStamp@19afe229</startTime>
         <owner>
             <name>TIAN YUAN</name>
             <phone>000</phone>
@@ -37,5 +38,6 @@
         <tagged>iDCP</tagged>
         <note>This is for the iDCP project</note>
         <status>QUEUED</status>
+        <requestDeletion>false</requestDeletion>
     </jobs>
 </MakerManagerJobs>

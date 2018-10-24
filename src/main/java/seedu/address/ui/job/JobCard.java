@@ -2,10 +2,15 @@ package seedu.address.ui.job;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Paint;
 import seedu.address.model.job.Job;
+import seedu.address.model.machine.MachineStatus;
 import seedu.address.ui.UiPart;
 import seedu.address.ui.machine.MachineCard;
 
@@ -60,6 +65,18 @@ public class JobCard extends UiPart<Region> {
 
         jobDescription.setText(job.getJobNote().toString());
 
+
+        //TODO dont know why the color is not changing...
+        if (job.requestDeletion()) {
+            Label requestDeletionLabel = new Label("Requested Deletion");
+            requestDeletionLabel.setBackground(new Background(
+                    new BackgroundFill(
+                            Paint.valueOf("#dd0404"),
+                            new CornerRadii(2),
+                            new javafx.geometry.Insets(0))));
+            requestDeletionLabel.setTextFill(Paint.valueOf("#F00"));
+            tags.getChildren().add(requestDeletionLabel);
+        }
 
 
         // TODO: 10-Oct-18 time to be displayed

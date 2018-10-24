@@ -200,6 +200,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void requestDeletion(JobName jobName) {
         versionedAddressBook.requestDeletion(jobName);
+        indicateJobListChanged();
 
     }
 
