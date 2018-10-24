@@ -10,7 +10,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Paint;
 import seedu.address.model.job.Job;
-import seedu.address.model.machine.MachineStatus;
 import seedu.address.ui.UiPart;
 import seedu.address.ui.machine.MachineCard;
 
