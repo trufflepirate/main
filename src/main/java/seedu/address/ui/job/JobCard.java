@@ -44,17 +44,19 @@ public class JobCard extends UiPart<Region> {
         this.job = job;
         jobName.setText(job.getJobName().fullName);
 
-        Label machineNameLabel = new Label(job.getMachine().getName().fullName);
+        Label machineNameLabel = new Label("Machine: " + job.getMachine().getName().fullName);
         //TODO Tianyuan change the way timestamp is given
         //Label timeStampLabel = new Label(job.getTime().toString());
-        Label ownerNameLabel = new Label(job.getOwner().getName().fullName);
-        Label priorityLabel = new Label(job.getPriority().toString());
+        Label ownerNameLabel = new Label("Job Owner: " + job.getOwner().getName().fullName);
+        Label priorityLabel = new Label("Priority: " + job.getPriority().toString());
 
         details.getChildren().add(machineNameLabel);
         details.getChildren().add(ownerNameLabel);
-        details.setHgap(4);
+        details.setHgap(8);
 
         tags.getChildren().add(priorityLabel);
+
+        job.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
 
         jobDescription.setText(job.getJobNote().toString());
 

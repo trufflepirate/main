@@ -3,15 +3,12 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import javax.sql.rowset.FilteredRowSet;
-import java.util.TreeSet;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableSet;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
@@ -131,6 +128,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(job);
         return versionedAddressBook.hasJob(job);
     }
+
     @Override
     public ModelMessageResult addJob(Job job) {
         requireAllNonNull(job);

@@ -1,6 +1,5 @@
 package seedu.address.logic.commands.queue;
 
-
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -67,4 +66,5 @@ public class SwapJobsCommand extends Command {
                 || (other instanceof SwapJobsCommand // instanceof handles nulls
                 && jobName1.equals(((SwapJobsCommand) other).jobName1)
                 && jobName2.equals(((SwapJobsCommand) other).jobName2));
-    }}
+    }
+}

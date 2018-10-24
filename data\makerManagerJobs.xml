@@ -90,7 +90,7 @@
             <address>000</address>
         </owner>
         <priority>HIGH</priority>
-        <duration>2.0</duration>
+        <duration>1.5</duration>
         <tagged>iDCP</tagged>
         <note>This is for the iDCP project</note>
         <status>QUEUED</status>

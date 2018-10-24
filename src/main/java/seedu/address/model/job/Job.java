@@ -1,17 +1,17 @@
 package seedu.address.model.job;
 
+import static java.util.concurrent.TimeUnit.HOURS;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.model.ModelManager;
 import seedu.address.model.machine.Machine;
-import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 
@@ -48,10 +48,10 @@ public class Job {
      * Every field must be present and not null.
      * TODO: Need to validate all these somewhere
      */
-    public Job(Name name, Machine machine, Person owner, Priority priority, float duration,
+    public Job(JobName name, Machine machine, Person owner, Priority priority, float duration,
                JobNote jobNote, Set<Tag> tags) {
         requireAllNonNull(name, machine, owner, tags);
-        this.name = (JobName) name;
+        this.name = name;
         this.machine = machine;
         this.owner = owner;
         this.tags.addAll(tags);
@@ -61,6 +61,11 @@ public class Job {
         this.duration = duration;
 
         startTime = new TimeStamp();
+    }
+
+    public boolean isFinished() {
+        TimeStamp currentTime = new TimeStamp();
+        return (currentTime.getTime() - startTime.getTime()) > TimeUnit.MILLISECONDS.convert((long) duration, HOURS);
     }
 
     public JobNote getJobNote() {
@@ -180,7 +185,7 @@ public class Job {
      * Compares priority between two jobs
      */
 
-    public int hasHigherPriority(Job comparedJob ) {
+    public int hasHigherPriority(Job comparedJob) {
         //TODO clean up code to make it neater for comparison
         if (this.equals(comparedJob)) {
             //logger.info(this.toString() + " \n==\n"  + comparedJob.toString());

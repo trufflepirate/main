@@ -1,22 +1,59 @@
 package seedu.address.model.job;
 
-import seedu.address.model.person.Name;
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represent the name of a job
- * The class have the similar functionality as the Name class of Person and inherent from that
+ * Represents a Job's name in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidJobName(String)}
  */
-public class JobName extends Name {
+public class JobName {
+
+    public static final String MESSAGE_JOBNAME_CONSTRAINTS =
+            "Job names should only contain alphanumeric characters and without spaces, and it should not be blank";
+
+    /*
+     * The first character of the address must not be a whitespace,
+     * otherwise " " (a blank string) becomes a valid input.
+     */
+    public static final String JOBNAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum}]*";
+
+    public final String fullName;
 
     /**
-     * Construct a {@code JobName}.
+     * Constructs a {@code Name}.
      *
-     * @param name A valid name as declared in the super class.
-     *
-     * Every field must be present and not null.
+     * @param name A valid job name.
      */
     public JobName(String name) {
-        super(name);
+        requireNonNull(name);
+        checkArgument(isValidJobName(name), MESSAGE_JOBNAME_CONSTRAINTS);
+        fullName = name;
+    }
+
+    /**
+     * Returns true if a given string is a valid job name.
+     */
+    public static boolean isValidJobName(String test) {
+        return test.matches(JOBNAME_VALIDATION_REGEX);
+    }
+
+
+    @Override
+    public String toString() {
+        return fullName;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof JobName // instanceof handles nulls
+                && fullName.equals(((JobName) other).fullName)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return fullName.hashCode();
     }
 
 }

@@ -1,13 +1,13 @@
 package seedu.address.model.job;
 
 import java.util.logging.Logger;
+
 import seedu.address.commons.core.LogsCenter;
 
 /**
  * Indicates different types of job priority
  */
 public enum Priority {
-
 
     URGENT,
     HIGH,
