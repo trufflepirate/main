@@ -3,10 +3,25 @@
     <machines>
         <machineName>JJPrinter</machineName>
         <status>ENABLED</status>
-    </machines>
-    <machines>
-        <machineName>SaifPrinter</machineName>
-        <status>DISABLED</status>
+        <jobs>
+            <name>iDCP</name>
+            <machine>
+                <machineName>JJPrinter</machineName>
+                <status>ENABLED</status>
+            </machine>
+            <startTime>seedu.address.model.job.TimeStamp@673338be</startTime>
+            <owner>
+                <name>JUN JIE</name>
+                <phone>000</phone>
+                <email>0@u.nus.edu</email>
+                <address>000</address>
+            </owner>
+            <priority>URGENT</priority>
+            <duration>3.0</duration>
+            <tagged>JJ</tagged>
+            <note>This is my own project</note>
+            <status>QUEUED</status>
+        </jobs>
     </machines>
     <machines>
         <machineName>TYPrinter</machineName>

@@ -81,6 +81,8 @@ public interface Model {
 
     ModelMessageResult swapJobs(JobName jobname1, JobName jobName2);
 
+    void requestDeletion(JobName jobName);
+
     // ============================== Machine methods ======================================= //
     /**
      * Adds the given machine

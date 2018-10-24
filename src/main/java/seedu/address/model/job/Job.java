@@ -43,6 +43,7 @@ public class Job {
     private Priority priority;
     private Status status;
     private float duration;
+    private boolean requestDeletion;
 
     /**
      * Every field must be present and not null.
@@ -59,10 +60,14 @@ public class Job {
         this.status = Status.QUEUED;
         this.jobNote = jobNote;
         this.duration = duration;
+        this.requestDeletion = false;
 
         startTime = new TimeStamp();
     }
 
+    /**
+     * checks if a job has been finished
+     */
     public boolean isFinished() {
         TimeStamp currentTime = new TimeStamp();
         return (currentTime.getTime() - startTime.getTime()) > TimeUnit.MILLISECONDS.convert((long) duration, HOURS);
@@ -164,6 +169,14 @@ public class Job {
         owner = newOwner;
     }
 
+    public boolean requestDeletion() {
+        return requestDeletion;
+    }
+
+    public void setRequestDeletion(boolean requestDeletion) {
+        this.requestDeletion = requestDeletion;
+    }
+
     /**
      * Returns true if both jobs of the same name have at least one other identity field that is the same.
      * This defines a weaker notion of equality between two jobs.
@@ -248,7 +261,9 @@ public class Job {
     public String toString() {
         return "Job name " + this.getJobName().fullName
                 + "\nJob machine " + this.getMachine()
-                + "\nJob Priority " + this.getPriority();
-
+                + "\nJob Priority " + this.getPriority()
+                + "\nRequest Deletion" + this.requestDeletion();
     }
+
+
 }

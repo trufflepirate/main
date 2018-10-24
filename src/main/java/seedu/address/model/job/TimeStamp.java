@@ -13,7 +13,8 @@ public class TimeStamp {
         this.createdTimeStamp = System.currentTimeMillis();
     }
 
-    public long getTime() {getTime();
+    public long getTime() {
+        getTime();
         return createdTimeStamp;
     }
 
