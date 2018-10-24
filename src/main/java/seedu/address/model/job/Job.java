@@ -178,7 +178,7 @@ public class Job {
      * Compares priority between two jobs
      */
 
-    public int hasHigherPriority(Job comparedJob ) {
+    public int hasHigherPriority(Job comparedJob) {
         //TODO clean up code to make it neater for comparison
         if (this.equals(comparedJob)) {
             //logger.info(this.toString() + " \n==\n"  + comparedJob.toString());
