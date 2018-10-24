@@ -1,11 +1,2 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addressbook>
-    <persons>
-        <name>John Doe</name>
-        <phone>98765432</phone>
-        <email>johnd@example.com</email>
-        <address>311, Clementi Ave 2, #02-25</address>
-        <tagged>owesMoney</tagged>
-        <tagged>friends</tagged>
-    </persons>
-</addressbook>
+<addressbook/>

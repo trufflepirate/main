@@ -3,44 +3,6 @@
     <machines>
         <machineName>JJPrinter</machineName>
         <status>ENABLED</status>
-        <jobs>
-            <name>iDCP project</name>
-            <machine>
-                <machineName>JJPrinter</machineName>
-                <status>ENABLED</status>
-            </machine>
-            <startTime>seedu.address.model.job.TimeStamp@70f0d068</startTime>
-            <owner>
-                <name>TIAN YUAN</name>
-                <phone>000</phone>
-                <email>0@u.nus.edu</email>
-                <address>000</address>
-            </owner>
-            <priority>HIGH</priority>
-            <duration>2.0</duration>
-            <tagged>iDCP</tagged>
-            <note>This is for the iDCP project</note>
-            <status>QUEUED</status>
-        </jobs>
-        <jobs>
-            <name>DCP project</name>
-            <machine>
-                <machineName>TYPrinter</machineName>
-                <status>ENABLED</status>
-            </machine>
-            <startTime>seedu.address.model.job.TimeStamp@4288ec6b</startTime>
-            <owner>
-                <name>TY</name>
-                <phone>000</phone>
-                <email>0@u.nus.edu</email>
-                <address>000</address>
-            </owner>
-            <priority>HIGH</priority>
-            <duration>2.0</duration>
-            <tagged>iDCP</tagged>
-            <note>This is for the iDCP project</note>
-            <status>QUEUED</status>
-        </jobs>
     </machines>
     <machines>
         <machineName>SaifPrinter</machineName>
@@ -49,24 +11,5 @@
     <machines>
         <machineName>TYPrinter</machineName>
         <status>ENABLED</status>
-        <jobs>
-            <name>DCP project</name>
-            <machine>
-                <machineName>TYPrinter</machineName>
-                <status>ENABLED</status>
-            </machine>
-            <startTime>seedu.address.model.job.TimeStamp@47b6e33b</startTime>
-            <owner>
-                <name>TY</name>
-                <phone>000</phone>
-                <email>0@u.nus.edu</email>
-                <address>000</address>
-            </owner>
-            <priority>HIGH</priority>
-            <duration>2.0</duration>
-            <tagged>iDCP</tagged>
-            <note>This is for the iDCP project</note>
-            <status>QUEUED</status>
-        </jobs>
     </machines>
 </MakerManagerMachines>
