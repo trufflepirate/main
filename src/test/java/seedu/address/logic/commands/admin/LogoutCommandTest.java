@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.function.Predicate;
 
-import javafx.collections.ObservableSet;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

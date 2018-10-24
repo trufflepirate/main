@@ -2,7 +2,6 @@ package seedu.address.logic.commands.admin;
 
 import java.util.function.Predicate;
 
-import javafx.collections.ObservableSet;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
