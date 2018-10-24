@@ -88,7 +88,7 @@ public class XmlAdaptedJob {
         machine = new XmlAdaptedMachine(source.getMachine());
         owner = new XmlAdaptedPerson(source.getOwner());
 
-        startTime = source.getStartTime().toString();
+        startTime = source.getAddedTime();
 
         priority = source.getPriority();
         status = source.getStatus();

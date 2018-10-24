@@ -1,2 +1,79 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<MakerManagerJobs/>
+<MakerManagerJobs>
+    <jobs>
+        <name>iDCP5</name>
+        <machine>
+            <machineName>TYPrinter</machineName>
+            <status>ENABLED</status>
+        </machine>
+        <startTime>24/10 22:18:08</startTime>
+        <owner>
+            <name>TIAN YUAN</name>
+            <phone>000</phone>
+            <email>0@u.nus.edu</email>
+            <address>000</address>
+        </owner>
+        <priority>URGENT</priority>
+        <duration>1.5</duration>
+        <tagged>iDCP</tagged>
+        <note>This is for the iDCP project</note>
+        <status>QUEUED</status>
+    </jobs>
+    <jobs>
+        <name>iDCP</name>
+        <machine>
+            <machineName>TYPrinter</machineName>
+            <status>ENABLED</status>
+        </machine>
+        <startTime>24/10 22:17:35</startTime>
+        <owner>
+            <name>TIAN YUAN</name>
+            <phone>000</phone>
+            <email>0@u.nus.edu</email>
+            <address>000</address>
+        </owner>
+        <priority>HIGH</priority>
+        <duration>1.5</duration>
+        <tagged>iDCP</tagged>
+        <note>This is for the iDCP project</note>
+        <status>QUEUED</status>
+    </jobs>
+    <jobs>
+        <name>iDCP2</name>
+        <machine>
+            <machineName>TYPrinter</machineName>
+            <status>ENABLED</status>
+        </machine>
+        <startTime>24/10 22:17:44</startTime>
+        <owner>
+            <name>TIAN YUAN</name>
+            <phone>000</phone>
+            <email>0@u.nus.edu</email>
+            <address>000</address>
+        </owner>
+        <priority>HIGH</priority>
+        <duration>1.5</duration>
+        <tagged>iDCP</tagged>
+        <note>This is for the iDCP project</note>
+        <status>QUEUED</status>
+    </jobs>
+    <jobs>
+        <name>iDCP3</name>
+        <machine>
+            <machineName>TYPrinter</machineName>
+            <status>ENABLED</status>
+        </machine>
+        <startTime>24/10 22:17:55</startTime>
+        <owner>
+            <name>TIAN YUAN</name>
+            <phone>000</phone>
+            <email>0@u.nus.edu</email>
+            <address>000</address>
+        </owner>
+        <priority>HIGH</priority>
+        <duration>1.5</duration>
+        <tagged>iDCP</tagged>
+        <note>This is for the iDCP project</note>
+        <status>QUEUED</status>
+    </jobs>
+</MakerManagerJobs>

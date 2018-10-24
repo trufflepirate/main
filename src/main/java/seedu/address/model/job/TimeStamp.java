@@ -22,9 +22,13 @@ public class TimeStamp {
         this.time = convertTimeString(timeStringArray);
     }
 
-    public String getTime() {
+    public String showTime() {
         return timeStringArray[1] + "/" + timeStringArray[0] + " " +
             timeStringArray[2] + ":" + timeStringArray[3] + ":" + timeStringArray[4];
+    }
+
+    public Integer[] getTime() {
+        return time;
     }
 
 
@@ -33,13 +37,36 @@ public class TimeStamp {
      * if {@code timestamp1} is earlier than
      * {@code timestamp2}
      */
-    public static boolean compareTimeStamp(TimeStamp timeStamp1, TimeStamp timeStamp2) {
+    public static boolean compareTime(String time1, String time2) {
+        String[] splitTime1 = time1.split(" ");
+        String[] splitTime2 = time2.split(" ");
+        Integer[] deviation = new Integer[5];
 
-        for(int i = 0; i < time.length; i ++) {
-            if(timeStamp1.time[i] == timeStamp2.time[i]) continue;
-            else if(timeStamp1.time[i] > timeStamp2.time[i]) return false;
-            else return true;
+
+        int month1 = Integer.valueOf(splitTime1[0].split("/")[0]);
+        int date1 = Integer.valueOf(splitTime1[0].split("/")[1]);
+        int hour1 = Integer.valueOf(splitTime1[1].split(":")[0]);
+        int minute1 = Integer.valueOf(splitTime1[1].split(":")[1]);
+        int second1 = Integer.valueOf(splitTime1[1].split(":")[2]);
+
+        int month2 = Integer.valueOf(splitTime2[0].split("/")[0]);
+        int date2 = Integer.valueOf(splitTime2[0].split("/")[1]);
+        int hour2 = Integer.valueOf(splitTime2[1].split(":")[0]);
+        int minute2 = Integer.valueOf(splitTime2[1].split(":")[1]);
+        int second2 = Integer.valueOf(splitTime2[1].split(":")[2]);
+
+        deviation[0] = month1 - month2;
+        deviation[1] = date1 - date2;
+        deviation[2] = hour1 - hour2;
+        deviation[3] = minute1 - minute2;
+        deviation[4] = second1 - second2;
+
+        for(int i = 0; i < 5; i ++) {
+            if(deviation[i] == 0) continue;
+            else if(deviation[i] < 0) return true;
+            else return false;
         }
+
         return true;
     }
 
