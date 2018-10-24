@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <MakerManagerJobs>
     <jobs>
-        <name>iDCP5</name>
+        <name>iDCP</name>
         <machine>
-            <machineName>TYPrinter</machineName>
+            <machineName>JJPrinter</machineName>
             <status>ENABLED</status>
         </machine>
         <startTime>24/10 22:18:08</startTime>
         <owner>
-            <name>TIAN YUAN</name>
+            <name>JUN JIE</name>
             <phone>000</phone>
             <email>0@u.nus.edu</email>
             <address>000</address>
         </owner>
         <priority>URGENT</priority>
-        <duration>1.5</duration>
-        <tagged>iDCP</tagged>
-        <note>This is for the iDCP project</note>
+        <duration>3.0</duration>
+        <tagged>JJ</tagged>
+        <note>This is my own project</note>
         <status>QUEUED</status>
+        <requestDeletion>true</requestDeletion>
     </jobs>
     <jobs>
         <name>iDCP</name>
@@ -75,5 +76,6 @@
         <tagged>iDCP</tagged>
         <note>This is for the iDCP project</note>
         <status>QUEUED</status>
+        <requestDeletion>false</requestDeletion>
     </jobs>
 </MakerManagerJobs>

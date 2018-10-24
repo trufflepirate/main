@@ -197,6 +197,13 @@ public class ModelManager extends ComponentManager implements Model {
         return new ModelMessageResult(true, "Jobs queue number swapped successfully");
     }
 
+    @Override
+    public void requestDeletion(JobName jobName) {
+        versionedAddressBook.requestDeletion(jobName);
+        indicateJobListChanged();
+
+    }
+
     // ============================== Machine methods ======================================= //
 
     @Override

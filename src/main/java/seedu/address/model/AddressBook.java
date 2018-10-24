@@ -349,6 +349,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         jobs.swapQueueNumber(jobName1, jobName2);
     }
 
+    /**
+     * Request deletion of print job
+     */
+
+    public void requestDeletion(JobName jobName){
+        jobs.requestDeletion(jobName);
+    }
+
     //======================== get lists methods ===========================//
     @Override
     public ObservableList<Person> getPersonList() {

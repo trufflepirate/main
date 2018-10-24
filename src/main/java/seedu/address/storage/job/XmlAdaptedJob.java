@@ -3,6 +3,7 @@ package seedu.address.storage.job;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -54,6 +55,9 @@ public class XmlAdaptedJob {
     @XmlElement
     private Status status;
 
+    @XmlElement
+    private Boolean requestDeletion;
+
     /**
      * Constructs an XmlAdaptedJob.
      * This is the no-arg constructor that is required by JAXB.
@@ -97,6 +101,7 @@ public class XmlAdaptedJob {
                 .map(XmlAdaptedTag::new)
                 .collect(Collectors.toList());
         note = source.getJobNote().toString();
+        requestDeletion = source.requestDeletion();
     }
 
     /**
@@ -119,13 +124,17 @@ public class XmlAdaptedJob {
             modelTags.add(tag.toModelType());
         }
 
-        return new Job(modelJobName,
+        Job job = new Job(modelJobName,
                 modelJobMachine,
                 modelJobOwner,
                 modelPriority,
                 modelDuration,
                 modelJobNote,
                 modelTags);
+
+        job.setRequestDeletion(Objects.requireNonNullElse(requestDeletion, false));
+
+        return job;
     }
 }
 

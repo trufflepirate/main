@@ -204,6 +204,11 @@ public class UniqueJobList {
         findJob(name).restartJob();
     }
 
+    public void requestDeletion(JobName name) {
+        findJob(name).setRequestDeletion(true);
+    }
+
+
 
     //============================= swap queue number operations =======================================//
 
