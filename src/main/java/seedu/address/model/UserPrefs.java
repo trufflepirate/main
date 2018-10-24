@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Objects;
 
 import seedu.address.commons.core.GuiSettings;
@@ -18,6 +19,10 @@ public class UserPrefs {
 
     public UserPrefs() {
         setGuiSettings(500, 500, 0, 0);
+        this.addressBookFilePath = Paths.get("data\\addressbook.xml");
+        this.makerManagerMachinesFilePath = Paths.get("data\\makerManagerMachines.xml");
+        this.makerManagerAdminsFilePath = Paths.get("data\\makerManagerAdmins.xml");
+        this.makerManagerJobsFilePath = Paths.get("data\\makerManagerJobs.xml");
     }
 
     public GuiSettings getGuiSettings() {
