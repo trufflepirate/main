@@ -1,6 +1,5 @@
 package seedu.address.model.job;
 
-import java.util.Date;
 
 /**
  * Represents a TimeStamp Object for Job.
@@ -8,14 +7,14 @@ import java.util.Date;
  */
 public class TimeStamp {
 
-    private final Date createdTimeStamp;
+    private final Long createdTimeStamp;
 
     public TimeStamp() {
-        this.createdTimeStamp = new Date(System.currentTimeMillis());
+        this.createdTimeStamp = System.currentTimeMillis();
     }
 
-    public long getTime() {
-        return createdTimeStamp.getTime();
+    public long getTime() {getTime();
+        return createdTimeStamp;
     }
 
     /**
@@ -26,6 +25,5 @@ public class TimeStamp {
     public static boolean compareTimeStamp(TimeStamp timeStamp1, TimeStamp timeStamp2) {
         return timeStamp1.getTime() < timeStamp2.getTime();
     }
-
 
 }

@@ -1,11 +1,13 @@
 package seedu.address.model.job;
 
+import static java.util.concurrent.TimeUnit.HOURS;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
@@ -59,6 +61,11 @@ public class Job {
         this.duration = duration;
 
         startTime = new TimeStamp();
+    }
+
+    public boolean isFinished() {
+        TimeStamp currentTime = new TimeStamp();
+        return (currentTime.getTime() - startTime.getTime()) > TimeUnit.MILLISECONDS.convert((long) duration, HOURS);
     }
 
     public JobNote getJobNote() {
