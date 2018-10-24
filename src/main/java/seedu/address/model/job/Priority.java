@@ -1,6 +1,7 @@
 package seedu.address.model.job;
 
 import java.util.logging.Logger;
+
 import seedu.address.commons.core.LogsCenter;
 
 /**

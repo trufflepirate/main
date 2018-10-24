@@ -1,11 +1,9 @@
 package seedu.address.ui;
 
-import java.util.Iterator;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
@@ -22,7 +20,6 @@ import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 //import seedu.address.model.machine.Machine;
-import seedu.address.model.job.Job;
 import seedu.address.ui.job.JobListPanel;
 import seedu.address.ui.machine.MachineListPanel;
 

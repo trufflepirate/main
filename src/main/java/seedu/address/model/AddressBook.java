@@ -3,13 +3,11 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javafx.collections.ObservableList;
-
 import org.mindrot.jbcrypt.BCrypt;
+
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.Password;
@@ -22,6 +20,8 @@ import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.UniqueMachineList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
+
+import javafx.collections.ObservableList;
 
 
 /**

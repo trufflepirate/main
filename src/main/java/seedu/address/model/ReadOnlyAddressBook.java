@@ -1,7 +1,6 @@
 package seedu.address.model;
 
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableSet;
 import seedu.address.model.admin.Admin;
 import seedu.address.model.job.Job;
 import seedu.address.model.machine.Machine;
