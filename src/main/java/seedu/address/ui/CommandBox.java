@@ -75,7 +75,7 @@ public class CommandBox extends UiPart<Region> {
             //loginCheck();
             //break;
         default:
-            loginCheck();
+            //loginCheck();
             // let JavaFx handle the keypress
         }
     }
@@ -193,7 +193,12 @@ public class CommandBox extends UiPart<Region> {
      * Sets the command box style to use the default style.
      */
     private void setStyleToDefault() {
-        commandTextField.getStyleClass().remove(ERROR_STYLE_CLASS);
+        final Matcher matcher = LOGIN_COMMAND_FORMAT.matcher(commandTextField.getText());
+        if (matcher.matches()) {
+            setStyleToIndicateCommandFailure();
+        } else {
+            commandTextField.getStyleClass().remove(ERROR_STYLE_CLASS);
+        }
     }
 
     /**
