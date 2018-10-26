@@ -135,6 +135,11 @@ public class AddCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
+        @Override
+        public void deleteJob(JobName job) {
+
+        }
+
         public void startJob(JobName name) {
 
         }
@@ -155,8 +160,8 @@ public class AddCommandTest {
         }
 
         @Override
-        public void deleteJob(Job job) {
-            throw new AssertionError("This method should not be called.");
+        public void requestDeletion(JobName jobName) {
+
         }
 
         @Override
