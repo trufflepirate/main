@@ -106,8 +106,6 @@ public interface Model {
      */
     void updateMachine(Machine target, Machine editedMachine);
 
-    Machine findMachine(MachineName name);
-
 
     // ============================== Admin methods ======================================= //
     /**

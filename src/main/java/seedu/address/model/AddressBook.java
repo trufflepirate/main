@@ -245,14 +245,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Returns the job, if present, according to JobName
-     */
-    public Machine findMachine(MachineName name) {
-        requireNonNull(name);
-        return machines.findMachine(name);
-    }
-
-    /**
      * Replaces the given Machine {@code target} in the list with {@code editedMachine}.
      * {@code target} must exist in the address book.
      * The Machine identity of {@code editedMachine} must not be the same as another existing

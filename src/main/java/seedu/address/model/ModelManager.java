@@ -215,12 +215,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public Machine findMachine(MachineName name) {
-        requireAllNonNull(name);
-        return versionedAddressBook.findMachine(name);
-    }
-
-    @Override
     public void removeMachine(Machine toRemove) {
         versionedAddressBook.removeMachine(toRemove);
         indicateMachineListChanged();
