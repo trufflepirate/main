@@ -29,7 +29,7 @@ public class StorageManagerTest {
 
     @Before
     public void setUp() {
-        XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(getTempFilePath("ab"));
+        XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(new UserPrefs());
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
         storageManager = new StorageManager(addressBookStorage, userPrefsStorage);
     }
@@ -67,6 +67,11 @@ public class StorageManagerTest {
         ReadOnlyAddressBook retrieved = storageManager.readAddressBook().get();
         assertEquals(original, new AddressBook(retrieved));
         */
+    }
+
+    @Test
+    public void getUserPrefs() {
+        assertNotNull(storageManager.getUserPrefs());
     }
 
     @Test
