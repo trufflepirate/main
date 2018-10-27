@@ -18,6 +18,7 @@ import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
 import seedu.address.model.job.UniqueJobList;
 import seedu.address.model.machine.Machine;
+import seedu.address.model.machine.MachineName;
 import seedu.address.model.machine.UniqueMachineList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
@@ -241,6 +242,14 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void removeMachine(Machine toRemove) {
         requireNonNull(toRemove);
         machines.remove(toRemove);
+    }
+
+    /**
+     * Returns the job, if present, according to JobName
+     */
+    public Machine findMachine(MachineName name) {
+        requireNonNull(name);
+        return machines.findMachine(name);
     }
 
     /**

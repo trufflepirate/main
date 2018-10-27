@@ -101,7 +101,7 @@ public class Machine {
 
 
     /**
-     * Returns true if both persons of the same name and same list of Jobs.
+     * Returns true if both machines of the same name and same list of Jobs.
      * This defines a weaker notion of equality between two machines.
      */
     public boolean isSameMachine(Machine otherMachine) {

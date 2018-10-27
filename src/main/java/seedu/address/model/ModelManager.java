@@ -21,6 +21,7 @@ import seedu.address.model.admin.Username;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
 import seedu.address.model.machine.Machine;
+import seedu.address.model.machine.MachineName;
 import seedu.address.model.person.Person;
 
 
@@ -211,6 +212,12 @@ public class ModelManager extends ComponentManager implements Model {
         versionedAddressBook.addMachine(machine);
         updateFilteredMachineList(PREDICATE_SHOW_ALL_MACHINES);
         indicateMachineListChanged();
+    }
+
+    @Override
+    public Machine findMachine(MachineName name) {
+        requireAllNonNull(name);
+        return versionedAddressBook.findMachine(name);
     }
 
     @Override

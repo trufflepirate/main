@@ -53,6 +53,7 @@ public class JobCard extends UiPart<Region> {
         Label timeStampLabel = new Label(job.getAddedTime());
         Label ownerNameLabel = new Label("Job Owner: " + job.getOwner().getName().fullName);
         Label priorityLabel = new Label("Priority: " + job.getPriority().toString());
+        Label statusLabel = new Label("Status: " + job.getStatus().toString());
 
         details.getChildren().add(machineNameLabel);
         details.getChildren().add(ownerNameLabel);
@@ -60,6 +61,7 @@ public class JobCard extends UiPart<Region> {
         details.setHgap(2);
 
         tags.getChildren().add(priorityLabel);
+        tags.getChildren().add(statusLabel);
 
         job.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
 
@@ -77,16 +79,6 @@ public class JobCard extends UiPart<Region> {
             requestDeletionLabel.setTextFill(Paint.valueOf("#F00"));
             tags.getChildren().add(requestDeletionLabel);
         }
-
-
-        // TODO: 10-Oct-18 time to be displayed
-
-        /* TODO Saif code leaving it here for now
-        jobOwner.setText(job.getOwner().getName().fullName);
-        jobPriority.setText(job.getPriority().toString());
-        status.setText(job.getStatus().toString());
-        */
-
     }
 
     @Override

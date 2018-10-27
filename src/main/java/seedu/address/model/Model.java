@@ -8,6 +8,7 @@ import seedu.address.model.admin.Username;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
 import seedu.address.model.machine.Machine;
+import seedu.address.model.machine.MachineName;
 import seedu.address.model.person.Person;
 
 /**
@@ -104,6 +105,9 @@ public interface Model {
      * The machine identity of {@code editedMachine} must not be the same as another existing machine in the model.
      */
     void updateMachine(Machine target, Machine editedMachine);
+
+    Machine findMachine(MachineName name);
+
 
     // ============================== Admin methods ======================================= //
     /**

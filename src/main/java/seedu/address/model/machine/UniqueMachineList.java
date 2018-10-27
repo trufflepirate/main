@@ -66,6 +66,20 @@ public class UniqueMachineList {
     }
 
     /**
+     * Returns the machine, given the machineName
+     * @param machineName
+     * @return
+     */
+    public Machine findMachine(MachineName machineName) {
+        for (Machine machine: internalList) {
+            if (machine.getName().equals(machineName)) {
+                return machine;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Adds a job the machine {@code target} jobs list
      */
     public void addJobToMachineList(Machine target, Job job) {
