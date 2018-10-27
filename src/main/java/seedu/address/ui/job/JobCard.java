@@ -15,6 +15,7 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.model.Model;
 import seedu.address.model.job.Job;
+import seedu.address.model.job.Priority;
 import seedu.address.model.machine.Machine;
 import seedu.address.ui.UiPart;
 import seedu.address.ui.machine.MachineCard;
@@ -71,7 +72,35 @@ public class JobCard extends UiPart<Region> {
         jobInformation.getChildren().add(informationLabel);
         jobInformation.setHgap(2);
 
+        if (job.getPriority() == Priority.URGENT){
+            priorityLabel.setStyle("-fx-font: 14 arial;"
+                    + "-fx-text-fill: #ffffff;"
+                    + "-fx-background-color: #b71c1c;"
+                    + "-fx-padding: 2;"
+                    + "-fx-text-alignment: center");
+        }
+
+        if (job.getPriority() == Priority.HIGH){
+            priorityLabel.setStyle("-fx-font: 14 arial;"
+                    + "-fx-text-fill: #000000;"
+                    + "-fx-background-color: #ffca28;"
+                    + "-fx-padding: 2;"
+                    + "-fx-text-alignment: center");
+        }
+        if (job.getPriority() == Priority.NORMAL){
+            priorityLabel.setStyle("-fx-font: 14 arial;"
+                    + "-fx-text-fill: #ffffff;"
+                    + "-fx-background-color: #00897b;"
+                    + "-fx-padding: 2;"
+                    + "-fx-text-alignment: center");
+        }
         tags.getChildren().add(priorityLabel);
+
+        statusLabel.setStyle("-fx-font: 12 arial;"
+                + "-fx-text-fill: #ffffff;"
+                + "-fx-background-color: #a1887f;"
+                + "-fx-padding: 2;"
+                + "-fx-text-alignment: center");
         tags.getChildren().add(statusLabel);
 
         job.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));

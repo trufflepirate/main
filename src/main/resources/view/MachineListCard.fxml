@@ -28,6 +28,11 @@
                 <Label fx:id="machineName" text="\$machineName" styleClass="cell_big_label" />
             </HBox>
             <FlowPane fx:id="machineStatus"/>
+            <FlowPane fx:id="totalDuration">
+                <VBox.margin>
+                    <Insets bottom="2.0" left="5.0" right="5.0" top="5.0" />
+                </VBox.margin>
+            </FlowPane>
         </VBox>
     </GridPane>
 </HBox>
