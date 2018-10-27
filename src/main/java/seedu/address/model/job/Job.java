@@ -29,6 +29,9 @@ public class Job {
             "Job notes should only contain alphanumeric characters and spaces, "
                     + "and it should not be blank";
 
+    public static final String MEEEAGE_PRIORITY_CONSTRAINTS =
+            "Job priority can only be URGENT, HIGH and NORMAL";
+
     private static final Logger logger = LogsCenter.getLogger(Job.class);
 
     //Identity field

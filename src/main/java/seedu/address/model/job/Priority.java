@@ -45,5 +45,7 @@ public enum Priority {
         return priority1value > priority2value ? 1 : priority1value.equals(priority2value) ? 0 : -1;
     }
 
-
+    public static boolean isValidPriority(String priority) {
+        return priority.equals("URGENT") || priority.equals("HIGH") || priority.equals("NORMAL");
+    }
 }
