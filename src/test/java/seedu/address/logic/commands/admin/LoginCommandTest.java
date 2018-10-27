@@ -112,6 +112,11 @@ public class LoginCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
+        @Override
+        public void deleteJob(JobName job) {
+
+        }
+
         public void startJob(JobName name) {
             throw new AssertionError("This method should not be called.");
         }
@@ -133,14 +138,9 @@ public class LoginCommandTest {
 
         @Override
         public void requestDeletion(JobName jobName) {
-            throw new AssertionError("This method should not be called.");
+
         }
 
-
-        @Override
-        public void deleteJob(Job job) {
-            throw new AssertionError("This method should not be called.");
-        }
 
         @Override
         public void updateJob(Job oldJob, Job updatedJob) {

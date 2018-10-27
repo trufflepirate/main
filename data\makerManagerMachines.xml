@@ -9,7 +9,7 @@
                 <machineName>JJPrinter</machineName>
                 <status>ENABLED</status>
             </machine>
-            <startTime>seedu.address.model.job.TimeStamp@673338be</startTime>
+            <startTime>24/10 22:43:33</startTime>
             <owner>
                 <name>JUN JIE</name>
                 <phone>000</phone>
@@ -21,10 +21,51 @@
             <tagged>JJ</tagged>
             <note>This is my own project</note>
             <status>QUEUED</status>
+            <requestDeletion>false</requestDeletion>
+        </jobs>
+        <jobs>
+            <name>newProject</name>
+            <machine>
+                <machineName>JJPrinter</machineName>
+                <status>ENABLED</status>
+            </machine>
+            <startTime>24/10 22:43:33</startTime>
+            <owner>
+                <name>Jun Jie</name>
+                <phone>000</phone>
+                <email>0@u.nus.edu</email>
+                <address>000</address>
+            </owner>
+            <priority>URGENT</priority>
+            <duration>3.0</duration>
+            <tagged>jjty</tagged>
+            <note>This is for the jjty project</note>
+            <status>QUEUED</status>
+            <requestDeletion>false</requestDeletion>
         </jobs>
     </machines>
     <machines>
         <machineName>TYPrinter</machineName>
         <status>ENABLED</status>
+        <jobs>
+            <name>iDCP</name>
+            <machine>
+                <machineName>TYPrinter</machineName>
+                <status>ENABLED</status>
+            </machine>
+            <startTime>24/10 22:45:22</startTime>
+            <owner>
+                <name>TIAN YUAN</name>
+                <phone>000</phone>
+                <email>0@u.nus.edu</email>
+                <address>000</address>
+            </owner>
+            <priority>HIGH</priority>
+            <duration>1.5</duration>
+            <tagged>iDCP</tagged>
+            <note>This is for the iDCP project</note>
+            <status>QUEUED</status>
+            <requestDeletion>false</requestDeletion>
+        </jobs>
     </machines>
 </MakerManagerMachines>

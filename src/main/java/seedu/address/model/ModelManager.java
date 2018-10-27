@@ -54,7 +54,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredMachines = new FilteredList<>(versionedAddressBook.getMachineList());
         filteredAdmins = new FilteredList<>(versionedAddressBook.getAdminList());
         //Queue list is the sorted list of jobs based on custom comparator
-        filteredJobs = new FilteredList<>(versionedAddressBook.getQueueList());
+        filteredJobs = new FilteredList<>(versionedAddressBook.getJobList());
         //TODO find a better way to change the data according to sorted jobs based on comparator
         indicateJobListChanged();
     }
@@ -145,7 +145,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void deleteJob(Job job) {
+    public void deleteJob(JobName job) {
         requireAllNonNull(job);
         versionedAddressBook.removeJob(job);
         indicateJobListChanged();
