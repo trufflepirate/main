@@ -21,12 +21,8 @@ public enum Priority {
     /**
      *checks if the input priority is a acceptable priority for the job
      */
-    public static boolean isValidPriority(Priority priority) {
-        boolean isValid = true;
-        if (priority != URGENT || priority != HIGH || priority != NORMAL) {
-            isValid = false;
-        }
-        return isValid;
+    public static boolean isValidPriority(String priority) {
+        return priority.equals("URGENT") || priority.equals("HIGH") || priority.equals("NORMAL");
     }
 
 
@@ -44,6 +40,5 @@ public enum Priority {
 
         return priority1value > priority2value ? 1 : priority1value.equals(priority2value) ? 0 : -1;
     }
-
 
 }

@@ -1,6 +1,5 @@
 package seedu.address.model.job;
 
-import static java.util.concurrent.TimeUnit.HOURS;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.job.Status.ONGOING;
 
@@ -8,7 +7,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
@@ -30,6 +28,9 @@ public class Job {
     public static final String MESSAGE_NOTE_CONSTRAINTS =
             "Job notes should only contain alphanumeric characters and spaces, "
                     + "and it should not be blank";
+
+    public static final String MEEEAGE_PRIORITY_CONSTRAINTS =
+            "Job priority can only be URGENT, HIGH and NORMAL";
 
     private static final Logger logger = LogsCenter.getLogger(Job.class);
 
@@ -69,11 +70,11 @@ public class Job {
         addedTime = startTime.showTime();
     }
 
-      /**
+    /**
      * checks if a job has been finished
      */
-
     public boolean isFinished() throws JobNotStartedException {
+
         if (this.status == ONGOING) {
             Integer[] current = new TimeStamp().getTime();
             Integer[] start = startTime.getTime();
@@ -85,9 +86,11 @@ public class Job {
 
             double runningTime = 30.0 * 24.0 * deviation[0] + 24.0 * deviation[1] + deviation[2]
                 + 1 / 60 * deviation[3] + 1 / 3600 * deviation[4];
+
             return runningTime > this.duration;
+        } else {
+            throw new JobNotStartedException();
         }
-        else throw new JobNotStartedException();
     }
 
 

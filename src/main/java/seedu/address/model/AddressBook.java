@@ -353,7 +353,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Request deletion of print job
      */
 
-    public void requestDeletion(JobName jobName){
+    public void requestDeletion(JobName jobName) {
         jobs.requestDeletion(jobName);
     }
 

@@ -105,6 +105,7 @@ public interface Model {
      */
     void updateMachine(Machine target, Machine editedMachine);
 
+
     // ============================== Admin methods ======================================= //
     /**
      * Adds the given Admin

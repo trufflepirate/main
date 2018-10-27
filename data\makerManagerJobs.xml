@@ -6,7 +6,7 @@
             <machineName>JJPrinter</machineName>
             <status>ENABLED</status>
         </machine>
-        <startTime>26/10 15:56:29</startTime>
+        <startTime>27/10 16:29:58</startTime>
         <owner>
             <name>Jun Jie</name>
             <phone>000</phone>
@@ -26,7 +26,7 @@
             <machineName>TYPrinter</machineName>
             <status>ENABLED</status>
         </machine>
-        <startTime>26/10 15:56:29</startTime>
+        <startTime>27/10 16:29:58</startTime>
         <owner>
             <name>TIAN YUAN</name>
             <phone>000</phone>
@@ -46,7 +46,7 @@
             <machineName>TYPrinter</machineName>
             <status>ENABLED</status>
         </machine>
-        <startTime>26/10 15:56:29</startTime>
+        <startTime>27/10 16:29:58</startTime>
         <owner>
             <name>Jun Jie</name>
             <phone>000</phone>
@@ -66,7 +66,27 @@
             <machineName>JJPrinter</machineName>
             <status>ENABLED</status>
         </machine>
-        <startTime>26/10 15:56:29</startTime>
+        <startTime>27/10 16:29:58</startTime>
+        <owner>
+            <name>TIAN YUAN</name>
+            <phone>000</phone>
+            <email>0@u.nus.edu</email>
+            <address>000</address>
+        </owner>
+        <priority>HIGH</priority>
+        <duration>1.5</duration>
+        <tagged>iDCP</tagged>
+        <note>This is for the iDCP project</note>
+        <status>QUEUED</status>
+        <requestDeletion>false</requestDeletion>
+    </jobs>
+    <jobs>
+        <name>gg</name>
+        <machine>
+            <machineName>TYPrinter</machineName>
+            <status>ENABLED</status>
+        </machine>
+        <startTime>27/10 16:31:19</startTime>
         <owner>
             <name>TIAN YUAN</name>
             <phone>000</phone>

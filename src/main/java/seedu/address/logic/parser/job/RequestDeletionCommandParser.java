@@ -2,7 +2,9 @@ package seedu.address.logic.parser.job;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+
 import java.util.stream.Stream;
+
 import seedu.address.logic.commands.job.RequestDeletionCommand;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
@@ -29,7 +31,8 @@ public class RequestDeletionCommandParser implements Parser<RequestDeletionComma
                 ArgumentTokenizer.tokenize(userInput, PREFIX_NAME);
 
         if (!arePrefixesPresent(argumentMultimap, PREFIX_NAME) || !argumentMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RequestDeletionCommand.MESSAGE_USAGE ));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                RequestDeletionCommand.MESSAGE_USAGE));
         }
 
         JobName jobName = ParserUtil.parseJobName(argumentMultimap.getValue(PREFIX_NAME).get());

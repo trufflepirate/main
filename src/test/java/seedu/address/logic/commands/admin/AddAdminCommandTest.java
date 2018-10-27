@@ -165,17 +165,17 @@ public class AddAdminCommandTest {
         }
 
         public void startJob(JobName name) {
-
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override
         public void cancelJob(JobName name) {
-
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override
         public void restartJob(JobName name) {
-
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override

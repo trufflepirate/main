@@ -41,6 +41,8 @@ public class MachineCard extends UiPart<Region> {
     private Label id;
     @FXML
     private FlowPane machineStatus;
+    @FXML
+    private FlowPane totalDuration;
 
     public MachineCard(Machine machine, int displayIndex) {
         super(FXML);
@@ -48,6 +50,8 @@ public class MachineCard extends UiPart<Region> {
         id.setText(displayIndex + ". ");
         machineName.setText(machine.getName().fullName);
         Label machineStatusLabel = new Label(machine.getStatus().toString());
+        Label durationLabel = new Label("Time until released: " + String.valueOf(machine.getTotalDuration())
+                + " hour(s).");
         machineStatusLabel.setStyle("-fx-font: 12 arial;"
                 + "-fx-text-fill: black;"
                 + "-fx-padding: 2;"
@@ -74,7 +78,7 @@ public class MachineCard extends UiPart<Region> {
         machineStatus.getChildren().add(machineStatusLabel);
         machineStatus.getChildren().add(machineAvailabilityLabel);
         machineStatus.setHgap(4);
-
+        totalDuration.getChildren().add(durationLabel);
     }
 
     @Override

@@ -226,6 +226,9 @@ public class ParserUtil {
     public static Priority parseJobPriority(String jobPriority) throws ParseException {
         requireNonNull(jobPriority);
         String trimJobPriority = jobPriority.trim();
+        if (!Priority.isValidPriority(jobPriority)) {
+            throw new ParseException(Job.MEEEAGE_PRIORITY_CONSTRAINTS);
+        }
 
         return Priority.valueOf(trimJobPriority);
     }

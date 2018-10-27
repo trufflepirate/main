@@ -13,8 +13,8 @@ public class TimeStamp {
     private static String timeString;
     private static String[] timeStringArray;
 
-    Calendar calendar = Calendar.getInstance();
-    SimpleDateFormat timeFormat = new SimpleDateFormat("MM-dd-HH-mm-ss");
+    private Calendar calendar = Calendar.getInstance();
+    private SimpleDateFormat timeFormat = new SimpleDateFormat("MM-dd-HH-mm-ss");
 
     public TimeStamp() {
         timeString = timeFormat.format(calendar.getTime());
@@ -22,9 +22,13 @@ public class TimeStamp {
         this.time = convertTimeString(timeStringArray);
     }
 
+    /**
+     * gives the information about date and time
+     * @return the formatted string showing the time
+     */
     public String showTime() {
-        return timeStringArray[1] + "/" + timeStringArray[0] + " " +
-            timeStringArray[2] + ":" + timeStringArray[3] + ":" + timeStringArray[4];
+        return timeStringArray[1] + "/" + timeStringArray[0] + " "
+            + timeStringArray[2] + ":" + timeStringArray[3] + ":" + timeStringArray[4];
     }
 
     public Integer[] getTime() {
@@ -61,19 +65,28 @@ public class TimeStamp {
         deviation[3] = minute1 - minute2;
         deviation[4] = second1 - second2;
 
-        for(int i = 0; i < 5; i ++) {
-            if(deviation[i] == 0) continue;
-            else if(deviation[i] < 0) return true;
-            else return false;
+        for (int i = 0; i < 5; i++) {
+            if (deviation[i] == 0) {
+                continue;
+            } else if (deviation[i] < 0) {
+                return true;
+            } else {
+                return false;
+            }
         }
 
         return true;
     }
 
+    /**
+     * Converts the split strings of time to the format of Integers for processing
+     * @param timeString
+     * @return results
+     */
     public Integer[] convertTimeString(String[] timeString) {
         Integer[] result = new Integer[timeString.length];
 
-        for(int i = 0; i < timeString.length; i ++) {
+        for (int i = 0; i < timeString.length; i++) {
             result[i] = Integer.parseInt(timeString[i]);
         }
 

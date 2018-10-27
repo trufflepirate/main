@@ -3,11 +3,12 @@ package seedu.address.logic.parser.queue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME_2;
+
 import java.util.Optional;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
+
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.queue.SwapJobsCommand;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;

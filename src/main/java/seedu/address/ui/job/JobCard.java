@@ -1,6 +1,7 @@
 package seedu.address.ui.job;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -10,9 +11,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Paint;
 import seedu.address.model.job.Job;
-import seedu.address.model.machine.MachineStatus;
+import seedu.address.model.job.Priority;
 import seedu.address.ui.UiPart;
 import seedu.address.ui.machine.MachineCard;
+
 
 /**
  * An UI component that displays information of a {@code Job}.
@@ -36,6 +38,8 @@ public class JobCard extends UiPart<Region> {
     @FXML
     private Label jobName;
     @FXML
+    private FlowPane jobInformation;
+    @FXML
     private FlowPane details;
     @FXML
     private Label status;
@@ -43,6 +47,8 @@ public class JobCard extends UiPart<Region> {
     private FlowPane tags;
     @FXML
     private Label jobDescription;
+    @FXML
+    private Label jobDuration;
 
     public JobCard(Job job, int displayIndex) {
         super(FXML);
@@ -50,21 +56,50 @@ public class JobCard extends UiPart<Region> {
         jobName.setText(job.getJobName().fullName);
 
         Label machineNameLabel = new Label("Machine: " + job.getMachine().getName().fullName);
-        //TODO Tianyuan change the way timestamp is given
-        Label timeStampLabel = new Label(job.getAddedTime());
-        Label ownerNameLabel = new Label("Job Owner: " + job.getOwner().getName().fullName);
+        Label informationLabel = new Label("Added by " + job.getOwner().getName().fullName + " at "
+                + job.getAddedTime());
         Label priorityLabel = new Label("Priority: " + job.getPriority().toString());
-
+        Label statusLabel = new Label("Status: " + job.getStatus().toString());
         details.getChildren().add(machineNameLabel);
-        details.getChildren().add(ownerNameLabel);
-        details.getChildren().add(timeStampLabel);
         details.setHgap(2);
+        jobInformation.getChildren().add(informationLabel);
+        jobInformation.setHgap(2);
 
+        if (job.getPriority() == Priority.URGENT) {
+            priorityLabel.setStyle("-fx-font: 14 arial;"
+                    + "-fx-text-fill: #ffffff;"
+                    + "-fx-background-color: #b71c1c;"
+                    + "-fx-padding: 2;"
+                    + "-fx-text-alignment: center");
+        }
+
+        if (job.getPriority() == Priority.HIGH) {
+            priorityLabel.setStyle("-fx-font: 14 arial;"
+                    + "-fx-text-fill: #000000;"
+                    + "-fx-background-color: #ffca28;"
+                    + "-fx-padding: 2;"
+                    + "-fx-text-alignment: center");
+        }
+        if (job.getPriority() == Priority.NORMAL) {
+            priorityLabel.setStyle("-fx-font: 14 arial;"
+                    + "-fx-text-fill: #ffffff;"
+                    + "-fx-background-color: #00897b;"
+                    + "-fx-padding: 2;"
+                    + "-fx-text-alignment: center");
+        }
         tags.getChildren().add(priorityLabel);
+
+        statusLabel.setStyle("-fx-font: 12 arial;"
+                + "-fx-text-fill: #ffffff;"
+                + "-fx-background-color: #a1887f;"
+                + "-fx-padding: 2;"
+                + "-fx-text-alignment: center");
+        tags.getChildren().add(statusLabel);
 
         job.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
 
         jobDescription.setText(job.getJobNote().toString());
+        jobDuration.setText("ETC: " + (job.getDuration() + job.getMachine().getTotalDuration()) + (" hour(s)."));
 
 
         //TODO dont know why the color is not changing...
@@ -74,20 +109,12 @@ public class JobCard extends UiPart<Region> {
                     new BackgroundFill(
                             Paint.valueOf("#dd0404"),
                             new CornerRadii(2),
-                            new javafx.geometry.Insets(0))));
+                            new Insets(0))));
             requestDeletionLabel.setTextFill(Paint.valueOf("#F00"));
             tags.getChildren().add(requestDeletionLabel);
+
+
         }
-
-
-        // TODO: 10-Oct-18 time to be displayed
-
-        /* TODO Saif code leaving it here for now
-        jobOwner.setText(job.getOwner().getName().fullName);
-        jobPriority.setText(job.getPriority().toString());
-        status.setText(job.getStatus().toString());
-        */
-
     }
 
     @Override
