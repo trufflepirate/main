@@ -11,17 +11,11 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Paint;
-import seedu.address.logic.Logic;
-import seedu.address.logic.LogicManager;
-import seedu.address.model.Model;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.Priority;
-import seedu.address.model.machine.Machine;
 import seedu.address.ui.UiPart;
 import seedu.address.ui.machine.MachineCard;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * An UI component that displays information of a {@code Job}.
@@ -72,7 +66,7 @@ public class JobCard extends UiPart<Region> {
         jobInformation.getChildren().add(informationLabel);
         jobInformation.setHgap(2);
 
-        if (job.getPriority() == Priority.URGENT){
+        if (job.getPriority() == Priority.URGENT) {
             priorityLabel.setStyle("-fx-font: 14 arial;"
                     + "-fx-text-fill: #ffffff;"
                     + "-fx-background-color: #b71c1c;"
@@ -80,14 +74,14 @@ public class JobCard extends UiPart<Region> {
                     + "-fx-text-alignment: center");
         }
 
-        if (job.getPriority() == Priority.HIGH){
+        if (job.getPriority() == Priority.HIGH) {
             priorityLabel.setStyle("-fx-font: 14 arial;"
                     + "-fx-text-fill: #000000;"
                     + "-fx-background-color: #ffca28;"
                     + "-fx-padding: 2;"
                     + "-fx-text-alignment: center");
         }
-        if (job.getPriority() == Priority.NORMAL){
+        if (job.getPriority() == Priority.NORMAL) {
             priorityLabel.setStyle("-fx-font: 14 arial;"
                     + "-fx-text-fill: #ffffff;"
                     + "-fx-background-color: #00897b;"
@@ -106,7 +100,7 @@ public class JobCard extends UiPart<Region> {
         job.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
 
         jobDescription.setText(job.getJobNote().toString());
-        jobDuration.setText("ETC: "+ (job.getDuration() + job.getMachine().getTotalDuration()) + (" hour(s)."));
+        jobDuration.setText("ETC: " + (job.getDuration() + job.getMachine().getTotalDuration()) + (" hour(s)."));
 
 
         //TODO dont know why the color is not changing...
