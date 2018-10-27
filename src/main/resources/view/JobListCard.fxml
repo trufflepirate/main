@@ -19,13 +19,19 @@
             <padding>
                 <Insets bottom="5" left="15" right="5" top="5" />
             </padding>
-             <Label fx:id="jobName" alignment="TOP_LEFT" styleClass="cell_big_label" text="jobName" textAlignment="JUSTIFY">
-            <font>
-               <Font size="16.0" />
-            </font>
-            <VBox.margin>
-               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-            </VBox.margin></Label>
+            <Label fx:id="jobName" alignment="TOP_LEFT" styleClass="cell_big_label" text="jobName" textAlignment="JUSTIFY">
+                <font>
+                    <Font size="16.0" />
+                </font>
+                <VBox.margin>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                </VBox.margin>
+            </Label>
+            <FlowPane fx:id="jobInformation">
+                <VBox.margin>
+                    <Insets bottom="2.0" left="5.0" right="5.0" top="5.0" />
+                </VBox.margin>
+            </FlowPane>
             <FlowPane fx:id="details">
                 <VBox.margin>
                    <Insets bottom="2.0" left="5.0" right="5.0" top="5.0" />
@@ -34,17 +40,24 @@
 
             <FlowPane fx:id="tags">
                 <VBox.margin>
-                   <Insets bottom="2.0" left="5.0" right="5.0" top="10.0" />
+                    <Insets bottom="2.0" left="5.0" right="5.0" top="10.0" />
                 </VBox.margin>
             </FlowPane>
-         <Label fx:id="jobDescription" minWidth="Infinity" prefWidth="118.0" text="Job description">
-            <VBox.margin>
-               <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
-            </VBox.margin>
-         </Label>
+
+            <Label fx:id="jobDescription" minWidth="Infinity" prefWidth="118.0" text="Job description">
+                <VBox.margin>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
+                </VBox.margin>
+            </Label>
+
+            <Label fx:id="jobDuration" minWidth="Infinity" prefWidth="118.0" text="Job Duration">
+                <VBox.margin>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
+                </VBox.margin>
+            </Label>
         </VBox>
-      <rowConstraints>
-         <RowConstraints />
-      </rowConstraints>
+        <rowConstraints>
+            <RowConstraints />
+        </rowConstraints>
     </GridPane>
 </HBox>
