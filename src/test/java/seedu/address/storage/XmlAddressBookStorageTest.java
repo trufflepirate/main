@@ -41,44 +41,46 @@ public class XmlAddressBookStorageTest {
 
     @Test
     public void read_missingFile_emptyResult() throws Exception {
-        assertFalse(readSingleTestDataFileFromMakerManagerData("NonExistentFile.xml").isPresent());
+        assertFalse(readTestData("NonExistentFile.xml","").isPresent());
     }
 
-    @Test
-    public void read_notValidMakerManagerFile() throws Exception {
-        assertFalse(readSingleTestDataFileFromMakerManagerData("validMakerManagerJobs.xml").isPresent());
-    }
+
 
     @Test
-    public void read_validMakerManagerFiles() throws Exception {
-        assertTrue(readSingleValidDataFileFromMakerManagerData("addressbook.xml").isPresent());
-        assertTrue(readSingleValidDataFileFromMakerManagerData("makerManagerAdmins.xml").isPresent());
-        assertTrue(readSingleValidDataFileFromMakerManagerData("makerManagerMachines.xml").isPresent());
-        assertTrue(readSingleValidDataFileFromMakerManagerData("makerManagerJobs.xml").isPresent());
+    public void read_validFile() throws Exception {
+        assertTrue(readTestData("makerManagerJobs.xml","valid").isPresent());
     }
+
+
+    /* IMPORTANT: Any code below an exception-throwing line (like the one above) will be ignored.
+     * That means you should not have more than one exception test in one method
+     */
 
     @Test
     public void read_notXmlFormat_exceptionThrown() throws Exception {
 
         thrown.expect(DataConversionException.class);
-        readInvalidDataFromStub("notValidXmlFormat.xml");
+        readInvalidDataFromStub("notValidXmlFormat.xml","invalid\\notValidXmlFormat");
 
-        /* IMPORTANT: Any code below an exception-throwing line (like the one above) will be ignored.
-         * That means you should not have more than one exception test in one method
-         */
     }
 
     @Test
-    public void readAddressBook_invalidPersonAddressBook_throwDataConversionException() throws Exception {
+    public void read_invalidAddressBook_throwDataConversionException() throws Exception {
         thrown.expect(DataConversionException.class);
-        readInvalidDataFromStub("invalidPersonAddressBook.xml");
+        readInvalidDataFromStub("addressbook.xml","invalid");
     }
 
     @Test
-    public void readAddressBook_invalidAndValidPersonAddressBook_throwDataConversionException() throws Exception {
-        thrown.expect(DataConversionException.class);
-        readInvalidDataFromStub("invalidAndValidPersonAddressBook.xml");
+    public void read_invalidMakerManagerJobs_throwNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        readTestData("makerManagerJobs.xml","invalid");
     }
+
+//    @Test
+//    public void readAddressBook_invalidAndValidPersonAddressBook_throwDataConversionException() throws Exception {
+//        thrown.expect(DataConversionException.class);
+//        readInvalidDataFromStub("invalidAndValidPersonAddressBook.xml");
+//    } 
 
     @Test
     public void saveAddressBook_nullAddressBook_throwsNullPointerException() {
@@ -112,15 +114,16 @@ public class XmlAddressBookStorageTest {
      * Reads single test makerMangager data file {@code filePath}
      */
 
-    private Optional<ReadOnlyAddressBook> readSingleTestDataFileFromMakerManagerData(String filePath) throws Exception {
-        return new XmlAddressBookStorage(new UserPrefs()).readAddressBook(addToTestDataPathIfNotNull(filePath));
+    private Optional<ReadOnlyAddressBook> readTestData(String filePath, String directory) throws Exception {
+        return new XmlAddressBookStorage(new UserPrefs()).readAddressBook(addToTestDataPathIfNotNull(filePath, directory));
+
     }
 
     /**
      * Reads single valid makerManager data file {@code validFilePath}
      */
 
-    private Optional<ReadOnlyAddressBook> readSingleValidDataFileFromMakerManagerData(String validFilePath)
+    private Optional<ReadOnlyAddressBook> readSingleData(String validFilePath)
             throws Exception {
         return new XmlAddressBookStorage(
                 new UserPrefs()).readAddressBook(addToValidDataPathIfNotNull(validFilePath));
@@ -131,15 +134,15 @@ public class XmlAddressBookStorageTest {
      * Reads an invalid MakerManager data file from xmladdressbookstoragestub
      */
 
-    private Optional<ReadOnlyAddressBook> readInvalidDataFromStub(String invalidFilePath)
+    private Optional<ReadOnlyAddressBook> readInvalidDataFromStub(String invalidFilePath, String directory)
             throws Exception {
         return new XmlAddressBookStorageExceptionThrowingStub(
-                new UserPrefs()).readAddressBook(addToTestDataPathIfNotNull(invalidFilePath));
+                new UserPrefs()).readAddressBook(addToTestDataPathIfNotNull(invalidFilePath, directory));
     }
 
-    private Path addToTestDataPathIfNotNull(String prefsFileInTestDataFolder) {
+    private Path addToTestDataPathIfNotNull(String prefsFileInTestDataFolder, String directory) {
         return prefsFileInTestDataFolder != null
-                ? TEST_DATA_FOLDER.resolve(prefsFileInTestDataFolder)
+                ? TEST_DATA_FOLDER.resolve(directory).resolve(prefsFileInTestDataFolder)
                 : null;
     }
 
@@ -155,7 +158,7 @@ public class XmlAddressBookStorageTest {
     private void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) {
         try {
             new XmlAddressBookStorageExceptionThrowingStub(new UserPrefs())
-                    .saveAddressBook(addressBook, addToTestDataPathIfNotNull(filePath));
+                    .saveAddressBook(addressBook, addToTestDataPathIfNotNull(filePath,"temp"));
         } catch (IOException ioe) {
             throw new AssertionError("There should not be an error writing to the file.", ioe);
         }

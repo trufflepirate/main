@@ -18,6 +18,7 @@ import seedu.address.model.job.JobNote;
 import seedu.address.model.job.Priority;
 import seedu.address.model.job.Status;
 import seedu.address.model.machine.Machine;
+import seedu.address.model.machine.MachineName;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 import seedu.address.storage.XmlAdaptedPerson;
@@ -112,13 +113,43 @@ public class XmlAdaptedJob {
     public Job toModelType() throws IllegalValueException {
         //TODO handle exceptions properly here
 
+        if (name == null) {
+            throw new NullPointerException(String.format(MISSING_FIELD_MESSAGE_FORMAT, MachineName.class.getSimpleName()));
+        }
+
         JobName modelJobName = new JobName(name);
+
+        if (machine == null) {
+            throw new NullPointerException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Machine.class.getSimpleName()));
+        }
+
         Machine modelJobMachine = machine.toModelType();
+
+        if (owner == null) {
+            throw new NullPointerException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Person.class.getSimpleName()));
+        }
+
         Person modelJobOwner = owner.toModelType();
+
+        if (priority == null) {
+            throw new NullPointerException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Priority.class.getSimpleName()));
+        }
+
         final Priority modelPriority = priority;
-        //TODO: no validation on duration yet
-        final float modelDuration = duration;
+
+        if (duration == 0.0f) {
+            throw new NullPointerException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Float.class.getSimpleName()));
+        }
+
+        float modelDuration = duration;
+
+        if (note == null) {
+            throw new NullPointerException(String.format(MISSING_FIELD_MESSAGE_FORMAT, JobNote.class.getSimpleName()));
+        }
+
         JobNote modelJobNote = new JobNote(note);
+
+        // Validation done in XmlAdaptedTag
         Set<Tag> modelTags = new HashSet<>();
         for (XmlAdaptedTag tag : tagged) {
             modelTags.add(tag.toModelType());
