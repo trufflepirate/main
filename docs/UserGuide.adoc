@@ -57,17 +57,16 @@ Give the user guidance as to what (s)he can do with makerManager +
 
     Format: help
 
-.. *[NOT IMPLEMENTED YET]Adding Print:*
-Add a print job to the queue. +
+.. *Adding a print Job:*
+Adds a print job to the queue. +
 
-    Format: add_print n/PRINT_NAME m/MACHINE_NAME d/PRINT_DURATION [s/SPECIAL_NOTES] <p/PRIORITY>
+    Format: add_print n/JOB NAME m/MACHINE NAME on/JOB OWNER NAME pr/JOB PRIORITY d/JOB DURATION jn/JOB NOTE [t/TAG]
 
-    Examples:  +
-    add_print n/myprint m/printer_1 d/13:00 s/use red filament p/1 +
-    add_print n/myprint m/printer_2 d/2:00 s/use blue filament
+    Examples:
+    addJob n/iDCP m/TYPrinter on/TIAN YUAN pr/HIGH d/1.5 jn/This is for the iDCP project t/iDCP
 
-.. *Starting a Print:*
-Starts an existing print in the queue. +
+.. *Starting a print Job:*
+Starts an existing print job in the queue. +
 
     Format: manageJob JOBNAME start
 
@@ -90,6 +89,31 @@ Restart an existing print in the queue. +
     Examples:
     manageJob myPrint restart
 
+.. *Deleting a Print:*
+deletes an existing print in the queue. +
+
+    Format: manageJob JOBNAME delete
+
+    Examples:
+    manageJob myPrint delete
+    manageJob anotherPrint delete
+
+.. *Adding a print job to a machine:*
+Adds a print job to the machine's queue. +
+
+   Format: addJobToMachine n/JOB NAME m/MACHINE NAME
+
+   Examples:
+   addJobToMachine n/iDCP_project m/PRINTER_1
+
+.. *Requests a print job to be deleted by admin:*
+Tags a print job with a "requestDeletion" tag that is to be removed by admin
+
+    Format: requestDeletion n/JOB NAME
+
+    Examples:
+    requestDeletion n/iDCP
+
 .. *[WIP]Listing Prints:*
 Lists prints with optional filters. Currently lists persons. +
 
@@ -98,6 +122,7 @@ Lists prints with optional filters. Currently lists persons. +
     Examples:
     list n/myprint m/printer_1 s/red filament only p/1 +
     list p/1
+
 
 .. *[NOT IMPLEMENTED YET]Listing History of Prints:*
 Lists all completed prints with optional filters. +
@@ -117,13 +142,7 @@ Edits an existing print in the queue. +
     edit 1 n/myprint m/printer_1 s/red filament only p/1 +
     edit 2 p/1
 
-.. *[NOT IMPLEMENTED YET]Deleting a Print:*
-deletes an existing print in the queue. +
-Format: del INDEX
 
-    Examples:
-    del 1
-    del 2
 
 .. *Listing Machines:*
 Lists machines. +
@@ -227,3 +246,6 @@ Edits an existing machine. All machine names must be unique. Status can only be 
 . manageJob JOB_NAME start
 . manageJob JOB_NAME cancel
 . manageJob JOB_NAME restart
+. manageJob JOB_NAME delete
+. addJobToMachine n/JOB NAME m/MACHINE NAME
+. requestDeletion n/iDCP
