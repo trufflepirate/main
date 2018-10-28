@@ -65,17 +65,18 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
         }
 
         try {
-            switch (filePath.toString()) {
-                case "data\\addressbook.xml" :
+            //Use filePath.getFileName() so that i can do testing with test makerManager files
+            switch (filePath.getFileName().toString()) {
+                case "addressbook.xml" :
                     XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(filePath);
                     return Optional.of(xmlAddressBook.toModelType());
-                case "data\\makerManagerMachines.xml" :
+                case "makerManagerMachines.xml" :
                     XmlSerializableMakerManagerMachines xmlMakerManagerMachines = XmlFileStorage.loadMakerManagerMachineDataFromSaveFile(filePath);
                     return Optional.of(xmlMakerManagerMachines.toModelType());
-                case "data\\makerManagerAdmins.xml" :
+                case "makerManagerAdmins.xml" :
                     XmlSerializableMakerManagerAdmins xmlMakerManagerAdmins = XmlFileStorage.loadMakerManagerAdminDataFromSaveFile(filePath);
                     return Optional.of(xmlMakerManagerAdmins.toModelType());
-                case "data\\makerManagerJobs.xml" :
+                case "makerManagerJobs.xml" :
                     XmlSerializableMakerManagerJobs xmlMakerManagerJobs = XmlFileStorage.loadMakerManagerJobDataFromSaveFile(filePath);
                     return Optional.of(xmlMakerManagerJobs.toModelType());
                 default:
@@ -100,6 +101,7 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
         Path makerManagerMachinesFile = userPrefs.getMakerManagerMachinesFilePath();
         Path makerManagerAdminsFile = userPrefs.getMakerManagerAdminsFilePath();
         Path makerManagerJobsFile = userPrefs.getMakerManagerJobsFilePath();
+
 
         try {
             if (!Files.exists(mainAddressBookFile)) {
@@ -216,17 +218,17 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
 
         FileUtil.createIfMissing(filePath);
 
-        switch (filePath.toString()) {
-        case "data\\addressbook.xml" :
+        switch (filePath.getFileName().toString()) {
+        case "addressbook.xml" :
             XmlFileStorage.saveDataToFile(filePath, new XmlSerializableAddressBook(addressBook));
             break;
-        case "data\\makerManagerMachines.xml" :
+        case "makerManagerMachines.xml" :
             XmlFileStorage.saveDataToFile(filePath, new XmlSerializableMakerManagerMachines(addressBook));
             break;
-        case "data\\makerManagerAdmins.xml" :
+        case "makerManagerAdmins.xml" :
             XmlFileStorage.saveDataToFile(filePath, new XmlSerializableMakerManagerAdmins(addressBook));
             break;
-        case "data\\makerManagerJobs.xml" :
+        case "makerManagerJobs.xml" :
             XmlFileStorage.saveDataToFile(filePath, new XmlSerializableMakerManagerJobs(addressBook));
             break;
         default:

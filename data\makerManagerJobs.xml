@@ -1,92 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <MakerManagerJobs>
     <jobs>
-        <name>myPrt</name>
-        <machine>
-            <machineName>JJPrinter</machineName>
-            <status>ENABLED</status>
-        </machine>
-        <startTime>28/10 03:57:14</startTime>
-        <owner>
-            <name>Jun Jie</name>
-            <phone>000</phone>
-            <email>0@u.nus.edu</email>
-            <address>000</address>
-        </owner>
-        <priority>URGENT</priority>
-        <duration>3.0</duration>
-        <tagged>iDCP</tagged>
-        <note>This is for the iDCP project</note>
-        <status>QUEUED</status>
-        <requestDeletion>false</requestDeletion>
-    </jobs>
-    <jobs>
         <name>iDCP</name>
         <machine>
-            <machineName>TYPrinter</machineName>
-            <status>ENABLED</status>
-        </machine>
-        <startTime>28/10 03:57:14</startTime>
-        <owner>
-            <name>TIAN YUAN</name>
-            <phone>000</phone>
-            <email>0@u.nus.edu</email>
-            <address>000</address>
-        </owner>
-        <priority>HIGH</priority>
-        <duration>1.5</duration>
-        <tagged>iDCP</tagged>
-        <note>This is for the iDCP project</note>
-        <status>QUEUED</status>
-        <requestDeletion>false</requestDeletion>
-    </jobs>
-    <jobs>
-        <name>myProject</name>
-        <machine>
-            <machineName>TYPrinter</machineName>
-            <status>ENABLED</status>
-        </machine>
-        <startTime>28/10 03:57:14</startTime>
-        <owner>
-            <name>Jun Jie</name>
-            <phone>000</phone>
-            <email>0@u.nus.edu</email>
-            <address>000</address>
-        </owner>
-        <priority>NORMAL</priority>
-        <duration>3.0</duration>
-        <tagged>iDCP</tagged>
-        <note>This is for the iDCP project</note>
-        <status>QUEUED</status>
-        <requestDeletion>false</requestDeletion>
-    </jobs>
-    <jobs>
-        <name>jjrb</name>
-        <machine>
             <machineName>JJPrinter</machineName>
             <status>ENABLED</status>
         </machine>
-        <startTime>28/10 03:57:14</startTime>
-        <owner>
-            <name>TIAN YUAN</name>
-            <phone>000</phone>
-            <email>0@u.nus.edu</email>
-            <address>000</address>
-        </owner>
-        <priority>HIGH</priority>
-        <duration>1.5</duration>
-        <tagged>iDCP</tagged>
-        <note>This is for the iDCP project</note>
-        <status>QUEUED</status>
-        <requestDeletion>false</requestDeletion>
-    </jobs>
-    <jobs>
-        <name>gg</name>
-        <machine>
-            <machineName>TYPrinter</machineName>
-            <status>ENABLED</status>
-        </machine>
-        <startTime>28/10 03:57:14</startTime>
+        <startTime>28/10 21:58:40</startTime>
         <owner>
             <name>TIAN YUAN</name>
             <phone>000</phone>

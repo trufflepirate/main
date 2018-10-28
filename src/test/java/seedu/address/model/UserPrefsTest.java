@@ -27,7 +27,7 @@ public class UserPrefsTest {
     @Before
     public void setup() {
         userPrefs = new UserPrefs();
-        addressBookFilePath = Paths.get("data\\notValidXmlFormat.xml");
+        addressBookFilePath = Paths.get("data\\addressbook.xml");
         makerManagerMachinesFilePath = Paths.get("data\\makerManagerMachines.xml");
         makerManagerAdminsFilePath = Paths.get("data\\makerManagerAdmins.xml");
         makerManagerJobsFilePath = Paths.get("data\\makerManagerJobs.xml");

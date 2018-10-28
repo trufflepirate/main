@@ -90,7 +90,6 @@ public class XmlFileStorage {
             throws DataConversionException,
             FileNotFoundException {
         try {
-            logger.info("Getting serialized ADMIN data from custom xml file");
             return XmlUtil.getDataFromFile(file, XmlSerializableMakerManagerAdmins.class);
         } catch (JAXBException e) {
             throw new DataConversionException(e);
@@ -103,7 +102,6 @@ public class XmlFileStorage {
             throws DataConversionException,
             FileNotFoundException {
         try {
-            logger.info("Getting serialized MACHINE data from custom xml file");
             return XmlUtil.getDataFromFile(file, XmlSerializableMakerManagerMachines.class);
         } catch (JAXBException e) {
             throw new DataConversionException(e);
@@ -116,7 +114,6 @@ public class XmlFileStorage {
             throws DataConversionException,
             FileNotFoundException {
         try {
-            logger.info("Getting serialized data from custom xml file");
             return XmlUtil.getDataFromFile(file, XmlSerializableMakerManagerJobs.class);
         } catch (JAXBException e) {
             throw new DataConversionException(e);

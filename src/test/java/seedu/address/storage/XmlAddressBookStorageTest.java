@@ -51,7 +51,7 @@ public class XmlAddressBookStorageTest {
 
     @Test
     public void read_validMakerManagerFiles() throws Exception {
-        assertTrue(readSingleValidDataFileFromMakerManagerData("notValidXmlFormat.xml").isPresent());
+        assertTrue(readSingleValidDataFileFromMakerManagerData("addressbook.xml").isPresent());
         assertTrue(readSingleValidDataFileFromMakerManagerData("makerManagerAdmins.xml").isPresent());
         assertTrue(readSingleValidDataFileFromMakerManagerData("makerManagerMachines.xml").isPresent());
         assertTrue(readSingleValidDataFileFromMakerManagerData("makerManagerJobs.xml").isPresent());

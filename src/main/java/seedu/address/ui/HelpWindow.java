@@ -28,7 +28,7 @@ public class HelpWindow extends UiPart<Stage> {
     public HelpWindow(Stage root) {
         super(FXML, root);
 
-        String userGuideUrl = getClass().getResource(USERGUIDE_FILE_PATH).toString();
+        String userGuideUrl = "/docs/HelpWindow.html";
         browser.getEngine().load(userGuideUrl);
     }
 
