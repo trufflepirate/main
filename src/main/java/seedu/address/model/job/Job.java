@@ -1,14 +1,17 @@
 package seedu.address.model.job;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.model.job.Status.ONGOING;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.job.exceptions.JobNotStartedException;
 import seedu.address.model.machine.Machine;
-import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 
@@ -26,11 +29,17 @@ public class Job {
             "Job notes should only contain alphanumeric characters and spaces, "
                     + "and it should not be blank";
 
+    public static final String MEEEAGE_PRIORITY_CONSTRAINTS =
+            "Job priority can only be URGENT, HIGH and NORMAL";
+
+    private static final Logger logger = LogsCenter.getLogger(Job.class);
+
     //Identity field
     private JobName name;
     private Machine machine;
     private TimeStamp startTime;
     private Person owner;
+    private final String addedTime;
 
     //Data field
     private final Set<Tag> tags = new HashSet<>();
@@ -43,10 +52,10 @@ public class Job {
      * Every field must be present and not null.
      * TODO: Need to validate all these somewhere
      */
-    public Job(Name name, Machine machine, Person owner, Priority priority, float duration,
+    public Job(JobName name, Machine machine, Person owner, Priority priority, float duration,
                JobNote jobNote, Set<Tag> tags) {
         requireAllNonNull(name, machine, owner, tags);
-        this.name = (JobName) name;
+        this.name = name;
         this.machine = machine;
         this.owner = owner;
         this.tags.addAll(tags);
@@ -56,7 +65,32 @@ public class Job {
         this.duration = duration;
 
         startTime = new TimeStamp();
+        addedTime = startTime.showTime();
     }
+
+    /**
+     * checks if a job has been finished
+     */
+    public boolean isFinished() throws JobNotStartedException {
+
+        if (this.status == ONGOING) {
+            Integer[] current = new TimeStamp().getTime();
+            Integer[] start = startTime.getTime();
+            Integer[] deviation = new Integer[start.length];
+
+            for (int i = 0; i < start.length; i++) {
+                deviation[i] = current[i] - start[i];
+            }
+
+            double runningTime = 30.0 * 24.0 * deviation[0] + 24.0 * deviation[1] + deviation[2]
+                + 1 / 60 * deviation[3] + 1 / 3600 * deviation[4];
+
+            return runningTime > this.duration;
+        } else {
+            throw new JobNotStartedException();
+        }
+    }
+
 
     public JobNote getJobNote() {
         return this.jobNote;
@@ -74,7 +108,7 @@ public class Job {
      * Used to start a job
      */
     public void startJob() {
-        this.status = Status.ONGOING;
+        this.status = ONGOING;
         this.startTime = new TimeStamp();
     }
 
@@ -121,8 +155,8 @@ public class Job {
         return machine;
     }
 
-    public TimeStamp getStartTime() {
-        return startTime;
+    public String getAddedTime() {
+        return addedTime;
     }
 
     public Person getOwner() {
@@ -154,6 +188,7 @@ public class Job {
         owner = newOwner;
     }
 
+
     /**
      * Returns true if both jobs of the same name have at least one other identity field that is the same.
      * This defines a weaker notion of equality between two jobs.
@@ -167,8 +202,32 @@ public class Job {
         return otherJob != null
                 && otherJob.getJobName().equals(getJobName())
                 && (otherJob.getMachine().equals(getMachine())
-                || otherJob.getStartTime().equals(getStartTime())
+                || otherJob.getAddedTime().equals(getAddedTime())
                 || otherJob.getOwner().equals(getOwner()));
+    }
+
+    /**
+     * Compares priority between two jobs
+     */
+
+    public int hasHigherPriority(Job comparedJob) {
+        //TODO clean up code to make it neater for comparison
+        if (this.equals(comparedJob)) {
+            return 0;
+        }
+
+        if (Priority.isHigherPriority(this.getPriority(), comparedJob.getPriority()) != 0) {
+            return Priority.isHigherPriority(this.getPriority(), comparedJob.getPriority());
+        }
+        if (TimeStamp.compareTime(this.addedTime, comparedJob.addedTime)) {
+            return 1;
+        }
+        if (this.getJobName().fullName.compareTo(comparedJob.getJobName().fullName) <= 0) {
+            return 1;
+        }
+
+        return -1;
+
     }
 
     /**
@@ -177,6 +236,8 @@ public class Job {
      */
     @Override
     public boolean equals(Object other) {
+        Job otherJob = (Job) other;
+
         if (other == this) {
             return true;
         }
@@ -185,11 +246,11 @@ public class Job {
             return false;
         }
 
-        Job otherJob = (Job) other;
+
         return otherJob.getJobName().equals(getJobName())
                 && otherJob.getMachine().equals(getMachine())
                 && otherJob.getOwner().equals(getOwner())
-                && otherJob.getStartTime().equals(getStartTime())
+                && otherJob.getAddedTime().equals(getAddedTime())
                 && otherJob.getTags().equals(getTags());
     }
 
@@ -197,6 +258,14 @@ public class Job {
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(name, machine, startTime, owner, tags);
+    }
+
+    @Override
+    public String toString() {
+        return "Job name " + this.getJobName().fullName
+                + "\nJob machine " + this.getMachine()
+                + "\nJob Priority " + this.getPriority()
+                + "\nJob status " + this.getStatus();
     }
 
 

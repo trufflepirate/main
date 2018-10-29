@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlValue;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.job.Job;
+import seedu.address.model.job.JobName;
 import seedu.address.model.job.JobNote;
 import seedu.address.model.job.Priority;
 import seedu.address.model.machine.Machine;
@@ -54,12 +55,12 @@ public class XmlAdaptedJobName {
      * @throws IllegalValueException if there were any data constraints violated in the adapted name
      */
     public Job toModelType() throws IllegalValueException {
-        if (!Name.isValidName(jobName)) {
-            throw new IllegalValueException((Name.MESSAGE_NAME_CONSTRAINTS));
+        if (!JobName.isValidJobName(jobName)) {
+            throw new IllegalValueException((JobName.MESSAGE_JOBNAME_CONSTRAINTS));
         }
 
         //TODO:  Remove hardcoding
-        Name name = new Name(jobName);
+        JobName name = new JobName(jobName);
         Machine machine = new Machine(new MachineName("JJ's printer"),
                 new ArrayList<>(),
                 new HashSet<>(),

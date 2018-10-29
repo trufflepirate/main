@@ -177,7 +177,7 @@ public class ParserUtil {
     public static JobName parseJobName(String jobName) throws ParseException {
         requireNonNull(jobName);
         String trimJobName = jobName.trim();
-        if (!JobName.isValidName(jobName)) {
+        if (!JobName.isValidJobName(jobName)) {
             throw new ParseException(Job.MESSAGE_NAME_CONSTRAINTS);
         }
 
@@ -226,6 +226,9 @@ public class ParserUtil {
     public static Priority parseJobPriority(String jobPriority) throws ParseException {
         requireNonNull(jobPriority);
         String trimJobPriority = jobPriority.trim();
+        if (!Priority.isValidPriority(jobPriority)) {
+            throw new ParseException(Job.MEEEAGE_PRIORITY_CONSTRAINTS);
+        }
 
         return Priority.valueOf(trimJobPriority);
     }

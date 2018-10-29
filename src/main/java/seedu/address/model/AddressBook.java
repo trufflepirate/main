@@ -1,12 +1,15 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.mindrot.jbcrypt.BCrypt;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.Password;
 import seedu.address.model.admin.UniqueAdminList;
@@ -19,11 +22,17 @@ import seedu.address.model.machine.UniqueMachineList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 
+
+
+
+
 /**
  * Wraps all data at the address-book level
  * Duplicates are not allowed (by .isSamePerson comparison)
  */
 public class AddressBook implements ReadOnlyAddressBook {
+
+    private static final Logger logger = LogsCenter.getLogger(AddressBook.class);
 
     private final UniquePersonList persons;
     private final UniqueAdminList admins;
@@ -59,6 +68,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         resetData(toBeCopied);
     }
 
+
+
     //============================= list overwrite operations ==============================//
 
     /**
@@ -92,7 +103,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setJobs(ObservableList<Job> jobs) {
         this.jobs.setJobs(jobs);
     }
-
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -102,6 +112,19 @@ public class AddressBook implements ReadOnlyAddressBook {
         setPersons(newData.getPersonList());
         setMachines(newData.getMachineList());
         setAdmins(newData.getAdminList());
+        setJobs(newData.getJobList());
+
+    }
+
+    //======================== queue methods ================================//
+
+    /**
+     * Adds a job to the chosen machine list
+     */
+
+    public void addJobToMachineList(Machine targetMachine , Job jobToAdd) {
+        requireAllNonNull(targetMachine, jobToAdd);
+        machines.addJobToMachineList(targetMachine, jobToAdd);
     }
 
     //======================== person methods ================================//
@@ -231,6 +254,12 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         machines.setMachine(target, editedMachine);
     }
+
+    public Machine getMachineByName (String machineName) {
+        requireNonNull(machineName);
+        return machines.get(machineName);
+    }
+
     //======================== job methods ================================//
 
     /**
@@ -253,7 +282,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Removes a job if {@code job} does not exist in the list
      */
-    public void removeJob(Job job) {
+    public void removeJob(JobName job) {
         requireNonNull(job);
         jobs.remove(job);
     }
@@ -273,6 +302,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(oldJob);
         requireNonNull(updatedJob);
         jobs.updateJob(oldJob, updatedJob);
+    }
+
+    /**
+     * Gets a job by name
+     */
+
+    public Job getJobByName(String jobName) {
+        requireNonNull(jobName);
+        return jobs.get(jobName);
     }
 
     /**
@@ -302,6 +340,23 @@ public class AddressBook implements ReadOnlyAddressBook {
         jobs.restartJob(name);
     }
 
+    /**
+     * Only admin can do this
+     * Swaps the jobs with the given jobnames
+     */
+
+    public void swapJobs(JobName jobName1, JobName jobName2) {
+        jobs.swapQueueNumber(jobName1, jobName2);
+    }
+
+    /**
+     * Request deletion of print job
+     */
+
+    public void requestDeletion(JobName jobName) {
+        jobs.requestDeletion(jobName);
+    }
+
     //======================== get lists methods ===========================//
     @Override
     public ObservableList<Person> getPersonList() {
@@ -323,6 +378,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         return machines.asUnmodifiableObservableList();
     }
 
+    @Override
+    public ObservableList<Job> getQueueList() {
+        return jobs.asUnmodifiableObservableSortedList();
+    }
 
     //======================== others ================================//
     @Override
@@ -344,6 +403,32 @@ public class AddressBook implements ReadOnlyAddressBook {
     public String toString() {
         return persons.asUnmodifiableObservableList().size() + " persons";
         // TODO: refine later
+    }
+
+    /**
+     * list all the current's version data for addressbook
+     */
+    public void listCurrentVersionData() {
+        logger.info("Listing current version data");
+        logger.info("-----------------------Machine data---------------------");
+        for (Machine m : machines.asUnmodifiableObservableList()) {
+            logger.info(m.getName().fullName);
+        }
+
+        logger.info("-----------------------Jobs data-----------------------");
+        for (Job j : jobs.asUnmodifiableObservableList()) {
+            logger.info(j.getJobName().fullName);
+        }
+
+        logger.info("----------------------Admins data----------------------");
+        for (Admin a : admins.asUnmodifiableObservableList()) {
+            logger.info(a.getUsername().toString());
+        }
+
+        logger.info("-----------------------Persons data---------------------");
+        for (Person p : persons.asUnmodifiableObservableList()) {
+            logger.info(p.getName().fullName);
+        }
     }
 
 }

@@ -15,6 +15,7 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.job.Job;
+import seedu.address.model.machine.exceptions.MachineNotFoundException;
 
 /**
  * Adds a job to the address book.
@@ -29,19 +30,21 @@ public class AddJobCommand extends Command {
             + PREFIX_MACHINE + "MACHINE NAME "
             + PREFIX_JOB_OWNER + "JOB OWNER NAME "
             + PREFIX_JOB_PRIORITY + "JOB PRIORITY "
-            + PREFIX_JOB_DURATION + "2 "
+            + PREFIX_JOB_DURATION + "JOB DURATION "
             + PREFIX_JOB_NOTE + "JOB NOTE "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_NAME + "iDCP project "
-            + PREFIX_MACHINE + "PRINTER1 "
+            + PREFIX_NAME + "iDCP "
+            + PREFIX_MACHINE + "TYPrinter "
             + PREFIX_JOB_OWNER + "TIAN YUAN "
             + PREFIX_JOB_PRIORITY + "HIGH "
+            + PREFIX_JOB_DURATION + "1.5 "
             + PREFIX_JOB_NOTE + "This is for the iDCP project "
             + PREFIX_TAG + "iDCP";
 
 
     public static final String MESSAGE_SUCCESS = "New job added: %1$s";
+    public static final String MESSAGE_FAILURE = "New job NOT added: %1$s";
     public static final String MESSAGE_DUPLICATE_JOB = "This job already exists in the address book";
 
     private final Job jobToAdd;
@@ -62,9 +65,14 @@ public class AddJobCommand extends Command {
             throw new CommandException(MESSAGE_DUPLICATE_JOB);
         }
 
-        model.addJob(jobToAdd);
-        model.commitAddressBook();
-        return new CommandResult(String.format(MESSAGE_SUCCESS, jobToAdd));
+        try {
+            model.addJob(jobToAdd);
+            model.commitAddressBook();
+            return new CommandResult(String.format(MESSAGE_SUCCESS, jobToAdd.getJobName()));
+        } catch (MachineNotFoundException mie) {
+            return new CommandResult(String.format(MESSAGE_FAILURE, mie.getMessage()));
+        }
+
     }
 
     @Override

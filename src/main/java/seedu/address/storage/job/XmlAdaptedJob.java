@@ -3,23 +3,25 @@ package seedu.address.storage.job;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.xml.bind.annotation.XmlElement;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
 import seedu.address.model.job.JobNote;
-import seedu.address.model.job.JobOwner;
 import seedu.address.model.job.Priority;
 import seedu.address.model.job.Status;
 import seedu.address.model.machine.Machine;
-import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
+import seedu.address.storage.XmlAdaptedPerson;
 import seedu.address.storage.XmlAdaptedTag;
+import seedu.address.storage.machine.XmlAdaptedMachine;
 
 /**
  * JAXB-friendly version of the Job.
@@ -28,17 +30,19 @@ public class XmlAdaptedJob {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Job's %s field is missing!";
 
+    private static final Logger logger = LogsCenter.getLogger(XmlAdaptedJob.class);
+
     @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)
-    private String machine;
+    private XmlAdaptedMachine machine;
     @XmlElement(required = true)
     private String startTime;
     @XmlElement(required = true)
-    private String owner;
+    private XmlAdaptedPerson owner;
     @XmlElement(required = true)
     private Priority priority;
-    @XmlElement (required = true)
+    @XmlElement(required = true)
     private float duration;
 
     @XmlElement
@@ -50,16 +54,20 @@ public class XmlAdaptedJob {
     @XmlElement
     private Status status;
 
+    @XmlElement
+    private Boolean requestDeletion;
+
     /**
      * Constructs an XmlAdaptedJob.
      * This is the no-arg constructor that is required by JAXB.
      */
-    public XmlAdaptedJob() {}
+    public XmlAdaptedJob() {
+    }
 
     /**
      * Constructs an {@code XmlAdaptedJob} with the given job details.
      */
-    public XmlAdaptedJob(String name, String machine, String time, String owner,
+    public XmlAdaptedJob(String name, XmlAdaptedMachine machine, String time, XmlAdaptedPerson owner,
                          Priority priority, float duration, String note, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.machine = machine;
@@ -80,9 +88,11 @@ public class XmlAdaptedJob {
      */
     public XmlAdaptedJob(Job source) {
         name = source.getJobName().fullName;
-        machine = source.getMachine().getName().toString();
-        startTime = source.getStartTime().toString();
-        owner = source.getOwner().getName().toString();
+        machine = new XmlAdaptedMachine(source.getMachine());
+        owner = new XmlAdaptedPerson(source.getOwner());
+
+        startTime = source.getAddedTime();
+
         priority = source.getPriority();
         status = source.getStatus();
         duration = source.getDuration();
@@ -98,81 +108,31 @@ public class XmlAdaptedJob {
      * @throws IllegalValueException if there were any data constraints violated in the adapted job
      */
     public Job toModelType() throws IllegalValueException {
-        final List<Tag> jobTags = new ArrayList<>();
-        for (XmlAdaptedTag tag : tagged) {
-            jobTags.add(tag.toModelType());
-        }
+        //TODO handle exceptions properly here
 
-        if (name == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    JobName.class.getSimpleName()));
-        }
-        if (!JobName.isValidName(name)) {
-            throw new IllegalValueException(JobName.MESSAGE_NAME_CONSTRAINTS);
-        }
-        final JobName modelJobName = new JobName(name);
-
-        if (machine == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    Machine.class.getSimpleName()));
-        }
-        if (!Machine.isValidMachine(machine)) {
-            throw new IllegalValueException(Machine.MESSAGE_NAME_CONSTRAINTS);
-        }
-        final Machine modelMachine = new Machine(machine);
-
-        if (owner == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    JobOwner.class.getSimpleName()));
-        }
-        if (!JobOwner.isValidJobOwner(owner)) {
-            throw new IllegalValueException(JobOwner.MESSAGE_OWNERNAME_CONSTRAINTS);
-        }
-        final JobOwner modelJobOwner = new JobOwner(new Name(owner));
-
-        if (priority == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    Priority.class.getSimpleName()));
-        }
-
-        //TODO: no validation on priority
-
+        JobName modelJobName = new JobName(name);
+        Machine modelJobMachine = machine.toModelType();
+        Person modelJobOwner = owner.toModelType();
         final Priority modelPriority = priority;
-
         //TODO: no validation on duration yet
         final float modelDuration = duration;
-
-        final Set<Tag> modelTags = new HashSet<>(jobTags);
-
-        if (note == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    JobNote.class.getSimpleName()));
-        }
-        if (!JobNote.isValidNote(note)) {
-            throw new IllegalValueException(JobNote.MESSAGE_NOTE_CONSTRAINTS);
-        }
-        final JobNote modelJobNote = new JobNote(note);
-
-        return new Job(modelJobName, modelMachine, modelJobOwner, modelPriority,
-                modelDuration, modelJobNote, modelTags);
-    }
-
-    //TODO: redo equals
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
+        JobNote modelJobNote = new JobNote(note);
+        Set<Tag> modelTags = new HashSet<>();
+        for (XmlAdaptedTag tag : tagged) {
+            modelTags.add(tag.toModelType());
         }
 
-        if (!(other instanceof seedu.address.storage.job.XmlAdaptedJob)) {
-            return false;
-        }
+        Job job = new Job(modelJobName,
+                modelJobMachine,
+                modelJobOwner,
+                modelPriority,
+                modelDuration,
+                modelJobNote,
+                modelTags);
 
-        seedu.address.storage.job.XmlAdaptedJob otherJob = (seedu.address.storage.job.XmlAdaptedJob) other;
-        return Objects.equals(name, otherJob.name)
-                && Objects.equals(machine, otherJob.machine)
-                && Objects.equals(owner, otherJob.owner)
-                && Objects.equals(priority, otherJob.priority)
-                && tagged.equals(otherJob.tagged);
+
+        return job;
     }
 }
+
+
