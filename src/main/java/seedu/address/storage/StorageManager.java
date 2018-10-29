@@ -109,6 +109,8 @@ public class StorageManager extends ComponentManager implements Storage {
     public void saveAddressBook(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) throws IOException {
         addressBookStorage.saveAddressBook(addressBook, userPrefs);
     }
+
+
     //----------------------------Events---------------------------------//
     @Override
     @Subscribe

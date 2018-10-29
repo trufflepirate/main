@@ -3,13 +3,18 @@ package seedu.address.storage;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
+import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
@@ -54,10 +59,25 @@ public class StorageManagerTest {
     }
 
     @Test
+    public void getUserPrefsPath() {
+        assertNotNull(storageManager.getUserPrefsFilePath());
+    }
+
+    @Test
     public void getAddressBookFilePath() {
         assertNotNull(storageManager.getAddressBookFilePath());
     }
 
+    @Test
+    public void readEntireMakerManagerDataWithDefaultUserPrefs() throws IOException, DataConversionException {
+        assertNotNull(storageManager.readAddressBook());
+    }
+
+    @Test
+    public void readMakerManagerDataWithSingleFilePath () throws IOException, DataConversionException {
+        Path tempPath = Paths.get("data\\makerManagerJobs.xml");
+        assertNotNull(storageManager.readAddressBook(tempPath));
+    }
 
 
 }
