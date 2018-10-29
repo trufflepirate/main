@@ -35,6 +35,8 @@ public class JobCard extends UiPart<Region> {
     @FXML
     private FlowPane jobInformation;
     @FXML
+    private FlowPane jobStartTime;
+    @FXML
     private FlowPane details;
     @FXML
     private Label status;
@@ -53,12 +55,22 @@ public class JobCard extends UiPart<Region> {
         Label machineNameLabel = new Label("Machine: " + job.getMachine().getName().fullName);
         Label informationLabel = new Label("Added by " + job.getOwner().getName().fullName + " at "
                 + job.getAddedTime());
+        Label startTimeLabel = new Label("Started at: " + job.getStartTime().showTime());
         Label priorityLabel = new Label("Priority: " + job.getPriority().toString());
         Label statusLabel = new Label("Status: " + job.getStatus().toString());
+
         details.getChildren().add(machineNameLabel);
         details.setHgap(2);
+
         jobInformation.getChildren().add(informationLabel);
         jobInformation.setHgap(2);
+
+        startTimeLabel.setStyle("-fx-font: 12 arial;"
+                + "-fx-text-fill: #ffffff;"
+                + "-fx-background-color: #b71c1c;"
+                + "-fx-padding: 2;"
+                + "-fx-text-alignment: center");        jobStartTime.getChildren().add(startTimeLabel);
+        jobStartTime.setHgap(2);
 
         if (job.getPriority() == Priority.URGENT) {
             priorityLabel.setStyle("-fx-font: 14 arial;"
