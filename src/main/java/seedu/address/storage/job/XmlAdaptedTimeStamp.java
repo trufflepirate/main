@@ -1,9 +1,10 @@
 package seedu.address.storage.job;
 
+import javax.xml.bind.annotation.XmlElement;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.job.TimeStamp;
 
-import javax.xml.bind.annotation.XmlElement;
 
 /**
  * JAXB-friendly version of the timeStamp.

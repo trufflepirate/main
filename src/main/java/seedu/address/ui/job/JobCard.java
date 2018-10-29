@@ -57,10 +57,9 @@ public class JobCard extends UiPart<Region> {
         Label informationLabel = new Label("Added by " + job.getOwner().getName().fullName + " at "
                 + job.getAddedTime());
         Label startTimeLabel;
-        if(job.getStatus() == Status.ONGOING) {
+        if (job.getStatus() == Status.ONGOING) {
             startTimeLabel = new Label("Started at: " + job.getStartTime().showTime());
-        }
-        else {
+        } else {
             startTimeLabel = new Label("The starting time is not applicable.");
         }
         Label priorityLabel = new Label("Priority: " + job.getPriority().toString());

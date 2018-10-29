@@ -11,7 +11,12 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.job.*;
+import seedu.address.model.job.Job;
+import seedu.address.model.job.JobName;
+import seedu.address.model.job.Priority;
+import seedu.address.model.job.Status;
+import seedu.address.model.job.TimeStamp;
+import seedu.address.model.job.JobNote;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
