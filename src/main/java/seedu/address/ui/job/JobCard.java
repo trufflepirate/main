@@ -72,6 +72,11 @@ public class JobCard extends UiPart<Region> {
         jobInformation.getChildren().add(informationLabel);
         jobInformation.setHgap(2);
 
+        startTimeLabel.setStyle("-fx-font: 12 arial;"
+                + "-fx-text-fill: #ffffff;"
+                + "-fx-background-color: #006064;"
+                + "-fx-padding: 2;"
+                + "-fx-text-alignment: center");
         jobStartTime.getChildren().add(startTimeLabel);
         jobStartTime.setHgap(2);
 
