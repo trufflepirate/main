@@ -230,6 +230,13 @@ public class ModelManager extends ComponentManager implements Model {
         versionedAddressBook.updateMachine(target, editedMachine);
         indicateMachineListChanged();
     }
+
+    @Override
+    public Machine getMostFreeMachine() {
+        return versionedAddressBook.getMostFreeMachine();
+    }
+
+
     // ============================== Admin methods ======================================= //
 
     @Override

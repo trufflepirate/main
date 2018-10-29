@@ -164,4 +164,18 @@ public class UniqueMachineList {
     }
 
 
+    public Machine getMostFreeMachine() {
+        float minimumTime = 999999;
+        Machine mostFreeMachine = null;
+
+        for (Machine machine : internalList) {
+            if (machine.getTotalDuration() < minimumTime) {
+                minimumTime = machine.getTotalDuration();
+                mostFreeMachine = machine;
+            }
+        }
+
+        return mostFreeMachine;
+    }
+
 }

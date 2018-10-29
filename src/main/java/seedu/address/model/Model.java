@@ -57,7 +57,9 @@ public interface Model {
     void addJob(Job job);
     void deleteJob(JobName job);
     void updateJob(Job oldJob, Job updatedJob);
+
     Job findJob(JobName name);
+
     boolean hasJob(Job job);
 
     /**
@@ -107,6 +109,13 @@ public interface Model {
 
 
     // ============================== Admin methods ======================================= //
+
+    /**
+     * Returns the machine that is most free, in terms fo time left
+     * @return Machine
+     */
+    Machine getMostFreeMachine();
+
     /**
      * Adds the given Admin
      * admin must not exist
