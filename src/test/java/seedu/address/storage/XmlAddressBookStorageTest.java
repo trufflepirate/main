@@ -108,7 +108,7 @@ public class XmlAddressBookStorageTest {
     private void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) {
         try {
             new XmlAddressBookStorage(new UserPrefs())
-                    .saveAddressBook(addressBook, getFilePath(filePath, "temp", true));
+                    .saveAddressBook(addressBook, testFolder.getRoot().toPath().resolve(filePath));
         } catch (IOException ioe) {
             throw new AssertionError("There should not be an error writing to the file.", ioe);
         }
