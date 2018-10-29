@@ -69,7 +69,7 @@ public class AddJobCommand extends Command {
             model.addJob(jobToAdd);
             model.commitAddressBook();
             return new CommandResult(String.format(MESSAGE_SUCCESS, jobToAdd.getJobName()));
-        } catch (MachineNotFoundException mie){
+        } catch (MachineNotFoundException mie) {
             return new CommandResult(String.format(MESSAGE_FAILURE, mie.getMessage()));
         }
 

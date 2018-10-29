@@ -1,15 +1,10 @@
 package seedu.address.ui.job;
 
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import javafx.scene.paint.Paint;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.Priority;
 import seedu.address.ui.UiPart;
