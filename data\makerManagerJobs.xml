@@ -1,3 +1,47 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <MakerManagerJobs>
+    <jobs>
+        <name>iDCP</name>
+        <machine>
+            <machineName>TYPrinter</machineName>
+            <status>ENABLED</status>
+        </machine>
+        <owner>
+            <name>TIAN YUAN</name>
+            <phone>000</phone>
+            <email>0@u.nus.edu</email>
+            <address>000</address>
+        </owner>
+        <addedTime>30/10 02:27:25</addedTime>
+        <startTime>
+            <timeStamp>30/10 02:28:03</timeStamp>
+        </startTime>
+        <priority>HIGH</priority>
+        <duration>1.5</duration>
+        <status>ONGOING</status>
+        <tagged>iDCP</tagged>
+        <note>This is for the iDCP project</note>
+    </jobs>
+    <jobs>
+        <name>iDCP2</name>
+        <machine>
+            <machineName>TYPrinter</machineName>
+            <status>ENABLED</status>
+        </machine>
+        <owner>
+            <name>TIAN YUAN</name>
+            <phone>000</phone>
+            <email>0@u.nus.edu</email>
+            <address>000</address>
+        </owner>
+        <addedTime>30/10 02:27:38</addedTime>
+        <startTime>
+            <timeStamp>30/10 02:28:39</timeStamp>
+        </startTime>
+        <priority>HIGH</priority>
+        <duration>1.5</duration>
+        <status>ONGOING</status>
+        <tagged>iDCP</tagged>
+        <note>This is for the iDCP project</note>
+    </jobs>
 </MakerManagerJobs>

@@ -64,8 +64,8 @@ public class Job {
         this.tags.addAll(tags);
 
         this.status = Status.QUEUED;
-        startTime = null;
-        addedTime = startTime.showTime();
+        startTime = new TimeStamp();
+        addedTime = new TimeStamp().showTime();
     }
 
     /**

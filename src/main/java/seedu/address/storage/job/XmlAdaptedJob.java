@@ -37,7 +37,7 @@ public class XmlAdaptedJob {
     @XmlElement(required = true)
     private String addedTime;
     @XmlElement
-    private TimeStamp startTime;
+    private XmlAdaptedTimeStamp startTime;
     @XmlElement(required = true)
     private Priority priority;
     @XmlElement(required = true)
@@ -62,7 +62,7 @@ public class XmlAdaptedJob {
      * Constructs an {@code XmlAdaptedJob} with the given job details.
      */
     public XmlAdaptedJob(String name, XmlAdaptedMachine machine, XmlAdaptedPerson owner, String addedTime,
-                         TimeStamp startTime, Priority priority, float duration,
+                         XmlAdaptedTimeStamp startTime, Priority priority, float duration,
                          Status status, List<XmlAdaptedTag> tagged, String note) {
         this.name = name;
         this.machine = machine;
@@ -88,7 +88,7 @@ public class XmlAdaptedJob {
         machine = new XmlAdaptedMachine(source.getMachine());
         owner = new XmlAdaptedPerson(source.getOwner());
         addedTime = source.getAddedTime();
-        startTime = source.getStartTime();
+        startTime = new XmlAdaptedTimeStamp(source.getStartTime());
         priority = source.getPriority();
         duration = source.getDuration();
         status = source.getStatus();
@@ -110,7 +110,8 @@ public class XmlAdaptedJob {
         Machine modelJobMachine = machine.toModelType();
         Person modelJobOwner = owner.toModelType();
         String modelAddedTime = addedTime;
-        TimeStamp modelStartTime = startTime;
+
+        TimeStamp modelStartTime = startTime.toModelType();
         final Priority modelPriority = priority;
         //TODO: no validation on duration yet
         final float modelDuration = duration;
