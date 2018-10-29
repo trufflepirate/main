@@ -15,11 +15,11 @@ import seedu.address.model.machine.MachineStatus;
  */
 public class ValidJobs {
 
-    public static final Job IDCP = new JobBuilder().
-            withName("IDCP").
-            withMachine(new MachineBuilder().
-                    withMachineName("JJPrinter").
-                    withMachineStatus(MachineStatus.ENABLED).build())
+    private static final Job IDCP = new JobBuilder()
+            .withName("IDCP")
+            .withMachine(new MachineBuilder()
+                    .withMachineName("JJPrinter")
+                    .withMachineStatus(MachineStatus.ENABLED).build())
             .withJobNote("This is jj jobnote")
             .withDuration(2)
             .withPriority(Priority.HIGH)
@@ -29,11 +29,11 @@ public class ValidJobs {
             .withStatus(Status.QUEUED)
             .build();
 
-    public static final Job newProject = new JobBuilder().
-            withName("newProject").
-            withMachine(new MachineBuilder().
-                    withMachineName("TyPrinter").
-                    withMachineStatus(MachineStatus.ENABLED).build())
+    private static final Job newProject = new JobBuilder()
+            .withName("newProject")
+            .withMachine(new MachineBuilder()
+                    .withMachineName("TyPrinter")
+                    .withMachineStatus(MachineStatus.ENABLED).build())
             .withJobNote("This is newproject jobnote")
             .withDuration(2)
             .withPriority(Priority.HIGH)
@@ -43,11 +43,11 @@ public class ValidJobs {
             .withStatus(Status.FINISHED)
             .build();
 
-    public static final Job bumberbee = new JobBuilder().
-            withName("bumblebee").
-            withMachine(new MachineBuilder().
-                    withMachineName("BumberbeePrinter").
-                    withMachineStatus(MachineStatus.ENABLED).build())
+    private static final Job bumberbee = new JobBuilder()
+            .withName("bumblebee")
+            .withMachine(new MachineBuilder()
+                    .withMachineName("BumberbeePrinter")
+                    .withMachineStatus(MachineStatus.ENABLED).build())
             .withJobNote("This is bumberbee jobnote")
             .withDuration(1)
             .withPriority(Priority.NORMAL)
