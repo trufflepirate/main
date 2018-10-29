@@ -49,9 +49,7 @@ public class ManageJobCommand extends Command {
             throw new CommandException(MESSAGE_NO_SUCH_JOB);
         }
 
-        if (model.isLoggedIn()) {
-            throw new CommandException(MESSAGE_ACCESS_DENIED);
-        }
+
 
         if (option.equals(OPTION_START)) {
             model.startJob(name);
@@ -63,6 +61,9 @@ public class ManageJobCommand extends Command {
             model.cancelJob(name);
             return new CommandResult(MESSAGE_CANCELLED_JOB);
         } else if (option.equals(OPTION_DELETE)) {
+            if (!model.isLoggedIn()) {
+                throw new CommandException(MESSAGE_ACCESS_DENIED);
+            }
             model.deleteJob(name);
             return new CommandResult(MESSAGE_DELETED_JOB);
         } else {
