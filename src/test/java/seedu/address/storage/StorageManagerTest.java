@@ -6,15 +6,15 @@ import static org.junit.Assert.assertNotNull;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
+import seedu.address.commons.events.model.AdminListChangedEvent;
 import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.AddressBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
@@ -27,11 +27,24 @@ public class StorageManagerTest {
 
     private StorageManager storageManager;
 
+    private UserPrefs myTestUserPrefs;
+    private Path testMakerManagerAdminsFilePath;
+    private Path testMakerManagerJobsFilePath;
+    private Path testMakerMangerMachinesFilePath;
+
     @Before
     public void setUp() {
-        XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(new UserPrefs());
+        myTestUserPrefs = new UserPrefs();
+        testMakerManagerAdminsFilePath = getTempFilePath("makerManagerAdmins.xml");
+        testMakerManagerJobsFilePath = getTempFilePath("makerManagerJobs.xml");
+        testMakerMangerMachinesFilePath = getTempFilePath("makerManagerMachines.xml");
+        myTestUserPrefs.setMakerManagerAdminsFilePath(testMakerManagerAdminsFilePath);
+        myTestUserPrefs.setMakerManagerJobsFilePath(testMakerManagerJobsFilePath);
+        myTestUserPrefs.setMakerManagerMachinesFilePath(testMakerMangerMachinesFilePath);
+        XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(myTestUserPrefs);
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
         storageManager = new StorageManager(addressBookStorage, userPrefsStorage);
+
     }
 
     private Path getTempFilePath(String fileName) {
@@ -77,6 +90,26 @@ public class StorageManagerTest {
     public void readMakerManagerDataWithSingleFilePath () throws IOException, DataConversionException {
         Path tempPath = Paths.get("data\\makerManagerJobs.xml");
         assertNotNull(storageManager.readAddressBook(tempPath));
+    }
+
+    @Test
+    public void saveTestMakerManagerDataWithSingleFilePath () throws IOException, DataConversionException {
+        storageManager.saveAddressBook(new AddressBook(), getTempFilePath("makerManagerJobs.xml"));
+        assertNotNull(storageManager.readAddressBook(getTempFilePath("makerManagerJobs.xml")));
+    }
+
+    @Test
+    public void saveTestEntireMakerManagerDataWithUserPrefs () throws IOException, DataConversionException {
+        storageManager.saveAddressBook(new AddressBook(), myTestUserPrefs);
+        assertNotNull(storageManager.readAddressBook(testMakerManagerAdminsFilePath));
+        assertNotNull(storageManager.readAddressBook(testMakerManagerJobsFilePath));
+        assertNotNull(storageManager.readAddressBook(testMakerMangerMachinesFilePath));
+    }
+
+    @Test
+    public void testHandLeAdminListChangedEvent() {
+        storageManager.handleAdminListChangedEvent(new AdminListChangedEvent(new AddressBook()));
+        assertNotNull(testMakerManagerAdminsFilePath);
     }
 
 
