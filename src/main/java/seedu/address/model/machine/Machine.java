@@ -129,7 +129,8 @@ public class Machine {
         }
 
         Machine otherMachine = (Machine) other;
-        return otherMachine.getName().equals(getName())
+        return otherMachine.getName().fullName.equals(getName().fullName)
+                && otherMachine.getStatus().equals(getStatus())
                 && otherMachine.getJobs().equals(getJobs())
                 && otherMachine.getTags().equals(getTags());
     }
