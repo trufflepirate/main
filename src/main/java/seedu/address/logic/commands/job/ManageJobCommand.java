@@ -28,6 +28,8 @@ public class ManageJobCommand extends Command {
     private static final String MESSAGE_DELETED_JOB = "The print has been deleted";
     private static final String MESSAGE_NO_SUCH_JOB = "No such print found";
     private static final String MESSAGE_NO_SUCH_OPTION = "No such options. Only use: start, restart, cancel.";
+    private static final String MESSAGE_ACCESS_DENIED =
+            "Non admin user is not allowed to manage jobs in maker manager";
 
     private JobName name;
     private String option;
@@ -45,6 +47,10 @@ public class ManageJobCommand extends Command {
         //TODO: Currently findJob is happening twice. Fix.
         if (model.findJob(this.name) == null) {
             throw new CommandException(MESSAGE_NO_SUCH_JOB);
+        }
+
+        if (model.isLoggedIn()) {
+            throw new CommandException(MESSAGE_ACCESS_DENIED);
         }
 
         if (option.equals(OPTION_START)) {
