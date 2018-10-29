@@ -101,7 +101,6 @@ public class XmlAdaptedJob {
                 .map(XmlAdaptedTag::new)
                 .collect(Collectors.toList());
         note = source.getJobNote().toString();
-        requestDeletion = source.requestDeletion();
     }
 
     /**
@@ -132,7 +131,6 @@ public class XmlAdaptedJob {
                 modelJobNote,
                 modelTags);
 
-        job.setRequestDeletion(Objects.requireNonNullElse(requestDeletion, false));
 
         return job;
     }

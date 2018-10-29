@@ -49,8 +49,6 @@ public class ManageJobCommand extends Command {
             throw new CommandException(MESSAGE_NO_SUCH_JOB);
         }
 
-
-
         if (option.equals(OPTION_START)) {
             model.startJob(name);
             return new CommandResult(MESSAGE_STARTED_JOB);

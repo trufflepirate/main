@@ -102,6 +102,9 @@ public class JobCard extends UiPart<Region> {
         jobDuration.setText("ETC: " + (job.getDuration() + job.getMachine().getTotalDuration()) + (" hour(s)."));
 
 
+        /* No longer need request deletion it goes under status now.
+        ** Leaving the code here for future reference will delete this
+        * * by v1.4
         //TODO dont know why the color is not changing...
         if (job.requestDeletion()) {
             Label requestDeletionLabel = new Label("Requested Deletion");
@@ -112,9 +115,8 @@ public class JobCard extends UiPart<Region> {
                             new Insets(0))));
             requestDeletionLabel.setTextFill(Paint.valueOf("#F00"));
             tags.getChildren().add(requestDeletionLabel);
-
-
         }
+        */
     }
 
     @Override

@@ -47,7 +47,6 @@ public class Job {
     private Priority priority;
     private Status status;
     private float duration;
-    private boolean requestDeletion;
 
     /**
      * Every field must be present and not null.
@@ -64,7 +63,6 @@ public class Job {
         this.status = Status.QUEUED;
         this.jobNote = jobNote;
         this.duration = duration;
-        this.requestDeletion = false;
 
         startTime = new TimeStamp();
         addedTime = startTime.showTime();
@@ -190,13 +188,6 @@ public class Job {
         owner = newOwner;
     }
 
-    public boolean requestDeletion() {
-        return requestDeletion;
-    }
-
-    public void setRequestDeletion(boolean requestDeletion) {
-        this.requestDeletion = requestDeletion;
-    }
 
     /**
      * Returns true if both jobs of the same name have at least one other identity field that is the same.
@@ -222,29 +213,18 @@ public class Job {
     public int hasHigherPriority(Job comparedJob) {
         //TODO clean up code to make it neater for comparison
         if (this.equals(comparedJob)) {
-            //logger.info(this.toString() + " \n==\n"  + comparedJob.toString());
-            //logger.info("Jobs are equal");
             return 0;
         }
 
         if (Priority.isHigherPriority(this.getPriority(), comparedJob.getPriority()) != 0) {
-            //logger.info(this.toString() + " \n>\n"  + comparedJob.toString());
-            //logger.info("Job Has higher priority");
             return Priority.isHigherPriority(this.getPriority(), comparedJob.getPriority());
         }
         if (TimeStamp.compareTime(this.addedTime, comparedJob.addedTime)) {
-            //logger.info(this.toString() + " \n>\n"  + comparedJob.toString());
-            //logger.info("Job was created earlier");
             return 1;
         }
         if (this.getJobName().fullName.compareTo(comparedJob.getJobName().fullName) <= 0) {
-            //logger.info(this.toString() + " \n>\n"  + comparedJob.toString());
-            //logger.info("Job is lexicographically earlier");
             return 1;
         }
-        //logger.info("Job is of lower priority");
-        //logger.info(this.toString() + " \n>\n"  + comparedJob.toString());
-
 
         return -1;
 
@@ -285,7 +265,7 @@ public class Job {
         return "Job name " + this.getJobName().fullName
                 + "\nJob machine " + this.getMachine()
                 + "\nJob Priority " + this.getPriority()
-                + "\nRequest Deletion" + this.requestDeletion();
+                + "\nJob status " + this.getStatus();
     }
 
 

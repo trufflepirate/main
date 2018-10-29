@@ -194,7 +194,7 @@ public class UniqueJobList {
     }
 
     public void requestDeletion(JobName name) {
-        findJob(name).setRequestDeletion(true);
+        findJob(name).setStatus(Status.DELETING);
     }
 
 
