@@ -42,6 +42,7 @@ public class XmlSerializableMakerManagerJobsTest {
     public void toModelType_duplicateJobs_throwsIllegalValueException() throws Exception {
         XmlSerializableMakerManagerJobs dataFromFile = XmlUtil.getDataFromFile(DUPLICATE_JOBS_FILE, XmlSerializableMakerManagerJobs.class);
         thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(XmlSerializableMakerManagerJobs.MESSAGE_DUPLICATE_JOB);
         dataFromFile.toModelType();
     }
 }

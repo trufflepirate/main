@@ -22,7 +22,7 @@ public class XmlSerializableMakerManagerJobs {
 
     private static final Logger logger = LogsCenter.getLogger(XmlSerializableMakerManagerJobs.class);
 
-    private static final String MESSAGE_DUPLICATE_JOB = "Jobs list contains duplicate job(s)";
+    public static final String MESSAGE_DUPLICATE_JOB = "Jobs list contains duplicate job(s)";
 
     @XmlElement
     private List<XmlAdaptedJob> jobs;
