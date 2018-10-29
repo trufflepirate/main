@@ -6,7 +6,7 @@
             <machineName>JJPrinter</machineName>
             <status>ENABLED</status>
         </machine>
-        <startTime>27/10 16:29:58</startTime>
+        <startTime>29/10 14:40:52</startTime>
         <owner>
             <name>Jun Jie</name>
             <phone>000</phone>
@@ -18,7 +18,6 @@
         <tagged>iDCP</tagged>
         <note>This is for the iDCP project</note>
         <status>QUEUED</status>
-        <requestDeletion>false</requestDeletion>
     </jobs>
     <jobs>
         <name>iDCP</name>
@@ -26,7 +25,7 @@
             <machineName>TYPrinter</machineName>
             <status>ENABLED</status>
         </machine>
-        <startTime>27/10 16:29:58</startTime>
+        <startTime>29/10 14:40:52</startTime>
         <owner>
             <name>TIAN YUAN</name>
             <phone>000</phone>
@@ -38,7 +37,6 @@
         <tagged>iDCP</tagged>
         <note>This is for the iDCP project</note>
         <status>QUEUED</status>
-        <requestDeletion>false</requestDeletion>
     </jobs>
     <jobs>
         <name>myProject</name>
@@ -46,7 +44,7 @@
             <machineName>TYPrinter</machineName>
             <status>ENABLED</status>
         </machine>
-        <startTime>27/10 16:29:58</startTime>
+        <startTime>29/10 14:40:52</startTime>
         <owner>
             <name>Jun Jie</name>
             <phone>000</phone>
@@ -58,7 +56,6 @@
         <tagged>iDCP</tagged>
         <note>This is for the iDCP project</note>
         <status>QUEUED</status>
-        <requestDeletion>false</requestDeletion>
     </jobs>
     <jobs>
         <name>jjrb</name>
@@ -66,7 +63,7 @@
             <machineName>JJPrinter</machineName>
             <status>ENABLED</status>
         </machine>
-        <startTime>27/10 16:29:58</startTime>
+        <startTime>29/10 14:40:52</startTime>
         <owner>
             <name>TIAN YUAN</name>
             <phone>000</phone>
@@ -78,7 +75,6 @@
         <tagged>iDCP</tagged>
         <note>This is for the iDCP project</note>
         <status>QUEUED</status>
-        <requestDeletion>false</requestDeletion>
     </jobs>
     <jobs>
         <name>gg</name>
@@ -86,7 +82,7 @@
             <machineName>TYPrinter</machineName>
             <status>ENABLED</status>
         </machine>
-        <startTime>27/10 16:31:19</startTime>
+        <startTime>29/10 14:40:52</startTime>
         <owner>
             <name>TIAN YUAN</name>
             <phone>000</phone>
@@ -98,6 +94,5 @@
         <tagged>iDCP</tagged>
         <note>This is for the iDCP project</note>
         <status>QUEUED</status>
-        <requestDeletion>false</requestDeletion>
     </jobs>
 </MakerManagerJobs>
