@@ -171,7 +171,7 @@ public class UpdatePasswordCommandTest {
         }
 
         @Override
-        public ModelMessageResult addJob(Job job) {
+        public void addJob(Job job) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -286,12 +286,6 @@ public class UpdatePasswordCommandTest {
         public int numAdmins() {
             return adminList.size();
         }
-
-        @Override
-        public ModelMessageResult addJobToMachine(String machineName, String jobName) {
-            return null;
-        }
-
 
         @Override
         public ObservableList<Person> getFilteredPersonList() {

@@ -93,7 +93,7 @@ public class LogoutCommandTest {
         }
 
         @Override
-        public ModelMessageResult addJob(Job job) {
+        public void addJob(Job job) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -199,11 +199,6 @@ public class LogoutCommandTest {
         @Override
         public int numAdmins() {
             return 0;
-        }
-
-        @Override
-        public ModelMessageResult addJobToMachine(String machineName, String jobName) {
-            return null;
         }
 
 

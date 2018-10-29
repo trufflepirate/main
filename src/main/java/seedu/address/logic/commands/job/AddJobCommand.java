@@ -16,6 +16,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelMessageResult;
 import seedu.address.model.job.Job;
+import seedu.address.model.machine.exceptions.MachineNotFoundException;
 
 /**
  * Adds a job to the address book.
@@ -65,14 +66,13 @@ public class AddJobCommand extends Command {
             throw new CommandException(MESSAGE_DUPLICATE_JOB);
         }
 
-        ModelMessageResult modelMessageResult = model.addJob(jobToAdd);
-        if (modelMessageResult.modelExecutionResult) {
+        try {
+            model.addJob(jobToAdd);
             model.commitAddressBook();
             return new CommandResult(String.format(MESSAGE_SUCCESS, jobToAdd.getJobName()));
-        } else {
-            return new CommandResult(String.format(MESSAGE_FAILURE, modelMessageResult.feedbackToUser));
+        } catch (MachineNotFoundException mie){
+            return new CommandResult(String.format(MESSAGE_FAILURE, mie.getMessage()));
         }
-
 
     }
 
