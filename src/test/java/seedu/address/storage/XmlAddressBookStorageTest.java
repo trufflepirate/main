@@ -20,12 +20,10 @@ import seedu.address.model.UserPrefs;
 
 public class XmlAddressBookStorageTest {
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "XmlAddressBookStorageTest");
-
     private static final Path MAKERMANAGER_DATA_FOLDER = Paths.get("data");
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();
 
@@ -97,7 +95,8 @@ public class XmlAddressBookStorageTest {
      * Reads a single real/test makerManager Data file {@code filePath}
      */
 
-    private Optional<ReadOnlyAddressBook> readData(String filePath, String directory, Boolean isTestData) throws Exception {
+    private Optional<ReadOnlyAddressBook> readData(String filePath, String directory, Boolean isTestData)
+            throws Exception {
         return new XmlAddressBookStorage(new UserPrefs()).readAddressBook(getFilePath(filePath, directory, isTestData));
     }
 
@@ -161,8 +160,7 @@ public class XmlAddressBookStorageTest {
         readBack = xmlAddressBookStorage.readAddressBook().get(); //file path not specified
         assertEquals(original, new AddressBook(readBack));
         */
-
-        /*
+    /*
         @Test
         public void readAddressBook_invalidAndValidPersonAddressBook_throwDataConversionException() throws Exception {
             thrown.expect(DataConversionException.class);
