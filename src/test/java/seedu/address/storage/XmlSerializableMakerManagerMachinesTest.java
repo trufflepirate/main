@@ -10,7 +10,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.XmlUtil;
 import seedu.address.model.AddressBook;
 import seedu.address.storage.machine.XmlSerializableMakerManagerMachines;
-import seedu.address.testutil.ValidMachines;
+import seedu.address.testutil.testdata.ValidMachines;
 
 public class XmlSerializableMakerManagerMachinesTest {
 

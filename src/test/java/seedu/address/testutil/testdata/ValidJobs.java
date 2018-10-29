@@ -1,4 +1,4 @@
-package seedu.address.testutil;
+package seedu.address.testutil.testdata;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,6 +9,9 @@ import seedu.address.model.job.Job;
 import seedu.address.model.job.Priority;
 import seedu.address.model.job.Status;
 import seedu.address.model.machine.MachineStatus;
+import seedu.address.testutil.builders.JobBuilder;
+import seedu.address.testutil.builders.MachineBuilder;
+import seedu.address.testutil.builders.PersonBuilder;
 
 /**
  * A utility class containing a list of {@code Job} objects to be used in tests.

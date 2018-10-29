@@ -1,4 +1,4 @@
-package seedu.address.testutil;
+package seedu.address.testutil.testdata;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,6 +6,7 @@ import java.util.List;
 import seedu.address.model.AddressBook;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.MachineStatus;
+import seedu.address.testutil.builders.MachineBuilder;
 
 /**
  * A utility class containing a list of {@code Machine} objects to be used in tests.

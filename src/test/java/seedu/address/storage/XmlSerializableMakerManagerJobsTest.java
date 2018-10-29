@@ -10,7 +10,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.XmlUtil;
 import seedu.address.model.AddressBook;
 import seedu.address.storage.job.XmlSerializableMakerManagerJobs;
-import seedu.address.testutil.ValidJobs;
+import seedu.address.testutil.testdata.ValidJobs;
 
 public class XmlSerializableMakerManagerJobsTest {
 
