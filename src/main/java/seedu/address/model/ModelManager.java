@@ -188,15 +188,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public ModelMessageResult swapJobs(JobName jobName1, JobName jobName2) {
+    public void swapJobs(JobName jobName1, JobName jobName2) {
         versionedAddressBook.swapJobs(jobName1, jobName2);
         versionedAddressBook.commit();
         indicateJobListChanged();
 
-        //TODO to determine in the future whether should the data be sorted according to priority also?
-        //TODO if so then we need to indicateJobListChanged() here also
 
-        return new ModelMessageResult(true, "Jobs queue number swapped successfully");
     }
 
     @Override

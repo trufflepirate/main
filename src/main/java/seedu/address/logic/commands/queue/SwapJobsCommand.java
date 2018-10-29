@@ -10,7 +10,6 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.ModelMessageResult;
 import seedu.address.model.job.JobName;
 
 /**
@@ -55,8 +54,7 @@ public class SwapJobsCommand extends Command {
             throw new CommandException(MESSAGE_ACCESS_DENIED);
         }
 
-        ModelMessageResult modelMessageResult = model.swapJobs(jobName1, jobName2);
-        modelMessageResult.printResult();
+        model.swapJobs(jobName1, jobName2);
         model.commitAddressBook();
         return new CommandResult(String.format(MESSAGE_SUCCESS, jobName1 + " and " + jobName2));
     }

@@ -14,7 +14,6 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.ModelMessageResult;
 import seedu.address.model.job.Job;
 import seedu.address.model.machine.exceptions.MachineNotFoundException;
 

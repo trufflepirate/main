@@ -79,7 +79,7 @@ public interface Model {
      * Swaps two jobs based on the given names
      */
 
-    ModelMessageResult swapJobs(JobName jobname1, JobName jobName2);
+    void swapJobs(JobName jobname1, JobName jobName2);
 
     void requestDeletion(JobName jobName);
 
