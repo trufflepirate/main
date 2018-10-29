@@ -169,7 +169,7 @@ public class RemoveAdminCommandTest {
 
         @Override
         public void swapJobs(JobName jobname1, JobName jobName2) {
-            return ;
+            return;
         }
 
         @Override
