@@ -134,7 +134,15 @@ public class ModelManager extends ComponentManager implements Model {
     public void addJob(Job job) throws MachineNotFoundException {
         requireAllNonNull(job);
         //TODO find another way to check if the printer exist before adding job
+        //TODO refactor after this is working
         for (Machine m : filteredMachines) {
+            if (job.getMachine().getName().fullName.equals(new Machine("AUTO").getName().fullName)) {
+                versionedAddressBook.addJob(job);
+                versionedAddressBook.addJobToMachineList(getMostFreeMachine(), job);
+                indicateJobListChanged();
+                indicateMachineListChanged();
+                return;
+            }
             if (job.getMachine().getName().fullName.equals(m.getName().fullName)) {
                 versionedAddressBook.addJob(job);
                 versionedAddressBook.addJobToMachineList(m, job);

@@ -3,7 +3,7 @@
     <jobs>
         <name>iDCP</name>
         <machine>
-            <machineName>TYPrinter</machineName>
+            <machineName>JJPrinter</machineName>
             <status>ENABLED</status>
         </machine>
         <owner>
