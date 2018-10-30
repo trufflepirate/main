@@ -54,7 +54,7 @@ public class MachineBuilder {
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Person} that we are building.
      */
-    public MachineBuilder withTags(String ... tags) {
+    public MachineBuilder withTags(String... tags) {
         this.tags = SampleDataUtil.getTagSet(tags);
         return this;
     }
@@ -76,7 +76,7 @@ public class MachineBuilder {
     }
 
     public Machine build() {
-        return new Machine(name,jobs,tags,status);
+        return new Machine(name, jobs, tags, status);
     }
 
 }

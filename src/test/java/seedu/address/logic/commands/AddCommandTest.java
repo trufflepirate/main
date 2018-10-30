@@ -164,7 +164,8 @@ public class AddCommandTest {
 
         }
 
-        @Override public Machine findMachine(MachineName machinename) {
+        @Override
+        public Machine findMachine(MachineName machinename) {
             return null;
         }
 
@@ -197,6 +198,7 @@ public class AddCommandTest {
         public void removeMachine(Machine machine) {
             throw new AssertionError("This method should not be called");
         }
+
         @Override
         public boolean hasMachine(Machine machine) {
             throw new AssertionError("This method should not be called");
@@ -309,16 +311,24 @@ public class AddCommandTest {
         }
 
         @Override
-        public void adminLoginCommitAddressBook(){throw new AssertionError("This method should not be called.");};
+        public void adminLoginCommitAddressBook() {
+            throw new AssertionError("This method should not be called.");
+        }
 
         @Override
-        public void adminLogoutCommitAddressBook() {throw new AssertionError("This method should not be called.");};
+        public void adminLogoutCommitAddressBook() {
+            throw new AssertionError("This method should not be called.");
+        }
 
         @Override
-        public boolean isNotRedoLogin() {throw new AssertionError("This method should not be called.");};
+        public boolean isNotRedoLogin() {
+            throw new AssertionError("This method should not be called.");
+        }
 
         @Override
-        public boolean isNotUndoLogout() {throw new AssertionError("This method should not be called.");};
+        public boolean isNotUndoLogout() {
+            throw new AssertionError("This method should not be called.");
+        }
 
         @Override
         public Admin currentlyLoggedIn() {

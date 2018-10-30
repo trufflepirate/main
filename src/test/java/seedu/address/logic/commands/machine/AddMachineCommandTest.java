@@ -283,7 +283,6 @@ public class AddMachineCommandTest {
 
         @Override
         public void updateFilteredJobList(Predicate<Job> predicate) {
-
         }
 
         @Override
@@ -316,28 +315,20 @@ public class AddMachineCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
-        ;
-
         @Override
         public void adminLogoutCommitAddressBook() {
             throw new AssertionError("This method should not be called.");
         }
-
-        ;
 
         @Override
         public boolean isNotRedoLogin() {
             throw new AssertionError("This method should not be called.");
         }
 
-        ;
-
         @Override
         public boolean isNotUndoLogout() {
             throw new AssertionError("This method should not be called.");
         }
-
-        ;
 
         @Override
         public Admin currentlyLoggedIn() {
