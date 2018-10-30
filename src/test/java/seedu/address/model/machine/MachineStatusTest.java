@@ -30,4 +30,6 @@ public class MachineStatusTest {
         thrown.expect(InvalidMachineStatusException.class);
         testMachine.setMachineStatus(MachineStatus.INVALID);
     }
+
+
 }
