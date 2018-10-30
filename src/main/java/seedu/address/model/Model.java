@@ -8,6 +8,7 @@ import seedu.address.model.admin.Username;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
 import seedu.address.model.machine.Machine;
+import seedu.address.model.machine.MachineName;
 import seedu.address.model.person.Person;
 
 /**
@@ -97,7 +98,7 @@ public interface Model {
      */
     void removeMachine(Machine machine);
     /**
-     * Returns true if a Machine with the same identity as {@code person} exists in the address book.
+     * Returns true if a Machine with the same identity as {@code machine} exists in the address book.
      */
     boolean hasMachine(Machine machine);
     /**
@@ -106,6 +107,11 @@ public interface Model {
      * The machine identity of {@code editedMachine} must not be the same as another existing machine in the model.
      */
     void updateMachine(Machine target, Machine editedMachine);
+    /**
+     * returns the machine if machine name is found
+     * @param machinename
+     */
+    Machine findMachine(MachineName machinename);
 
 
     // ============================== Admin methods ======================================= //

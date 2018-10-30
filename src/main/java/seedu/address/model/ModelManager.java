@@ -21,6 +21,7 @@ import seedu.address.model.admin.Username;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
 import seedu.address.model.machine.Machine;
+import seedu.address.model.machine.MachineName;
 import seedu.address.model.machine.exceptions.MachineNotFoundException;
 import seedu.address.model.person.Person;
 
@@ -234,6 +235,7 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedAddressBook.hasMachine(machine);
     }
 
+
     @Override
     public void updateMachine(Machine target, Machine editedMachine) {
         requireAllNonNull(target, editedMachine);
@@ -246,6 +248,11 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedAddressBook.getMostFreeMachine();
     }
 
+    @Override
+    public Machine findMachine(MachineName machineName) {
+        requireNonNull(machineName);
+        return versionedAddressBook.findMachine(machineName);
+    }
 
     // ============================== Admin methods ======================================= //
 
