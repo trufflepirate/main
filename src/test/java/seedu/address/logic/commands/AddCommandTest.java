@@ -233,11 +233,6 @@ public class AddCommandTest {
         }
 
         @Override
-        public Admin currentlyLoggedIn() {
-            return null;
-        }
-
-        @Override
         public Admin findAdmin(Username username) {
             return null;
         }
@@ -324,6 +319,11 @@ public class AddCommandTest {
 
         @Override
         public boolean isNotUndoLogout() {throw new AssertionError("This method should not be called.");};
+
+        @Override
+        public Admin currentlyLoggedIn() {
+            return null;
+        }
     }
 
     /**

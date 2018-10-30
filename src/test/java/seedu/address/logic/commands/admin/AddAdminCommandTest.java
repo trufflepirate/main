@@ -17,11 +17,13 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.admin.Admin;
+import seedu.address.model.admin.AdminSession;
 import seedu.address.model.admin.Password;
 import seedu.address.model.admin.Username;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
 import seedu.address.model.machine.Machine;
+import seedu.address.model.machine.MachineName;
 import seedu.address.model.person.Person;
 
 public class AddAdminCommandTest {
@@ -62,7 +64,8 @@ public class AddAdminCommandTest {
     @Test
     public void execute_passwordsNotMatching_throwsCommandException() throws Exception {
         ModelStub modelStub = new ModelStub();
-        modelStub.setLogin(new Username("dummy"));
+        Admin admin = new Admin(new Username("dummy"), new Password("oldPW"));
+        modelStub.setLogin(admin);
 
         thrown.expect(CommandException.class);
         thrown.expectMessage(AddAdminCommand.MESSAGE_PASSWORDS_DONT_MATCH);
@@ -73,7 +76,8 @@ public class AddAdminCommandTest {
     @Test
     public void execute_alreadyExists_throwsCommandException() throws Exception {
         ModelStub modelStub = new ModelStub();
-        modelStub.setLogin(new Username("dummyLogin"));
+        Admin admin = new Admin(new Username("dummy"), new Password("oldPW"));
+        modelStub.setLogin(admin);
         modelStub.addAdmin(new Admin(new Username("dummyUsername"), new Password("dummyPW")));
 
         thrown.expect(CommandException.class);
@@ -85,7 +89,8 @@ public class AddAdminCommandTest {
     @Test
     public void execute_addAdminInvalidPassword_throwsCommandException() throws Exception {
         ModelStub modelStub = new ModelStub();
-        modelStub.setLogin(new Username("dummyLogin"));
+        Admin admin = new Admin(new Username("dummy"), new Password("oldPW"));
+        modelStub.setLogin(admin);
 
         thrown.expect(CommandException.class);
         thrown.expectMessage(AddAdminCommand.MESSAGE_NOT_VALID_PASSWORD);
@@ -97,7 +102,8 @@ public class AddAdminCommandTest {
     @Test
     public void execute_addAdmin_success() throws Exception {
         ModelStub modelStub = new ModelStub();
-        modelStub.setLogin(new Username("dummyLogin"));
+        Admin admin = new Admin(new Username("dummy"), new Password("oldPW"));
+        modelStub.setLogin(admin);
         Admin adminToAdd = new Admin(new Username("dummyUsername"), new Password("aaaAAA123$"));
 
         CommandResult commandResult = new AddAdminCommand(new Username("dummyUsername"),
@@ -115,8 +121,7 @@ public class AddAdminCommandTest {
      */
     private class ModelStub implements Model {
         final ArrayList<Admin> adminList = new ArrayList<>();
-
-        private boolean loginStatus = false;
+        final AdminSession adminSession = new AdminSession();
 
         @Override
         public void addPerson(Person person) {
@@ -238,26 +243,6 @@ public class AddAdminCommandTest {
         }
 
         @Override
-        public void setLogin(Username username) {
-            this.loginStatus = true;
-        }
-
-        @Override
-        public void clearLogin() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public boolean isLoggedIn() {
-            return this.loginStatus;
-        }
-
-        @Override
-        public Username currentlyLoggedIn() {
-            return null;
-        }
-
-        @Override
         public Admin findAdmin(Username username) {
             for (Admin admin: adminList) {
                 if (admin.getUsername().equals(username)) {
@@ -336,6 +321,42 @@ public class AddAdminCommandTest {
         @Override
         public void commitAddressBook() {
             return;
+        }
+
+        @Override public void adminLoginCommitAddressBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override public void adminLogoutCommitAddressBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override public boolean isNotRedoLogin() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override public boolean isNotUndoLogout() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override public Admin currentlyLoggedIn() {
+            return null;
+        }
+
+        @Override public void setLogin(Admin admin) {
+            adminSession.setLogin(admin);
+        }
+
+        @Override public void clearLogin() {
+            adminSession.clearLogin();
+        }
+
+        @Override public boolean isLoggedIn() {
+            return adminSession.isAdminLoggedIn();
+        }
+
+        @Override public Machine findMachine(MachineName machinename) {
+            throw new AssertionError("This method should not be called.");
         }
     }
 }
