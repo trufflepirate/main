@@ -2,9 +2,11 @@ package seedu.address.model.machine;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
 import seedu.address.testutil.testdata.ValidMachines;
 
 public class UniqueMachineListTest {
@@ -29,5 +31,6 @@ public class UniqueMachineListTest {
         uniqueMachineList.add(ValidMachines.JJPRINTER);
         assertTrue(uniqueMachineList.contains(ValidMachines.JJPRINTER));
     }
+
 
 }
