@@ -273,48 +273,51 @@ public class LoginCommandTest {
             return;
         }
 
-        @Override public void adminLoginCommitAddressBook() {
+        @Override
+        public void adminLoginCommitAddressBook() {
             throw new AssertionError("This method should not be called.");
         }
 
-        ;
-
-        @Override public void adminLogoutCommitAddressBook() {
+        @Override
+        public void adminLogoutCommitAddressBook() {
             throw new AssertionError("This method should not be called.");
         }
 
-        ;
-
-        @Override public boolean isNotRedoLogin() {
+        @Override
+        public boolean isNotRedoLogin() {
             throw new AssertionError("This method should not be called.");
         }
 
-        ;
 
-        @Override public boolean isNotUndoLogout() {
+        @Override
+        public boolean isNotUndoLogout() {
             throw new AssertionError("This method should not be called.");
         }
 
-        ;
-
-        @Override public Admin currentlyLoggedIn() {
+        @Override
+        public Admin currentlyLoggedIn() {
             return null;
         }
 
-        @Override public void setLogin(Admin admin) {
+        @Override
+        public void setLogin(Admin admin) {
             adminSession.setLogin(admin);
         }
 
-        @Override public void clearLogin() {
+        @Override
+        public void clearLogin() {
             adminSession.clearLogin();
         }
 
-        @Override public boolean isLoggedIn() {
+        @Override
+        public boolean isLoggedIn() {
             return adminSession.isAdminLoggedIn();
         }
 
-        @Override public Machine findMachine(MachineName machinename) {
+        @Override
+        public Machine findMachine(MachineName machinename) {
             throw new AssertionError("This method should not be called.");
+        }
     }
-}}
+}
 
