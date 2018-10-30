@@ -1,4 +1,4 @@
-package seedu.address.storage.Serializable;
+package seedu.address.storage.serializable;
 
 import static org.junit.Assert.assertEquals;
 

@@ -1,15 +1,20 @@
 package seedu.address.testutil.builders;
 
-
 import java.util.ArrayList;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import seedu.address.model.job.Job;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.MachineName;
 import seedu.address.model.machine.MachineStatus;
 import seedu.address.model.tag.Tag;
+
+/**
+ * A utility class to help with building Machine objects.
+ */
 
 public class MachineBuilder {
 
