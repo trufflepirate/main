@@ -208,6 +208,11 @@ public class RemoveAdminCommandTest {
         }
 
         @Override
+        public Machine getMostFreeMachine() {
+            return null;
+        }
+
+        @Override
         public void addAdmin(Admin admin) {
             adminList.add(admin);
         }

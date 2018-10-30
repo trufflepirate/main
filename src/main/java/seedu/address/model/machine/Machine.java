@@ -86,7 +86,6 @@ public class Machine {
      * Returns true if the machine contains
      * {@code job} in its list;
      */
-
     public boolean hasJob(Job job) {
         return jobs.contains(job);
     }
@@ -162,8 +161,6 @@ public class Machine {
     public static boolean isValidName(String test) {
         return test.matches(NAME_VALIDATION_REGEX);
     }
-
-
 
     public MachineStatus getStatus() {
         return status;

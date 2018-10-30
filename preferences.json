@@ -1,7 +1,7 @@
 {
   "guiSettings" : {
-    "windowWidth" : 1285.0,
-    "windowHeight" : 818.0,
+    "windowWidth" : 1285.5999755859375,
+    "windowHeight" : 818.4000244140625,
     "windowCoordinates" : {
       "x" : 205,
       "y" : 58
@@ -12,3 +12,4 @@
   "makerManagerAdminsFilePath" : "data\\makerManagerAdmins.xml",
   "makerManagerJobsFilePath" : "data\\makerManagerJobs.xml"
 }
+

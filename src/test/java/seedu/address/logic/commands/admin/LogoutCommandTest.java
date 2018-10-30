@@ -155,6 +155,11 @@ public class LogoutCommandTest {
         }
 
         @Override
+        public Machine getMostFreeMachine() {
+            return null;
+        }
+
+        @Override
         public void addAdmin(Admin admin) {
             throw new AssertionError("This method should not be called.");
         }
