@@ -6,18 +6,20 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
 import seedu.address.model.machine.exceptions.InvalidMachineStatusException;
 
 public class MachineStatusTest {
-    private Machine testMachine;
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-
+    private Machine testMachine;
     @Before
-    public void setup(){
+    public void setup() {
         testMachine = new Machine("test");
     }
+
+
     @Test
     public void checkEnabledMachineStatus() {
         assertTrue(testMachine.getStatus() == MachineStatus.ENABLED);
