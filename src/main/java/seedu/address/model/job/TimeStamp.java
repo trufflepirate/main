@@ -9,9 +9,9 @@ import java.util.Calendar;
  */
 public class TimeStamp {
 
-    private static Integer[] time;
-    private static String timeString;
-    private static String[] timeStringArray;
+    private Integer[] time;
+    private String timeString;
+    private String[] timeStringArray = new String[5];
 
     private Calendar calendar = Calendar.getInstance();
     private SimpleDateFormat timeFormat = new SimpleDateFormat("MM-dd-HH-mm-ss");
@@ -22,6 +22,15 @@ public class TimeStamp {
         this.time = convertTimeString(timeStringArray);
     }
 
+    public  TimeStamp(String timeString) {
+        String[] splitTime = timeString.split(" ");
+        timeStringArray[0] = String.valueOf(splitTime[0].split("/")[0]);
+        timeStringArray[1] = String.valueOf(splitTime[0].split("/")[1]);
+        timeStringArray[2] = String.valueOf(splitTime[1].split(":")[0]);
+        timeStringArray[3] = String.valueOf(splitTime[1].split(":")[1]);
+        timeStringArray[4] = String.valueOf(splitTime[1].split(":")[2]);
+        time = convertTimeString(timeStringArray);
+    }
     /**
      * gives the information about date and time
      * @return the formatted string showing the time
@@ -83,7 +92,7 @@ public class TimeStamp {
      * @param timeString
      * @return results
      */
-    public Integer[] convertTimeString(String[] timeString) {
+    public static Integer[] convertTimeString(String[] timeString) {
         Integer[] result = new Integer[timeString.length];
 
         for (int i = 0; i < timeString.length; i++) {
