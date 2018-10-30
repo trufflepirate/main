@@ -4,6 +4,7 @@ package seedu.address.model.admin;
 public class AdminSession {
 
     private Admin loggedInAdmin;
+
     public AdminSession() {
         this.loggedInAdmin = null;
     }
@@ -11,7 +12,7 @@ public class AdminSession {
     public boolean isAdminLoggedIn() {
         return !(loggedInAdmin == null);
     }
-    
+
     public void setLogin(Admin admin) {
         this.loggedInAdmin = admin;
     }
@@ -20,9 +21,8 @@ public class AdminSession {
         this.loggedInAdmin = null;
     }
 
-    public Admin getLoggedInAdmin(){
+    public Admin getLoggedInAdmin() {
         return this.loggedInAdmin;
     }
-
 
 }
