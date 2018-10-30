@@ -48,12 +48,13 @@ public class XmlAddressBookStorageTest {
         //assertTrue(readData("makerManagerJobs.xml", "valid" , true).isPresent());
     }
 
-
+    /*
     @Test
     public void read_notXmlFormat_exceptionThrown() throws Exception {
         thrown.expect(DataConversionException.class);
         readData("addressbook.xml", "invalid\\notValidXmlFormat", true);
     }
+    */
 
     @Test
     public void read_invalidAddressBook_throwDataConversionException() throws Exception {
