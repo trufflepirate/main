@@ -21,13 +21,13 @@ public class UpdatePasswordCommandParser {
         String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddAdminCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdatePasswordCommand.MESSAGE_USAGE));
         }
 
         String [] temp = trimmedArgs.split(" ");
 
         if (temp.length != 4) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddAdminCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdatePasswordCommand.MESSAGE_USAGE));
         }
 
         Username username = new Username(temp[0]);

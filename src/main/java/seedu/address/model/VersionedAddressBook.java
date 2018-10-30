@@ -10,6 +10,8 @@ public class VersionedAddressBook extends AddressBook {
 
     private final List<ReadOnlyAddressBook> addressBookStateList;
     private int currentStatePointer;
+    private int lastAdminLogoutPointer;
+    private int lastAdminLoginPointer;
 
     public VersionedAddressBook(ReadOnlyAddressBook initialState) {
         super(initialState);
@@ -17,6 +19,8 @@ public class VersionedAddressBook extends AddressBook {
         addressBookStateList = new ArrayList<>();
         addressBookStateList.add(new AddressBook(initialState));
         currentStatePointer = 0;
+        lastAdminLogoutPointer = -1;
+        lastAdminLoginPointer = -1;
     }
 
     /**
@@ -27,11 +31,37 @@ public class VersionedAddressBook extends AddressBook {
         removeStatesAfterCurrentPointer();
         addressBookStateList.add(new AddressBook(this));
         currentStatePointer++;
+        if (currentStatePointer == lastAdminLoginPointer) {
+            lastAdminLoginPointer = -1;
+        }
+    }
+
+    /**
+     * Saves a copy of the current {@code AddressBook} state at the end of the state list.
+     * Undone states are removed from the state list.
+     */
+    public void adminLoginCommit() {
+        removeStatesAfterCurrentPointer();
+        addressBookStateList.add(new AddressBook(this));
+        currentStatePointer++;
+        lastAdminLoginPointer = currentStatePointer;
+    }
+
+    /**
+     * Saves a copy of the current {@code AddressBook} state at the end of the state list.
+     * Undone states are removed from the state list.
+     */
+    public void adminLogoutCommit() {
+        removeStatesAfterCurrentPointer();
+        addressBookStateList.add(new AddressBook(this));
+        currentStatePointer++;
+        lastAdminLogoutPointer = currentStatePointer;
     }
 
     private void removeStatesAfterCurrentPointer() {
         addressBookStateList.subList(currentStatePointer + 1, addressBookStateList.size()).clear();
     }
+
 
     /**
      * Restores the address book to its previous state.
@@ -56,6 +86,13 @@ public class VersionedAddressBook extends AddressBook {
     }
 
     /**
+     * Returns true if {@code undo()} has address book states to undo that are not done by the admin.
+     */
+    public boolean isNotUndoLogout() {
+        return currentStatePointer > lastAdminLogoutPointer;
+    }
+
+    /**
      * Returns true if {@code undo()} has address book states to undo.
      */
     public boolean canUndo() {
@@ -67,6 +104,16 @@ public class VersionedAddressBook extends AddressBook {
      */
     public boolean canRedo() {
         return currentStatePointer < addressBookStateList.size() - 1;
+    }
+
+    /**
+     * Returns true if {@code redo()} has address book states to redo that is not a login.
+     */
+    public boolean isNotRedoLogin() {
+        if (lastAdminLoginPointer < 0){
+            return true;
+        }
+        return !(currentStatePointer == lastAdminLoginPointer-1);
     }
 
     @Override

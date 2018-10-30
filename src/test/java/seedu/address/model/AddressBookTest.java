@@ -20,6 +20,7 @@ import org.junit.rules.ExpectedException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.admin.Admin;
+import seedu.address.model.admin.AdminSession;
 import seedu.address.model.job.Job;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
@@ -102,6 +103,7 @@ public class AddressBookTest {
         private final ObservableList<Admin> admins = FXCollections.observableArrayList();
         private final ObservableList<Machine> machines = FXCollections.observableArrayList();
         private final ObservableList<Job> jobs = FXCollections.observableArrayList();
+        private final AdminSession adminSession = new AdminSession();
 
         AddressBookStub(Collection<Person> persons) {
             this.persons.setAll(persons);
@@ -132,6 +134,9 @@ public class AddressBookTest {
         public ObservableList<Job> getQueueList() {
             return jobs;
         }
+
+        @Override
+        public AdminSession getAdminSession() {return adminSession;}
 
 
     }

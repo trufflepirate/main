@@ -145,7 +145,7 @@ public interface Model {
     /**
      * sets loginStatus to true
      */
-    void setLogin(Username username);
+    void setLogin(Admin admin);
     /**
      * sets loginStatus to false
      */
@@ -157,7 +157,7 @@ public interface Model {
     /**
      * Returns the current logged in admin
      */
-    Username currentlyLoggedIn();
+    Admin currentlyLoggedIn();
     /**
      * returns the admin if username is found
      * @param username
@@ -218,5 +218,21 @@ public interface Model {
      * Saves the current address book state for undo/redo.
      */
     void commitAddressBook();
+    /**
+     * Saves the current address book state for undo/redo. Indicates saved state is a login.
+     */
+    void adminLoginCommitAddressBook();
+    /**
+     * Saves the current address book state for undo/redo. Indicates saved state is a logout.
+     */
+    void adminLogoutCommitAddressBook();
+    /**
+     * Returns true if next state is not a login.
+     */
+    boolean isNotRedoLogin();
+    /**
+     * Returns true if previous state is not a logout.
+     */
+    boolean isNotUndoLogout();
 
 }

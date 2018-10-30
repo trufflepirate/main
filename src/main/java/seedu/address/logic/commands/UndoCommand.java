@@ -15,6 +15,7 @@ public class UndoCommand extends Command {
     public static final String COMMAND_WORD = "undo";
     public static final String MESSAGE_SUCCESS = "Undo success!";
     public static final String MESSAGE_FAILURE = "No more commands to undo!";
+    public static final String MESSAGE_UNDO_DENIED = "Access Denied. Unable to undo Logout.";
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
@@ -24,8 +25,12 @@ public class UndoCommand extends Command {
             throw new CommandException(MESSAGE_FAILURE);
         }
 
+        if (!model.isNotUndoLogout()) {
+            throw new CommandException(MESSAGE_UNDO_DENIED);
+        }
+
         model.undoAddressBook();
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        //model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

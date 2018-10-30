@@ -15,6 +15,7 @@ public class RedoCommand extends Command {
     public static final String COMMAND_WORD = "redo";
     public static final String MESSAGE_SUCCESS = "Redo success!";
     public static final String MESSAGE_FAILURE = "No more commands to redo!";
+    public static final String MESSAGE_REDO_DENIED = "Access denied. Please Re-Login manually.";
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
@@ -22,6 +23,10 @@ public class RedoCommand extends Command {
 
         if (!model.canRedoAddressBook()) {
             throw new CommandException(MESSAGE_FAILURE);
+        }
+
+        if (!model.isNotRedoLogin()) {
+            throw new CommandException(MESSAGE_REDO_DENIED);
         }
 
         model.redoAddressBook();
