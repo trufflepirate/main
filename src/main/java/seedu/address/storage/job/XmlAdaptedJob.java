@@ -113,7 +113,8 @@ public class XmlAdaptedJob {
         //TODO handle exceptions properly here
 
         if (name == null) {
-            throw new NullPointerException(String.format(MISSING_FIELD_MESSAGE_FORMAT, MachineName.class.getSimpleName()));
+            throw new NullPointerException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, MachineName.class.getSimpleName()));
         }
 
         JobName modelJobName = new JobName(name);

@@ -20,8 +20,6 @@ import seedu.address.model.job.Job;
 @XmlRootElement(name = "MakerManagerJobs")
 public class XmlSerializableMakerManagerJobs {
 
-    private static final Logger logger = LogsCenter.getLogger(XmlSerializableMakerManagerJobs.class);
-
     public static final String MESSAGE_DUPLICATE_JOB = "Jobs list contains duplicate job(s)";
 
     @XmlElement
@@ -51,7 +49,6 @@ public class XmlSerializableMakerManagerJobs {
      */
     public AddressBook toModelType() throws IllegalValueException {
         AddressBook addressBook = new AddressBook();
-        logger.info("Size of jobs " + Integer.toString(jobs.size()));
         for (XmlAdaptedJob m : jobs) {
             Job job = m.toModelType();
             if (addressBook.hasJob(job)) {
@@ -59,7 +56,6 @@ public class XmlSerializableMakerManagerJobs {
             }
             addressBook.addJob(job);
         }
-        logger.info("Address book jobs size : " + Integer.toString(addressBook.getJobList().size()));
         return addressBook;
     }
 

@@ -21,7 +21,6 @@ import seedu.address.model.machine.Machine;
 @XmlRootElement(name = "MakerManagerMachines")
 public class XmlSerializableMakerManagerMachines {
 
-    private static final Logger logger = LogsCenter.getLogger(XmlSerializableMakerManagerMachines.class);
     public static final String MESSAGE_DUPLICATE_MACHINE = "Machines list contains duplicate machine(s)";
 
     @XmlElement
@@ -51,7 +50,6 @@ public class XmlSerializableMakerManagerMachines {
      */
     public AddressBook toModelType() throws IllegalValueException {
         AddressBook addressBook = new AddressBook();
-        logger.info("No. of machines stored :" + Integer.toString(machines.size()));
         for (XmlAdaptedMachine m : machines) {
             Machine machine = m.toModelType();
             if (addressBook.hasMachine(machine)) {

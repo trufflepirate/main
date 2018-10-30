@@ -67,21 +67,24 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
         try {
             //Use filePath.getFileName() so that i can do testing with test makerManager files
             switch (filePath.getFileName().toString()) {
-                case "addressbook.xml" :
-                    XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(filePath);
-                    return Optional.of(xmlAddressBook.toModelType());
-                case "makerManagerMachines.xml" :
-                    XmlSerializableMakerManagerMachines xmlMakerManagerMachines = XmlFileStorage.loadMakerManagerMachineDataFromSaveFile(filePath);
-                    return Optional.of(xmlMakerManagerMachines.toModelType());
-                case "makerManagerAdmins.xml" :
-                    XmlSerializableMakerManagerAdmins xmlMakerManagerAdmins = XmlFileStorage.loadMakerManagerAdminDataFromSaveFile(filePath);
-                    return Optional.of(xmlMakerManagerAdmins.toModelType());
-                case "makerManagerJobs.xml" :
-                    XmlSerializableMakerManagerJobs xmlMakerManagerJobs = XmlFileStorage.loadMakerManagerJobDataFromSaveFile(filePath);
-                    return Optional.of(xmlMakerManagerJobs.toModelType());
-                default:
-                    logger.info("No such file path available to read data from");
-                    return Optional.empty();
+            case "addressbook.xml" :
+                XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(filePath);
+                return Optional.of(xmlAddressBook.toModelType());
+            case "makerManagerMachines.xml" :
+                XmlSerializableMakerManagerMachines xmlMakerManagerMachines =
+                        XmlFileStorage.loadMakerManagerMachineDataFromSaveFile(filePath);
+                return Optional.of(xmlMakerManagerMachines.toModelType());
+            case "makerManagerAdmins.xml" :
+                XmlSerializableMakerManagerAdmins xmlMakerManagerAdmins =
+                        XmlFileStorage.loadMakerManagerAdminDataFromSaveFile(filePath);
+                return Optional.of(xmlMakerManagerAdmins.toModelType());
+            case "makerManagerJobs.xml" :
+                XmlSerializableMakerManagerJobs xmlMakerManagerJobs =
+                        XmlFileStorage.loadMakerManagerJobDataFromSaveFile(filePath);
+                return Optional.of(xmlMakerManagerJobs.toModelType());
+            default:
+                logger.info("No such file path available to read data from");
+                return Optional.empty();
             }
         } catch (IllegalValueException ive) {
             logger.info("Illegal values found in " + filePath + ": " + ive.getMessage());
