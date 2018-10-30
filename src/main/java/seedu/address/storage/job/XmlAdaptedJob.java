@@ -16,6 +16,7 @@ import seedu.address.model.job.JobName;
 import seedu.address.model.job.JobNote;
 import seedu.address.model.job.Priority;
 import seedu.address.model.job.Status;
+import seedu.address.model.job.TimeStamp;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
@@ -37,23 +38,21 @@ public class XmlAdaptedJob {
     @XmlElement(required = true)
     private XmlAdaptedMachine machine;
     @XmlElement(required = true)
-    private String startTime;
-    @XmlElement(required = true)
     private XmlAdaptedPerson owner;
+    @XmlElement(required = true)
+    private String addedTime;
+    @XmlElement
+    private XmlAdaptedTimeStamp startTime;
     @XmlElement(required = true)
     private Priority priority;
     @XmlElement(required = true)
     private float duration;
-
+    @XmlElement(required = true)
+    private Status status;
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
-
     @XmlElement
     private String note;
-
-    @XmlElement
-    private Status status;
-
     @XmlElement
     private Boolean requestDeletion;
 
@@ -67,14 +66,17 @@ public class XmlAdaptedJob {
     /**
      * Constructs an {@code XmlAdaptedJob} with the given job details.
      */
-    public XmlAdaptedJob(String name, XmlAdaptedMachine machine, String time, XmlAdaptedPerson owner,
-                         Priority priority, float duration, String note, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedJob(String name, XmlAdaptedMachine machine, XmlAdaptedPerson owner, String addedTime,
+                         XmlAdaptedTimeStamp startTime, Priority priority, float duration,
+                         Status status, List<XmlAdaptedTag> tagged, String note) {
         this.name = name;
         this.machine = machine;
-        this.startTime = time;
         this.owner = owner;
+        this.addedTime = addedTime;
+        this.startTime = startTime;
         this.priority = priority;
         this.duration = duration;
+        this.status = status;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -90,12 +92,11 @@ public class XmlAdaptedJob {
         name = source.getJobName().fullName;
         machine = new XmlAdaptedMachine(source.getMachine());
         owner = new XmlAdaptedPerson(source.getOwner());
-
-        startTime = source.getAddedTime();
-
+        addedTime = source.getAddedTime();
+        startTime = new XmlAdaptedTimeStamp(source.getStartTime());
         priority = source.getPriority();
-        status = source.getStatus();
         duration = source.getDuration();
+        status = source.getStatus();
         tagged = source.getTags().stream()
                 .map(XmlAdaptedTag::new)
                 .collect(Collectors.toList());
@@ -113,19 +114,27 @@ public class XmlAdaptedJob {
         JobName modelJobName = new JobName(name);
         Machine modelJobMachine = machine.toModelType();
         Person modelJobOwner = owner.toModelType();
+        String modelAddedTime = addedTime;
+
+        TimeStamp modelStartTime = startTime.toModelType();
         final Priority modelPriority = priority;
         //TODO: no validation on duration yet
         final float modelDuration = duration;
-        JobNote modelJobNote = new JobNote(note);
+        Status modelStatus = status;
         Set<Tag> modelTags = new HashSet<>();
         for (XmlAdaptedTag tag : tagged) {
             modelTags.add(tag.toModelType());
         }
+        JobNote modelJobNote = new JobNote(note);
+
 
         Job job = new Job(modelJobName,
                 modelJobMachine,
                 modelJobOwner,
+                modelAddedTime,
+                modelStartTime,
                 modelPriority,
+                modelStatus,
                 modelDuration,
                 modelJobNote,
                 modelTags);

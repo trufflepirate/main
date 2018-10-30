@@ -58,14 +58,32 @@ public class Job {
         this.name = name;
         this.machine = machine;
         this.owner = owner;
-        this.tags.addAll(tags);
         this.priority = priority;
-        this.status = Status.QUEUED;
-        this.jobNote = jobNote;
         this.duration = duration;
+        this.jobNote = jobNote;
+        this.tags.addAll(tags);
 
+        this.status = Status.QUEUED;
         startTime = new TimeStamp();
-        addedTime = startTime.showTime();
+        addedTime = new TimeStamp().showTime();
+    }
+
+    /**
+     * Recovers a job object from the storage file
+     */
+    public Job(JobName name, Machine machine, Person owner, String addedTime, TimeStamp startTime, Priority priority,
+               Status status, float duration, JobNote jobNote, Set<Tag> tags) {
+        requireAllNonNull(name, machine, owner, tags);
+        this.name = name;
+        this.machine = machine;
+        this.owner = owner;
+        this.addedTime = addedTime;
+        this.priority = priority;
+        this.status = status;
+        this.duration = duration;
+        this.jobNote = jobNote;
+        this.startTime = startTime;
+        this.tags.addAll(tags);
     }
 
     /**
@@ -157,6 +175,10 @@ public class Job {
 
     public String getAddedTime() {
         return addedTime;
+    }
+
+    public TimeStamp getStartTime() {
+        return startTime;
     }
 
     public Person getOwner() {
