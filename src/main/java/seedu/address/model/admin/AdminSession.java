@@ -1,6 +1,8 @@
 package seedu.address.model.admin;
 
-
+/**
+ * Container for the logged in Admin.
+ */
 public class AdminSession {
 
     private Admin loggedInAdmin;

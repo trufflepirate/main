@@ -32,11 +32,11 @@ public class EditMachineCommand extends Command {
 
     public static final String COMMAND_WORD = "editMachine";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the Machine identified " +
-        "by the index number used in the displayed Machine list. " +
-        "Existing values will be overwritten by the input values.\n" + "Parameters: MACHINE_NAME " + "[" + PREFIX_NAME +
-        "NAME] " + "[" + PREFIX_MACHINE_STATUS + "MACHINE_STATUS] " + "[" + PREFIX_TAG + "TAG]...\n" + "Example: " +
-        COMMAND_WORD + " MyPrinter " + PREFIX_NAME + "YourPrinter " + PREFIX_MACHINE_STATUS + "ENABLED";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the Machine identified "
+        + "by the index number used in the displayed Machine list. "
+        + "Existing values will be overwritten by the input values.\n" + "Parameters: MACHINE_NAME " + "[" + PREFIX_NAME
+        + "NAME] " + "[" + PREFIX_MACHINE_STATUS + "MACHINE_STATUS] " + "[" + PREFIX_TAG + "TAG]...\n" + "Example: "
+        + COMMAND_WORD + " MyPrinter " + PREFIX_NAME + "YourPrinter " + PREFIX_MACHINE_STATUS + "ENABLED";
 
     public static final String MESSAGE_EDIT_MACHINE_SUCCESS = "Edited Machine: %1$s";
     public static final String MESSAGE_MACHINE_NOT_FOUND = "Machine does not exist";
@@ -211,8 +211,8 @@ public class EditMachineCommand extends Command {
             // state check
             EditMachineDescriptor e = (EditMachineDescriptor) other;
 
-            return getName().equals(e.getName()) && getJobs().equals(e.getJobs()) && getTags().equals(e.getTags()) &&
-                getStatus().equals(e.getStatus());
+            return getName().equals(e.getName()) && getJobs().equals(e.getJobs()) && getTags().equals(e.getTags())
+                && getStatus().equals(e.getStatus());
         }
     }
 }

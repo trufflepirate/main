@@ -105,7 +105,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     public void setAdminsSession(AdminSession adminsSession) {
-        if(!adminsSession.isAdminLoggedIn()){
+        if (!adminsSession.isAdminLoggedIn()) {
             this.adminSession.setLogin(adminsSession.getLoggedInAdmin());
         }
     }
@@ -292,6 +292,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         return machines.get(machineName);
     }
 
+    /**
+     * Returns the machine that Machines the MachineName
+     */
     public Machine findMachine(MachineName machineName) {
         requireNonNull(machineName);
         return machines.findMachine(machineName);

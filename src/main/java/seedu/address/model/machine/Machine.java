@@ -24,11 +24,9 @@ public class Machine {
      */
     public static final String NAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
     public static final String MESSAGE_NAME_CONSTRAINTS =
-            "Names should only contain alphanumeric characters and spaces, "
-                    + "and it should not be blank";
+        "Names should only contain alphanumeric characters and spaces, " + "and it should not be blank";
     public static final String MESSAGE_WRONG_STATUS =
-            "Status can only contain 'ENABLED' or 'DISABLED'"
-                    + "and should not be blank";
+        "Status can only contain 'ENABLED' or 'DISABLED'" + "and should not be blank";
     // Identity fields
     private final MachineName machineName;
     //TODO make status be more diverse, like enum
@@ -74,6 +72,7 @@ public class Machine {
     public List<Job> getJobs() {
         return Collections.unmodifiableList(jobs);
     }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -103,7 +102,7 @@ public class Machine {
      * Returns true if both machines of the same name.
      * This defines a weakest notion of equality between two machines.
      */
-    public boolean isSameNamedMachine(Machine otherMachine){
+    public boolean isSameNamedMachine(Machine otherMachine) {
         return otherMachine.getName() == getName();
     }
 
@@ -116,17 +115,15 @@ public class Machine {
             return true;
         }
 
-        return otherMachine != null
-                && otherMachine.getName().equals(getName())
-                && otherMachine.getJobs().equals(getJobs());
+        return otherMachine != null && otherMachine.getName().equals(getName()) && otherMachine.getJobs()
+            .equals(getJobs());
     }
 
     /**
      * Returns true if both machines have the same identity and data fields.
      * This defines a stronger notion of equality between two persons.
      */
-    @Override
-    public boolean equals(Object other) {
+    @Override public boolean equals(Object other) {
         if (other == this) {
             return true;
         }
@@ -136,22 +133,18 @@ public class Machine {
         }
 
         Machine otherMachine = (Machine) other;
-        return otherMachine.getName().equals(getName())
-                && otherMachine.getJobs().equals(getJobs())
-                && otherMachine.getTags().equals(getTags());
+        return otherMachine.getName().equals(getName()) && otherMachine.getJobs().equals(getJobs()) && otherMachine
+            .getTags().equals(getTags());
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(machineName, jobs, tags);
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getName())
-                .append(" Tags: ");
+        builder.append(getName()).append(" Tags: ");
         getTags().forEach(builder::append);
 
         builder.append(" Jobs: ");

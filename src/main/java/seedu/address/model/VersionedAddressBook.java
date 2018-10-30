@@ -110,14 +110,13 @@ public class VersionedAddressBook extends AddressBook {
      * Returns true if {@code redo()} has address book states to redo that is not a login.
      */
     public boolean isNotRedoLogin() {
-        if (lastAdminLoginPointer < 0){
+        if (lastAdminLoginPointer < 0) {
             return true;
         }
-        return !(currentStatePointer == lastAdminLoginPointer-1);
+        return !(currentStatePointer == lastAdminLoginPointer - 1);
     }
 
-    @Override
-    public boolean equals(Object other) {
+    @Override public boolean equals(Object other) {
         // short circuit if same object
         if (other == this) {
             return true;
@@ -131,9 +130,9 @@ public class VersionedAddressBook extends AddressBook {
         VersionedAddressBook otherVersionedAddressBook = (VersionedAddressBook) other;
 
         // state check
-        return super.equals(otherVersionedAddressBook)
-                && addressBookStateList.equals(otherVersionedAddressBook.addressBookStateList)
-                && currentStatePointer == otherVersionedAddressBook.currentStatePointer;
+        return super.equals(otherVersionedAddressBook) && addressBookStateList
+            .equals(otherVersionedAddressBook.addressBookStateList)
+            && currentStatePointer == otherVersionedAddressBook.currentStatePointer;
     }
 
     /**
