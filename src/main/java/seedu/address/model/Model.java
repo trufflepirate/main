@@ -54,7 +54,7 @@ public interface Model {
 
     // ============================== Job methods ======================================= //
 
-    ModelMessageResult addJob(Job job);
+    void addJob(Job job);
     void deleteJob(JobName job);
     void updateJob(Job oldJob, Job updatedJob);
     Job findJob(JobName name);
@@ -79,7 +79,7 @@ public interface Model {
      * Swaps two jobs based on the given names
      */
 
-    ModelMessageResult swapJobs(JobName jobname1, JobName jobName2);
+    void swapJobs(JobName jobname1, JobName jobName2);
 
     void requestDeletion(JobName jobName);
 
@@ -153,17 +153,6 @@ public interface Model {
      */
     int numAdmins();
 
-    // ============================== Queue methods ======================================= //
-
-    /**
-     * returns true if job is successfully added to machine
-     * false otherwise if any of the conditions below does not check out
-     * 1) machine does not exist
-     * 2) job does not exist
-     * 3) machine already has the print job in its own queue
-    \ */
-
-    ModelMessageResult addJobToMachine(String machineName, String jobName);
 
 
     //=========== Filtered Person List Accessors =============================================================

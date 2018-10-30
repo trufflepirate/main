@@ -4,4 +4,30 @@
         <machineName>JJPrinter</machineName>
         <status>ENABLED</status>
     </machines>
+    <machines>
+        <machineName>TYPrinter</machineName>
+        <status>ENABLED</status>
+        <jobs>
+            <name>iDCP</name>
+            <machine>
+                <machineName>TYPrinter</machineName>
+                <status>ENABLED</status>
+            </machine>
+            <owner>
+                <name>TIAN YUAN</name>
+                <phone>000</phone>
+                <email>0@u.nus.edu</email>
+                <address>000</address>
+            </owner>
+            <addedTime>30/10 02:55:09</addedTime>
+            <startTime>
+                <timeStamp>30/10 02:55:09</timeStamp>
+            </startTime>
+            <priority>HIGH</priority>
+            <duration>1.5</duration>
+            <status>QUEUED</status>
+            <tagged>iDCP</tagged>
+            <note>This is for the iDCP project</note>
+        </jobs>
+    </machines>
 </MakerManagerMachines>

@@ -21,6 +21,7 @@ import seedu.address.model.admin.Username;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
 import seedu.address.model.machine.Machine;
+import seedu.address.model.machine.exceptions.MachineNotFoundException;
 import seedu.address.model.person.Person;
 
 
@@ -130,18 +131,19 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public ModelMessageResult addJob(Job job) {
+    public void addJob(Job job) throws MachineNotFoundException {
         requireAllNonNull(job);
         //TODO find another way to check if the printer exist before adding job
         for (Machine m : filteredMachines) {
             if (job.getMachine().getName().fullName.equals(m.getName().fullName)) {
                 versionedAddressBook.addJob(job);
+                versionedAddressBook.addJobToMachineList(m, job);
                 indicateJobListChanged();
-                return new ModelMessageResult(true, "Job added successfully");
+                indicateMachineListChanged();
+                return;
             }
         }
-
-        return new ModelMessageResult(false, "Machine does not exist");
+        throw new MachineNotFoundException();
     }
 
     @Override
@@ -186,15 +188,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public ModelMessageResult swapJobs(JobName jobName1, JobName jobName2) {
+    public void swapJobs(JobName jobName1, JobName jobName2) {
         versionedAddressBook.swapJobs(jobName1, jobName2);
         versionedAddressBook.commit();
         indicateJobListChanged();
 
-        //TODO to determine in the future whether should the data be sorted according to priority also?
-        //TODO if so then we need to indicateJobListChanged() here also
 
-        return new ModelMessageResult(true, "Jobs queue number swapped successfully");
     }
 
     @Override
@@ -288,35 +287,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
 
-
-    // ============================== Queue methods ======================================= //
-
-    @Override
-    public ModelMessageResult addJobToMachine(String machineName, String jobName) {
-        versionedAddressBook.listCurrentVersionData();
-        logger.info("Inputs are : ");
-        logger.info(jobName);
-        logger.info(machineName);
-        Machine machine = versionedAddressBook.getMachineByName(machineName);
-        Job job = versionedAddressBook.getJobByName(jobName);
-        if (machine == null || !hasMachine(machine)) {
-            return new ModelMessageResult(false , "No such machine available");
-        }
-        if (job == null || !hasJob(job)) {
-            return new ModelMessageResult(false, "No such job available");
-        }
-
-        logger.info("Machine and job found");
-        logger.info(machine.getName().fullName);
-        logger.info(job.getJobName().fullName);
-        if (machine.hasJob(job)) {
-            return new ModelMessageResult(false, "Machine already has job in its print queue");
-        }
-
-        versionedAddressBook.addJobToMachineList(machine, job);
-        indicateMachineListChanged();
-        return new ModelMessageResult(true, "Model execution successful for addJobToMachine");
-    }
 
 
     //=========== Filtered Person List Accessors =============================================================

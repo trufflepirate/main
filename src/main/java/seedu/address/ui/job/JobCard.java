@@ -1,17 +1,13 @@
 package seedu.address.ui.job;
 
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import javafx.scene.paint.Paint;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.Priority;
+import seedu.address.model.job.Status;
 import seedu.address.ui.UiPart;
 import seedu.address.ui.machine.MachineCard;
 
@@ -40,6 +36,8 @@ public class JobCard extends UiPart<Region> {
     @FXML
     private FlowPane jobInformation;
     @FXML
+    private FlowPane jobStartTime;
+    @FXML
     private FlowPane details;
     @FXML
     private Label status;
@@ -58,12 +56,28 @@ public class JobCard extends UiPart<Region> {
         Label machineNameLabel = new Label("Machine: " + job.getMachine().getName().fullName);
         Label informationLabel = new Label("Added by " + job.getOwner().getName().fullName + " at "
                 + job.getAddedTime());
+        Label startTimeLabel;
+        if (job.getStatus() == Status.ONGOING) {
+            startTimeLabel = new Label("Started at: " + job.getStartTime().showTime());
+        } else {
+            startTimeLabel = new Label("The starting time is not applicable.");
+        }
         Label priorityLabel = new Label("Priority: " + job.getPriority().toString());
         Label statusLabel = new Label("Status: " + job.getStatus().toString());
+
         details.getChildren().add(machineNameLabel);
         details.setHgap(2);
+
         jobInformation.getChildren().add(informationLabel);
         jobInformation.setHgap(2);
+
+        startTimeLabel.setStyle("-fx-font: 12 arial;"
+                + "-fx-text-fill: #ffffff;"
+                + "-fx-background-color: #006064;"
+                + "-fx-padding: 2;"
+                + "-fx-text-alignment: center");
+        jobStartTime.getChildren().add(startTimeLabel);
+        jobStartTime.setHgap(2);
 
         if (job.getPriority() == Priority.URGENT) {
             priorityLabel.setStyle("-fx-font: 14 arial;"
@@ -102,6 +116,9 @@ public class JobCard extends UiPart<Region> {
         jobDuration.setText("ETC: " + (job.getDuration() + job.getMachine().getTotalDuration()) + (" hour(s)."));
 
 
+        /* No longer need request deletion it goes under status now.
+        ** Leaving the code here for future reference will delete this
+        * * by v1.4
         //TODO dont know why the color is not changing...
         if (job.requestDeletion()) {
             Label requestDeletionLabel = new Label("Requested Deletion");
@@ -112,9 +129,8 @@ public class JobCard extends UiPart<Region> {
                             new Insets(0))));
             requestDeletionLabel.setTextFill(Paint.valueOf("#F00"));
             tags.getChildren().add(requestDeletionLabel);
-
-
         }
+        */
     }
 
     @Override

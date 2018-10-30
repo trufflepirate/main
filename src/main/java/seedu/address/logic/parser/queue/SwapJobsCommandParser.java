@@ -1,8 +1,8 @@
 package seedu.address.logic.parser.queue;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MACHINE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME_2;
 
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -33,17 +33,17 @@ public class SwapJobsCommandParser implements Parser<SwapJobsCommand> {
     public SwapJobsCommand parse(String userInput) throws ParseException {
         logger.info("User input : " + userInput);
         ArgumentMultimap argMultiMap =
-                ArgumentTokenizer.tokenize(userInput, PREFIX_NAME, PREFIX_NAME_2);
+                ArgumentTokenizer.tokenize(userInput, PREFIX_NAME, PREFIX_MACHINE);
 
 
-        if (!arePrefixesPresent(argMultiMap, PREFIX_NAME, PREFIX_NAME_2)
+        if (!arePrefixesPresent(argMultiMap, PREFIX_NAME, PREFIX_MACHINE)
                 || !argMultiMap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     SwapJobsCommand.MESSAGE_USAGE));
         }
 
         Optional<String> jobName1 = argMultiMap.getValue(PREFIX_NAME);
-        Optional<String> jobName2 = argMultiMap.getValue(PREFIX_NAME_2);
+        Optional<String> jobName2 = argMultiMap.getValue(PREFIX_MACHINE);
 
 
         if (!jobName1.isPresent() || !jobName2.isPresent()) {
