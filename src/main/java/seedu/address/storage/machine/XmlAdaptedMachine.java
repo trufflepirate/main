@@ -16,6 +16,7 @@ import seedu.address.model.machine.MachineName;
 import seedu.address.model.machine.MachineStatus;
 import seedu.address.model.tag.Tag;
 import seedu.address.storage.XmlAdaptedTag;
+import seedu.address.storage.job.XmlAdaptedJob;
 
 /**
  * JAXB-friendly version of the Machine
@@ -31,7 +32,7 @@ public class XmlAdaptedMachine {
     private MachineStatus status;
 
     @XmlElement
-    private List<XmlAdaptedJobName> jobs = new ArrayList<>();
+    private List<XmlAdaptedJob> jobs = new ArrayList<>();
     @XmlElement
     private Set<XmlAdaptedTag> tags = new HashSet<>();
 
@@ -46,7 +47,7 @@ public class XmlAdaptedMachine {
      */
     public XmlAdaptedMachine(String machineName,
                              MachineStatus status,
-                             List<XmlAdaptedJobName> jobs,
+                             List<XmlAdaptedJob> jobs,
                              Set<XmlAdaptedTag> tags) {
         this.machineName = machineName;
         this.status = status;
@@ -63,7 +64,7 @@ public class XmlAdaptedMachine {
         machineName = source.getName().fullName;
         status = source.getStatus();
         jobs = source.getJobs().stream()
-                .map(XmlAdaptedJobName::new)
+                .map(XmlAdaptedJob::new)
                 .collect(Collectors.toList());
         tags = source.getTags().stream()
                 .map(XmlAdaptedTag::new)
@@ -86,12 +87,13 @@ public class XmlAdaptedMachine {
 
         final MachineName name = new MachineName(machineName);
 
+        //TODO: no validation on status
         if (status == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "STATUS"));
         }
 
         final List<Job> finalJobs = new ArrayList<>();
-        for (XmlAdaptedJobName job : jobs) {
+        for (XmlAdaptedJob job : jobs) {
             finalJobs.add(job.toModelType());
         }
 

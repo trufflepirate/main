@@ -66,13 +66,29 @@ Add a print job to the queue. +
     add_print n/myprint m/printer_1 d/13:00 s/use red filament p/1 +
     add_print n/myprint m/printer_2 d/2:00 s/use blue filament
 
-.. *[NOT IMPLEMENTED YET]Starting a Print:*
+.. *Starting a Print:*
 Starts an existing print in the queue. +
 
-    Format: start INDEX
+    Format: manageJob JOBNAME start
 
     Examples:
-    START 1
+    manageJob myPrint start
+
+.. *Cancelling a Print:*
+Cancel an existing print in the queue. +
+
+    Format: manageJob JOBNAME cancel
+
+    Examples:
+    manageJob myPrint cancel
+
+.. *Restarting a Print:*
+Restart an existing print in the queue. +
+
+    Format: manageJob JOBNAME restart
+
+    Examples:
+    manageJob myPrint restart
 
 .. *[WIP]Listing Prints:*
 Lists prints with optional filters. Currently lists persons. +
@@ -133,7 +149,7 @@ Exits the program +
 .. *Saving Data:*
 Address book data are saved in the hard disk automatically after any command that changes the data.There is no need to save manually.
 
-.. *[WIP]Admin specific commands:*
+.. *Admin specific commands:*
 The following commands will only work in admin mode. Admin accounts currently not saved across sessions.
 
 ... *Login:*
@@ -147,15 +163,19 @@ Disable admin mode. +
 	Format: logout
 
 ... *Add Admin:*
-Add another admin. +
+
+Add another admin. Note that PASSWORD has to match some specific validation criteria. +
+
     Format: addAdmin USERNAME PASSWORD VERIFY_PASSWORD
 
 ... *Remove Admin:*
-Add another admin. +
+Removing another admin. +
+
     Format: removeAdmin USERNAME
 
 ... *Update Admin Password:*
-Add another admin. +
+Updating your own account's password. Note that NEW_PW has to match some specific validation criteria. +
+
     Format: updatePassword USERNAME OLD_PW NEW_PW NEW_PW_VERIFY
 
 ... *Add Machine:*
@@ -204,3 +224,6 @@ Edits an existing machine. All machine names must be unique. Status can only be 
 . add_machine n/MACHINE_NAME s/STATUS
 . remove_machine MACHINE_NAME
 . edit_machine MACHINE_NAME [n/MACHINE_NAME] [s/STATUS]
+. manageJob JOB_NAME start
+. manageJob JOB_NAME cancel
+. manageJob JOB_NAME restart

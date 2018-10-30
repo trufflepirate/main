@@ -55,10 +55,35 @@ public interface Model {
     // ============================== Job methods ======================================= //
 
     void addJob(Job job);
-    void deleteJob(Job job);
+    void deleteJob(JobName job);
     void updateJob(Job oldJob, Job updatedJob);
+
     Job findJob(JobName name);
+
     boolean hasJob(Job job);
+
+    /**
+     * Starts the job given
+     */
+    void startJob(JobName name);
+
+    /**
+     * Cancels the job given
+     */
+    void cancelJob(JobName name);
+
+    /**
+     * Restarts the job given
+     */
+    void restartJob(JobName name);
+
+    /**
+     * Swaps two jobs based on the given names
+     */
+
+    void swapJobs(JobName jobname1, JobName jobName2);
+
+    void requestDeletion(JobName jobName);
 
     // ============================== Machine methods ======================================= //
     /**
@@ -82,7 +107,15 @@ public interface Model {
      */
     void updateMachine(Machine target, Machine editedMachine);
 
+
     // ============================== Admin methods ======================================= //
+
+    /**
+     * Returns the machine that is most free, in terms fo time left
+     * @return Machine
+     */
+    Machine getMostFreeMachine();
+
     /**
      * Adds the given Admin
      * admin must not exist
@@ -128,6 +161,7 @@ public interface Model {
      * returns number of admins in the makerManager
      */
     int numAdmins();
+
 
 
     //=========== Filtered Person List Accessors =============================================================
@@ -178,4 +212,5 @@ public interface Model {
      * Saves the current address book state for undo/redo.
      */
     void commitAddressBook();
+
 }

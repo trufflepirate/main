@@ -6,8 +6,11 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.job.Job;
+import seedu.address.model.job.Priority;
+import seedu.address.model.job.Status;
 import seedu.address.ui.UiPart;
 import seedu.address.ui.machine.MachineCard;
+
 
 /**
  * An UI component that displays information of a {@code Job}.
@@ -26,32 +29,108 @@ public class JobCard extends UiPart<Region> {
 
     public final Job job;
 
-    @javafx.fxml.FXML
-    private HBox cardPane;
     @FXML
-    private Label id;
+    private HBox cardPane;
     @FXML
     private Label jobName;
     @FXML
-    private Label jobMachine;
+    private FlowPane jobInformation;
     @FXML
-    private Label time;
+    private FlowPane jobStartTime;
     @FXML
-    private Label jobOwner;
+    private FlowPane details;
     @FXML
-    private Label jobPriority;
+    private Label status;
     @FXML
     private FlowPane tags;
+    @FXML
+    private Label jobDescription;
+    @FXML
+    private Label jobDuration;
 
     public JobCard(Job job, int displayIndex) {
         super(FXML);
         this.job = job;
-        id.setText(displayIndex + ". ");
         jobName.setText(job.getJobName().fullName);
-        jobMachine.setText(job.getMachine().getName().fullName);
-        // TODO: 10-Oct-18 time to be displayed
-        jobOwner.setText(job.getOwner().getName().fullName);
-        jobPriority.setText(job.getPriority().toString());
+
+        Label machineNameLabel = new Label("Machine: " + job.getMachine().getName().fullName);
+        Label informationLabel = new Label("Added by " + job.getOwner().getName().fullName + " at "
+                + job.getAddedTime());
+        Label startTimeLabel;
+        if (job.getStatus() == Status.ONGOING) {
+            startTimeLabel = new Label("Started at: " + job.getStartTime().showTime());
+        } else {
+            startTimeLabel = new Label("The starting time is not applicable.");
+        }
+        Label priorityLabel = new Label("Priority: " + job.getPriority().toString());
+        Label statusLabel = new Label("Status: " + job.getStatus().toString());
+
+        details.getChildren().add(machineNameLabel);
+        details.setHgap(2);
+
+        jobInformation.getChildren().add(informationLabel);
+        jobInformation.setHgap(2);
+
+        startTimeLabel.setStyle("-fx-font: 12 arial;"
+                + "-fx-text-fill: #ffffff;"
+                + "-fx-background-color: #006064;"
+                + "-fx-padding: 2;"
+                + "-fx-text-alignment: center");
+        jobStartTime.getChildren().add(startTimeLabel);
+        jobStartTime.setHgap(2);
+
+        if (job.getPriority() == Priority.URGENT) {
+            priorityLabel.setStyle("-fx-font: 14 arial;"
+                    + "-fx-text-fill: #ffffff;"
+                    + "-fx-background-color: #b71c1c;"
+                    + "-fx-padding: 2;"
+                    + "-fx-text-alignment: center");
+        }
+
+        if (job.getPriority() == Priority.HIGH) {
+            priorityLabel.setStyle("-fx-font: 14 arial;"
+                    + "-fx-text-fill: #000000;"
+                    + "-fx-background-color: #ffca28;"
+                    + "-fx-padding: 2;"
+                    + "-fx-text-alignment: center");
+        }
+        if (job.getPriority() == Priority.NORMAL) {
+            priorityLabel.setStyle("-fx-font: 14 arial;"
+                    + "-fx-text-fill: #ffffff;"
+                    + "-fx-background-color: #00897b;"
+                    + "-fx-padding: 2;"
+                    + "-fx-text-alignment: center");
+        }
+        tags.getChildren().add(priorityLabel);
+
+        statusLabel.setStyle("-fx-font: 12 arial;"
+                + "-fx-text-fill: #ffffff;"
+                + "-fx-background-color: #a1887f;"
+                + "-fx-padding: 2;"
+                + "-fx-text-alignment: center");
+        tags.getChildren().add(statusLabel);
+
+        job.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+
+        jobDescription.setText(job.getJobNote().toString());
+        jobDuration.setText("ETC: " + (job.getDuration() + job.getMachine().getTotalDuration()) + (" hour(s)."));
+
+
+        /* No longer need request deletion it goes under status now.
+        ** Leaving the code here for future reference will delete this
+        * * by v1.4
+        //TODO dont know why the color is not changing...
+        if (job.requestDeletion()) {
+            Label requestDeletionLabel = new Label("Requested Deletion");
+            requestDeletionLabel.setBackground(new Background(
+                    new BackgroundFill(
+                            Paint.valueOf("#dd0404"),
+                            new CornerRadii(2),
+                            new Insets(0))));
+            requestDeletionLabel.setTextFill(Paint.valueOf("#F00"));
+            tags.getChildren().add(requestDeletionLabel);
+        }
+        */
     }
 
     @Override
@@ -68,7 +147,6 @@ public class JobCard extends UiPart<Region> {
 
         // state check
         JobCard jobCard = (JobCard) other;
-        return id.getText().equals(jobCard.id.getText())
-                && job.equals(jobCard.job);
+        return job.equals(jobCard.job);
     }
 }

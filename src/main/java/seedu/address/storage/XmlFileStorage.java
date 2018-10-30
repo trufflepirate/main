@@ -45,9 +45,21 @@ public class XmlFileStorage {
     }
 
     /**
-     * Saves the given admins data to the specified file.
+     * Saves the given machines data to the specified file.
      */
     public static void saveDataToFile(Path file, XmlSerializableMakerManagerMachines addressBook)
+            throws FileNotFoundException {
+        try {
+            XmlUtil.saveDataToFile(file, addressBook);
+        } catch (JAXBException e) {
+            throw new AssertionError("Unexpected exception " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Saves the given jobs data to the specified file
+     */
+    public static void saveDataToFile(Path file, XmlSerializableMakerManagerJobs addressBook)
             throws FileNotFoundException {
         try {
             XmlUtil.saveDataToFile(file, addressBook);

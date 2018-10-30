@@ -47,18 +47,25 @@
         </StackPane>
 
         <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-          <VBox fx:id="machineList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+          <VBox fx:id="machineList" minWidth="250" prefWidth="250" SplitPane.resizableWithParent="false">
             <padding>
               <Insets top="10" right="10" bottom="10" left="10" />
             </padding>
             <StackPane fx:id="machineListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
           </VBox>
 
-          <StackPane fx:id="browserPlaceholder" prefWidth="340" >
-            <padding>
-              <Insets top="10" right="10" bottom="10" left="10" />
-            </padding>
-          </StackPane>
+          <VBox fx:id="viewInfoPanel">
+              <StackPane fx:id="displayMachineDetailsPlaceholder" prefWidth="340" >
+                  <padding>
+                      <Insets top="10" right="10" bottom="10" left="10" />
+                  </padding>
+              </StackPane>
+          </VBox>
+
+
+          <VBox fx:id="jobsList" minWidth="250" prefWidth="250" SplitPane.resizableWithParent="false">
+            <StackPane fx:id="jobsListPlaceHolder" VBox.vgrow="ALWAYS"/>
+          </VBox>
         </SplitPane>
 
         <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
