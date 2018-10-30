@@ -163,6 +163,7 @@ Disable admin mode. +
 	Format: logout
 
 ... *Add Admin:*
+
 Add another admin. Note that PASSWORD has to match some specific validation criteria. +
 
     Format: addAdmin USERNAME PASSWORD VERIFY_PASSWORD

@@ -21,6 +21,7 @@ import seedu.address.model.admin.Username;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
 import seedu.address.model.machine.Machine;
+import seedu.address.model.machine.exceptions.MachineNotFoundException;
 import seedu.address.model.person.Person;
 
 
@@ -53,7 +54,10 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
         filteredMachines = new FilteredList<>(versionedAddressBook.getMachineList());
         filteredAdmins = new FilteredList<>(versionedAddressBook.getAdminList());
+        //Queue list is the sorted list of jobs based on custom comparator
         filteredJobs = new FilteredList<>(versionedAddressBook.getJobList());
+        //TODO find a better way to change the data according to sorted jobs based on comparator
+        indicateJobListChanged();
     }
 
     public ModelManager() {
@@ -125,15 +129,25 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(job);
         return versionedAddressBook.hasJob(job);
     }
+
     @Override
-    public void addJob(Job job) {
+    public void addJob(Job job) throws MachineNotFoundException {
         requireAllNonNull(job);
-        versionedAddressBook.addJob(job);
-        indicateJobListChanged();
+        //TODO find another way to check if the printer exist before adding job
+        for (Machine m : filteredMachines) {
+            if (job.getMachine().getName().fullName.equals(m.getName().fullName)) {
+                versionedAddressBook.addJob(job);
+                versionedAddressBook.addJobToMachineList(m, job);
+                indicateJobListChanged();
+                indicateMachineListChanged();
+                return;
+            }
+        }
+        throw new MachineNotFoundException();
     }
 
     @Override
-    public void deleteJob(Job job) {
+    public void deleteJob(JobName job) {
         requireAllNonNull(job);
         versionedAddressBook.removeJob(job);
         indicateJobListChanged();
@@ -171,6 +185,22 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull();
         versionedAddressBook.restartJob(name);
         indicateJobListChanged();
+    }
+
+    @Override
+    public void swapJobs(JobName jobName1, JobName jobName2) {
+        versionedAddressBook.swapJobs(jobName1, jobName2);
+        versionedAddressBook.commit();
+        indicateJobListChanged();
+
+
+    }
+
+    @Override
+    public void requestDeletion(JobName jobName) {
+        versionedAddressBook.requestDeletion(jobName);
+        indicateJobListChanged();
+
     }
 
     // ============================== Machine methods ======================================= //
@@ -255,6 +285,9 @@ public class ModelManager extends ComponentManager implements Model {
     public int numAdmins() {
         return versionedAddressBook.numAdmins();
     }
+
+
+
 
     //=========== Filtered Person List Accessors =============================================================
 

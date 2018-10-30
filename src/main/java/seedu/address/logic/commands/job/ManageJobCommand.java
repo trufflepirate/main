@@ -17,15 +17,19 @@ public class ManageJobCommand extends Command {
     public static final String OPTION_START = "start";
     public static final String OPTION_RESTART = "restart";
     public static final String OPTION_CANCEL = "cancel";
+    public static final String OPTION_DELETE = "delete";
 
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": starts/restarts/cancels a particular job\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": starts/restarts/cancels/deletes a particular job\n"
             + "Example: " + COMMAND_WORD + " IDCP start";
     private static final String MESSAGE_STARTED_JOB = "The print has started.";
     private static final String MESSAGE_CANCELLED_JOB = "The print has been cancelled.";
     private static final String MESSAGE_RESTARTED_JOB = "The print has restarted.";
+    private static final String MESSAGE_DELETED_JOB = "The print has been deleted";
     private static final String MESSAGE_NO_SUCH_JOB = "No such print found";
     private static final String MESSAGE_NO_SUCH_OPTION = "No such options. Only use: start, restart, cancel.";
+    private static final String MESSAGE_ACCESS_DENIED =
+            "Non admin user is not allowed to delete jobs in maker manager";
 
     private JobName name;
     private String option;
@@ -54,6 +58,12 @@ public class ManageJobCommand extends Command {
         } else if (option.equals(OPTION_CANCEL)) {
             model.cancelJob(name);
             return new CommandResult(MESSAGE_CANCELLED_JOB);
+        } else if (option.equals(OPTION_DELETE)) {
+            if (!model.isLoggedIn()) {
+                throw new CommandException(MESSAGE_ACCESS_DENIED);
+            }
+            model.deleteJob(name);
+            return new CommandResult(MESSAGE_DELETED_JOB);
         } else {
             return new CommandResult(MESSAGE_NO_SUCH_OPTION);
         }

@@ -149,6 +149,18 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
         }
 
         try {
+            XmlSerializableMakerManagerJobs xmlMakerManagerJobs =
+                    XmlFileStorage.loadMakerManagerJobDataFromSaveFile(makerManagerJobsFile);
+            AddressBook jobsAddressBookData = xmlMakerManagerJobs.toModelType();
+            fullAddressBookData.setJobs(jobsAddressBookData.getJobList());
+            logger.info("Full addressbook data jobs size : " + fullAddressBookData.getJobList().size());
+        } catch (IllegalValueException e) {
+            e.printStackTrace();
+        } catch (DataConversionException dce) {
+            logger.info("Jobs conversion error");
+        }
+
+        try {
             XmlSerializableMakerManagerAdmins xmlMakerManagerAdmins =
                     XmlFileStorage.loadMakerManagerAdminDataFromSaveFile(makerManagerAdminsFile);
             AddressBook adminsData = xmlMakerManagerAdmins.toModelType();

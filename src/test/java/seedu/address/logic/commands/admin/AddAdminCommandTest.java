@@ -154,28 +154,37 @@ public class AddAdminCommandTest {
         }
 
         @Override
-        public void startJob(JobName name) {
-
-        }
-
-        @Override
-        public void cancelJob(JobName name) {
-
-        }
-
-        @Override
-        public void restartJob(JobName name) {
-
-        }
-
-        @Override
         public void addJob(Job job) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void deleteJob(Job job) {
+        public void deleteJob(JobName job) {
+
+        }
+
+        public void startJob(JobName name) {
             throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void cancelJob(JobName name) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void restartJob(JobName name) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void swapJobs(JobName jobname1, JobName jobName2) {
+            return;
+        }
+
+        @Override
+        public void requestDeletion(JobName jobName) {
+
         }
 
         @Override
@@ -297,6 +306,7 @@ public class AddAdminCommandTest {
         public void updateFilteredJobList(Predicate<Job> predicate) {
             throw new AssertionError("This method should not be called.");
         }
+
 
         @Override
         public boolean canUndoAddressBook() {
