@@ -255,6 +255,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         machines.setMachine(target, editedMachine);
     }
 
+    /**
+     * Returns the machine that has least time left in Queue
+     */
+    public Machine getMostFreeMachine() {
+        return machines.getMostFreeMachine();
+    }
+
+
     public Machine getMachineByName (String machineName) {
         requireNonNull(machineName);
         return machines.get(machineName);
