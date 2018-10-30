@@ -1,4 +1,4 @@
-package seedu.address.storage;
+package seedu.address.storage.Serializable;
 
 import static org.junit.Assert.assertEquals;
 import java.nio.file.Path;

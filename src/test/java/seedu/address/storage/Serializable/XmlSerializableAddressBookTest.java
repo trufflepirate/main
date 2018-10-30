@@ -1,4 +1,4 @@
-package seedu.address.storage;
+package seedu.address.storage.Serializable;
 
 import static org.junit.Assert.assertEquals;
 
@@ -12,6 +12,7 @@ import org.junit.rules.ExpectedException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.XmlUtil;
 import seedu.address.model.AddressBook;
+import seedu.address.storage.XmlSerializableAddressBook;
 import seedu.address.testutil.testdata.TypicalPersons;
 
 public class XmlSerializableAddressBookTest {

@@ -266,7 +266,6 @@ public class Job {
             return false;
         }
 
-
         return otherJob.getJobName().equals(getJobName())
                 && otherJob.getMachine().equals(getMachine())
                 && otherJob.getOwner().equals(getOwner())
