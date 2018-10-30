@@ -70,8 +70,8 @@ public class LoginCommandTest {
      * A default model stub that has some methods failing
      */
     private class ModelStub implements Model {
+        private final AdminSession adminSession = new AdminSession();
         private Admin firstAdmin = new Admin(new Username("firstAdmin"), new Password("rightPW"));
-        final AdminSession adminSession = new AdminSession();
 
         @Override
         public void addPerson(Person person) {
