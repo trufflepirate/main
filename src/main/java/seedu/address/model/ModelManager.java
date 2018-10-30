@@ -137,8 +137,10 @@ public class ModelManager extends ComponentManager implements Model {
         //TODO refactor after this is working
         for (Machine m : filteredMachines) {
             if (job.getMachine().getName().fullName.equals(new Machine("AUTO").getName().fullName)) {
+                Machine mostFree = getMostFreeMachine();
+                job.setMachine(mostFree);
                 versionedAddressBook.addJob(job);
-                versionedAddressBook.addJobToMachineList(getMostFreeMachine(), job);
+                versionedAddressBook.addJobToMachineList(mostFree, job);
                 indicateJobListChanged();
                 indicateMachineListChanged();
                 return;
