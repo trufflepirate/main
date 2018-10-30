@@ -29,7 +29,8 @@ public class  AddMachineCommand extends Command {
             + PREFIX_MACHINE_STATUS + "ENABLED"
             + "\n"
             + "Names should only contain alphanumeric "
-            + "characters and spaces, and it should not be blank";
+            + "characters and spaces, and it should not be blank"
+            + "\nReserved names are : [ AUTO ]";
 
 
     public static final String MESSAGE_SUCCESS = "New machine added: %1$s";
