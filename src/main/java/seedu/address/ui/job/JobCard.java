@@ -113,7 +113,7 @@ public class JobCard extends UiPart<Region> {
         job.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
 
         jobDescription.setText(job.getJobNote().toString());
-        jobDuration.setText("ETC: " + (job.getDuration() + job.getMachine().getTotalDuration()) + (" hour(s)."));
+        jobDuration.setText("Time Remaining: " + (job.getDuration() + job.getMachine().getTotalDuration()) + (" hour(s)."));
 
 
         /* No longer need request deletion it goes under status now.

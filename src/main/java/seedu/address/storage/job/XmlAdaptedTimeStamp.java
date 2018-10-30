@@ -25,7 +25,7 @@ public class XmlAdaptedTimeStamp {
      * @param source future changes to this will not affect the created XmlAdaptedTimeStamp
      */
     public XmlAdaptedTimeStamp(TimeStamp source) {
-        this.timeStamp = source.showTime();
+        this.timeStamp = Long.toString(source.getDate().getTime());
     }
 
     /**
@@ -34,6 +34,6 @@ public class XmlAdaptedTimeStamp {
      * @throws IllegalValueException if there were any data constraints violated in the adapted job
      */
     public TimeStamp toModelType() throws IllegalValueException {
-        return new TimeStamp(timeStamp);
+        return new TimeStamp(Long.parseLong(timeStamp));
     }
 }
