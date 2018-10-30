@@ -2,7 +2,9 @@ package seedu.address.model.job;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.job.Status.ONGOING;
+import static seedu.address.model.job.Status.PAUSED;
 
+import java.sql.Time;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -39,7 +41,7 @@ public class Job {
     private Machine machine;
     private TimeStamp startTime;
     private Person owner;
-    private final String addedTime;
+    private final TimeStamp addedTime;
 
     //Data field
     private final Set<Tag> tags = new HashSet<>();
@@ -65,13 +67,13 @@ public class Job {
 
         this.status = Status.QUEUED;
         startTime = new TimeStamp();
-        addedTime = new TimeStamp().showTime();
+        addedTime = new TimeStamp();
     }
 
     /**
      * Recovers a job object from the storage file
      */
-    public Job(JobName name, Machine machine, Person owner, String addedTime, TimeStamp startTime, Priority priority,
+    public Job(JobName name, Machine machine, Person owner, TimeStamp addedTime, TimeStamp startTime, Priority priority,
                Status status, float duration, JobNote jobNote, Set<Tag> tags) {
         requireAllNonNull(name, machine, owner, tags);
         this.name = name;
@@ -86,27 +88,22 @@ public class Job {
         this.tags.addAll(tags);
     }
 
+
     /**
      * checks if a job has been finished
      */
     public boolean isFinished() throws JobNotStartedException {
 
         if (this.status == ONGOING) {
-            Integer[] current = new TimeStamp().getTime();
-            Integer[] start = startTime.getTime();
-            Integer[] deviation = new Integer[start.length];
-
-            for (int i = 0; i < start.length; i++) {
-                deviation[i] = current[i] - start[i];
-            }
-
-            double runningTime = 30.0 * 24.0 * deviation[0] + 24.0 * deviation[1] + deviation[2]
-                + 1 / 60 * deviation[3] + 1 / 3600 * deviation[4];
-
-            return runningTime > this.duration;
+            TimeStamp current = new TimeStamp();
+            return TimeStamp.timeDifference(startTime,current) > hoursToMillis(this.duration);
         } else {
             throw new JobNotStartedException();
         }
+    }
+
+    private static long hoursToMillis(float hours){
+        return (long) hours*60*60*1000;
     }
 
 
@@ -126,7 +123,13 @@ public class Job {
      * Used to start a job
      */
     public void startJob() {
-        this.status = ONGOING;
+        if (this.status==PAUSED) {
+            this.status = ONGOING;
+
+        } else {
+            this.status=ONGOING;
+
+        }
         this.startTime = new TimeStamp();
     }
 
@@ -135,6 +138,11 @@ public class Job {
      */
     public void restartJob() {
         this.startJob();
+    }
+
+    public void pauseJob(){
+        this.status = PAUSED;
+
     }
 
     public void cancelJob() {
@@ -173,7 +181,7 @@ public class Job {
         return machine;
     }
 
-    public String getAddedTime() {
+    public TimeStamp getAddedTime() {
         return addedTime;
     }
 
