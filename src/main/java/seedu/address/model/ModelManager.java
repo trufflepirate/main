@@ -53,10 +53,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
         filteredMachines = new FilteredList<>(versionedAddressBook.getMachineList());
         filteredAdmins = new FilteredList<>(versionedAddressBook.getAdminList());
-        //Queue list is the sorted list of jobs based on custom comparator
         filteredJobs = new FilteredList<>(versionedAddressBook.getJobList());
-        //TODO find a better way to change the data according to sorted jobs based on comparator
-        indicateJobListChanged();
     }
 
     public ModelManager() {
@@ -92,6 +89,10 @@ public class ModelManager extends ComponentManager implements Model {
     /** Raises an event to indicate the model has changed */
     private void indicateJobListChanged() {
         raise(new JobListChangedEvent(versionedAddressBook));
+        /**
+         * Since when job changes, it implicitly implies that machine list will change too
+         */
+        raise(new MachineListChangedEvent(versionedAddressBook));
     }
 
     // ============================== Person methods ======================================= //
@@ -160,6 +161,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(job);
         versionedAddressBook.removeJob(job);
         indicateJobListChanged();
+        indicateMachineListChanged();
     }
 
     @Override
@@ -167,6 +169,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(oldJob, updatedJob);
         versionedAddressBook.updateJob(oldJob, updatedJob);
         indicateJobListChanged();
+        indicateMachineListChanged();
     }
 
     @Override
@@ -180,6 +183,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(name);
         versionedAddressBook.startJob(name);
         indicateJobListChanged();
+        indicateMachineListChanged();
     }
 
     @Override
@@ -187,6 +191,8 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull();
         versionedAddressBook.cancelJob(name);
         indicateJobListChanged();
+        indicateMachineListChanged();
+
     }
 
     @Override
@@ -194,6 +200,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull();
         versionedAddressBook.restartJob(name);
         indicateJobListChanged();
+        indicateMachineListChanged();
     }
 
     @Override

@@ -28,10 +28,9 @@ public class  AddMachineCommand extends Command {
             + PREFIX_NAME + "JJPrinter "
             + PREFIX_MACHINE_STATUS + "ENABLED"
             + "\n"
-            + "Names should be unique, only contain alphanumeric "
-            + "characters and spaces, and it should not be blank";
-
-
+            + "Names should only contain alphanumeric "
+            + "characters and spaces, and it should not be blank"
+            + "\nReserved names are : [ AUTO ]";
     public static final String MESSAGE_SUCCESS = "New machine added: %1$s";
     public static final String MESSAGE_DUPLICATE_MACHINE = " This machine already exists in MakerManager address book";
     private static final String MESSAGE_ACCESS_DENIED =

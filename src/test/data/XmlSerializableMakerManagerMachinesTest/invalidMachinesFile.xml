@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<MakerManagerMachines>
+    <machines>
+        <status>ENABLED</status>
+    </machines>
+    <machines>
+        <machineName>TYPrinter</machineName>
+        <status>DISABLED</status>
+    </machines>
+</MakerManagerMachines>
