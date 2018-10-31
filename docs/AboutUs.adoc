@@ -35,7 +35,7 @@ image::teojunjie.png[width="150", align="left"]
 {empty}[http://github.com/teojunjie[github]] [<<teojunjie#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Code Quality
+Responsibilities: System Integration
 
 '''
 
