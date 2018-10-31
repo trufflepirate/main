@@ -9,6 +9,15 @@ import java.util.Date;
 public class TimeStamp {
     private Calendar calendar;
 
+    public TimeStamp() {
+        this.calendar = Calendar.getInstance();
+    }
+
+    public TimeStamp(long millis) {
+        this.calendar = Calendar.getInstance();
+        this.calendar.setTimeInMillis(millis);
+    }
+
     /**
      * Return the calendar
      *
@@ -22,15 +31,6 @@ public class TimeStamp {
         return this.getCalendar().getTime();
     }
 
-    public TimeStamp() {
-        this.calendar = Calendar.getInstance();
-    }
-
-    public TimeStamp(long millis) {
-        this.calendar = Calendar.getInstance();
-        this.calendar.setTimeInMillis(millis);
-    }
-
     public static boolean compareTime(TimeStamp time1, TimeStamp time2) {
         return time1.getDate().getTime() <= time2.getDate().getTime();
     }
@@ -41,6 +41,7 @@ public class TimeStamp {
 
     /**
      * Shows the time
+     *
      * @return
      */
     public String showTime() {

@@ -11,8 +11,8 @@ import java.util.Set;
 import javafx.collections.ObservableList;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.Status;
-import seedu.address.model.machine.exceptions.InvalidMachineStatusException;
 import seedu.address.model.job.UniqueJobList;
+import seedu.address.model.machine.exceptions.InvalidMachineStatusException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -154,8 +154,8 @@ public class Machine {
         }
 
         Machine otherMachine = (Machine) other;
-        return otherMachine.getName().equals(getName()) && otherMachine.getStatus().equals(getStatus()) && otherMachine.getJobs().equals(getJobs())
-            && otherMachine.getTags().equals(getTags());
+        return otherMachine.getName().equals(getName()) && otherMachine.getStatus().equals(getStatus()) && otherMachine
+            .getJobs().equals(getJobs()) && otherMachine.getTags().equals(getTags());
     }
 
     @Override
