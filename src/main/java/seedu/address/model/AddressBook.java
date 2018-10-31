@@ -105,7 +105,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     public void setAdminsSession(AdminSession adminsSession) {
-        if (!adminsSession.isAdminLoggedIn()) {
+        if (adminsSession.isAdminLoggedIn()) {
             this.adminSession.setLogin(adminsSession.getLoggedInAdmin());
         }
     }
@@ -395,45 +395,54 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //======================== get lists methods ===========================//
-    @Override public ObservableList<Person> getPersonList() {
+    @Override
+    public ObservableList<Person> getPersonList() {
         return persons.asUnmodifiableObservableList();
     }
 
-    @Override public ObservableList<Admin> getAdminList() {
+    @Override
+    public ObservableList<Admin> getAdminList() {
         return admins.asUnmodifiableObservableList();
     }
 
-    @Override public ObservableList<Job> getJobList() {
+    @Override
+    public ObservableList<Job> getJobList() {
         return jobs.asUnmodifiableObservableList();
     }
 
-    @Override public ObservableList<Machine> getMachineList() {
+    @Override
+    public ObservableList<Machine> getMachineList() {
         return machines.asUnmodifiableObservableList();
     }
 
-    @Override public ObservableList<Job> getQueueList() {
+    @Override
+    public ObservableList<Job> getQueueList() {
         return jobs.asUnmodifiableObservableSortedList();
     }
 
-    @Override public AdminSession getAdminSession() {
+    @Override
+    public AdminSession getAdminSession() {
         return adminSession;
     }
 
     //======================== others ================================//
-    @Override public boolean equals(Object other) {
+    @Override
+    public boolean equals(Object other) {
         return other == this // short circuit if same object
             || (other instanceof AddressBook // instanceof handles nulls
             && persons.equals(((AddressBook) other).persons));
         //TODO: refine later
     }
 
-    @Override public int hashCode() {
+    @Override
+    public int hashCode() {
         //TODO: Refine later
         return persons.hashCode();
     }
 
     //======================== util methods ================================//
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return persons.asUnmodifiableObservableList().size() + " persons";
         // TODO: refine later
     }

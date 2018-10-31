@@ -115,6 +115,7 @@ public class VersionedAddressBook extends AddressBook {
         }
         return (currentStatePointer == lastAdminLoginPointer - 1);
     }
+
     /**
      * Returns true if {@code redo()} the previous state is a login.
      */
@@ -125,7 +126,8 @@ public class VersionedAddressBook extends AddressBook {
         return (currentStatePointer == lastAdminLoginPointer);
     }
 
-    @Override public boolean equals(Object other) {
+    @Override
+    public boolean equals(Object other) {
         // short circuit if same object
         if (other == this) {
             return true;
