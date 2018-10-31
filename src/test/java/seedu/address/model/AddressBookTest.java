@@ -127,6 +127,13 @@ public class AddressBookTest {
         public ObservableList<Job> getJobList() {
             return jobs;
         }
+
+        @Override
+        public ObservableList<Job> getQueueList() {
+            return jobs;
+        }
+
+
     }
 
 }

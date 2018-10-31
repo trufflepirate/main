@@ -20,7 +20,7 @@ import seedu.address.ui.UiPart;
  * Panel containing the list of jobs
  */
 public class JobListPanel extends UiPart<Region> {
-    private static final String FXML = "JobListPanel.fxml";
+    private static final String FXML = "JobsListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(JobListPanel.class);
 
     @FXML

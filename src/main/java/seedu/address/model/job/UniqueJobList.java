@@ -3,10 +3,14 @@ package seedu.address.model.job;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.job.exceptions.JobNotFoundException;
 
@@ -15,7 +19,9 @@ import seedu.address.model.job.exceptions.JobNotFoundException;
  */
 public class UniqueJobList {
 
+    private static final Logger logger = LogsCenter.getLogger(UniqueJobList.class);
     private final ObservableList<Job> internalList = FXCollections.observableArrayList();
+
 
     /**
      * Returns true if the list contains an equivalent job as the given argument.
@@ -23,6 +29,7 @@ public class UniqueJobList {
     public boolean contains(Job toCheck) {
         requireNonNull(toCheck);
         return internalList.stream().anyMatch(toCheck::isSameJob);
+
     }
 
     /**
@@ -41,8 +48,9 @@ public class UniqueJobList {
      * Removes the equivalent job from the list.
      * The job must exist in the list.
      */
-    public void remove(Job toRemove) {
-        requireNonNull(toRemove);
+    public void remove(JobName toRemoveName) {
+        requireNonNull(toRemoveName);
+        Job toRemove = findJob(toRemoveName);
         if (!internalList.remove(toRemove)) {
             throw new JobNotFoundException();
         }
@@ -66,11 +74,43 @@ public class UniqueJobList {
         internalList.setAll(jobs);
     }
 
+    /**
+     * Returns a job by name
+     */
 
+    public Job get(String jobName) {
+        requireNonNull(jobName);
+        logger.info("Jobs size : " + Integer.toString(internalList.size()));
+        logger.info("Doing for loop for jobs");
+        for (Job j : internalList) {
+            logger.info(j.getJobName().fullName);
+            if (j.getJobName().fullName.equals(jobName)) {
+                logger.info("Job name matches!!");
+                Job changedJob = new Job(j.getJobName(),
+                                        j.getMachine(),
+                                        j.getOwner(),
+                                        j.getPriority(),
+                                        j.getDuration(),
+                                        j.getJobNote(),
+                                        j.getTags());
+                return changedJob;
+            }
+        }
+        return null;
+    }
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
     public ObservableList<Job> asUnmodifiableObservableList() {
+        return FXCollections.unmodifiableObservableList(internalList);
+    }
+
+    /**
+     * Returns a sorted list based on custom comparator
+     */
+
+    public ObservableList<Job> asUnmodifiableObservableSortedList() {
+        FXCollections.sort(internalList, new JobComparator());
         return FXCollections.unmodifiableObservableList(internalList);
     }
 
@@ -122,7 +162,7 @@ public class UniqueJobList {
             throw new JobNotFoundException();
         }
 
-        if (!target.isSameJob(editedJob) && contains(editedJob)) {
+        if (target.isSameJob(editedJob) && contains(editedJob)) {
             throw new DuplicateJobException();
         }
 
@@ -151,5 +191,49 @@ public class UniqueJobList {
     public void restartJob(JobName name) {
         requireAllNonNull();
         findJob(name).restartJob();
+    }
+
+    public void requestDeletion(JobName name) {
+        findJob(name).setStatus(Status.DELETING);
+    }
+
+
+
+    //============================= swap queue number operations =======================================//
+
+    /**
+     * Swaps job with @param jobname1 and job with @param jobname2
+     * in the queue and updates it
+     */
+    public void swapQueueNumber(JobName jobname1, JobName jobname2) {
+        Job job1 = findJob(jobname1);
+        Job job2 = findJob(jobname2);
+
+        int index1 = internalList.indexOf(job1);
+        int index2 = internalList.indexOf(job2);
+
+        if (index1 == -1 || index2 == -1) {
+            throw new JobNotFoundException();
+        }
+
+        if (job1.isSameJob(job2)) {
+            throw new DuplicateJobException();
+        }
+
+        Collections.swap(internalList, index1, index2);
+
+    }
+
+    //============================= queue operations =======================================//
+
+    /**
+     * Queue comparator for job
+     */
+    class JobComparator implements Comparator<Job> {
+
+        @Override
+        public int compare(Job j1, Job j2) {
+            return j2.hasHigherPriority(j1);
+        }
     }
 }

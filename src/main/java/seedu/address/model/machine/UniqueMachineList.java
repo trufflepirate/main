@@ -4,10 +4,13 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.job.Job;
 import seedu.address.model.machine.exceptions.DuplicateMachineException;
 import seedu.address.model.machine.exceptions.MachineNotFoundException;
 
@@ -18,6 +21,7 @@ import seedu.address.model.machine.exceptions.MachineNotFoundException;
  * A list of machines that ensures uniqueness in Machine names
  */
 public class UniqueMachineList {
+    private static final Logger logger = LogsCenter.getLogger(UniqueMachineList.class);
     private final ObservableList<Machine> internalList = FXCollections.observableArrayList();
 
     /**
@@ -42,7 +46,7 @@ public class UniqueMachineList {
     }
 
     /**
-     * Replaces the person {@code target} in the list with {@code editedMachine}.
+     * Replaces the machine {@code target} in the list with {@code editedMachine}.
      * {@code target} must exist in the list.
      * The person identity of {@code editedMachine} must not be the same as another existing person in the list.
      */
@@ -59,6 +63,39 @@ public class UniqueMachineList {
         }
 
         internalList.set(index, editedMachine);
+    }
+
+    /**
+     * Returns the machine, given the machineName
+     * @param machineName
+     * @return
+     */
+    public Machine findMachine(MachineName machineName) {
+        for (Machine machine: internalList) {
+            if (machine.getName().equals(machineName)) {
+                return machine;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Adds a job the machine {@code target} jobs list
+     */
+    public void addJobToMachineList(Machine target, Job job) {
+        requireAllNonNull(target, job);
+
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new MachineNotFoundException();
+        }
+
+        Machine updatedMachine = internalList.get(index);
+        updatedMachine.addJob(job);
+
+        internalList.set(index, updatedMachine);
+
+
     }
 
     /**
@@ -86,6 +123,25 @@ public class UniqueMachineList {
         }
     }
 
+    public Machine get(String machineName) {
+        requireNonNull(machineName);
+
+        logger.info("Doing for loop");
+        for (Machine m : internalList) {
+            logger.info(m.getName().fullName);
+            if (m.getName().fullName.equals(machineName)) {
+                logger.info("Machine name matches!!");
+                Machine changedMachine = new Machine(m.getName(),
+                                                    m.getJobs(),
+                                                    m.getTags(),
+                                                    m.getStatus());
+                return changedMachine;
+            }
+        }
+        return null;
+    }
+
+
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}
      */
@@ -107,5 +163,19 @@ public class UniqueMachineList {
         return true;
     }
 
+
+    public Machine getMostFreeMachine() {
+        float minimumTime = 999999;
+        Machine mostFreeMachine = null;
+
+        for (Machine machine : internalList) {
+            if (machine.getTotalDuration() < minimumTime) {
+                minimumTime = machine.getTotalDuration();
+                mostFreeMachine = machine;
+            }
+        }
+
+        return mostFreeMachine;
+    }
 
 }

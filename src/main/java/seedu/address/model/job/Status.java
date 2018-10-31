@@ -7,7 +7,8 @@ public enum Status {
     CANCELLED,
     FINISHED,
     ONGOING,
-    QUEUED;
+    QUEUED,
+    DELETING;
 
     public static final String MESSAGE_STATUS_CONSTRAINTS =
             "Job status should only be specified as CANCELLED, FINISHED, ONGOING or QUEUED";
@@ -17,7 +18,7 @@ public enum Status {
      */
     public static boolean isValidStatus(Status status) {
         boolean isValid = true;
-        if (status != CANCELLED || status != FINISHED || status != ONGOING || status != QUEUED) {
+        if (status != CANCELLED || status != FINISHED || status != ONGOING || status != QUEUED || status != DELETING) {
             isValid = false;
         }
         return isValid;

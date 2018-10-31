@@ -36,4 +36,12 @@ public interface ReadOnlyAddressBook {
      * This list will not contain any duplicate jobs
      */
     ObservableList<Job> getJobList();
+
+    /**
+     * Returns a unmodifiable view of queue
+     * This list should contain the highest priority job in descending order
+     */
+
+    ObservableList<Job> getQueueList();
+
 }

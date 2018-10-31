@@ -129,28 +129,38 @@ public class AddCommandTest {
         }
 
         @Override
-        public void startJob(JobName name) {
+        public void addJob(Job job) {
 
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void deleteJob(JobName job) {
+
+        }
+
+        public void startJob(JobName name) {
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override
         public void cancelJob(JobName name) {
-
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override
         public void restartJob(JobName name) {
-
-        }
-
-        @Override
-        public void addJob(Job job) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void deleteJob(Job job) {
-            throw new AssertionError("This method should not be called.");
+        public void swapJobs(JobName jobname1, JobName jobName2) {
+            return;
+        }
+
+        @Override
+        public void requestDeletion(JobName jobName) {
+
         }
 
         @Override
@@ -171,6 +181,11 @@ public class AddCommandTest {
         @Override
         public void updateMachine(Machine target, Machine editedMachine) {
             throw new AssertionError("This method should not be called");
+        }
+
+        @Override
+        public Machine getMostFreeMachine() {
+            return null;
         }
 
         @Override
@@ -226,6 +241,7 @@ public class AddCommandTest {
         public int numAdmins() {
             return 0;
         }
+
 
         @Override
         public ObservableList<Person> getFilteredPersonList() {
