@@ -57,14 +57,13 @@ Give the user guidance as to what (s)he can do with makerManager +
 
     Format: help
 
-.. *[NOT IMPLEMENTED YET]Adding Print:*
-Add a print job to the queue. +
+.. *Adding Job:*
+Add a printing job to the queue. +
 
-    Format: add_print n/PRINT_NAME m/MACHINE_NAME d/PRINT_DURATION [s/SPECIAL_NOTES] <p/PRIORITY>
+    Format: n/JOB_NAME m/MACHINE_NAME on/JOB_OWNER_NAME pr/JOB_PRIORITY d/JOB_DURATION jn/JOB_NOTE [t/TAG]
 
     Examples:  +
-    add_print n/myprint m/printer_1 d/13:00 s/use red filament p/1 +
-    add_print n/myprint m/printer_2 d/2:00 s/use blue filament
+    addJob n/iDCP m/TYPrinter on/TIAN YUAN pr/HIGH d/1.5 jn/This is for the iDCP project t/iDCP
 
 .. *Starting a Print:*
 Starts an existing print in the queue. +
@@ -90,7 +89,7 @@ Restart an existing print in the queue. +
     Examples:
     manageJob myPrint restart
 
-.. *[WIP]Listing Prints:*
+.. *Listing Prints:*
 Lists prints with optional filters. Currently lists persons. +
 
     Format: list [n/PRINT_NAME] [m/MACHINE_NAME] [s/SPECIAL_NOTES] [p/PRIORITY]
