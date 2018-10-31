@@ -2,16 +2,17 @@ package seedu.address.model.machine;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import javafx.collections.ObservableList;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.Status;
 import seedu.address.model.machine.exceptions.InvalidMachineStatusException;
+import seedu.address.model.job.UniqueJobList;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -36,8 +37,8 @@ public class Machine {
 
     // Data fields
     //Name is a placeholder. To be replaced by Job class in the future
-    private List<Job> jobs = new ArrayList<>();
-    private Set<Tag> tags = new HashSet<>();
+    private final UniqueJobList jobs = new UniqueJobList();
+    private final Set<Tag> tags = new HashSet<>();
 
 
     /**
@@ -46,7 +47,7 @@ public class Machine {
     public Machine(MachineName name, List<Job> jobs, Set<Tag> tags, MachineStatus status) {
         requireAllNonNull(name, jobs, tags);
         this.machineName = name;
-        this.jobs.addAll(jobs);
+        this.jobs.setJobs(jobs);
         this.tags.addAll(tags);
         this.status = status;
     }
@@ -72,7 +73,7 @@ public class Machine {
      * if modification is attempted.
      */
     public List<Job> getJobs() {
-        return Collections.unmodifiableList(jobs);
+        return Collections.unmodifiableList(jobs.asUnmodifiableObservableList());
     }
 
     /**
@@ -81,6 +82,14 @@ public class Machine {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags);
+    }
+
+    /**
+     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public ObservableList<Job> getJobsAsObeservableList() {
+        return jobs.asUnmodifiableObservableList();
     }
 
     /**
@@ -181,13 +190,12 @@ public class Machine {
     public float getTotalDuration() {
         float duration = 0;
 
-        for (Job job : jobs) {
+        for (Job job : jobs.asUnmodifiableObservableList()) {
             if (job.getStatus() == Status.ONGOING || job.getStatus() == Status.QUEUED) {
                 duration += job.getDuration();
             }
-        }
         return duration;
+        }
+
+
     }
-
-
-}
