@@ -2,7 +2,6 @@ package seedu.address.model.machine;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -10,6 +9,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.model.job.Job;
+import seedu.address.model.job.UniqueJobList;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -34,7 +34,7 @@ public class Machine {
 
     // Data fields
     //Name is a placeholder. To be replaced by Job class in the future
-    private final List<Job> jobs = new ArrayList<>();
+    private final UniqueJobList jobs = new UniqueJobList();
     private final Set<Tag> tags = new HashSet<>();
 
 
@@ -44,7 +44,7 @@ public class Machine {
     public Machine(MachineName name, List<Job> jobs, Set<Tag> tags, MachineStatus status) {
         requireAllNonNull(name, jobs, tags);
         this.machineName = name;
-        this.jobs.addAll(jobs);
+        this.jobs.setJobs(jobs);
         this.tags.addAll(tags);
         this.status = status;
     }
@@ -70,7 +70,7 @@ public class Machine {
      * if modification is attempted.
      */
     public List<Job> getJobs() {
-        return Collections.unmodifiableList(jobs);
+        return Collections.unmodifiableList(jobs.asUnmodifiableObservableList());
     }
 
     /**
@@ -169,7 +169,7 @@ public class Machine {
     public float getTotalDuration() {
         float duration = 0;
 
-        for (Job job : jobs) {
+        for (Job job : jobs.asUnmodifiableObservableList()) {
             duration += job.getDuration();
         }
         return duration;
