@@ -71,7 +71,11 @@ public class MachineListPanel extends UiPart<Region> {
      * Custom {@code ListCell} that displays the graphics of a {@code Machine} using a {@code MachineCard}
      */
     class MachineListViewCell extends ListCell<Machine> {
-        public ObservableList<Job> jobList;
+        private ObservableList<Job> jobList;
+
+        public ObservableList<Job> getJobList(){
+            return jobList;
+        }
 
         public MachineListViewCell(ObservableList<Job> jobList) {
             super();
@@ -86,7 +90,7 @@ public class MachineListPanel extends UiPart<Region> {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new MachineCard(machine, getIndex() + 1, this.jobList).getRoot());
+                setGraphic(new MachineCard(machine, getIndex() + 1, this.getJobList()).getRoot());
             }
         }
     }
