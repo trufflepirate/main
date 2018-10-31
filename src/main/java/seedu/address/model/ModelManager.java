@@ -90,6 +90,10 @@ public class ModelManager extends ComponentManager implements Model {
     /** Raises an event to indicate the model has changed */
     private void indicateJobListChanged() {
         raise(new JobListChangedEvent(versionedAddressBook));
+        /**
+         * Since when job changes, it implicitly implies that machine list will change too
+         */
+        raise(new MachineListChangedEvent(versionedAddressBook));
     }
 
     // ============================== Person methods ======================================= //
