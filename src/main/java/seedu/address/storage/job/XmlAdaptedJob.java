@@ -130,6 +130,7 @@ public class XmlAdaptedJob {
         }
 
         Person modelJobOwner = owner.toModelType();
+        TimeStamp modelAddedTime = addedTime.toModelType();
 
         if (priority == null) {
             throw new NullPointerException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Priority.class.getSimpleName()));
@@ -148,9 +149,6 @@ public class XmlAdaptedJob {
         }
 
         JobNote modelJobNote = new JobNote(note);
-
-        // Validation done in XmlAdaptedTag
-        String modelAddedTime = addedTime;
 
         TimeStamp modelStartTime = startTime.toModelType();
         Status modelStatus = status;
