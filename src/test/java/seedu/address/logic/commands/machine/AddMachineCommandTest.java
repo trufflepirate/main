@@ -1,6 +1,9 @@
-package seedu.address.logic.commands.admin;
+package seedu.address.logic.commands.machine;
 
+import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,19 +17,21 @@ import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.admin.Admin;
-import seedu.address.model.admin.AdminSession;
-import seedu.address.model.admin.Password;
 import seedu.address.model.admin.Username;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.MachineName;
 import seedu.address.model.person.Person;
+import seedu.address.testutil.MachineBuilder;
 
-public class AddAdminCommandTest {
+public class AddMachineCommandTest {
+
+    private static final CommandHistory EMPTY_COMMAND_HISTORY = new CommandHistory();
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -34,93 +39,62 @@ public class AddAdminCommandTest {
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test
-    public void constructor_nullUsername_throwsNullPointerException() {
+    public void constructor_nullMachine_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new AddAdminCommand(null, new Password("dummy"), new Password("dummy"));
+        new AddMachineCommand(null);
     }
 
     @Test
-    public void constructor_nullPassword_throwsNullPointerException() {
-        thrown.expect(NullPointerException.class);
-        new AddAdminCommand(new Username("dummy"), null, new Password("dummy"));
+    public void execute_machineAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingMachineAdded modelStub = new ModelStubAcceptingMachineAdded();
+        Machine validMachine = new MachineBuilder().build();
+
+        CommandResult commandResult = new AddMachineCommand(validMachine).execute(modelStub, commandHistory);
+
+        assertEquals(String.format(AddMachineCommand.MESSAGE_SUCCESS, validMachine), commandResult.feedbackToUser);
+        assertEquals(Arrays.asList(validMachine), modelStub.machinesAdded);
+        assertEquals(EMPTY_COMMAND_HISTORY, commandHistory);
     }
 
     @Test
-    public void constructor_nullVerify_throwsNullPointerException() {
-        thrown.expect(NullPointerException.class);
-        new AddAdminCommand(new Username("dummy"), new Password("dummy"), null);
-    }
-
-    @Test
-    public void execute_notLoggedIn_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStub();
+    public void execute_duplicateMachine_throwsCommandException() throws Exception {
+        Machine validMachine = new MachineBuilder().build();
+        AddMachineCommand addMachineCommand = new AddMachineCommand(validMachine);
+        ModelStub modelStub = new AddMachineCommandTest.ModelStubWithMachine(validMachine);
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddAdminCommand.MESSAGE_NO_ACCESS);
-        new AddAdminCommand(new Username("dummy"), new Password("dummy"), new Password("dummy"))
-            .execute(modelStub, commandHistory);
+        thrown.expectMessage(AddMachineCommand.MESSAGE_DUPLICATE_MACHINE);
+        addMachineCommand.execute(modelStub, commandHistory);
     }
 
     @Test
-    public void execute_passwordsNotMatching_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStub();
-        Admin admin = new Admin(new Username("dummy"), new Password("oldPW"));
-        modelStub.setLogin(admin);
+    public void equals() {
+        Machine m1 = new MachineBuilder().withName("Machine1").build();
+        Machine m2 = new MachineBuilder().withName("Machine2").build();
+        AddMachineCommand addm1Command = new AddMachineCommand(m1);
+        AddMachineCommand addm2Command = new AddMachineCommand(m2);
 
-        thrown.expect(CommandException.class);
-        thrown.expectMessage(AddAdminCommand.MESSAGE_PASSWORDS_DONT_MATCH);
-        new AddAdminCommand(new Username("dummy"), new Password("dummy1"), new Password("dummy2"))
-            .execute(modelStub, commandHistory);
+        // same object -> returns true
+        assertTrue(addm1Command.equals(addm1Command));
+
+        // same values -> returns true
+        AddMachineCommand addm1CommandCopy = new AddMachineCommand(m1);
+        assertTrue(addm1Command.equals(addm1CommandCopy));
+
+        // different types -> returns false
+        assertFalse(addm1Command.equals(1));
+
+        // null -> returns false
+        assertFalse(addm1Command.equals(null));
+
+        // different person -> returns false
+        assertFalse(addm1Command.equals(addm2Command));
     }
-
-    @Test
-    public void execute_alreadyExists_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStub();
-        Admin admin = new Admin(new Username("dummy"), new Password("oldPW"));
-        modelStub.setLogin(admin);
-        modelStub.addAdmin(new Admin(new Username("dummyUsername"), new Password("dummyPW")));
-
-        thrown.expect(CommandException.class);
-        thrown.expectMessage(AddAdminCommand.MESSAGE_ADMIN_ALREADY_EXISTS);
-        new AddAdminCommand(new Username("dummyUsername"), new Password("dummyPW"), new Password("dummyPW"))
-            .execute(modelStub, commandHistory);
-    }
-
-    @Test
-    public void execute_addAdminInvalidPassword_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStub();
-        Admin admin = new Admin(new Username("dummy"), new Password("oldPW"));
-        modelStub.setLogin(admin);
-
-        thrown.expect(CommandException.class);
-        thrown.expectMessage(AddAdminCommand.MESSAGE_NOT_VALID_PASSWORD);
-        new AddAdminCommand(new Username("dummyUsername"), new Password("invalidPW"), new Password("invalidPW"))
-            .execute(modelStub, commandHistory);
-    }
-
-    @Test
-    public void execute_addAdmin_success() throws Exception {
-        ModelStub modelStub = new ModelStub();
-        Admin admin = new Admin(new Username("dummy"), new Password("oldPW"));
-        modelStub.setLogin(admin);
-        Admin adminToAdd = new Admin(new Username("dummyUsername"), new Password("aaaAAA123$"));
-
-        CommandResult commandResult = new AddAdminCommand(new Username("dummyUsername"), new Password("aaaAAA123$"),
-            new Password("aaaAAA123$")).execute(modelStub, commandHistory);
-
-        assertEquals(commandResult.feedbackToUser, AddAdminCommand.MESSAGE_SUCCESS);
-        assertEquals(modelStub.adminList, Arrays.asList(adminToAdd));
-    }
-
-    //TODO: equals not tested
 
     /**
-     * A default model stub that has some methods failing
+     * A default model stub that have all of the methods failing.
      */
     private class ModelStub implements Model {
-        final ArrayList<Admin> adminList = new ArrayList<>();
-        final AdminSession adminSession = new AdminSession();
-
         @Override
         public void addPerson(Person person) {
             throw new AssertionError("This method should not be called.");
@@ -158,6 +132,7 @@ public class AddAdminCommandTest {
 
         @Override
         public void addJob(Job job) {
+
             throw new AssertionError("This method should not be called.");
         }
 
@@ -191,8 +166,13 @@ public class AddAdminCommandTest {
         }
 
         @Override
+        public Machine findMachine(MachineName machinename) {
+            return null;
+        }
+
+        @Override
         public void updateJob(Job oldJob, Job updatedJob) {
-            throw new AssertionError("This method should not be called.");
+
         }
 
         @Override
@@ -206,18 +186,8 @@ public class AddAdminCommandTest {
         }
 
         @Override
-        public void removeMachine(Machine machine) {
-            throw new AssertionError("This method should not be called");
-        }
-
-        @Override
-        public boolean hasMachine(Machine machine) {
-            return false;
-        }
-
-        @Override
         public void updateMachine(Machine target, Machine editedMachine) {
-
+            throw new AssertionError("This method should not be called");
         }
 
         @Override
@@ -226,8 +196,18 @@ public class AddAdminCommandTest {
         }
 
         @Override
+        public void removeMachine(Machine machine) {
+            throw new AssertionError("This method should not be called");
+        }
+
+        @Override
+        public boolean hasMachine(Machine machine) {
+            throw new AssertionError("This method should not be called");
+        }
+
+        @Override
         public void addAdmin(Admin admin) {
-            adminList.add(admin);
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override
@@ -241,12 +221,22 @@ public class AddAdminCommandTest {
         }
 
         @Override
+        public void setLogin(Admin admin) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void clearLogin() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean isLoggedIn() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public Admin findAdmin(Username username) {
-            for (Admin admin : adminList) {
-                if (admin.getUsername().equals(username)) {
-                    return admin;
-                }
-            }
             return null;
         }
 
@@ -254,6 +244,7 @@ public class AddAdminCommandTest {
         public int numAdmins() {
             return 0;
         }
+
 
         @Override
         public ObservableList<Person> getFilteredPersonList() {
@@ -292,9 +283,7 @@ public class AddAdminCommandTest {
 
         @Override
         public void updateFilteredJobList(Predicate<Job> predicate) {
-            throw new AssertionError("This method should not be called.");
         }
-
 
         @Override
         public boolean canUndoAddressBook() {
@@ -318,7 +307,7 @@ public class AddAdminCommandTest {
 
         @Override
         public void commitAddressBook() {
-            return;
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override
@@ -347,28 +336,99 @@ public class AddAdminCommandTest {
         }
 
         @Override
-        public void setLogin(Admin admin) {
-            adminSession.setLogin(admin);
-        }
-
-        @Override
-        public void clearLogin() {
-            adminSession.clearLogin();
-        }
-
-        @Override
-        public boolean isLoggedIn() {
-            return adminSession.isAdminLoggedIn();
-        }
-
-        @Override
-        public Machine findMachine(MachineName machinename) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
         public boolean isUndoLogin() {
             throw new AssertionError("This method should not be called.");
         }
     }
+
+    /**
+     * A Model stub that contains a single Machine.
+     */
+    private class ModelStubWithMachine extends ModelStub {
+        private final Machine machine;
+
+        ModelStubWithMachine(Machine machine) {
+            requireNonNull(machine);
+            this.machine = machine;
+        }
+
+        @Override
+        public boolean hasMachine(Machine machine) {
+            requireNonNull(machine);
+            return this.machine.isSameMachine(machine);
+        }
+
+        @Override
+        public Machine findMachine(MachineName machineName) {
+            requireNonNull(machineName);
+            if (this.machine.getName().equals(machineName)) {
+                return machine;
+            }
+            return null;
+        }
+
+        @Override
+        public boolean isLoggedIn() {
+            return true;
+        }
+    }
+
+    /**
+     * A Model stub that is logged in.
+     */
+    private class ModelStubNonAdmin extends ModelStub {
+        ModelStubNonAdmin() {
+        }
+
+        @Override
+        public boolean isLoggedIn() {
+            return true;
+        }
+    }
+
+    /**
+     * A Model stub that always accept the person being added.
+     */
+    private class ModelStubAcceptingMachineAdded extends ModelStub {
+        final ArrayList<Machine> machinesAdded = new ArrayList<>();
+
+        @Override
+        public boolean hasMachine(Machine machine) {
+            requireNonNull(machine);
+            return machinesAdded.stream().anyMatch(machine::isSameMachine);
+        }
+
+        @Override
+        public Machine findMachine(MachineName machineName) {
+            requireNonNull(machineName);
+            for (Machine machine : machinesAdded) {
+                if (machine.getName().equals(machineName)) {
+                    return machine;
+                }
+            }
+            return null;
+        }
+
+        @Override
+        public void addMachine(Machine machine) {
+            requireNonNull(machine);
+            machinesAdded.add(machine);
+        }
+
+        @Override
+        public void commitAddressBook() {
+            // called by {@code AddCommand#execute()}
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            return new AddressBook();
+        }
+
+        @Override
+        public boolean isLoggedIn() {
+            return true;
+        }
+    }
+
 }

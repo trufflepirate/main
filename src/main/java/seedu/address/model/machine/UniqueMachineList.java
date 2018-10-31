@@ -25,7 +25,7 @@ public class UniqueMachineList {
     private final ObservableList<Machine> internalList = FXCollections.observableArrayList();
 
     /**
-     * Returns true if the list contains an equivalent machineName
+     * Returns true if the list contains an equivalent machine
      */
     public boolean contains(Machine toCheck) {
         requireNonNull(toCheck);

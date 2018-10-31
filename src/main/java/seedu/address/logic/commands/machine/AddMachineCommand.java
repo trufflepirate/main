@@ -28,7 +28,7 @@ public class  AddMachineCommand extends Command {
             + PREFIX_NAME + "JJPrinter "
             + PREFIX_MACHINE_STATUS + "ENABLED"
             + "\n"
-            + "Names should only contain alphanumeric "
+            + "Names should be unique, only contain alphanumeric "
             + "characters and spaces, and it should not be blank";
 
 
@@ -51,7 +51,7 @@ public class  AddMachineCommand extends Command {
             throw new CommandException(MESSAGE_ACCESS_DENIED);
         }
 
-        if (model.hasMachine(machineToAdd)) {
+        if (!(model.findMachine(machineToAdd.getName()) == null)) {
             throw new CommandException(MESSAGE_DUPLICATE_MACHINE);
         }
 

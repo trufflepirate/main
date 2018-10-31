@@ -28,7 +28,7 @@ public class LogoutCommand extends Command {
             throw new CommandException(MESSAGE_NO_CURRENT_SESSION);
         }
         model.clearLogin();
-        model.commitAddressBook(); //TODO: Not sure what this does
+        model.adminLogoutCommitAddressBook();
 
         EventsCenter.getInstance().post(new AdminLogoutEvent());
         return new CommandResult(MESSAGE_SUCCESS);
