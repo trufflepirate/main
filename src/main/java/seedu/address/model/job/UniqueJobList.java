@@ -56,9 +56,26 @@ public class UniqueJobList {
         }
     }
 
+    /**
+     * Replaces the current job list with another joblist
+     */
     public void setJobs(UniqueJobList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
+    }
+
+
+    /**
+     * Replaces the contents of this list with {@code jobs}.
+     * {@code jobs} must not contain duplicate jobs.
+     */
+    public void setJobs(List<Job> jobs) {
+        requireAllNonNull(jobs);
+        if (!jobsAreUnique(jobs)) {
+            throw new DuplicateJobException();
+        }
+
+        internalList.setAll(jobs);
     }
 
     /**
@@ -82,22 +99,8 @@ public class UniqueJobList {
     }
 
     /**
-     * Replaces the contents of this list with {@code jobs}.
-     * {@code jobs} must not contain duplicate jobs.
-     */
-    public void setJobs(List<Job> jobs) {
-        requireAllNonNull(jobs);
-        if (!jobsAreUnique(jobs)) {
-            throw new DuplicateJobException();
-        }
-
-        internalList.setAll(jobs);
-    }
-
-    /**
      * Returns a job by name
      */
-
     public Job get(String jobName) {
         requireNonNull(jobName);
         logger.info("Jobs size : " + Integer.toString(internalList.size()));
@@ -118,6 +121,7 @@ public class UniqueJobList {
         }
         return null;
     }
+
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
@@ -128,7 +132,6 @@ public class UniqueJobList {
     /**
      * Returns a sorted list based on custom comparator
      */
-
     public ObservableList<Job> asUnmodifiableObservableSortedList() {
         FXCollections.sort(internalList, new JobComparator());
         return FXCollections.unmodifiableObservableList(internalList);

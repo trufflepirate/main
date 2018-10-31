@@ -1,7 +1,5 @@
 package seedu.address.model.job;
 
-import static seedu.address.model.person.Name.NAME_VALIDATION_REGEX;
-
 /**
  * Represents a Note Object for Job.
  */

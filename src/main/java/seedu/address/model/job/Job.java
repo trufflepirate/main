@@ -10,7 +10,6 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.model.job.exceptions.JobNotStartedException;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
@@ -86,20 +85,32 @@ public class Job {
         this.tags.addAll(tags);
     }
 
+    /**
+     * returns the job note
+     */
     public JobNote getJobNote() {
         return this.jobNote;
     }
 
+
+    /**
+     * returns the job duration
+     */
     public float getDuration() {
         return this.duration;
     }
 
+
+    /**
+     * set the duration to the input new one
+     * @param duration
+     */
     public void setDuration(float duration) {
         this.duration = duration;
     }
 
     /**
-     * Used to start a job
+     * starts a job
      */
     public void startJob() {
         this.status = ONGOING;
@@ -107,56 +118,101 @@ public class Job {
     }
 
     /**
-     * Used in case of failed prints
+     * restarts a job once the job is cancelled
      */
     public void restartJob() {
         this.startJob();
     }
 
+
+    /**
+     * cancel the printing of the job
+     */
     public void cancelJob() {
         this.status = Status.CANCELLED;
     }
 
+    /**
+     * finishes a job
+     */
     public void finishJob() {
         this.status = Status.FINISHED;
     }
 
+    /**
+     * sets the note of the job by a new job
+     * @param jobNote
+     */
     public void setJobNote(String jobNote) {
         this.jobNote.changeNote(jobNote);
     }
 
+    /**
+     * returns the priority of the job
+     * @return
+     */
     public Priority getPriority() {
         return priority;
     }
 
+    /**
+     * sets the priority of the job
+     * @param priority
+     */
     public void setPriority(Priority priority) {
         this.priority = priority;
     }
 
+    /**
+     * returns the status of the job
+     * @return
+     */
     public Status getStatus() {
         return this.status;
     }
 
+    /**
+     * sets the status of the job
+     * @param status
+     */
     public void setStatus(Status status) {
         this.status = status;
     }
 
+
+    /**
+     * returns the name of the job
+     * @return
+     */
     public JobName getJobName() {
         return name;
     }
 
+
+    /**
+     * returns the machine object of the job
+     */
     public Machine getMachine() {
         return machine;
     }
 
+    /**
+     * returns the time the job is added
+     */
     public String getAddedTime() {
         return addedTime;
     }
 
+    /**
+     * returns the timestamp of the job being executed
+     */
     public TimeStamp getStartTime() {
         return startTime;
     }
 
+    /**
+     * returns the owner object of the job
+     */
     public Person getOwner() {
         return owner;
     }
@@ -169,19 +225,33 @@ public class Job {
         return Collections.unmodifiableSet(tags);
     }
 
+    /**
+     * Adds an extra note to the job
+     */
     public void addNote(String addition) {
         this.jobNote.addNote(addition);
     }
 
-
+    /**
+     * changes the name of the job to a new name
+     * @param newName
+     */
     public void setName(String newName) {
         name = new JobName(newName);
     }
 
+    /**
+     * assigns a new machine to the job
+     * @param newMachine
+     */
     public void setMachine(Machine newMachine) {
         machine = newMachine;
     }
 
+    /**
+     * changes the owner of the job to a new one
+     * @param newOwner
+     */
     public void setOwner(Person newOwner) {
         owner = newOwner;
     }
