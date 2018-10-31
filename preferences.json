@@ -11,4 +11,8 @@
   "makerManagerMachinesFilePath" : "data\\makerManagerMachines.xml",
   "makerManagerAdminsFilePath" : "data\\makerManagerAdmins.xml",
   "makerManagerJobsFilePath" : "data\\makerManagerJobs.xml"
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes
