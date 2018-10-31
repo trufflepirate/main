@@ -1,13 +1,5 @@
 package seedu.address.model.job;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
-import seedu.address.testutil.builders.JobBuilder;
-import seedu.address.testutil.builders.MachineBuilder;
-import seedu.address.testutil.builders.PersonBuilder;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_JOBADDEDTIME_SOMEDAY;
@@ -19,6 +11,14 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_JOBSTATUS_CANCE
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.testutil.testdata.TypicalJobs.NEWPROJECT;
 import static seedu.address.testutil.testdata.ValidJobs.IDCP;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import seedu.address.testutil.builders.JobBuilder;
+import seedu.address.testutil.builders.MachineBuilder;
+import seedu.address.testutil.builders.PersonBuilder;
 
 public class JobTest {
     @Rule
