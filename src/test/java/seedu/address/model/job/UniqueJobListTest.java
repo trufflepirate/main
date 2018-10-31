@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.testdata.TypicalJobs.IDCP;
-import static seedu.address.testutil.testdata.TypicalJobs.newProject;
+import static seedu.address.testutil.testdata.TypicalJobs.NEWPROJECT;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -83,18 +83,18 @@ public class UniqueJobListTest {
     @Test
     public void setJob_editedJobHasDifferentIdentity_success() {
         uniqueJobList.add(IDCP);
-        uniqueJobList.setJob(IDCP, newProject);
+        uniqueJobList.setJob(IDCP, NEWPROJECT);
         UniqueJobList expectedUniqueJobList = new UniqueJobList();
-        expectedUniqueJobList.add(newProject);
+        expectedUniqueJobList.add(NEWPROJECT);
         assertEquals(expectedUniqueJobList, uniqueJobList);
     }
 
     @Test
     public void setJob_editedJobHasNonUniqueIdentity_throwsDuplicateJobException() {
         uniqueJobList.add(IDCP);
-        uniqueJobList.add(newProject);
+        uniqueJobList.add(NEWPROJECT);
         thrown.expect(DuplicateJobException.class);
-        uniqueJobList.setJob(IDCP, newProject);
+        uniqueJobList.setJob(IDCP, NEWPROJECT);
     }
 
     @Test
@@ -127,7 +127,7 @@ public class UniqueJobListTest {
     public void setJobs_uniqueJobList_replacesOwnListWithProvidedUniqueJobList() {
         uniqueJobList.add(IDCP);
         UniqueJobList expectedUniqueJobList = new UniqueJobList();
-        expectedUniqueJobList.add(newProject);
+        expectedUniqueJobList.add(NEWPROJECT);
         uniqueJobList.setJobs(expectedUniqueJobList);
         assertEquals(expectedUniqueJobList, uniqueJobList);
     }
@@ -141,10 +141,10 @@ public class UniqueJobListTest {
     @Test
     public void setJobs_list_replacesOwnListWithProvidedList() {
         uniqueJobList.add(IDCP);
-        List<Job> jobList = Collections.singletonList(newProject);
+        List<Job> jobList = Collections.singletonList(NEWPROJECT);
         uniqueJobList.setJobs(jobList);
         UniqueJobList expectedUniqueJobList = new UniqueJobList();
-        expectedUniqueJobList.add(newProject);
+        expectedUniqueJobList.add(NEWPROJECT);
         assertEquals(expectedUniqueJobList, uniqueJobList);
     }
 

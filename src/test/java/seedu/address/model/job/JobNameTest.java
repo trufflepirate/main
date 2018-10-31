@@ -1,6 +1,7 @@
 package seedu.address.model.job;
 
 import org.junit.Test;
+
 import seedu.address.testutil.Assert;
 
 import static org.junit.Assert.assertFalse;

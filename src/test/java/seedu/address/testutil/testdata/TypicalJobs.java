@@ -1,7 +1,6 @@
 package seedu.address.testutil.testdata;
 
 import seedu.address.model.job.Job;
-import seedu.address.model.job.JobOwner;
 import seedu.address.model.job.Priority;
 import seedu.address.model.job.Status;
 import seedu.address.model.machine.MachineStatus;
@@ -9,6 +8,9 @@ import seedu.address.testutil.builders.JobBuilder;
 import seedu.address.testutil.builders.MachineBuilder;
 import seedu.address.testutil.builders.PersonBuilder;
 
+/**
+ * A utility class containing a list of {@code Job} objects to be used in tests.
+ */
 public class TypicalJobs {
 
     public static final Job IDCP = new JobBuilder()
@@ -25,7 +27,7 @@ public class TypicalJobs {
             .withStatus(Status.QUEUED)
             .build();
 
-    public static final Job newProject = new JobBuilder()
+    public static final Job NEWPROJECT = new JobBuilder()
             .withName("newProject")
             .withMachine(new MachineBuilder()
                     .withMachineName("TyPrinter")
@@ -39,7 +41,7 @@ public class TypicalJobs {
             .withStatus(Status.FINISHED)
             .build();
 
-    public static final Job bumberbee = new JobBuilder()
+    public static final Job BUMBERBEE = new JobBuilder()
             .withName("bumblebee")
             .withMachine(new MachineBuilder()
                     .withMachineName("BumberbeePrinter")

@@ -3,7 +3,12 @@ package seedu.address.testutil.builders;
 import java.util.HashSet;
 import java.util.Set;
 
-import seedu.address.model.job.*;
+import seedu.address.model.job.Job;
+import seedu.address.model.job.JobName;
+import seedu.address.model.job.JobNote;
+import seedu.address.model.job.Priority;
+import seedu.address.model.job.Status;
+import seedu.address.model.job.TimeStamp;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
@@ -131,7 +136,7 @@ public class JobBuilder {
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Person} that we are building.
      */
-    public JobBuilder withTags(String ... tags) {
+    public JobBuilder withTags(String... tags) {
         this.tags = SampleDataUtil.getTagSet(tags);
         return this;
     }

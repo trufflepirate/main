@@ -18,14 +18,17 @@ public class JobNameContainsKeywordsPredicateTest {
         List<String> firstPredicateKeywordList = Collections.singletonList("first");
         List<String> secondPredicateKeywordList = Arrays.asList("first", "second");
 
-        JobNameContainsKeywordsPredicate firstPredicate = new JobNameContainsKeywordsPredicate(firstPredicateKeywordList);
-        JobNameContainsKeywordsPredicate secondPredicate = new JobNameContainsKeywordsPredicate(secondPredicateKeywordList);
+        JobNameContainsKeywordsPredicate firstPredicate = new JobNameContainsKeywordsPredicate(
+            firstPredicateKeywordList);
+        JobNameContainsKeywordsPredicate secondPredicate = new JobNameContainsKeywordsPredicate(
+            secondPredicateKeywordList);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        JobNameContainsKeywordsPredicate firstPredicateCopy = new JobNameContainsKeywordsPredicate(firstPredicateKeywordList);
+        JobNameContainsKeywordsPredicate firstPredicateCopy = new JobNameContainsKeywordsPredicate(
+            firstPredicateKeywordList);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -41,8 +44,8 @@ public class JobNameContainsKeywordsPredicateTest {
     @Test
     public void test_jobJobNameContainsKeywords_returnsTrue() {
         // One keyword
-        JobNameContainsKeywordsPredicate predicate =
-                new JobNameContainsKeywordsPredicate(Collections.singletonList("IDCP"));
+        JobNameContainsKeywordsPredicate predicate = new JobNameContainsKeywordsPredicate(
+            Collections.singletonList("IDCP"));
         assertTrue(predicate.test(new JobBuilder().withName("IDCP Project").build()));
 
         // Multiple keywords
