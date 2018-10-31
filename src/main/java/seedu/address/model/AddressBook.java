@@ -386,6 +386,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         jobs.swapQueueNumber(jobName1, jobName2);
     }
 
+    /**
+     * Changes the status of the job to FINISHED
+     * @param job
+     */
     public void finishJob(Job job) {
         requireNonNull(job);
         jobs.finishJob(job);

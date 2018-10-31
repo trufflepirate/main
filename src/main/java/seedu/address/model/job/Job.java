@@ -4,7 +4,6 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.job.Status.ONGOING;
 import static seedu.address.model.job.Status.PAUSED;
 
-import java.sql.Time;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -96,14 +95,14 @@ public class Job {
 
         if (this.status == ONGOING) {
             TimeStamp current = new TimeStamp();
-            return TimeStamp.timeDifference(startTime,current) > hoursToMillis(this.duration);
+            return TimeStamp.timeDifference(startTime, current) > hoursToMillis(this.duration);
         } else {
             throw new JobNotStartedException();
         }
     }
 
-    private static long hoursToMillis(float hours){
-        return (long) hours*60*60*1000;
+    private static long hoursToMillis(float hours) {
+        return (long) hours * 60 * 60 * 1000;
     }
 
 
@@ -123,12 +122,10 @@ public class Job {
      * Used to start a job
      */
     public void startJob() {
-        if (this.status==PAUSED) {
+        if (this.status == PAUSED) {
             this.status = ONGOING;
-
         } else {
-            this.status=ONGOING;
-
+            this.status = ONGOING;
         }
         this.startTime = new TimeStamp();
     }
@@ -140,7 +137,7 @@ public class Job {
         this.startJob();
     }
 
-    public void pauseJob(){
+    public void pauseJob() {
         this.status = PAUSED;
     }
 

@@ -19,7 +19,8 @@ public enum Status {
      */
     public static boolean isValidStatus(Status status) {
         boolean isValid = true;
-        if (status != CANCELLED || status != FINISHED || status != ONGOING || status != QUEUED || status != DELETING || status != PAUSED) {
+        if (status != CANCELLED || status != FINISHED || status != ONGOING || status != QUEUED || status != DELETING
+                || status != PAUSED) {
             isValid = false;
         }
         return isValid;
