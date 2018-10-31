@@ -330,7 +330,9 @@ public class Job {
      */
     @Override
     public boolean equals(Object other) {
-        if(! (other instanceof Job)) return false;
+        if (!(other instanceof Job)) {
+            return false;
+        }
 
         Job otherJob = (Job) other;
 
