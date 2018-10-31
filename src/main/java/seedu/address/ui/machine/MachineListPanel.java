@@ -73,13 +73,13 @@ public class MachineListPanel extends UiPart<Region> {
     class MachineListViewCell extends ListCell<Machine> {
         private ObservableList<Job> jobList;
 
-        public ObservableList<Job> getJobList(){
-            return jobList;
-        }
-
         public MachineListViewCell(ObservableList<Job> jobList) {
             super();
             this.jobList = jobList;
+        }
+
+        public ObservableList<Job> getJobList() {
+            return jobList;
         }
 
         @Override
