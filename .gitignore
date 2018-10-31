@@ -16,8 +16,5 @@ classes/
 /data/
 src/main/resources/docs/
 out/
-/src/test/data/XmlSerializableAddressBookTest/
-/src/test/data/XmlSerializableMakerManagerJobsTest/
-/src/test/data/XmlSerializableMakerManagerMachinesTest/
 /config\.json
 preferences\.json
