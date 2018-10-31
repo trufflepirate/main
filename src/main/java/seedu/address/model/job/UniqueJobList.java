@@ -224,6 +224,10 @@ public class UniqueJobList {
 
     }
 
+    public void finishJob(Job job) {
+        job.finishJob();
+    }
+
     //============================= queue operations =======================================//
 
     /**
