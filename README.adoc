@@ -13,13 +13,27 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-* This is a desktop maker space manager application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* It is a Java application intended for maker spaces to manage primarily 3-D prints but has capabilities to handle other forms of manufacturing machines as well.
-* It is *written in OOP fashion*. It provides a *reasonably well-written* code that is based on https://github.com/se-edu/addressbook-level4[Address Book (level 4)], a sample java program written for students to learn software engineering.
-* Features:
-** A GUI for displaying all available machines at a glance.
+* This is a desktop application for managing maker spaces. It has a GUI but most of the user interactions happen through a CLI (Command Line Interface).
+* It is a Java application intended for managing 3-D prints, but has capabilities to handle other forms of manufacturing machines as well.
+* It is *written in OOP fashion*. It provides a *reasonably well-written* code that is based on https://github.com/se-edu/addressbook-level4[Address Book (level 4)].
+* *Features*:
+** A GUI for displaying all available machines at a glance.+
+** Two different access levels, for two separate target profiles (see below)
+** Ability to manipulate prints, queues, and machines, depending on access level
 ** More test cases, including automated GUI testing.
 ** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using Travis CI.
+
+* Target user profile:
+** There will be two categories of users for the app. The main user will be students using the makerspace. The second user will be the lab manager.
+
+*** has a need to manage a significant number shared devices (lab manager)
+*** has a need to prioritize and queue certain print jobs over others (lab manager)
+*** has a need to look up when certain devices will be free for use (students)
+*** prefers typing over mouse input
+*** is reasonably comfortable using CLI apps
+
+* *Value proposition*: see 3D printers are being used, and the estimated time left until the equipment will be free. This will reduce system loss and increase the efficiency of all parties involved.
+
 
 == Site Map
 
@@ -31,7 +45,7 @@ endif::[]
 
 * Some parts of this sample application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
 _Marco Jakob_.
-* Libraries used: https://github.com/TestFX/TestFX[TextFX], https://bitbucket.org/controlsfx/controlsfx/[ControlsFX], https://github.com/FasterXML/jackson[Jackson], https://github.com/google/guava[Guava], https://github.com/junit-team/junit5[JUnit5]
+* Libraries used: https://github.com/TestFX/TestFX[TextFX], https://bitbucket.org/controlsfx/controlsfx/[ControlsFX], https://github.com/FasterXML/jackson[Jackson], https://github.com/google/guava[Guava], https://github.com/junit-team/junit5[JUnit5], https://www.mindrot.org/projects/jBCrypt/[jBcrypt]
 * Original code base: https://github.com/se-edu/addressbook-level4[Address Book (level 4)] project created by SE-EDU initiative at https://github.com/se-edu/
 == Licence : link:LICENSE[MIT]
 
