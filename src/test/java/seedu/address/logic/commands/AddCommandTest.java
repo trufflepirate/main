@@ -321,18 +321,23 @@ public class AddCommandTest {
         }
 
         @Override
-        public boolean isNotRedoLogin() {
+        public boolean isRedoLogin() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public boolean isNotUndoLogout() {
+        public boolean isUndoLogout() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
         public Admin currentlyLoggedIn() {
             return null;
+        }
+
+        @Override
+        public boolean isUndoLogin() {
+            throw new AssertionError("This method should not be called.");
         }
     }
 

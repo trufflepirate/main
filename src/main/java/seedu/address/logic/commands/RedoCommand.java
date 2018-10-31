@@ -25,7 +25,7 @@ public class RedoCommand extends Command {
             throw new CommandException(MESSAGE_FAILURE);
         }
 
-        if (!model.isNotRedoLogin()) {
+        if (model.isRedoLogin()) {
             throw new CommandException(MESSAGE_REDO_DENIED);
         }
 

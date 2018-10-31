@@ -286,12 +286,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         return machines.getMostFreeMachine();
     }
 
-
-    public Machine getMachineByName(String machineName) {
-        requireNonNull(machineName);
-        return machines.get(machineName);
-    }
-
     /**
      * Returns the machine that Machines the MachineName
      */

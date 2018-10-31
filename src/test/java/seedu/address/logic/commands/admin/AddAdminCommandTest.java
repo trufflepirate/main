@@ -58,7 +58,7 @@ public class AddAdminCommandTest {
         thrown.expect(CommandException.class);
         thrown.expectMessage(AddAdminCommand.MESSAGE_NO_ACCESS);
         new AddAdminCommand(new Username("dummy"), new Password("dummy"), new Password("dummy"))
-                .execute(modelStub, commandHistory);
+            .execute(modelStub, commandHistory);
     }
 
     @Test
@@ -70,7 +70,7 @@ public class AddAdminCommandTest {
         thrown.expect(CommandException.class);
         thrown.expectMessage(AddAdminCommand.MESSAGE_PASSWORDS_DONT_MATCH);
         new AddAdminCommand(new Username("dummy"), new Password("dummy1"), new Password("dummy2"))
-                .execute(modelStub, commandHistory);
+            .execute(modelStub, commandHistory);
     }
 
     @Test
@@ -83,7 +83,7 @@ public class AddAdminCommandTest {
         thrown.expect(CommandException.class);
         thrown.expectMessage(AddAdminCommand.MESSAGE_ADMIN_ALREADY_EXISTS);
         new AddAdminCommand(new Username("dummyUsername"), new Password("dummyPW"), new Password("dummyPW"))
-                .execute(modelStub, commandHistory);
+            .execute(modelStub, commandHistory);
     }
 
     @Test
@@ -94,9 +94,8 @@ public class AddAdminCommandTest {
 
         thrown.expect(CommandException.class);
         thrown.expectMessage(AddAdminCommand.MESSAGE_NOT_VALID_PASSWORD);
-        new AddAdminCommand(new Username("dummyUsername"),
-                new Password("invalidPW"), new Password("invalidPW"))
-                .execute(modelStub, commandHistory);
+        new AddAdminCommand(new Username("dummyUsername"), new Password("invalidPW"), new Password("invalidPW"))
+            .execute(modelStub, commandHistory);
     }
 
     @Test
@@ -106,9 +105,8 @@ public class AddAdminCommandTest {
         modelStub.setLogin(admin);
         Admin adminToAdd = new Admin(new Username("dummyUsername"), new Password("aaaAAA123$"));
 
-        CommandResult commandResult = new AddAdminCommand(new Username("dummyUsername"),
-                new Password("aaaAAA123$"), new Password("aaaAAA123$"))
-                .execute(modelStub, commandHistory);
+        CommandResult commandResult = new AddAdminCommand(new Username("dummyUsername"), new Password("aaaAAA123$"),
+            new Password("aaaAAA123$")).execute(modelStub, commandHistory);
 
         assertEquals(commandResult.feedbackToUser, AddAdminCommand.MESSAGE_SUCCESS);
         assertEquals(modelStub.adminList, Arrays.asList(adminToAdd));
@@ -244,7 +242,7 @@ public class AddAdminCommandTest {
 
         @Override
         public Admin findAdmin(Username username) {
-            for (Admin admin: adminList) {
+            for (Admin admin : adminList) {
                 if (admin.getUsername().equals(username)) {
                     return admin;
                 }
@@ -323,39 +321,53 @@ public class AddAdminCommandTest {
             return;
         }
 
-        @Override public void adminLoginCommitAddressBook() {
+        @Override
+        public void adminLoginCommitAddressBook() {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override public void adminLogoutCommitAddressBook() {
+        @Override
+        public void adminLogoutCommitAddressBook() {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override public boolean isNotRedoLogin() {
+        @Override
+        public boolean isRedoLogin() {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override public boolean isNotUndoLogout() {
+        @Override
+        public boolean isUndoLogout() {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override public Admin currentlyLoggedIn() {
+        @Override
+        public Admin currentlyLoggedIn() {
             return null;
         }
 
-        @Override public void setLogin(Admin admin) {
+        @Override
+        public void setLogin(Admin admin) {
             adminSession.setLogin(admin);
         }
 
-        @Override public void clearLogin() {
+        @Override
+        public void clearLogin() {
             adminSession.clearLogin();
         }
 
-        @Override public boolean isLoggedIn() {
+        @Override
+        public boolean isLoggedIn() {
             return adminSession.isAdminLoggedIn();
         }
 
-        @Override public Machine findMachine(MachineName machinename) {
+        @Override
+        public Machine findMachine(MachineName machinename) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean isUndoLogin() {
             throw new AssertionError("This method should not be called.");
         }
     }

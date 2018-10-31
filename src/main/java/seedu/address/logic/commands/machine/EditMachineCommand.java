@@ -43,7 +43,7 @@ public class EditMachineCommand extends Command {
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_MACHINE = "This Machine already exists in the address book.";
     private static final String MESSAGE_ACCESS_DENIED =
-        "Non admin user is not allowed to add a machine to maker manager";
+        "Non-admin user is not allowed to edit a machine in maker manager";
     private final MachineName machineName;
     private final EditMachineDescriptor editMachineDescriptor;
 

@@ -227,12 +227,17 @@ public interface Model {
      */
     void adminLogoutCommitAddressBook();
     /**
-     * Returns true if next state is not a login.
+     * Returns true if next state is a login.
      */
-    boolean isNotRedoLogin();
+    boolean isRedoLogin();
     /**
-     * Returns true if previous state is not a logout.
+     * Returns true if previous state is a logout.
      */
-    boolean isNotUndoLogout();
+    boolean isUndoLogout();
+    /**
+     * Returns True if previos state was a login
+     * @return boolean
+     */
+    boolean isUndoLogin();
 
 }

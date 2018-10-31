@@ -115,9 +115,8 @@ public class UpdatePasswordCommandTest {
             new Password("$2a$10$Cj1nZuVAdZIysLK24P8zBe9gRBK.hagqzZJ0zF7i0UFlxlplRCI7e")));
         //weird string is hash for "admin2"
 
-        CommandResult commandResult =
-            new UpdatePasswordCommand(new Username("dummy"), new Password("admin2"), new Password("aaaAAA1$"),
-                new Password("aaaAAA1$")).execute(modelStub, commandHistory);
+        CommandResult commandResult = new UpdatePasswordCommand(new Username("dummy"), new Password("admin2"),
+            new Password("aaaAAA1$"), new Password("aaaAAA1$")).execute(modelStub, commandHistory);
 
         assertEquals(commandResult.feedbackToUser, UpdatePasswordCommand.MESSAGE_SUCCESS);
         assertEquals(modelStub.isLoggedIn(), true);
@@ -346,12 +345,12 @@ public class UpdatePasswordCommandTest {
         }
 
         @Override
-        public boolean isNotRedoLogin() {
+        public boolean isRedoLogin() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public boolean isNotUndoLogout() {
+        public boolean isUndoLogout() {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -377,6 +376,11 @@ public class UpdatePasswordCommandTest {
 
         @Override
         public Machine findMachine(MachineName machinename) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean isUndoLogin() {
             throw new AssertionError("This method should not be called.");
         }
     }

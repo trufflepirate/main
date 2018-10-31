@@ -28,7 +28,7 @@ public class  AddMachineCommand extends Command {
             + PREFIX_NAME + "JJPrinter "
             + PREFIX_MACHINE_STATUS + "ENABLED"
             + "\n"
-            + "Names should unique, only contain alphanumeric "
+            + "Names should be unique, only contain alphanumeric "
             + "characters and spaces, and it should not be blank";
 
 
