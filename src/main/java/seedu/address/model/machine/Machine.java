@@ -138,11 +138,13 @@ public class Machine {
         throw new InvalidMachineStatusException();
 
     }
+
     /**
      * Returns true if both machines have the same identity and data fields.
      * This defines a stronger notion of equality between two persons.
      */
-    @Override public boolean equals(Object other) {
+    @Override
+    public boolean equals(Object other) {
         if (other == this) {
             return true;
         }
@@ -152,18 +154,18 @@ public class Machine {
         }
 
         Machine otherMachine = (Machine) other;
-        return otherMachine.getName().equals(getName())
-                && otherMachine.getStatus().equals(getStatus())
-                && otherMachine.getJobs().equals(getJobs())
-                && otherMachine.getTags().equals(getTags());
+        return otherMachine.getName().equals(getName()) && otherMachine.getStatus().equals(getStatus()) && otherMachine.getJobs().equals(getJobs())
+            && otherMachine.getTags().equals(getTags());
     }
 
-    @Override public int hashCode() {
+    @Override
+    public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(machineName, jobs, tags);
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName()).append(" Tags: ");
         getTags().forEach(builder::append);
@@ -194,8 +196,8 @@ public class Machine {
             if (job.getStatus() == Status.ONGOING || job.getStatus() == Status.QUEUED) {
                 duration += job.getDuration();
             }
-        return duration;
         }
-
+        return duration;
 
     }
+}
