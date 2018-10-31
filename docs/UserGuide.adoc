@@ -57,17 +57,16 @@ Give the user guidance as to what (s)he can do with makerManager +
 
     Format: help
 
-.. *[NOT IMPLEMENTED YET]Adding Print:*
-Add a print job to the queue. +
+.. *Adding a print Job:*
+Adds a print job to the machine's queue. +
 
-    Format: add_print n/PRINT_NAME m/MACHINE_NAME d/PRINT_DURATION [s/SPECIAL_NOTES] <p/PRIORITY>
+    Format: addJob n/JOB NAME m/MACHINE NAME on/JOB OWNER NAME pr/JOB PRIORITY d/JOB DURATION jn/JOB NOTE [t/TAG]
 
-    Examples:  +
-    add_print n/myprint m/printer_1 d/13:00 s/use red filament p/1 +
-    add_print n/myprint m/printer_2 d/2:00 s/use blue filament
+    Examples:
+    addJob n/iDCP m/TYPrinter on/TIAN YUAN pr/HIGH d/1.5 jn/This is for the iDCP project t/iDCP
 
-.. *Starting a Print:*
-Starts an existing print in the queue. +
+.. *Starting a print Job:*
+Starts an existing print job in the queue. +
 
     Format: manageJob JOBNAME start
 
@@ -90,6 +89,23 @@ Restart an existing print in the queue. +
     Examples:
     manageJob myPrint restart
 
+.. *Deleting a Print:*
+deletes an existing print in the queue. +
+
+    Format: manageJob JOBNAME delete
+
+    Examples:
+    manageJob myPrint delete
+    manageJob anotherPrint delete
+
+.. *Requests a print job to be deleted by admin:*
+Tags a print job with a "requestDeletion" tag that is to be removed by admin
+
+    Format: requestDeletion n/JOB NAME
+
+    Examples:
+    requestDeletion n/iDCP
+
 .. *[WIP]Listing Prints:*
 Lists prints with optional filters. Currently lists persons. +
 
@@ -98,6 +114,7 @@ Lists prints with optional filters. Currently lists persons. +
     Examples:
     list n/myprint m/printer_1 s/red filament only p/1 +
     list p/1
+
 
 .. *[NOT IMPLEMENTED YET]Listing History of Prints:*
 Lists all completed prints with optional filters. +
@@ -117,13 +134,7 @@ Edits an existing print in the queue. +
     edit 1 n/myprint m/printer_1 s/red filament only p/1 +
     edit 2 p/1
 
-.. *[NOT IMPLEMENTED YET]Deleting a Print:*
-deletes an existing print in the queue. +
-Format: del INDEX
 
-    Examples:
-    del 1
-    del 2
 
 .. *Listing Machines:*
 Lists machines. +
@@ -182,26 +193,26 @@ Updating your own account's password. Note that NEW_PW has to match some specifi
 Adds a new machine. All machine names must be unique. Status can only be either “ENABLED” or “DISABLED”. +
 
     Format:
-    add_machine n/MACHINE_NAME ms/STATUS
+    addMachine n/MACHINE_NAME ms/STATUS
 
     Example:
-    add_machine n/my_machine ms/ENABLED
+    addMachine n/my_machine ms/ENABLED
 
 ... *[WIP]Remove Machine:*
 removes a machine.  +
 
-    Format: remove_machine MACHINE_NAME
+    Format: removeMachine MACHINE_NAME
 
     Example:
-    remove_machine my_machine
+    removeMachine my_machine
 
 ... *[WIP]Change Device Status:*
 Edits an existing machine. All machine names must be unique. Status can only be either “enabled” or “disabled”. At least one optional argument must be present. +
 
-    Format: edit_machine MACHINE_NAME [n/MACHINE_NAME] [s/STATUS]
+    Format: editMachine MACHINE_NAME [n/MACHINE_NAME] [s/STATUS]
 
     Example:
-    edit_machine my_machine n/my_machine2 s/enabled
+    editMachine my_machine n/my_machine2 s/enabled
 
 
 == FAQ
@@ -210,7 +221,7 @@ Edits an existing machine. All machine names must be unique. Status can only be 
 
 == Command Summary
 . help
-. add_print n/PRINT_NAME m/MACHINE_NAME d/PRINT_DURATION [s/SPECIAL_NOTES] <p/PRIORITY>
+. addJob n/PRINT_NAME m/MACHINE_NAME d/PRINT_DURATION [s/SPECIAL_NOTES] <p/PRIORITY>
 . list [n/PRINT_NAME] [m/MACHINE_NAME] [s/SPECIAL_NOTES] [p/PRIORITY]
 . list_history [n/PRINT_NAME] [m/MACHINE_NAME] [s/SPECIAL_NOTES] [p/PRIORITY]
 . edit INDEX [n/PRINT_NAME] [m/MACHINE_NAME] [s/SPECIAL_NOTES] <p/PRIORITY>
@@ -227,3 +238,5 @@ Edits an existing machine. All machine names must be unique. Status can only be 
 . manageJob JOB_NAME start
 . manageJob JOB_NAME cancel
 . manageJob JOB_NAME restart
+. manageJob JOB_NAME delete
+. requestDeletion n/iDCP

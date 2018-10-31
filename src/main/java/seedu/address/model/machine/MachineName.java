@@ -3,9 +3,6 @@ package seedu.address.model.machine;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-import seedu.address.model.person.Name;
-
-
 
 /**
  * Represents a Machine's name in the address book.
@@ -14,7 +11,7 @@ import seedu.address.model.person.Name;
  */
 public class MachineName {
     public static final String MESSAGE_NAME_CONSTRAINTS =
-            "Names should only contain alphanumeric characters and spaces, and it should not be blank";
+        "Names should only contain alphanumeric characters and spaces, and it should not be blank";
 
     /*
      * The first character of the address must not be a whitespace,
@@ -42,20 +39,17 @@ public class MachineName {
         return test.matches(NAME_VALIDATION_REGEX);
     }
 
-    @Override
-    public boolean equals(Object other) {
+    @Override public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Name // instanceof handles nulls
-                && fullName.equals(((Name) other).fullName)); // state check
+                || (other instanceof MachineName // instanceof handles nulls
+                && fullName.equals(((MachineName) other).fullName)); // state check
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return fullName;
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return fullName.hashCode();
     }
 }

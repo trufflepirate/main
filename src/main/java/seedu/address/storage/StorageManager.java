@@ -53,6 +53,13 @@ public class StorageManager extends ComponentManager implements Storage {
         userPrefsStorage.saveUserPrefs(userPrefs);
     }
 
+    /**
+     * Should not be used here
+     */
+    @Override
+    public UserPrefs getUserPrefs() {
+        return userPrefs;
+    }
 
     // ================ AddressBook methods ==============================
 
@@ -68,7 +75,6 @@ public class StorageManager extends ComponentManager implements Storage {
 
     @Override
     public Optional<ReadOnlyAddressBook> readAddressBook(Path filePath) throws DataConversionException, IOException {
-        logger.fine("Attempting to read data from file: " + filePath);
         return addressBookStorage.readAddressBook(filePath);
     }
 
@@ -91,32 +97,21 @@ public class StorageManager extends ComponentManager implements Storage {
      */
     @Override
     public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
-        //saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath());
         saveAddressBook(addressBook, userPrefs);
     }
 
     @Override
     public void saveAddressBook(ReadOnlyAddressBook addressBook, Path filePath) throws IOException {
-        logger.info("Attempting to write to data file: " + filePath);
-        logger.info("Attempting to write to a SINGLE data file");
         addressBookStorage.saveAddressBook(addressBook, filePath);
     }
 
     @Override
     public void saveAddressBook(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) throws IOException {
-        logger.info("Attempting to write data for ALL files");
         addressBookStorage.saveAddressBook(addressBook, userPrefs);
     }
 
-    /**
-     * Should not be used here
-     */
-    @Override
-    public UserPrefs getUserPrefs() {
-        return addressBookStorage.getUserPrefs();
-    }
 
-
+    //----------------------------Events---------------------------------//
     @Override
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent event) {

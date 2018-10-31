@@ -264,10 +264,9 @@ public class Job {
             return true;
         }
 
-        if (!(other instanceof Job)) {
+        if (other == null) {
             return false;
         }
-
 
         return otherJob.getJobName().equals(getJobName())
                 && otherJob.getMachine().equals(getMachine())

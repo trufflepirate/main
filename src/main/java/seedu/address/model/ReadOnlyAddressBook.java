@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.admin.Admin;
+import seedu.address.model.admin.AdminSession;
 import seedu.address.model.job.Job;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
@@ -41,7 +42,12 @@ public interface ReadOnlyAddressBook {
      * Returns a unmodifiable view of queue
      * This list should contain the highest priority job in descending order
      */
-
     ObservableList<Job> getQueueList();
+
+    /**
+     * Returns an admin Session
+     * Session should contain currently logged in Admin, or null if no admin is currently logged in
+     */
+    AdminSession getAdminSession();
 
 }

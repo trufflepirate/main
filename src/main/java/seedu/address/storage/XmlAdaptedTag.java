@@ -44,6 +44,7 @@ public class XmlAdaptedTag {
         if (!Tag.isValidTagName(tagName)) {
             throw new IllegalValueException(Tag.MESSAGE_TAG_CONSTRAINTS);
         }
+
         return new Tag(tagName);
     }
 

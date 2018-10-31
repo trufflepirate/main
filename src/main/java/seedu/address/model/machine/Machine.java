@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.model.job.Job;
+import seedu.address.model.machine.exceptions.InvalidMachineStatusException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -24,20 +25,18 @@ public class Machine {
      */
     public static final String NAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
     public static final String MESSAGE_NAME_CONSTRAINTS =
-            "Names should only contain alphanumeric characters and spaces, "
-                    + "and it should not be blank";
+        "Names should only contain alphanumeric characters and spaces, " + "and it should not be blank";
     public static final String MESSAGE_WRONG_STATUS =
-            "Status can only contain 'ENABLED' or 'DISABLED'"
-                    + "and should not be blank";
+        "Status can only contain 'ENABLED' or 'DISABLED'" + "and should not be blank";
     // Identity fields
-    private final MachineName machineName;
+    private MachineName machineName;
     //TODO make status be more diverse, like enum
-    private final MachineStatus status;
+    private MachineStatus status;
 
     // Data fields
     //Name is a placeholder. To be replaced by Job class in the future
-    private final List<Job> jobs = new ArrayList<>();
-    private final Set<Tag> tags = new HashSet<>();
+    private List<Job> jobs = new ArrayList<>();
+    private Set<Tag> tags = new HashSet<>();
 
 
     /**
@@ -74,6 +73,7 @@ public class Machine {
     public List<Job> getJobs() {
         return Collections.unmodifiableList(jobs);
     }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -100,6 +100,14 @@ public class Machine {
 
 
     /**
+     * Returns true if both machines of the same name.
+     * This defines a weakest notion of equality between two machines.
+     */
+    public boolean isSameNamedMachine(Machine otherMachine) {
+        return otherMachine.getName() == getName();
+    }
+
+    /**
      * Returns true if both machines of the same name and same list of Jobs.
      * This defines a weaker notion of equality between two machines.
      */
@@ -108,17 +116,23 @@ public class Machine {
             return true;
         }
 
-        return otherMachine != null
-                && otherMachine.getName().equals(getName())
-                && otherMachine.getJobs().equals(getJobs());
+        return otherMachine != null && otherMachine.getName().equals(getName()) && otherMachine.getJobs()
+            .equals(getJobs());
     }
 
+    public void setMachineStatus(MachineStatus machineStatus) throws InvalidMachineStatusException {
+        if (MachineStatus.isValidMachineStatus(machineStatus)) {
+            this.status = machineStatus;
+        }
+
+        throw new InvalidMachineStatusException();
+
+    }
     /**
      * Returns true if both machines have the same identity and data fields.
      * This defines a stronger notion of equality between two persons.
      */
-    @Override
-    public boolean equals(Object other) {
+    @Override public boolean equals(Object other) {
         if (other == this) {
             return true;
         }
@@ -129,21 +143,19 @@ public class Machine {
 
         Machine otherMachine = (Machine) other;
         return otherMachine.getName().equals(getName())
+                && otherMachine.getStatus().equals(getStatus())
                 && otherMachine.getJobs().equals(getJobs())
                 && otherMachine.getTags().equals(getTags());
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(machineName, jobs, tags);
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getName())
-                .append(" Tags: ");
+        builder.append(getName()).append(" Tags: ");
         getTags().forEach(builder::append);
 
         builder.append(" Jobs: ");

@@ -201,15 +201,18 @@ image::DeletePersonSdForLogic.png[width="800"]
 === Model component
 
 .Structure of the Model Component
-image::ModelClassDiagram.png[width="800"]
+image::ModelComponentClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
 The `Model`,
 
-* stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
-* exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* exposes an unmodifiable `ObservableList<Person>` that can be 'observed'
+* exposes an unmodifiable `ObservableList<Admin>` that can be 'observed'
+* exposes an unmodifiable `ObservableList<Job>` that can be 'observed'
+* exposes an unmodifiable `ObservableList<Machine>` that can be 'observed'
+* eg. the UI can be bound to this 4 list so that the UI automatically updates when the data in any of the list changes.
 * does not depend on any of the other three components.
 
 [NOTE]
@@ -221,14 +224,21 @@ image:ModelClassBetterOopDiagram.png[width="800"]
 === Storage component
 
 .Structure of the Storage Component
-image::StorageClassDiagram.png[width="800"]
+image::StorageComponentClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
 The `Storage` component,
 
+* stores an initialized `UserPref` object that represents the user's preferences derived from
+JsonUserPrefsStorage
 * can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
+* can save the Address Book data in 4 separate xml format
+** XmlSerializableAddressBook
+** XmlSerializableMakerManagerAdmins
+** XmlSerializableMakerManagerMachines
+** XmlSerializableMakerManagerJobs
+
 
 [[Design-Commons]]
 === Common classes

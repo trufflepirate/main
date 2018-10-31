@@ -47,12 +47,12 @@ public class RemoveAdminCommand extends Command {
         model.removeAdmin(toRemove);
 
         //Logout current admin if deleted him/herself
-        if (model.currentlyLoggedIn().equals(username)) {
+        if (model.currentlyLoggedIn().getUsername().equals(username)) {
             model.clearLogin();
+            model.adminLogoutCommitAddressBook();
+        } else {
+            model.commitAddressBook();
         }
-
-        model.commitAddressBook();  //TODO: not sure what this does;
-
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

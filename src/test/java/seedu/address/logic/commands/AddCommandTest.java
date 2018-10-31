@@ -24,8 +24,9 @@ import seedu.address.model.admin.Username;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
 import seedu.address.model.machine.Machine;
+import seedu.address.model.machine.MachineName;
 import seedu.address.model.person.Person;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.builders.PersonBuilder;
 
 public class AddCommandTest {
 
@@ -164,6 +165,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public Machine findMachine(MachineName machinename) {
+            return null;
+        }
+
+        @Override
         public void updateJob(Job oldJob, Job updatedJob) {
 
         }
@@ -192,6 +198,7 @@ public class AddCommandTest {
         public void removeMachine(Machine machine) {
             throw new AssertionError("This method should not be called");
         }
+
         @Override
         public boolean hasMachine(Machine machine) {
             throw new AssertionError("This method should not be called");
@@ -213,7 +220,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void setLogin(Username username) {
+        public void setLogin(Admin admin) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -225,11 +232,6 @@ public class AddCommandTest {
         @Override
         public boolean isLoggedIn() {
             throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public Username currentlyLoggedIn() {
-            return null;
         }
 
         @Override
@@ -305,6 +307,36 @@ public class AddCommandTest {
 
         @Override
         public void commitAddressBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void adminLoginCommitAddressBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void adminLogoutCommitAddressBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean isRedoLogin() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean isUndoLogout() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public Admin currentlyLoggedIn() {
+            return null;
+        }
+
+        @Override
+        public boolean isUndoLogin() {
             throw new AssertionError("This method should not be called.");
         }
     }

@@ -15,10 +15,13 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.admin.Admin;
+import seedu.address.model.admin.AdminSession;
+import seedu.address.model.admin.Password;
 import seedu.address.model.admin.Username;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
 import seedu.address.model.machine.Machine;
+import seedu.address.model.machine.MachineName;
 import seedu.address.model.person.Person;
 
 public class LogoutCommandTest {
@@ -41,7 +44,8 @@ public class LogoutCommandTest {
     @Test
     public void execute_logout_successful() throws Exception {
         ModelStub modelStub = new ModelStub();
-        modelStub.setLogin(new Username("dummyUsername"));
+        Admin admin = new Admin(new Username("dummy"), new Password("oldPW"));
+        modelStub.setLogin(admin);
         CommandResult commandResult = new LogoutCommand().execute(modelStub, commandHistory);
 
         assertEquals(commandResult.feedbackToUser, LogoutCommand.MESSAGE_SUCCESS);
@@ -54,7 +58,7 @@ public class LogoutCommandTest {
      * A default model stub that have some methods
      */
     private class ModelStub implements Model {
-        private boolean loginStatus = false;
+        private final AdminSession adminSession = new AdminSession();
 
         @Override
         public void addPerson(Person person) {
@@ -175,26 +179,6 @@ public class LogoutCommandTest {
         }
 
         @Override
-        public void setLogin(Username username) {
-            this.loginStatus = true;
-        }
-
-        @Override
-        public void clearLogin() {
-            this.loginStatus = false;
-        }
-
-        @Override
-        public boolean isLoggedIn() {
-            return this.loginStatus;
-        }
-
-        @Override
-        public Username currentlyLoggedIn() {
-            return null;
-        }
-
-        @Override
         public Admin findAdmin(Username username) {
             return null;
         }
@@ -269,6 +253,56 @@ public class LogoutCommandTest {
         @Override
         public void commitAddressBook() {
             return;
+        }
+
+        @Override
+        public void adminLoginCommitAddressBook() {
+            return;
+        }
+
+        @Override
+        public void adminLogoutCommitAddressBook() {
+            return;
+        }
+
+        @Override
+        public boolean isRedoLogin() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean isUndoLogout() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public Admin currentlyLoggedIn() {
+            return null;
+        }
+
+        @Override
+        public void setLogin(Admin admin) {
+            adminSession.setLogin(admin);
+        }
+
+        @Override
+        public void clearLogin() {
+            adminSession.clearLogin();
+        }
+
+        @Override
+        public boolean isLoggedIn() {
+            return adminSession.isAdminLoggedIn();
+        }
+
+        @Override
+        public Machine findMachine(MachineName machinename) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean isUndoLogin() {
+            throw new AssertionError("This method should not be called.");
         }
     }
 }
