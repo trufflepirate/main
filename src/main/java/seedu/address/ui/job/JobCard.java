@@ -55,7 +55,7 @@ public class JobCard extends UiPart<Region> {
 
         Label machineNameLabel = new Label("Machine: " + job.getMachine().getName().fullName);
         Label informationLabel = new Label("Added by " + job.getOwner().getName().fullName + " at "
-                + job.getAddedTime());
+                + job.getAddedTime().showTime());
         Label startTimeLabel;
         if (job.getStatus() == Status.ONGOING) {
             startTimeLabel = new Label("Started at: " + job.getStartTime().showTime());
