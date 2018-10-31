@@ -330,20 +330,22 @@ public class Job {
      */
     @Override
     public boolean equals(Object other) {
+        if(! (other instanceof Job)) return false;
+
         Job otherJob = (Job) other;
 
-        if (other == this) {
+        if (otherJob == this) {
             return true;
         }
 
-        if (other == null) {
+        if (otherJob == null) {
             return false;
         }
 
-        return otherJob.getJobName().equals(getJobName())
-                && otherJob.getMachine().equals(getMachine())
-                && otherJob.getOwner().equals(getOwner())
-                && otherJob.getAddedTime().equals(getAddedTime());
+        return otherJob.getJobName().equals(this.getJobName())
+                && otherJob.getMachine().getName().equals(this.getMachine().getName())
+                && otherJob.getOwner().getName().equals(this.getOwner().getName())
+                && otherJob.getAddedTime().equals(this.getAddedTime());
     }
 
     @Override

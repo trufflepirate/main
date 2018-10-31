@@ -61,7 +61,7 @@ public class CommandTestUtil {
     public static final String VALID_JOBNOTE_ANOTHERIDCP = "This job is really meant for the iDCP project";
     public static final Status VALID_JOBSTATUS_CANCELLED = CANCELLED;
     public static final Status VALID_JOBSTATUS_ONGOING = ONGOING;
-    public static final String VALID_JOBADDEDTIME_SOMEDAY = "30/10 16:49:28";
+    public static final String VALID_JOBADDEDTIME_SOMEDAY = "sample day";
 
 
 

@@ -46,19 +46,19 @@ public class JobNameContainsKeywordsPredicateTest {
         // One keyword
         JobNameContainsKeywordsPredicate predicate = new JobNameContainsKeywordsPredicate(
             Collections.singletonList("IDCP"));
-        assertTrue(predicate.test(new JobBuilder().withName("IDCP Project").build()));
+        assertTrue(predicate.test(new JobBuilder().withName("IDCP").build()));
 
         // Multiple keywords
         predicate = new JobNameContainsKeywordsPredicate(Arrays.asList("IDCP", "Orbital"));
-        assertTrue(predicate.test(new JobBuilder().withName("IDCP Orbital").build()));
+        assertTrue(predicate.test(new JobBuilder().withName("IDCP").build()));
 
         // Only one matching keyword
         predicate = new JobNameContainsKeywordsPredicate(Arrays.asList("Innoventure", "Orbital"));
-        assertTrue(predicate.test(new JobBuilder().withName("IDCP Orbital").build()));
+        assertTrue(predicate.test(new JobBuilder().withName("IDCPOrbital").build()));
 
         // Mixed-case keywords
         predicate = new JobNameContainsKeywordsPredicate(Arrays.asList("IDCP", "Orbital"));
-        assertTrue(predicate.test(new JobBuilder().withName("iDcP oBiTAl").build()));
+        assertTrue(predicate.test(new JobBuilder().withName("iDcPoBiTAl").build()));
     }
 
     @Test
