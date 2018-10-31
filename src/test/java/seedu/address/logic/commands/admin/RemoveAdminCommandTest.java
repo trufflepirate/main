@@ -16,11 +16,13 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.admin.Admin;
+import seedu.address.model.admin.AdminSession;
 import seedu.address.model.admin.Password;
 import seedu.address.model.admin.Username;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
 import seedu.address.model.machine.Machine;
+import seedu.address.model.machine.MachineName;
 import seedu.address.model.person.Person;
 
 public class RemoveAdminCommandTest {
@@ -48,7 +50,8 @@ public class RemoveAdminCommandTest {
     @Test
     public void execute_doesNotExists_throwsCommandException() throws Exception {
         ModelStub modelStub = new ModelStub();
-        modelStub.setLogin(new Username("dummyLogin"));
+        Admin admin = new Admin(new Username("dummy"), new Password("oldPW"));
+        modelStub.setLogin(admin);
 
         thrown.expect(CommandException.class);
         thrown.expectMessage(RemoveAdminCommand.MESSAGE_NO_SUCH_ADMIN);
@@ -58,7 +61,8 @@ public class RemoveAdminCommandTest {
     @Test
     public void execute_removeOnlyAdmin_throwsCommandException() throws Exception {
         ModelStub modelStub = new ModelStub();
-        modelStub.setLogin(new Username("dummyLogin"));
+        Admin admin = new Admin(new Username("dummy"), new Password("oldPW"));
+        modelStub.setLogin(admin);
         modelStub.addAdmin(new Admin(new Username("dummyLogin"), new Password("dummyPassword")));
 
         thrown.expect(CommandException.class);
@@ -69,31 +73,33 @@ public class RemoveAdminCommandTest {
     @Test
     public void execute_removeNotLoggedIn_success() throws Exception {
         ModelStub modelStub = new ModelStub();
-        modelStub.setLogin(new Username("dummyLogin"));
+        Admin admin = new Admin(new Username("dummy"), new Password("oldPW"));
+        modelStub.setLogin(admin);
         modelStub.addAdmin(new Admin(new Username("dummyLogin"), new Password("dummyPW")));
         modelStub.addAdmin(new Admin(new Username("dummyRemove"), new Password("dummyPW")));
 
         CommandResult commandResult = new RemoveAdminCommand(new Username("dummyRemove"))
-                .execute(modelStub, commandHistory);
+            .execute(modelStub, commandHistory);
 
         assertEquals(commandResult.feedbackToUser, RemoveAdminCommand.MESSAGE_SUCCESS);
-        assertEquals(modelStub.loggedInAdmin, new Username("dummyLogin"));
-        assertEquals(modelStub.loginStatus, true);
+        assertEquals(modelStub.currentlyLoggedIn(), admin);
+        assertEquals(modelStub.isLoggedIn(), true);
     }
 
     @Test
     public void execute_removeLoggedIn_success() throws Exception {
         ModelStub modelStub = new ModelStub();
-        modelStub.setLogin(new Username("dummyLogin"));
-        modelStub.addAdmin(new Admin(new Username("dummyLogin"), new Password("dummyPW")));
+        Admin admin = new Admin(new Username("dummyLogin"), new Password("dummyPW"));
+        modelStub.setLogin(admin);
+        modelStub.addAdmin(admin);
         modelStub.addAdmin(new Admin(new Username("dummyOther"), new Password("dummyPW")));
 
         CommandResult commandResult = new RemoveAdminCommand(new Username("dummyLogin"))
-                .execute(modelStub, commandHistory);
+            .execute(modelStub, commandHistory);
 
         assertEquals(commandResult.feedbackToUser, RemoveAdminCommand.MESSAGE_SUCCESS);
-        assertEquals(modelStub.loggedInAdmin, null);
-        assertEquals(modelStub.loginStatus, false);
+        assertEquals(modelStub.currentlyLoggedIn(), null);
+        assertEquals(modelStub.isLoggedIn(), false);
     }
 
     //TODO: equals not tested
@@ -103,9 +109,7 @@ public class RemoveAdminCommandTest {
      */
     private class ModelStub implements Model {
         final ArrayList<Admin> adminList = new ArrayList<>();
-
-        private boolean loginStatus = false;
-        private Username loggedInAdmin = null;
+        final AdminSession adminSession = new AdminSession();
 
         @Override
         public void addPerson(Person person) {
@@ -228,30 +232,8 @@ public class RemoveAdminCommandTest {
         }
 
         @Override
-        public void setLogin(Username username) {
-            this.loggedInAdmin = username;
-            this.loginStatus = true;
-        }
-
-        @Override
-        public void clearLogin() {
-            this.loginStatus = false;
-            this.loggedInAdmin = null;
-        }
-
-        @Override
-        public boolean isLoggedIn() {
-            return this.loginStatus;
-        }
-
-        @Override
-        public Username currentlyLoggedIn() {
-            return loggedInAdmin;
-        }
-
-        @Override
         public Admin findAdmin(Username username) {
-            for (Admin admin: adminList) {
+            for (Admin admin : adminList) {
                 if (admin.getUsername().equals(username)) {
                     return admin;
                 }
@@ -328,6 +310,56 @@ public class RemoveAdminCommandTest {
         @Override
         public void commitAddressBook() {
             return;
+        }
+
+        @Override
+        public void adminLoginCommitAddressBook() {
+            return;
+        }
+
+        @Override
+        public void adminLogoutCommitAddressBook() {
+            return;
+        }
+
+        @Override
+        public boolean isRedoLogin() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean isUndoLogout() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public Admin currentlyLoggedIn() {
+            return adminSession.getLoggedInAdmin();
+        }
+
+        @Override
+        public void setLogin(Admin admin) {
+            adminSession.setLogin(admin);
+        }
+
+        @Override
+        public void clearLogin() {
+            adminSession.clearLogin();
+        }
+
+        @Override
+        public boolean isLoggedIn() {
+            return adminSession.isAdminLoggedIn();
+        }
+
+        @Override
+        public Machine findMachine(MachineName machinename) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean isUndoLogin() {
+            throw new AssertionError("This method should not be called.");
         }
     }
 }

@@ -21,6 +21,7 @@ import seedu.address.model.admin.Username;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
 import seedu.address.model.machine.Machine;
+import seedu.address.model.machine.MachineName;
 import seedu.address.model.machine.exceptions.MachineNotFoundException;
 import seedu.address.model.person.Person;
 
@@ -37,8 +38,6 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<Machine> filteredMachines;
     private final FilteredList<Job> filteredJobs;
 
-    private boolean loginStatus = false;
-    private Username loggedInAdmin = null;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -241,6 +240,7 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedAddressBook.hasMachine(machine);
     }
 
+
     @Override
     public void updateMachine(Machine target, Machine editedMachine) {
         requireAllNonNull(target, editedMachine);
@@ -253,6 +253,11 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedAddressBook.getMostFreeMachine();
     }
 
+    @Override
+    public Machine findMachine(MachineName machineName) {
+        requireNonNull(machineName);
+        return versionedAddressBook.findMachine(machineName);
+    }
 
     // ============================== Admin methods ======================================= //
 
@@ -278,25 +283,23 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void setLogin(Username username) {
-        this.loggedInAdmin = username;
-        this.loginStatus = true;
+    public void setLogin(Admin admin) {
+        versionedAddressBook.setLoggedInAdmin(admin);
     }
 
     @Override
     public void clearLogin() {
-        this.loggedInAdmin = null;
-        this.loginStatus = false;
+        versionedAddressBook.clearLogin();
     }
 
     @Override
     public boolean isLoggedIn() {
-        return this.loginStatus;
+        return versionedAddressBook.isLoggedIn();
     }
 
     @Override
-    public Username currentlyLoggedIn() {
-        return this.loggedInAdmin;
+    public Admin currentlyLoggedIn() {
+        return versionedAddressBook.currentlyLoggedIn();
     }
 
     @Override
@@ -394,6 +397,21 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public boolean isUndoLogout() {
+        return versionedAddressBook.isUndoLogout();
+    }
+
+    @Override
+    public boolean isRedoLogin() {
+        return versionedAddressBook.isRedoLogin();
+    }
+
+    @Override
+    public boolean isUndoLogin() {
+        return versionedAddressBook.isUndoLogin();
+    }
+
+    @Override
     public void undoAddressBook() {
         versionedAddressBook.undo();
         indicateAddressBookChanged();
@@ -408,6 +426,16 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void commitAddressBook() {
         versionedAddressBook.commit();
+    }
+
+    @Override
+    public void adminLoginCommitAddressBook() {
+        versionedAddressBook.adminLoginCommit();
+    }
+
+    @Override
+    public void adminLogoutCommitAddressBook() {
+        versionedAddressBook.adminLogoutCommit();
     }
 
     @Override

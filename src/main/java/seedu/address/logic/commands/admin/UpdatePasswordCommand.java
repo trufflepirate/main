@@ -21,7 +21,7 @@ public class UpdatePasswordCommand extends Command {
     public static final String MESSAGE_NO_ACCESS = "You must be logged in to change your password!";
     public static final String MESSAGE_SUCCESS = "Your password has been changed successfully!";
     public static final String MESSAGE_USAGE = COMMAND_WORD + " is used to change password of logged in admin.\n"
-            + "Example: udpatePassword USERNAME OLD_PW NEW_PW NEW_PW_VERIFY\n";
+            + "Example: updatePassword USERNAME OLD_PW NEW_PW NEW_PW_VERIFY\n";
     public static final String MESSAGE_ONLY_CHANGE_YOUR_OWN_PW = "You can only change your own password.";
     public static final String MESSAGE_PASSWORDS_DONT_MATCH = "The two password fields don't match! Please try again.";
     public static final String MESSAGE_WRONG_OLD_DETAILS = "Your old password doesn't match.";
@@ -58,7 +58,7 @@ public class UpdatePasswordCommand extends Command {
             throw new CommandException(MESSAGE_PASSWORDS_DONT_MATCH);
         }
 
-        if (!username.equals(model.currentlyLoggedIn())) {
+        if (!username.equals(model.currentlyLoggedIn().getUsername())) {
             throw new CommandException(MESSAGE_ONLY_CHANGE_YOUR_OWN_PW);
         }
 
