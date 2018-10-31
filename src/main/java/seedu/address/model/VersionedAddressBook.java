@@ -115,7 +115,9 @@ public class VersionedAddressBook extends AddressBook {
         }
         return (currentStatePointer == lastAdminLoginPointer - 1);
     }
-
+    /**
+     * Returns true if {@code redo()} the previous state is a login.
+     */
     public boolean isUndoLogin() {
         if (lastAdminLoginPointer < 0) {
             return false;
