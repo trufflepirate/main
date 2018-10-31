@@ -161,7 +161,7 @@ public class AddCommandTest {
 
         @Override
         public void finishJob(Job job) {
-            
+
         }
 
         @Override
