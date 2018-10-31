@@ -35,9 +35,18 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
     private Path filePath;
     private UserPrefs userPrefs;
 
+    private String addressBookFilePath;
+    private String makerManagerAdminsFilePath;
+    private String makerManagerMachinesFilePath;
+    private String makerManagerJobsFilePath;
+
     public XmlAddressBookStorage(UserPrefs userPrefs) {
         this.userPrefs = userPrefs;
         this.filePath = userPrefs.getAddressBookFilePath();
+        this.addressBookFilePath = userPrefs.getAddressBookFilePath().getFileName().toString();
+        this.makerManagerAdminsFilePath = userPrefs.getMakerManagerAdminsFilePath().getFileName().toString();
+        this.makerManagerMachinesFilePath = userPrefs.getMakerManagerMachinesFilePath().getFileName().toString();
+        this.makerManagerJobsFilePath = userPrefs.getMakerManagerJobsFilePath().getFileName().toString();
     }
 
     public Path getAddressBookFilePath() {
@@ -66,23 +75,24 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
 
         try {
             //Use filePath.getFileName() so that i can do testing with test makerManager files
-            switch (filePath.getFileName().toString()) {
-            case "addressbook.xml" :
+            if (filePath.getFileName().toString().equals(addressBookFilePath)) {
                 XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(filePath);
                 return Optional.of(xmlAddressBook.toModelType());
-            case "makerManagerMachines.xml" :
+            } else if (filePath.getFileName().toString().equals(makerManagerMachinesFilePath)) {
                 XmlSerializableMakerManagerMachines xmlMakerManagerMachines =
                         XmlFileStorage.loadMakerManagerMachineDataFromSaveFile(filePath);
                 return Optional.of(xmlMakerManagerMachines.toModelType());
-            case "makerManagerAdmins.xml" :
+            } else if (filePath.getFileName().toString().equals(makerManagerAdminsFilePath)) {
+
                 XmlSerializableMakerManagerAdmins xmlMakerManagerAdmins =
                         XmlFileStorage.loadMakerManagerAdminDataFromSaveFile(filePath);
                 return Optional.of(xmlMakerManagerAdmins.toModelType());
-            case "makerManagerJobs.xml" :
+            } else if (filePath.getFileName().toString().equals(makerManagerJobsFilePath)) {
+
                 XmlSerializableMakerManagerJobs xmlMakerManagerJobs =
                         XmlFileStorage.loadMakerManagerJobDataFromSaveFile(filePath);
                 return Optional.of(xmlMakerManagerJobs.toModelType());
-            default:
+            } else {
                 logger.info("No such file path available to read data from");
                 return Optional.empty();
             }
@@ -220,21 +230,15 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
         requireNonNull(filePath);
 
         FileUtil.createIfMissing(filePath);
-
-        switch (filePath.getFileName().toString()) {
-        case "addressbook.xml" :
+        if (filePath.getFileName().toString().equals(addressBookFilePath)) {
             XmlFileStorage.saveDataToFile(filePath, new XmlSerializableAddressBook(addressBook));
-            break;
-        case "makerManagerMachines.xml" :
+        } else if (filePath.getFileName().toString().equals(makerManagerMachinesFilePath)) {
             XmlFileStorage.saveDataToFile(filePath, new XmlSerializableMakerManagerMachines(addressBook));
-            break;
-        case "makerManagerAdmins.xml" :
+        } else if (filePath.getFileName().toString().equals(makerManagerAdminsFilePath)) {
             XmlFileStorage.saveDataToFile(filePath, new XmlSerializableMakerManagerAdmins(addressBook));
-            break;
-        case "makerManagerJobs.xml" :
+        } else if (filePath.getFileName().toString().equals(makerManagerJobsFilePath)) {
             XmlFileStorage.saveDataToFile(filePath, new XmlSerializableMakerManagerJobs(addressBook));
-            break;
-        default:
+        } else {
             logger.info("No such file path available to save data in");
         }
 

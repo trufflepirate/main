@@ -13,8 +13,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.Command;
@@ -35,45 +33,45 @@ public class EditMachineCommand extends Command {
     public static final String COMMAND_WORD = "editMachine";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the Machine identified "
-            + "by the index number used in the displayed Machine list. "
-            + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_NAME + "NAME] "
-            + "[" + PREFIX_MACHINE_STATUS + "MACHINE_STATUS] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_NAME + "MyPrinter "
-            + PREFIX_MACHINE_STATUS + "ENABLED";
+        + "by the index number used in the displayed Machine list. "
+        + "Existing values will be overwritten by the input values.\n" + "Parameters: MACHINE_NAME " + "[" + PREFIX_NAME
+        + "NAME] " + "[" + PREFIX_MACHINE_STATUS + "MACHINE_STATUS] " + "[" + PREFIX_TAG + "TAG]...\n" + "Example: "
+        + COMMAND_WORD + " MyPrinter " + PREFIX_NAME + "YourPrinter " + PREFIX_MACHINE_STATUS + "ENABLED";
 
     public static final String MESSAGE_EDIT_MACHINE_SUCCESS = "Edited Machine: %1$s";
+    public static final String MESSAGE_MACHINE_NOT_FOUND = "Machine does not exist";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_MACHINE = "This Machine already exists in the address book.";
-
-    private final Index index;
+    private static final String MESSAGE_ACCESS_DENIED =
+        "Non-admin user is not allowed to edit a machine in maker manager";
+    private final MachineName machineName;
     private final EditMachineDescriptor editMachineDescriptor;
 
     /**
-     * @param index of the person in the filtered person list to edit
+     * @param machineName           of the person in the filtered person list to edit
      * @param editMachineDescriptor details to edit the person with
      */
-    public EditMachineCommand(Index index, EditMachineDescriptor editMachineDescriptor) {
-        requireNonNull(index);
+    public EditMachineCommand(MachineName machineName, EditMachineDescriptor editMachineDescriptor) {
+        requireNonNull(machineName);
         requireNonNull(editMachineDescriptor);
 
-        this.index = index;
+        this.machineName = machineName;
         this.editMachineDescriptor = new EditMachineDescriptor(editMachineDescriptor);
     }
 
-    @Override
-    public CommandResult execute(Model model, CommandHistory history) throws CommandException {
+    @Override public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
-        List<Machine> lastShownList = model.getFilteredMachineList();
 
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_MACHINE_DISPLAYED_INDEX);
+        if (!model.isLoggedIn()) {
+            throw new CommandException(MESSAGE_ACCESS_DENIED);
         }
 
-        Machine machineToEdit = lastShownList.get(index.getZeroBased());
+        Machine machineToEdit = model.findMachine(machineName);
+
+        if (machineToEdit == null) {
+            throw new CommandException(MESSAGE_MACHINE_NOT_FOUND);
+        }
+
         Machine editedMachine = createEditedMachine(machineToEdit, editMachineDescriptor);
 
         if (!machineToEdit.isSameMachine(editedMachine) && model.hasMachine(editedMachine)) {
@@ -101,8 +99,7 @@ public class EditMachineCommand extends Command {
         return new Machine(updatedName, updatedJobs, updatedTags, updatedStatus);
     }
 
-    @Override
-    public boolean equals(Object other) {
+    @Override public boolean equals(Object other) {
         // short circuit if same object
         if (other == this) {
             return true;
@@ -115,8 +112,7 @@ public class EditMachineCommand extends Command {
 
         // state check
         EditMachineCommand e = (EditMachineCommand) other;
-        return index.equals(e.index)
-                && editMachineDescriptor.equals(e.editMachineDescriptor);
+        return machineName.equals(e.machineName) && editMachineDescriptor.equals(e.editMachineDescriptor);
     }
 
     /**
@@ -129,7 +125,8 @@ public class EditMachineCommand extends Command {
         private Set<Tag> tags;
         private MachineStatus status;
 
-        public EditMachineDescriptor() {}
+        public EditMachineDescriptor() {
+        }
 
         /**
          * Copy constructor.
@@ -156,6 +153,7 @@ public class EditMachineCommand extends Command {
         public Optional<MachineName> getName() {
             return Optional.ofNullable(name);
         }
+
         /**
          * Sets {@code jobs} to this object's {@code jobs}.
          * A defensive copy of {@code jobs} is used internally.
@@ -163,6 +161,7 @@ public class EditMachineCommand extends Command {
         public void setJobs(List<Job> jobs) {
             this.jobs = (jobs != null) ? new ArrayList<>(jobs) : null;
         }
+
         /**
          * Returns an unmodifiable jobs list, which throws {@code UnsupportedOperationException}
          * if modification is attempted.
@@ -198,8 +197,7 @@ public class EditMachineCommand extends Command {
             return Optional.ofNullable(status);
         }
 
-        @Override
-        public boolean equals(Object other) {
+        @Override public boolean equals(Object other) {
             // short circuit if same object
             if (other == this) {
                 return true;
@@ -213,10 +211,8 @@ public class EditMachineCommand extends Command {
             // state check
             EditMachineDescriptor e = (EditMachineDescriptor) other;
 
-            return getName().equals(e.getName())
-                    && getJobs().equals(e.getJobs())
-                    && getTags().equals(e.getTags())
-                    && getStatus().equals(e.getStatus());
+            return getName().equals(e.getName()) && getJobs().equals(e.getJobs()) && getTags().equals(e.getTags())
+                && getStatus().equals(e.getStatus());
         }
     }
 }

@@ -7,8 +7,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.model.machine.exceptions.InvalidMachineStatusException;
-
 public class MachineStatusTest {
 
     @Rule
@@ -24,12 +22,4 @@ public class MachineStatusTest {
     public void checkEnabledMachineStatus() {
         assertTrue(testMachine.getStatus() == MachineStatus.ENABLED);
     }
-
-    @Test
-    public void setInvalidMachineStatus() {
-        thrown.expect(InvalidMachineStatusException.class);
-        testMachine.setMachineStatus(MachineStatus.INVALID);
-    }
-
-
 }
