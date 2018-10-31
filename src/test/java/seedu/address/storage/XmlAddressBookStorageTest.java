@@ -56,17 +56,21 @@ public class XmlAddressBookStorageTest {
     }
     */
 
+    /*
     @Test
     public void read_invalidAddressBook_throwDataConversionException() throws Exception {
         thrown.expect(DataConversionException.class);
         readData("addressbook.xml", "invalid", true);
     }
+    */
 
+    /*
     @Test
     public void read_invalidMakerManagerJobs_throwNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
         readData("makerManagerJobs.xml", "invalid", true);
     }
+    */
 
 
     @Test
