@@ -3,6 +3,8 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -20,6 +22,8 @@ import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.Username;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
+import seedu.address.model.job.Status;
+import seedu.address.model.job.exceptions.JobNotStartedException;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.MachineName;
 import seedu.address.model.machine.exceptions.MachineNotFoundException;
@@ -54,6 +58,31 @@ public class ModelManager extends ComponentManager implements Model {
         filteredMachines = new FilteredList<>(versionedAddressBook.getMachineList());
         filteredAdmins = new FilteredList<>(versionedAddressBook.getAdminList());
         filteredJobs = new FilteredList<>(versionedAddressBook.getJobList());
+        //TODO find a better way to change the data according to sorted jobs based on comparator
+        indicateJobListChanged();
+
+        // Timer for auto print cleanup
+        // credit: https://dzone.com/articles/how-schedule-task-run-interval
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                for (Job job : versionedAddressBook.getJobList()) {
+                    try {
+                        if (job.getStatus()== Status.ONGOING && job.isFinished()) {
+                            finishJob(job);
+                        }
+                    } catch (JobNotStartedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+
+        Timer timer = new Timer();
+        long delay = 60000;
+        long intervalPeriod = 60000;
+        timer.scheduleAtFixedRate(task, delay, intervalPeriod);
+
     }
 
     public ModelManager() {
@@ -213,6 +242,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void finishJob(Job job) {
+        versionedAddressBook.finishJob(job);
+        indicateJobListChanged();
+    }
+
+    @Override
     public void requestDeletion(JobName jobName) {
         versionedAddressBook.requestDeletion(jobName);
         indicateJobListChanged();
@@ -312,9 +347,6 @@ public class ModelManager extends ComponentManager implements Model {
     public int numAdmins() {
         return versionedAddressBook.numAdmins();
     }
-
-
-
 
     //=========== Filtered Person List Accessors =============================================================
 
@@ -456,5 +488,6 @@ public class ModelManager extends ComponentManager implements Model {
                 && (filteredPersons.equals(other.filteredPersons)
                     || filteredMachines.equals(other.filteredMachines));
     }
+
 
 }

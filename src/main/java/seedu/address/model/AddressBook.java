@@ -386,6 +386,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         jobs.swapQueueNumber(jobName1, jobName2);
     }
 
+    public void finishJob(Job job) {
+        requireNonNull(job);
+        jobs.finishJob(job);
+    }
     /**
      * Request deletion of print job
      */

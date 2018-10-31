@@ -142,7 +142,6 @@ public class Job {
 
     public void pauseJob(){
         this.status = PAUSED;
-
     }
 
     public void cancelJob() {

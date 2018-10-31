@@ -11,6 +11,7 @@ import java.util.Set;
 
 import seedu.address.model.job.Job;
 import seedu.address.model.machine.exceptions.InvalidMachineStatusException;
+import seedu.address.model.job.Status;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -181,7 +182,9 @@ public class Machine {
         float duration = 0;
 
         for (Job job : jobs) {
-            duration += job.getDuration();
+            if (job.getStatus() == Status.ONGOING || job.getStatus() == Status.QUEUED) {
+                duration += job.getDuration();
+            }
         }
         return duration;
     }
