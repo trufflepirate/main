@@ -1,5 +1,6 @@
 package seedu.address.ui.machine;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -11,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
+import seedu.address.model.job.Job;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.MachineStatus;
 import seedu.address.ui.UiPart;
@@ -49,7 +51,7 @@ public class MachineCard extends UiPart<Region> {
     @FXML
     private StackPane jobsListPlaceHolder;
 
-    public MachineCard(Machine machine, int displayIndex) {
+    public MachineCard(Machine machine, int displayIndex, ObservableList<Job> jobList) {
         super(FXML);
         this.machine = machine;
         id.setText(displayIndex + ". ");
@@ -85,7 +87,7 @@ public class MachineCard extends UiPart<Region> {
         machineStatus.setHgap(4);
         totalDuration.getChildren().add(durationLabel);
 
-        jobListPanel = new JobListPanel(machine.getJobsAsObeservableList());
+        jobListPanel = new JobListPanel(jobList.filtered(job -> job.getMachine().getName().equals(machine.getName())));
         jobsListPlaceHolder.getChildren().add(jobListPanel.getRoot());
     }
 

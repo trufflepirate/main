@@ -14,6 +14,7 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.MachinePanelSelectiononChangedEvent;
+import seedu.address.model.job.Job;
 import seedu.address.model.machine.Machine;
 import seedu.address.ui.UiPart;
 
@@ -27,18 +28,20 @@ public class MachineListPanel extends UiPart<Region> {
     private static final String FXML = "MachineListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(MachineListPanel.class);
 
+    private ObservableList<Job> jobList;
     @FXML
     private ListView<Machine> machineListView;
 
-    public MachineListPanel(ObservableList<Machine> machineList) {
+    public MachineListPanel(ObservableList<Machine> machineList, ObservableList<Job> jobList) {
         super(FXML);
-        setConnections(machineList);
+        setConnections(machineList, jobList);
         registerAsAnEventHandler(this);
     }
 
-    private void setConnections(ObservableList<Machine> machineList) {
+    private void setConnections(ObservableList<Machine> machineList,ObservableList<Job> jobList ) {
+        this.jobList = jobList;
         machineListView.setItems(machineList);
-        machineListView.setCellFactory(listView -> new MachineListViewCell());
+        machineListView.setCellFactory(listView -> new MachineListViewCell(jobList));
         setEventHandlerForSelectionChangeEvent();
     }
 
@@ -72,6 +75,12 @@ public class MachineListPanel extends UiPart<Region> {
      * Custom {@code ListCell} that displays the graphics of a {@code Machine} using a {@code MachineCard}
      */
     class MachineListViewCell extends ListCell<Machine> {
+        public ObservableList<Job> jobList;
+
+        public MachineListViewCell(ObservableList<Job> jobList){
+            super();
+            this.jobList=jobList;
+        }
         @Override
         protected void updateItem(Machine machine, boolean empty) {
             super.updateItem(machine, empty);
@@ -80,7 +89,7 @@ public class MachineListPanel extends UiPart<Region> {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new MachineCard(machine, getIndex() + 1).getRoot());
+                setGraphic(new MachineCard(machine, getIndex() + 1, this.jobList).getRoot());
             }
         }
     }
