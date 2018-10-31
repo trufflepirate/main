@@ -290,7 +290,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Removes a job if {@code job} does not exist in the list
      */
-    public void removeJob(Job job) {
+    public void removeJob(JobName job) {
         requireNonNull(job);
         jobs.remove(job);
     }

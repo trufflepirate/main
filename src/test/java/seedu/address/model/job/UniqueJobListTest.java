@@ -106,13 +106,13 @@ public class UniqueJobListTest {
     @Test
     public void remove_jobDoesNotExist_throwsJobNotFoundException() {
         thrown.expect(JobNotFoundException.class);
-        uniqueJobList.remove(IDCP);
+        uniqueJobList.remove(IDCP.getJobName());
     }
 
     @Test
     public void remove_existingJob_removesJob() {
         uniqueJobList.add(IDCP);
-        uniqueJobList.remove(IDCP);
+        uniqueJobList.remove(IDCP.getJobName());
         UniqueJobList expectedUniqueJobList = new UniqueJobList();
         assertEquals(expectedUniqueJobList, uniqueJobList);
     }

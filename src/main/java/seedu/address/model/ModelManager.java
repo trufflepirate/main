@@ -154,7 +154,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void deleteJob(Job job) {
+    public void deleteJob(JobName job) {
         requireAllNonNull(job);
         versionedAddressBook.removeJob(job);
         indicateJobListChanged();
