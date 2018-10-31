@@ -5,8 +5,7 @@ package seedu.address.model.machine;
  */
 public enum MachineStatus {
     ENABLED,
-    DISABLED,
-    INVALID;
+    DISABLED;
 
 
     public static boolean isValidMachineStatus(MachineStatus machineStatus) {

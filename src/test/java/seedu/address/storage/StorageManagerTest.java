@@ -88,7 +88,7 @@ public class StorageManagerTest {
 
     @Test
     public void readMakerManagerDataWithSingleFilePath () throws IOException, DataConversionException {
-        Path tempPath = Paths.get("data\\makerManagerJobs.xml");
+        Path tempPath = Paths.get("makerManagerJobs.xml");
         assertNotNull(storageManager.readAddressBook(tempPath));
     }
 
