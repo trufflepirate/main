@@ -25,7 +25,7 @@ import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.builders.PersonBuilder;
 
 public class AddCommandTest {
 

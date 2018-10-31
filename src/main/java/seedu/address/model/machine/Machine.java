@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.model.job.Job;
+import seedu.address.model.machine.exceptions.InvalidMachineStatusException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -30,14 +31,14 @@ public class Machine {
             "Status can only contain 'ENABLED' or 'DISABLED'"
                     + "and should not be blank";
     // Identity fields
-    private final MachineName machineName;
+    private MachineName machineName;
     //TODO make status be more diverse, like enum
-    private final MachineStatus status;
+    private MachineStatus status;
 
     // Data fields
     //Name is a placeholder. To be replaced by Job class in the future
-    private final List<Job> jobs = new ArrayList<>();
-    private final Set<Tag> tags = new HashSet<>();
+    private List<Job> jobs = new ArrayList<>();
+    private Set<Tag> tags = new HashSet<>();
 
 
     /**
@@ -113,6 +114,14 @@ public class Machine {
                 && otherMachine.getJobs().equals(getJobs());
     }
 
+    public void setMachineStatus(MachineStatus machineStatus) throws InvalidMachineStatusException {
+        if (MachineStatus.isValidMachineStatus(machineStatus)) {
+            this.status = machineStatus;
+        }
+
+        throw new InvalidMachineStatusException();
+
+    }
     /**
      * Returns true if both machines have the same identity and data fields.
      * This defines a stronger notion of equality between two persons.
@@ -129,6 +138,7 @@ public class Machine {
 
         Machine otherMachine = (Machine) other;
         return otherMachine.getName().equals(getName())
+                && otherMachine.getStatus().equals(getStatus())
                 && otherMachine.getJobs().equals(getJobs())
                 && otherMachine.getTags().equals(getTags());
     }

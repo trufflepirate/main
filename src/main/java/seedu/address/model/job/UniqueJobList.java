@@ -28,7 +28,7 @@ public class UniqueJobList {
      */
     public boolean contains(Job toCheck) {
         requireNonNull(toCheck);
-        return internalList.stream().anyMatch(toCheck::isSameJob);
+        return internalList.stream().anyMatch(toCheck::equals);
 
     }
 

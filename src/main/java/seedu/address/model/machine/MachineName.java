@@ -3,9 +3,6 @@ package seedu.address.model.machine;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-import seedu.address.model.person.Name;
-
-
 
 /**
  * Represents a Machine's name in the address book.
@@ -45,8 +42,8 @@ public class MachineName {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Name // instanceof handles nulls
-                && fullName.equals(((Name) other).fullName)); // state check
+                || (other instanceof MachineName // instanceof handles nulls
+                && fullName.equals(((MachineName) other).fullName)); // state check
     }
 
     @Override

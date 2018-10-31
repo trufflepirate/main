@@ -2,7 +2,6 @@ package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -13,8 +12,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
+import seedu.address.commons.events.model.AdminListChangedEvent;
+import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.AddressBook;
-import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
@@ -27,11 +27,24 @@ public class StorageManagerTest {
 
     private StorageManager storageManager;
 
+    private UserPrefs myTestUserPrefs;
+    private Path testMakerManagerAdminsFilePath;
+    private Path testMakerManagerJobsFilePath;
+    private Path testMakerMangerMachinesFilePath;
+
     @Before
     public void setUp() {
-        XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(getTempFilePath("ab"));
+        myTestUserPrefs = new UserPrefs();
+        testMakerManagerAdminsFilePath = getTempFilePath("makerManagerAdmins.xml");
+        testMakerManagerJobsFilePath = getTempFilePath("makerManagerJobs.xml");
+        testMakerMangerMachinesFilePath = getTempFilePath("makerManagerMachines.xml");
+        myTestUserPrefs.setMakerManagerAdminsFilePath(testMakerManagerAdminsFilePath);
+        myTestUserPrefs.setMakerManagerJobsFilePath(testMakerManagerJobsFilePath);
+        myTestUserPrefs.setMakerManagerMachinesFilePath(testMakerMangerMachinesFilePath);
+        XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(myTestUserPrefs);
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
         storageManager = new StorageManager(addressBookStorage, userPrefsStorage);
+
     }
 
     private Path getTempFilePath(String fileName) {
@@ -54,19 +67,13 @@ public class StorageManagerTest {
     }
 
     @Test
-    public void addressBookReadSave() throws Exception {
-        /*
-         * Note: This is an integration test that verifies the StorageManager is properly wired to the
-         * {@link XmlAddressBookStorage} class.
-         * More extensive testing of UserPref saving/reading is done in {@link XmlAddressBookStorageTest} class.
-         */
-        AddressBook original = getTypicalAddressBook();
-        //TODO REWRITE TEST HERE
-        /*
-        storageManager.saveAddressBook(original);
-        ReadOnlyAddressBook retrieved = storageManager.readAddressBook().get();
-        assertEquals(original, new AddressBook(retrieved));
-        */
+    public void getUserPrefs() {
+        assertNotNull(storageManager.getUserPrefs());
+    }
+
+    @Test
+    public void getUserPrefsPath() {
+        assertNotNull(storageManager.getUserPrefsFilePath());
     }
 
     @Test
@@ -75,28 +82,34 @@ public class StorageManagerTest {
     }
 
     @Test
-    public void handleAddressBookChangedEvent_exceptionThrown_eventRaised() {
-        // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
-        Storage storage = new StorageManager(new XmlAddressBookStorageExceptionThrowingStub(Paths.get("dummy")),
-                                             new JsonUserPrefsStorage(Paths.get("dummy")));
-        //storage.handleAddressBookChangedEvent(new AddressBookChangedEvent(new AddressBook()));
-        //assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
+    public void readEntireMakerManagerDataWithDefaultUserPrefs() throws IOException, DataConversionException {
+        assertNotNull(storageManager.readAddressBook());
     }
 
+    @Test
+    public void readMakerManagerDataWithSingleFilePath () throws IOException, DataConversionException {
+        Path tempPath = Paths.get("data\\makerManagerJobs.xml");
+        assertNotNull(storageManager.readAddressBook(tempPath));
+    }
 
-    /**
-     * A Stub class to throw an exception when the save method is called
-     */
-    class XmlAddressBookStorageExceptionThrowingStub extends XmlAddressBookStorage {
+    @Test
+    public void saveTestMakerManagerDataWithSingleFilePath () throws IOException, DataConversionException {
+        storageManager.saveAddressBook(new AddressBook(), getTempFilePath("makerManagerJobs.xml"));
+        assertNotNull(storageManager.readAddressBook(getTempFilePath("makerManagerJobs.xml")));
+    }
 
-        public XmlAddressBookStorageExceptionThrowingStub(Path filePath) {
-            super(filePath);
-        }
+    @Test
+    public void saveTestEntireMakerManagerDataWithUserPrefs () throws IOException, DataConversionException {
+        storageManager.saveAddressBook(new AddressBook(), myTestUserPrefs);
+        assertNotNull(storageManager.readAddressBook(testMakerManagerAdminsFilePath));
+        assertNotNull(storageManager.readAddressBook(testMakerManagerJobsFilePath));
+        assertNotNull(storageManager.readAddressBook(testMakerMangerMachinesFilePath));
+    }
 
-        @Override
-        public void saveAddressBook(ReadOnlyAddressBook addressBook, Path filePath) throws IOException {
-            throw new IOException("dummy exception");
-        }
+    @Test
+    public void testHandLeAdminListChangedEvent() {
+        storageManager.handleAdminListChangedEvent(new AdminListChangedEvent(new AddressBook()));
+        assertNotNull(testMakerManagerAdminsFilePath);
     }
 
 

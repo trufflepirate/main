@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<MakerManagerJobs>
+    <jobs>
+        <name>bumblebee</name>
+        <machine>
+            <machineName>BumberbeePrinter</machineName>
+            <status>ENABLED</status>
+        </machine>
+        <startTime>30/10 00:37:23</startTime>
+        <owner>
+            <name>Bumble bee</name>
+            <phone>85355255</phone>
+            <email>alice@gmail.com</email>
+            <address>123, Jurong West Ave 6, #08-111</address>
+        </owner>
+        <priority>NORMAL</priority>
+        <duration>1.0</duration>
+        <note>This is bumberbee jobnote</note>
+        <status>QUEUED</status>
+        <requestDeletion>false</requestDeletion>
+    </jobs>
+    <jobs>
+        <name>bumblebee</name>
+        <machine>
+            <machineName>BumberbeePrinter</machineName>
+            <status>ENABLED</status>
+        </machine>
+        <startTime>30/10 00:37:23</startTime>
+        <owner>
+            <name>Bumble bee</name>
+            <phone>85355255</phone>
+            <email>alice@gmail.com</email>
+            <address>123, Jurong West Ave 6, #08-111</address>
+        </owner>
+        <priority>NORMAL</priority>
+        <duration>1.0</duration>
+        <note>This is bumberbee jobnote</note>
+        <status>QUEUED</status>
+        <requestDeletion>false</requestDeletion>
+    </jobs>
+</MakerManagerJobs>

@@ -35,9 +35,6 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
     private Path filePath;
     private UserPrefs userPrefs;
 
-    public XmlAddressBookStorage(Path filePath) {
-        this.filePath = filePath;
-    }
     public XmlAddressBookStorage(UserPrefs userPrefs) {
         this.userPrefs = userPrefs;
         this.filePath = userPrefs.getAddressBookFilePath();
@@ -56,20 +53,39 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
      * Similar to {@link #readAddressBook()}
      * @param filePath location of the data. Cannot be null
      * @throws DataConversionException if the file is not in the correct format.
-     * Returns a single file addressbook that only consists of data from one xml file
+     * Returns a single file makerManager data that only consists of data from one xml file
      */
     public Optional<ReadOnlyAddressBook> readAddressBook(Path filePath) throws DataConversionException,
                                                                                  FileNotFoundException {
         requireNonNull(filePath);
 
         if (!Files.exists(filePath)) {
-            logger.info("AddressBook file "  + filePath + " not found");
+            logger.info("MakerManager file "  + filePath + " not found");
             return Optional.empty();
         }
 
-        XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(filePath);
         try {
-            return Optional.of(xmlAddressBook.toModelType());
+            //Use filePath.getFileName() so that i can do testing with test makerManager files
+            switch (filePath.getFileName().toString()) {
+            case "addressbook.xml" :
+                XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(filePath);
+                return Optional.of(xmlAddressBook.toModelType());
+            case "makerManagerMachines.xml" :
+                XmlSerializableMakerManagerMachines xmlMakerManagerMachines =
+                        XmlFileStorage.loadMakerManagerMachineDataFromSaveFile(filePath);
+                return Optional.of(xmlMakerManagerMachines.toModelType());
+            case "makerManagerAdmins.xml" :
+                XmlSerializableMakerManagerAdmins xmlMakerManagerAdmins =
+                        XmlFileStorage.loadMakerManagerAdminDataFromSaveFile(filePath);
+                return Optional.of(xmlMakerManagerAdmins.toModelType());
+            case "makerManagerJobs.xml" :
+                XmlSerializableMakerManagerJobs xmlMakerManagerJobs =
+                        XmlFileStorage.loadMakerManagerJobDataFromSaveFile(filePath);
+                return Optional.of(xmlMakerManagerJobs.toModelType());
+            default:
+                logger.info("No such file path available to read data from");
+                return Optional.empty();
+            }
         } catch (IllegalValueException ive) {
             logger.info("Illegal values found in " + filePath + ": " + ive.getMessage());
             throw new DataConversionException(ive);
@@ -89,31 +105,20 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
         Path makerManagerAdminsFile = userPrefs.getMakerManagerAdminsFilePath();
         Path makerManagerJobsFile = userPrefs.getMakerManagerJobsFilePath();
 
+
         try {
             if (!Files.exists(mainAddressBookFile)) {
-                logger.info("AddressBook file " + mainAddressBookFile + " not found");
-                logger.info("Creating new " + mainAddressBookFile);
                 FileUtil.createIfMissing(mainAddressBookFile);
             }
-
             if (!Files.exists(makerManagerMachinesFile)) {
-                logger.info("AddressBook file "  + makerManagerMachinesFile + " not found");
-                logger.info("Creating new " + makerManagerMachinesFile);
                 FileUtil.createIfMissing(makerManagerMachinesFile);
             }
-
             if (!Files.exists(makerManagerAdminsFile)) {
-                logger.info("AddressBook file "  + makerManagerAdminsFile + " not found");
-                logger.info("Creating new " + makerManagerAdminsFile);
                 FileUtil.createIfMissing(makerManagerAdminsFile);
             }
-
             if (!Files.exists(makerManagerJobsFile)) {
-                logger.info("AddressBook file " + makerManagerJobsFile + " not found");
-                logger.info("Creating new " + makerManagerJobsFile);
                 FileUtil.createIfMissing(makerManagerJobsFile);
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -216,17 +221,17 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
 
         FileUtil.createIfMissing(filePath);
 
-        switch (filePath.toString()) {
-        case "data\\addressbook.xml" :
+        switch (filePath.getFileName().toString()) {
+        case "addressbook.xml" :
             XmlFileStorage.saveDataToFile(filePath, new XmlSerializableAddressBook(addressBook));
             break;
-        case "data\\makerManagerMachines.xml" :
+        case "makerManagerMachines.xml" :
             XmlFileStorage.saveDataToFile(filePath, new XmlSerializableMakerManagerMachines(addressBook));
             break;
-        case "data\\makerManagerAdmins.xml" :
+        case "makerManagerAdmins.xml" :
             XmlFileStorage.saveDataToFile(filePath, new XmlSerializableMakerManagerAdmins(addressBook));
             break;
-        case "data\\makerManagerJobs.xml" :
+        case "makerManagerJobs.xml" :
             XmlFileStorage.saveDataToFile(filePath, new XmlSerializableMakerManagerJobs(addressBook));
             break;
         default:

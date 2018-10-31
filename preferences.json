@@ -3,8 +3,8 @@
     "windowWidth" : 1286.0,
     "windowHeight" : 819.0,
     "windowCoordinates" : {
-      "x" : 40,
-      "y" : 40
+      "x" : 205,
+      "y" : 58
     }
   },
   "addressBookFilePath" : "data\\addressbook.xml",
