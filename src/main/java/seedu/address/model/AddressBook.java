@@ -387,6 +387,14 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Changes the status of the job to FINISHED
+     * @param job
+     */
+    public void finishJob(Job job) {
+        requireNonNull(job);
+        jobs.finishJob(job);
+    }
+    /**
      * Request deletion of print job
      */
 

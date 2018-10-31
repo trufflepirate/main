@@ -41,7 +41,7 @@ public class XmlAdaptedJob {
     @XmlElement(required = true)
     private XmlAdaptedPerson owner;
     @XmlElement(required = true)
-    private String addedTime;
+    private XmlAdaptedTimeStamp addedTime;
     @XmlElement
     private XmlAdaptedTimeStamp startTime;
     @XmlElement(required = true)
@@ -67,7 +67,7 @@ public class XmlAdaptedJob {
     /**
      * Constructs an {@code XmlAdaptedJob} with the given job details.
      */
-    public XmlAdaptedJob(String name, XmlAdaptedMachine machine, XmlAdaptedPerson owner, String addedTime,
+    public XmlAdaptedJob(String name, XmlAdaptedMachine machine, XmlAdaptedPerson owner, XmlAdaptedTimeStamp addedTime,
                          XmlAdaptedTimeStamp startTime, Priority priority, float duration,
                          Status status, List<XmlAdaptedTag> tagged, String note) {
         this.name = name;
@@ -93,7 +93,7 @@ public class XmlAdaptedJob {
         name = source.getJobName().fullName;
         machine = new XmlAdaptedMachine(source.getMachine());
         owner = new XmlAdaptedPerson(source.getOwner());
-        addedTime = source.getAddedTime();
+        addedTime = new XmlAdaptedTimeStamp(source.getAddedTime());
         startTime = new XmlAdaptedTimeStamp(source.getStartTime());
         priority = source.getPriority();
         duration = source.getDuration();
@@ -130,6 +130,7 @@ public class XmlAdaptedJob {
         }
 
         Person modelJobOwner = owner.toModelType();
+        TimeStamp modelAddedTime = addedTime.toModelType();
 
         if (priority == null) {
             throw new NullPointerException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Priority.class.getSimpleName()));
@@ -148,9 +149,6 @@ public class XmlAdaptedJob {
         }
 
         JobNote modelJobNote = new JobNote(note);
-
-        // Validation done in XmlAdaptedTag
-        String modelAddedTime = addedTime;
 
         TimeStamp modelStartTime = startTime.toModelType();
         Status modelStatus = status;

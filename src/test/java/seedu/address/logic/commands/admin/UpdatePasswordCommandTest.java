@@ -198,6 +198,11 @@ public class UpdatePasswordCommandTest {
         }
 
         @Override
+        public void finishJob(Job job) {
+
+        }
+
+        @Override
         public void requestDeletion(JobName jobName) {
 
         }

@@ -177,6 +177,11 @@ public class RemoveAdminCommandTest {
         }
 
         @Override
+        public void finishJob(Job job) {
+
+        }
+
+        @Override
         public void requestDeletion(JobName jobName) {
 
         }
