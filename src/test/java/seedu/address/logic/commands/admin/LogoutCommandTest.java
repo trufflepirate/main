@@ -26,11 +26,13 @@ import seedu.address.model.person.Person;
 
 public class LogoutCommandTest {
 
-    @Rule public ExpectedException thrown = ExpectedException.none();
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     private CommandHistory commandHistory = new CommandHistory();
 
-    @Test public void execute_logoutWithoutLogin_throwsCommandException() throws Exception {
+    @Test
+    public void execute_logoutWithoutLogin_throwsCommandException() throws Exception {
         ModelStub modelStub = new ModelStub();
         LogoutCommand logoutCommand = new LogoutCommand();
 
@@ -39,7 +41,8 @@ public class LogoutCommandTest {
         logoutCommand.execute(modelStub, commandHistory);
     }
 
-    @Test public void execute_logout_successful() throws Exception {
+    @Test
+    public void execute_logout_successful() throws Exception {
         ModelStub modelStub = new ModelStub();
         Admin admin = new Admin(new Username("dummy"), new Password("oldPW"));
         modelStub.setLogin(admin);
@@ -57,39 +60,48 @@ public class LogoutCommandTest {
     private class ModelStub implements Model {
         private final AdminSession adminSession = new AdminSession();
 
-        @Override public void addPerson(Person person) {
+        @Override
+        public void addPerson(Person person) {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override public void resetData(ReadOnlyAddressBook newData) {
+        @Override
+        public void resetData(ReadOnlyAddressBook newData) {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override public ReadOnlyAddressBook getAddressBook() {
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override public boolean hasPerson(Person person) {
+        @Override
+        public boolean hasPerson(Person person) {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override public void deletePerson(Person target) {
+        @Override
+        public void deletePerson(Person target) {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override public void updatePerson(Person target, Person editedPerson) {
+        @Override
+        public void updatePerson(Person target, Person editedPerson) {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override public boolean hasJob(Job job) {
+        @Override
+        public boolean hasJob(Job job) {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override public void addJob(Job job) {
+        @Override
+        public void addJob(Job job) {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override public void deleteJob(JobName job) {
+        @Override
+        public void deleteJob(JobName job) {
 
         }
 
@@ -97,156 +109,199 @@ public class LogoutCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override public void cancelJob(JobName name) {
+        @Override
+        public void cancelJob(JobName name) {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override public void restartJob(JobName name) {
+        @Override
+        public void restartJob(JobName name) {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override public void swapJobs(JobName jobname1, JobName jobName2) {
+        @Override
+        public void swapJobs(JobName jobname1, JobName jobName2) {
         }
 
-        @Override public void requestDeletion(JobName jobName) {
+        @Override
+        public void requestDeletion(JobName jobName) {
 
         }
 
-        @Override public void updateJob(Job oldJob, Job updatedJob) {
+        @Override
+        public void updateJob(Job oldJob, Job updatedJob) {
 
         }
 
-        @Override public Job findJob(JobName name) {
+        @Override
+        public Job findJob(JobName name) {
             return null;
         }
 
-        @Override public void addMachine(Machine machine) {
+        @Override
+        public void addMachine(Machine machine) {
             throw new AssertionError("This method should not be called");
         }
 
-        @Override public void removeMachine(Machine machine) {
+        @Override
+        public void removeMachine(Machine machine) {
             throw new AssertionError("This method should not be called");
         }
 
-        @Override public boolean hasMachine(Machine machine) {
+        @Override
+        public boolean hasMachine(Machine machine) {
             return false;
         }
 
-        @Override public void updateMachine(Machine target, Machine editedMachine) {
+        @Override
+        public void updateMachine(Machine target, Machine editedMachine) {
 
         }
 
-        @Override public Machine getMostFreeMachine() {
+        @Override
+        public Machine getMostFreeMachine() {
             return null;
         }
 
-        @Override public void addAdmin(Admin admin) {
+        @Override
+        public void addAdmin(Admin admin) {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override public void removeAdmin(Admin admin) {
+        @Override
+        public void removeAdmin(Admin admin) {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override public void updateAdmin(Admin admin, Admin updatedAdmin) {
+        @Override
+        public void updateAdmin(Admin admin, Admin updatedAdmin) {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override public Admin findAdmin(Username username) {
+        @Override
+        public Admin findAdmin(Username username) {
             return null;
         }
 
-        @Override public int numAdmins() {
+        @Override
+        public int numAdmins() {
             return 0;
         }
 
 
-        @Override public ObservableList<Person> getFilteredPersonList() {
+        @Override
+        public ObservableList<Person> getFilteredPersonList() {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override public void updateFilteredPersonList(Predicate<Person> predicate) {
+        @Override
+        public void updateFilteredPersonList(Predicate<Person> predicate) {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override public ObservableList<Admin> getFilteredAdminList() {
+        @Override
+        public ObservableList<Admin> getFilteredAdminList() {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override public void updateFilteredAdminList(Predicate<Admin> predicate) {
+        @Override
+        public void updateFilteredAdminList(Predicate<Admin> predicate) {
             throw new AssertionError("This method should not be called");
         }
 
-        @Override public ObservableList<Machine> getFilteredMachineList() {
+        @Override
+        public ObservableList<Machine> getFilteredMachineList() {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override public void updateFilteredMachineList(Predicate<Machine> predicate) {
+        @Override
+        public void updateFilteredMachineList(Predicate<Machine> predicate) {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override public ObservableList<Job> getFilteredJobList() {
+        @Override
+        public ObservableList<Job> getFilteredJobList() {
             return null;
         }
 
-        @Override public void updateFilteredJobList(Predicate<Job> predicate) {
+        @Override
+        public void updateFilteredJobList(Predicate<Job> predicate) {
 
         }
 
 
-        @Override public boolean canUndoAddressBook() {
+        @Override
+        public boolean canUndoAddressBook() {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override public boolean canRedoAddressBook() {
+        @Override
+        public boolean canRedoAddressBook() {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override public void undoAddressBook() {
+        @Override
+        public void undoAddressBook() {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override public void redoAddressBook() {
+        @Override
+        public void redoAddressBook() {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override public void commitAddressBook() {
+        @Override
+        public void commitAddressBook() {
             return;
         }
 
-        @Override public void adminLoginCommitAddressBook() {
+        @Override
+        public void adminLoginCommitAddressBook() {
             return;
         }
 
-        @Override public void adminLogoutCommitAddressBook() {
+        @Override
+        public void adminLogoutCommitAddressBook() {
             return;
         }
 
-        @Override public boolean isNotRedoLogin() {
+        @Override
+        public boolean isRedoLogin() {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override public boolean isNotUndoLogout() {
+        @Override
+        public boolean isUndoLogout() {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override public Admin currentlyLoggedIn() {
+        @Override
+        public Admin currentlyLoggedIn() {
             return null;
         }
 
-        @Override public void setLogin(Admin admin) {
+        @Override
+        public void setLogin(Admin admin) {
             adminSession.setLogin(admin);
         }
 
-        @Override public void clearLogin() {
+        @Override
+        public void clearLogin() {
             adminSession.clearLogin();
         }
 
-        @Override public boolean isLoggedIn() {
+        @Override
+        public boolean isLoggedIn() {
             return adminSession.isAdminLoggedIn();
         }
 
-        @Override public Machine findMachine(MachineName machinename) {
+        @Override
+        public Machine findMachine(MachineName machinename) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean isUndoLogin() {
             throw new AssertionError("This method should not be called.");
         }
     }

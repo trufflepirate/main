@@ -284,13 +284,13 @@ public class LoginCommandTest {
         }
 
         @Override
-        public boolean isNotRedoLogin() {
+        public boolean isRedoLogin() {
             throw new AssertionError("This method should not be called.");
         }
 
 
         @Override
-        public boolean isNotUndoLogout() {
+        public boolean isUndoLogout() {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -316,6 +316,11 @@ public class LoginCommandTest {
 
         @Override
         public Machine findMachine(MachineName machinename) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean isUndoLogin() {
             throw new AssertionError("This method should not be called.");
         }
     }

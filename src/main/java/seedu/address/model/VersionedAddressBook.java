@@ -88,8 +88,8 @@ public class VersionedAddressBook extends AddressBook {
     /**
      * Returns true if {@code undo()} has address book states to undo that are not done by the admin.
      */
-    public boolean isNotUndoLogout() {
-        return currentStatePointer > lastAdminLogoutPointer;
+    public boolean isUndoLogout() {
+        return !(currentStatePointer > lastAdminLogoutPointer);
     }
 
     /**
@@ -109,11 +109,20 @@ public class VersionedAddressBook extends AddressBook {
     /**
      * Returns true if {@code redo()} has address book states to redo that is not a login.
      */
-    public boolean isNotRedoLogin() {
+    public boolean isRedoLogin() {
         if (lastAdminLoginPointer < 0) {
-            return true;
+            return false;
         }
-        return !(currentStatePointer == lastAdminLoginPointer - 1);
+        return (currentStatePointer == lastAdminLoginPointer - 1);
+    }
+    /**
+     * Returns true if {@code redo()} the previous state is a login.
+     */
+    public boolean isUndoLogin() {
+        if (lastAdminLoginPointer < 0) {
+            return false;
+        }
+        return (currentStatePointer == lastAdminLoginPointer);
     }
 
     @Override public boolean equals(Object other) {

@@ -390,13 +390,18 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public boolean isNotUndoLogout() {
-        return versionedAddressBook.isNotUndoLogout();
+    public boolean isUndoLogout() {
+        return versionedAddressBook.isUndoLogout();
     }
 
     @Override
-    public boolean isNotRedoLogin() {
-        return versionedAddressBook.isNotRedoLogin();
+    public boolean isRedoLogin() {
+        return versionedAddressBook.isRedoLogin();
+    }
+
+    @Override
+    public boolean isUndoLogin() {
+        return versionedAddressBook.isUndoLogin();
     }
 
     @Override
