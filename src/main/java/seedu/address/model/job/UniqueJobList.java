@@ -48,9 +48,8 @@ public class UniqueJobList {
      * Removes the equivalent job from the list.
      * The job must exist in the list.
      */
-    public void remove(JobName toRemoveName) {
-        requireNonNull(toRemoveName);
-        Job toRemove = findJob(toRemoveName);
+    public void remove(Job toRemove) {
+        requireNonNull(toRemove);
         if (!internalList.remove(toRemove)) {
             throw new JobNotFoundException();
         }
@@ -59,6 +58,26 @@ public class UniqueJobList {
     public void setJobs(UniqueJobList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
+    }
+
+    /**
+     * Replaces the job {@code target} in the list with {@code editedJob}.
+     * {@code target} must exist in the list.
+     * The job identity of {@code editedJob} must not be the same as another existing job in the list.
+     */
+    public void setJob(Job target, Job editedJob) {
+        requireAllNonNull(target, editedJob);
+
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new JobNotFoundException();
+        }
+
+        if (!target.isSameJob(editedJob) && contains(editedJob)) {
+            throw new DuplicateJobException();
+        }
+
+        internalList.set(index, editedJob);
     }
 
     /**
@@ -150,9 +169,9 @@ public class UniqueJobList {
     }
 
     /**
-     * Replaces the person {@code target} in the list with {@code editedJob}.
+     * Replaces the job {@code target} in the list with {@code editedJob}.
      * {@code target} must exist in the list.
-     * The person identity of {@code editedJob} must not be the same as another existing person in the list.
+     * The job identity of {@code editedJob} must not be the same as another existing job in the list.
      */
     public void updateJob(Job target, Job editedJob) {
         requireAllNonNull(target, editedJob);

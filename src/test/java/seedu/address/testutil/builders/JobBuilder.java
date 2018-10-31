@@ -3,15 +3,11 @@ package seedu.address.testutil.builders;
 import java.util.HashSet;
 import java.util.Set;
 
-import seedu.address.model.job.Job;
-import seedu.address.model.job.JobName;
-import seedu.address.model.job.JobNote;
-import seedu.address.model.job.Priority;
-import seedu.address.model.job.Status;
-import seedu.address.model.job.TimeStamp;
+import seedu.address.model.job.*;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.util.SampleDataUtil;
 
 /**
  * A utility class to help with building Job objects.
@@ -19,7 +15,7 @@ import seedu.address.model.tag.Tag;
 
 public class JobBuilder {
 
-    public static final String DEFAULT_JOBNAME = "MakerManagerJob";
+    public static final String DEFAULT_JOBNAME = "IDCP";
     public static final Priority DEFAULT_PRIORITY = Priority.URGENT;
     public static final Status DEFAULT_STATUS = Status.ONGOING;
     private static final String DEFAULT_JOBNOTE = "This is makerManager default job";
@@ -31,10 +27,10 @@ public class JobBuilder {
     private Machine machine;
     private TimeStamp startTime;
     private Person owner;
-    private final String addedTime;
+    private String addedTime;
 
     //Data field
-    private final Set<Tag> tags;
+    private Set<Tag> tags;
     private JobNote jobNote;
     private Priority priority;
     private Status status;
@@ -55,8 +51,21 @@ public class JobBuilder {
         addedTime = startTime.showTime();
     }
 
+    public JobBuilder(Job jobToCopy) {
+        name = jobToCopy.getJobName();
+        machine = jobToCopy.getMachine();
+        owner = jobToCopy.getOwner();
+        addedTime = jobToCopy.getAddedTime();
+        tags = new HashSet<>(jobToCopy.getTags());
+        jobNote = jobToCopy.getJobNote();
+        priority = jobToCopy.getPriority();
+        status = jobToCopy.getStatus();
+        duration = jobToCopy.getDuration();
+
+    }
+
     /**
-     *
+     * Sets the name to be the input name  parameter
      */
     public JobBuilder withName(String name) {
         this.name = new JobName(name);
@@ -64,7 +73,7 @@ public class JobBuilder {
     }
 
     /**
-     *
+     * Sets the machine to be the input machine parameter
      */
     public JobBuilder withMachine(Machine machine) {
         this.machine = machine;
@@ -72,7 +81,7 @@ public class JobBuilder {
     }
 
     /**
-     *
+     * Sets the job owner to be the input person parameter
      */
     public JobBuilder withOwner(Person owner) {
         this.owner = owner;
@@ -80,7 +89,7 @@ public class JobBuilder {
     }
 
     /**
-     *
+     * Sets the job note to be the input string parameter
      */
     public JobBuilder withJobNote(String jobNote) {
         this.jobNote = new JobNote(jobNote);
@@ -88,7 +97,7 @@ public class JobBuilder {
     }
 
     /**
-     *
+     * Sets the priority of the job to be the input priority parameter
      */
     public JobBuilder withPriority(Priority priority) {
         this.priority = priority;
@@ -96,7 +105,7 @@ public class JobBuilder {
     }
 
     /**
-     *
+     * Sets the status to be the input status parameter
      */
     public JobBuilder withStatus(Status status) {
         this.status = status;
@@ -104,7 +113,7 @@ public class JobBuilder {
     }
 
     /**
-     *
+     * Sets the duration to be the input duration parameter
      */
     public JobBuilder withDuration(float duration) {
         this.duration = duration;
@@ -112,12 +121,19 @@ public class JobBuilder {
     }
 
     /**
-     *
+     * Sets the added time to be the input added time parameter
      */
-    public JobBuilder addTags(Tag tag) {
-        tags.add(tag);
+    public JobBuilder withAddedTime(String addedTime) {
+        this.addedTime = addedTime;
         return this;
+    }
 
+    /**
+     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Person} that we are building.
+     */
+    public JobBuilder withTags(String ... tags) {
+        this.tags = SampleDataUtil.getTagSet(tags);
+        return this;
     }
 
     public Job build() {

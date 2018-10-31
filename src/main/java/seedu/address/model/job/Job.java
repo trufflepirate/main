@@ -86,30 +86,6 @@ public class Job {
         this.tags.addAll(tags);
     }
 
-    /**
-     * checks if a job has been finished
-     */
-    public boolean isFinished() throws JobNotStartedException {
-
-        if (this.status == ONGOING) {
-            Integer[] current = new TimeStamp().getTime();
-            Integer[] start = startTime.getTime();
-            Integer[] deviation = new Integer[start.length];
-
-            for (int i = 0; i < start.length; i++) {
-                deviation[i] = current[i] - start[i];
-            }
-
-            double runningTime = 30.0 * 24.0 * deviation[0] + 24.0 * deviation[1] + deviation[2]
-                + 1 / 60 * deviation[3] + 1 / 3600 * deviation[4];
-
-            return runningTime > this.duration;
-        } else {
-            throw new JobNotStartedException();
-        }
-    }
-
-
     public JobNote getJobNote() {
         return this.jobNote;
     }
@@ -212,6 +188,32 @@ public class Job {
 
 
     /**
+     * checks if a job has been finished
+     */
+    /*
+    public boolean isFinished() throws JobNotStartedException {
+
+        if (this.status == ONGOING) {
+            Integer[] current = new TimeStamp().getTime();
+            Integer[] start = startTime.getTime();
+            Integer[] deviation = new Integer[start.length];
+
+            for (int i = 0; i < start.length; i++) {
+                deviation[i] = current[i] - start[i];
+            }
+
+            double runningTime = 30.0 * 24.0 * deviation[0] + 24.0 * deviation[1] + deviation[2]
+                    + 1 / 60 * deviation[3] + 1 / 3600 * deviation[4];
+
+            return runningTime > this.duration;
+        } else {
+            throw new JobNotStartedException();
+        }
+    }
+    */
+
+
+    /**
      * Returns true if both jobs of the same name have at least one other identity field that is the same.
      * This defines a weaker notion of equality between two jobs.
      * //TODO: Modify to match new class
@@ -223,9 +225,9 @@ public class Job {
 
         return otherJob != null
                 && otherJob.getJobName().equals(getJobName())
-                && (otherJob.getMachine().equals(getMachine())
-                || otherJob.getAddedTime().equals(getAddedTime())
-                || otherJob.getOwner().equals(getOwner()));
+                && otherJob.getMachine().equals(getMachine())
+                && (otherJob.getDuration() == getDuration())
+                && otherJob.getOwner().equals(getOwner());
     }
 
     /**
@@ -271,8 +273,7 @@ public class Job {
         return otherJob.getJobName().equals(getJobName())
                 && otherJob.getMachine().equals(getMachine())
                 && otherJob.getOwner().equals(getOwner())
-                && otherJob.getAddedTime().equals(getAddedTime())
-                && otherJob.getTags().equals(getTags());
+                && otherJob.getAddedTime().equals(getAddedTime());
     }
 
     @Override
