@@ -51,12 +51,15 @@ public class ManageJobCommand extends Command {
 
         if (option.equals(OPTION_START)) {
             model.startJob(name);
+            model.commitAddressBook();
             return new CommandResult(MESSAGE_STARTED_JOB);
         } else if (option.equals(OPTION_RESTART)) {
             model.restartJob(name);
+            model.commitAddressBook();
             return new CommandResult(MESSAGE_RESTARTED_JOB);
         } else if (option.equals(OPTION_CANCEL)) {
             model.cancelJob(name);
+            model.commitAddressBook();
             return new CommandResult(MESSAGE_CANCELLED_JOB);
         } else if (option.equals(OPTION_DELETE)) {
             //TODO:Disbled until v1.4!
@@ -66,6 +69,7 @@ public class ManageJobCommand extends Command {
                 throw new CommandException(MESSAGE_ACCESS_DENIED);
             }
             model.deleteJob(name);
+            model.commitAddressBook();
             return new CommandResult(MESSAGE_DELETED_JOB);
             */
         } else {
