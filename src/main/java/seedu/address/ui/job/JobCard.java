@@ -54,7 +54,8 @@ public class JobCard extends UiPart<Region> {
         jobName.setText(job.getJobName().fullName);
 
         Label machineNameLabel = new Label("Machine: " + job.getMachine().getName().fullName);
-        Label informationLabel = new Label("Added by " + job.getOwner().getName().fullName + " at "
+        Label informationLabel =
+            new Label("Added by " + job.getOwner().getName().fullName + " at "
                 + job.getAddedTime());
         Label startTimeLabel;
         if (job.getStatus() == Status.ONGOING) {
@@ -71,41 +72,36 @@ public class JobCard extends UiPart<Region> {
         jobInformation.getChildren().add(informationLabel);
         jobInformation.setHgap(2);
 
-        startTimeLabel.setStyle("-fx-font: 12 arial;"
-                + "-fx-text-fill: #ffffff;"
-                + "-fx-background-color: #006064;"
+        startTimeLabel.setStyle(
+            "-fx-font: 12 arial;" + "-fx-text-fill: #ffffff;" + "-fx-background-color: #006064;"
                 + "-fx-padding: 2;"
                 + "-fx-text-alignment: center");
         jobStartTime.getChildren().add(startTimeLabel);
         jobStartTime.setHgap(2);
 
         if (job.getPriority() == Priority.URGENT) {
-            priorityLabel.setStyle("-fx-font: 14 arial;"
-                    + "-fx-text-fill: #ffffff;"
-                    + "-fx-background-color: #b71c1c;"
+            priorityLabel.setStyle(
+                "-fx-font: 14 arial;" + "-fx-text-fill: #ffffff;" + "-fx-background-color: #b71c1c;"
                     + "-fx-padding: 2;"
                     + "-fx-text-alignment: center");
         }
 
         if (job.getPriority() == Priority.HIGH) {
-            priorityLabel.setStyle("-fx-font: 14 arial;"
-                    + "-fx-text-fill: #000000;"
-                    + "-fx-background-color: #ffca28;"
+            priorityLabel.setStyle(
+                "-fx-font: 14 arial;" + "-fx-text-fill: #000000;" + "-fx-background-color: #ffca28;"
                     + "-fx-padding: 2;"
                     + "-fx-text-alignment: center");
         }
         if (job.getPriority() == Priority.NORMAL) {
-            priorityLabel.setStyle("-fx-font: 14 arial;"
-                    + "-fx-text-fill: #ffffff;"
-                    + "-fx-background-color: #00897b;"
+            priorityLabel.setStyle(
+                "-fx-font: 14 arial;" + "-fx-text-fill: #ffffff;" + "-fx-background-color: #00897b;"
                     + "-fx-padding: 2;"
                     + "-fx-text-alignment: center");
         }
         tags.getChildren().add(priorityLabel);
 
-        statusLabel.setStyle("-fx-font: 12 arial;"
-                + "-fx-text-fill: #ffffff;"
-                + "-fx-background-color: #a1887f;"
+        statusLabel.setStyle(
+            "-fx-font: 12 arial;" + "-fx-text-fill: #ffffff;" + "-fx-background-color: #a1887f;"
                 + "-fx-padding: 2;"
                 + "-fx-text-alignment: center");
         tags.getChildren().add(statusLabel);
@@ -113,7 +109,9 @@ public class JobCard extends UiPart<Region> {
         job.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
 
         jobDescription.setText(job.getJobNote().toString());
-        jobDuration.setText("Time Remaining: " + (job.getDuration() + job.getMachine().getTotalDuration()) + (" hour(s)."));
+        jobDuration
+            .setText("Time Remaining: " + (job.getDuration() + job.getMachine().getTotalDuration())
+                + (" hour(s)."));
 
 
         /* No longer need request deletion it goes under status now.
