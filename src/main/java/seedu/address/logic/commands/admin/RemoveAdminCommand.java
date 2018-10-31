@@ -2,6 +2,8 @@ package seedu.address.logic.commands.admin;
 
 import static java.util.Objects.requireNonNull;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.AdminLogoutEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
@@ -50,6 +52,7 @@ public class RemoveAdminCommand extends Command {
         if (model.currentlyLoggedIn().getUsername().equals(username)) {
             model.clearLogin();
             model.adminLogoutCommitAddressBook();
+            EventsCenter.getInstance().post(new AdminLogoutEvent());
         } else {
             model.commitAddressBook();
         }
