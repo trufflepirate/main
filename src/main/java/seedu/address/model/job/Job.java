@@ -4,7 +4,6 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.job.Status.ONGOING;
 import static seedu.address.model.job.Status.PAUSED;
 
-import java.sql.Time;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;

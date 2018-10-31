@@ -3,7 +3,9 @@ package seedu.address.model.job;
 import java.util.Calendar;
 import java.util.Date;
 
-
+/**
+ * Timestamp for modelling time
+ */
 public class TimeStamp {
     private Calendar calendar;
 
@@ -37,6 +39,10 @@ public class TimeStamp {
         return time2.getDate().getTime() - time1.getDate().getTime();
     }
 
+    /**
+     * Shows the time
+     * @return
+     */
     public String showTime() {
         return this.getCalendar().get(Calendar.DAY_OF_MONTH) + "/" + this.getCalendar().get(Calendar.MONTH) + " " + this
             .getCalendar().get(Calendar.HOUR) + ":" + this.getCalendar().get(Calendar.MINUTE) + ":" + this.getCalendar()

@@ -68,7 +68,7 @@ public class ModelManager extends ComponentManager implements Model {
             public void run() {
                 for (Job job : versionedAddressBook.getJobList()) {
                     try {
-                        if (job.getStatus()== Status.ONGOING && job.isFinished()) {
+                        if (job.getStatus() == Status.ONGOING && job.isFinished()) {
                             finishJob(job);
                         }
                     } catch (JobNotStartedException e) {

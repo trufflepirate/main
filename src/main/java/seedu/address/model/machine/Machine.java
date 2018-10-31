@@ -10,8 +10,8 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.model.job.Job;
-import seedu.address.model.machine.exceptions.InvalidMachineStatusException;
 import seedu.address.model.job.Status;
+import seedu.address.model.machine.exceptions.InvalidMachineStatusException;
 import seedu.address.model.tag.Tag;
 
 /**
