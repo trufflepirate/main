@@ -165,6 +165,8 @@ public class ModelManager extends ComponentManager implements Model {
         //TODO find another way to check if the printer exist before adding job
         //TODO refactor after this is working
         for (Machine m : filteredMachines) {
+            //TODO: Fix and reenable
+            /*
             if (job.getMachine().getName().fullName.equals(new Machine("AUTO").getName().fullName)) {
                 Machine mostFree = getMostFreeMachine();
                 job.setMachine(mostFree);
@@ -174,6 +176,7 @@ public class ModelManager extends ComponentManager implements Model {
                 indicateMachineListChanged();
                 return;
             }
+            */
             if (job.getMachine().getName().fullName.equals(m.getName().fullName)) {
                 versionedAddressBook.addJob(job);
                 versionedAddressBook.addJobToMachineList(m, job);
