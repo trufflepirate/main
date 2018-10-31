@@ -10,15 +10,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
-
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.MachinePanelSelectiononChangedEvent;
 import seedu.address.model.job.Job;
 import seedu.address.model.machine.Machine;
 import seedu.address.ui.UiPart;
-
-
 
 
 /**
@@ -38,7 +35,7 @@ public class MachineListPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    private void setConnections(ObservableList<Machine> machineList,ObservableList<Job> jobList ) {
+    private void setConnections(ObservableList<Machine> machineList, ObservableList<Job> jobList) {
         this.jobList = jobList;
         machineListView.setItems(machineList);
         machineListView.setCellFactory(listView -> new MachineListViewCell(jobList));
@@ -46,13 +43,12 @@ public class MachineListPanel extends UiPart<Region> {
     }
 
     private void setEventHandlerForSelectionChangeEvent() {
-        machineListView.getSelectionModel().selectedItemProperty()
-                .addListener(((observable, oldValue, newValue) -> {
-                    if (newValue != null) {
-                        logger.info("Selection in machine list panel changed to : " + newValue + "'");
-                        raise(new MachinePanelSelectiononChangedEvent(newValue));
-                    }
-                }));
+        machineListView.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                logger.info("Selection in machine list panel changed to : " + newValue + "'");
+                raise(new MachinePanelSelectiononChangedEvent(newValue));
+            }
+        }));
     }
 
     /**
@@ -77,10 +73,11 @@ public class MachineListPanel extends UiPart<Region> {
     class MachineListViewCell extends ListCell<Machine> {
         public ObservableList<Job> jobList;
 
-        public MachineListViewCell(ObservableList<Job> jobList){
+        public MachineListViewCell(ObservableList<Job> jobList) {
             super();
-            this.jobList=jobList;
+            this.jobList = jobList;
         }
+
         @Override
         protected void updateItem(Machine machine, boolean empty) {
             super.updateItem(machine, empty);
