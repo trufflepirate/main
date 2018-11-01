@@ -18,6 +18,7 @@ import seedu.address.model.job.Priority;
 import seedu.address.model.job.Status;
 import seedu.address.model.job.TimeStamp;
 import seedu.address.model.machine.Machine;
+import seedu.address.model.machine.MachineName;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 import seedu.address.storage.XmlAdaptedPerson;
@@ -40,7 +41,7 @@ public class XmlAdaptedJob {
     @XmlElement(required = true)
     private XmlAdaptedPerson owner;
     @XmlElement(required = true)
-    private String addedTime;
+    private XmlAdaptedTimeStamp addedTime;
     @XmlElement
     private XmlAdaptedTimeStamp startTime;
     @XmlElement(required = true)
@@ -66,7 +67,7 @@ public class XmlAdaptedJob {
     /**
      * Constructs an {@code XmlAdaptedJob} with the given job details.
      */
-    public XmlAdaptedJob(String name, XmlAdaptedMachine machine, XmlAdaptedPerson owner, String addedTime,
+    public XmlAdaptedJob(String name, XmlAdaptedMachine machine, XmlAdaptedPerson owner, XmlAdaptedTimeStamp addedTime,
                          XmlAdaptedTimeStamp startTime, Priority priority, float duration,
                          Status status, List<XmlAdaptedTag> tagged, String note) {
         this.name = name;
@@ -92,7 +93,7 @@ public class XmlAdaptedJob {
         name = source.getJobName().fullName;
         machine = new XmlAdaptedMachine(source.getMachine());
         owner = new XmlAdaptedPerson(source.getOwner());
-        addedTime = source.getAddedTime();
+        addedTime = new XmlAdaptedTimeStamp(source.getAddedTime());
         startTime = new XmlAdaptedTimeStamp(source.getStartTime());
         priority = source.getPriority();
         duration = source.getDuration();
@@ -111,21 +112,50 @@ public class XmlAdaptedJob {
     public Job toModelType() throws IllegalValueException {
         //TODO handle exceptions properly here
 
+        if (name == null) {
+            throw new NullPointerException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, MachineName.class.getSimpleName()));
+        }
+
         JobName modelJobName = new JobName(name);
+
+        if (machine == null) {
+            throw new NullPointerException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Machine.class.getSimpleName()));
+        }
+
         Machine modelJobMachine = machine.toModelType();
+
+        if (owner == null) {
+            throw new NullPointerException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Person.class.getSimpleName()));
+        }
+
         Person modelJobOwner = owner.toModelType();
-        String modelAddedTime = addedTime;
+        TimeStamp modelAddedTime = addedTime.toModelType();
+
+        if (priority == null) {
+            throw new NullPointerException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Priority.class.getSimpleName()));
+        }
+
+        final Priority modelPriority = priority;
+
+        if (duration == 0.0f) {
+            throw new NullPointerException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Float.class.getSimpleName()));
+        }
+
+        float modelDuration = duration;
+
+        if (note == null) {
+            throw new NullPointerException(String.format(MISSING_FIELD_MESSAGE_FORMAT, JobNote.class.getSimpleName()));
+        }
+
+        JobNote modelJobNote = new JobNote(note);
 
         TimeStamp modelStartTime = startTime.toModelType();
-        final Priority modelPriority = priority;
-        //TODO: no validation on duration yet
-        final float modelDuration = duration;
         Status modelStatus = status;
         Set<Tag> modelTags = new HashSet<>();
         for (XmlAdaptedTag tag : tagged) {
             modelTags.add(tag.toModelType());
         }
-        JobNote modelJobNote = new JobNote(note);
 
 
         Job job = new Job(modelJobName,

@@ -4,44 +4,46 @@
 :imagesDir: images
 :stylesDir: stylesheets
 
-MakerManager was developed by the https://github.com/NUSCS2113-T09-1[T09-1] team. +
-{empty} +
+MakerManager was developed by the https://github.com/NUSCS2113-T09-1[T09-1] team, as part of CS2113T - a Software
+Engineering module. +
+
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
+At the time of writing, all 4 of us are Computer Engineering students in our Sophomore year.
 
 == Project Team
 
 === Saif Uddin Mahmud
-image::psyf.jpg[width="150", align="left"]
+image::psyf.png[width="150", align="left"]
 {empty}[http://github.com/Psyf[github]] [<<psyf#, portfolio>>]
 
-Role: Team Lead +
+Role: Product Manager +
 Responsibilities: Deliverables and Deadlines
 
 '''
 
 === Sean Tan
-image::trufflepirate.jpg[width="150", align="left"]
+image::trufflepirate.png[width="150", align="left"]
 {empty}[http://github.com/trufflepirate[github]] [<<trufflepirate#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Documentation
+Responsibilities: Integration and Bug Fixer
 
 '''
 
 === Teo Jun Jie
-image::teojunjie.jpg[width="150", align="left"]
+image::teojunjie.png[width="150", align="left"]
 {empty}[http://github.com/teojunjie[github]] [<<teojunjie#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Code Quality
+Responsibilities: System Integration
 
 '''
 
 === Fu Tian yuan
-image::ftywan.jpg[width="150", align="left"]
+image::ftywan.png[width="150", align="left"]
 {empty}[http://github.com/ftywan[github]] [<<ftywan#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Integration
+Responsibilities: Testing
 
 '''

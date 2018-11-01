@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.layout.HBox?>
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
          minWidth="450" minHeight="600" onCloseRequest="#handleExit">
   <icons>
@@ -46,27 +47,14 @@
           </padding>
         </StackPane>
 
-        <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-          <VBox fx:id="machineList" minWidth="250" prefWidth="250" SplitPane.resizableWithParent="false">
-            <padding>
-              <Insets top="10" right="10" bottom="10" left="10" />
-            </padding>
-            <StackPane fx:id="machineListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-          </VBox>
-
-          <VBox fx:id="viewInfoPanel">
-              <StackPane fx:id="displayMachineDetailsPlaceholder" prefWidth="340" >
-                  <padding>
-                      <Insets top="10" right="10" bottom="10" left="10" />
-                  </padding>
-              </StackPane>
-          </VBox>
-
-
-          <VBox fx:id="jobsList" minWidth="250" prefWidth="250" SplitPane.resizableWithParent="false">
-            <StackPane fx:id="jobsListPlaceHolder" VBox.vgrow="ALWAYS"/>
-          </VBox>
-        </SplitPane>
+        <StackPane id="stackPane" fx:id="stackPane" VBox.vgrow="ALWAYS" styleClass="pane-with-border">
+          <padding>
+            <Insets top="5" right="10" bottom="5" left="10" />
+          </padding>
+          <HBox fx:id="machineList" >
+            <StackPane fx:id="machineListPanelPlaceholder" HBox.hgrow="ALWAYS" />
+          </HBox>
+        </StackPane>
 
         <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
       </VBox>

@@ -40,7 +40,6 @@ public class XmlUtil {
             throw new FileNotFoundException("File not found : " + file.toAbsolutePath());
         }
 
-        logger.info("Getting data from file from XmlUtil");
         JAXBContext context = JAXBContext.newInstance(classToConvert);
         Unmarshaller um = context.createUnmarshaller();
 

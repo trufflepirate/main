@@ -127,14 +127,14 @@ public class MainWindow extends UiPart<Stage> {
      */
     void fillInnerParts() {
         //TODO change browser panel to displayMachineDetails
-        viewInfoPanel = new ViewInfoPanel();
-        displayMachineDetailsPlaceholder.getChildren().add(viewInfoPanel.getRoot());
+        //viewInfoPanel = new ViewInfoPanel();
+        //displayMachineDetailsPlaceholder.getChildren().add(viewInfoPanel.getRoot());
 
-        machineListPanel = new MachineListPanel(logic.getFilteredMachineList());
+        machineListPanel = new MachineListPanel(logic.getFilteredMachineList(), logic.getFilteredJobList());
         machineListPanelPlaceholder.getChildren().add(machineListPanel.getRoot());
 
-        jobListPanel = new JobListPanel(logic.getFilteredJobList());
-        jobsListPlaceHolder.getChildren().add(jobListPanel.getRoot());
+        //jobListPanel = new JobListPanel(logic.getFilteredJobList());
+        //jobsListPlaceHolder.getChildren().add(jobListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());

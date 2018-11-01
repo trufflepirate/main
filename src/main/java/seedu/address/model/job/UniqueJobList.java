@@ -28,7 +28,7 @@ public class UniqueJobList {
      */
     public boolean contains(Job toCheck) {
         requireNonNull(toCheck);
-        return internalList.stream().anyMatch(toCheck::isSameJob);
+        return internalList.stream().anyMatch(toCheck::equals);
 
     }
 
@@ -222,6 +222,10 @@ public class UniqueJobList {
 
         Collections.swap(internalList, index1, index2);
 
+    }
+
+    public void finishJob(Job job) {
+        job.finishJob();
     }
 
     //============================= queue operations =======================================//

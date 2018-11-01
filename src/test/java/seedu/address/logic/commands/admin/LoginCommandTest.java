@@ -12,11 +12,13 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.admin.Admin;
+import seedu.address.model.admin.AdminSession;
 import seedu.address.model.admin.Password;
 import seedu.address.model.admin.Username;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
 import seedu.address.model.machine.Machine;
+import seedu.address.model.machine.MachineName;
 import seedu.address.model.person.Person;
 
 public class LoginCommandTest {
@@ -42,7 +44,8 @@ public class LoginCommandTest {
     public void execute_alreadyLoggedIn_throwsCommandException() throws Exception {
         LoginCommand loginCommand = new LoginCommand(new Username("DummyName"), new Password("DummyPW"));
         ModelStub modelStub = new ModelStub();
-        modelStub.setLogin(new Username("Notice how this is never made idiot proof"));
+        Admin admin = new Admin(new Username("Notice how this is never made idiot proof"), new Password("oldPW"));
+        modelStub.setLogin(admin);
         //TODO: make modelManager.setLogin idiotProof
 
         thrown.expect(CommandException.class);
@@ -67,9 +70,8 @@ public class LoginCommandTest {
      * A default model stub that has some methods failing
      */
     private class ModelStub implements Model {
+        private final AdminSession adminSession = new AdminSession();
         private Admin firstAdmin = new Admin(new Username("firstAdmin"), new Password("rightPW"));
-
-        private boolean loginStatus;
 
         @Override
         public void addPerson(Person person) {
@@ -136,6 +138,11 @@ public class LoginCommandTest {
         }
 
         @Override
+        public void finishJob(Job job) {
+
+        }
+
+        @Override
         public void requestDeletion(JobName jobName) {
 
         }
@@ -189,26 +196,6 @@ public class LoginCommandTest {
         @Override
         public void updateAdmin(Admin admin, Admin updatedAdmin) {
             throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void setLogin(Username username) {
-            this.loginStatus = true;
-        }
-
-        @Override
-        public void clearLogin() {
-            this.loginStatus = false;
-        }
-
-        @Override
-        public boolean isLoggedIn() {
-            return this.loginStatus;
-        }
-
-        @Override
-        public Username currentlyLoggedIn() {
-            return null;
         }
 
         @Override
@@ -290,5 +277,57 @@ public class LoginCommandTest {
         public void commitAddressBook() {
             return;
         }
+
+        @Override
+        public void adminLoginCommitAddressBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void adminLogoutCommitAddressBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean isRedoLogin() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+
+        @Override
+        public boolean isUndoLogout() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public Admin currentlyLoggedIn() {
+            return null;
+        }
+
+        @Override
+        public void setLogin(Admin admin) {
+            adminSession.setLogin(admin);
+        }
+
+        @Override
+        public void clearLogin() {
+            adminSession.clearLogin();
+        }
+
+        @Override
+        public boolean isLoggedIn() {
+            return adminSession.isAdminLoggedIn();
+        }
+
+        @Override
+        public Machine findMachine(MachineName machinename) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean isUndoLogin() {
+            throw new AssertionError("This method should not be called.");
+        }
     }
 }
+

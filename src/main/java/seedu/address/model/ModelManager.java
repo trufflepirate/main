@@ -3,6 +3,8 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -20,7 +22,10 @@ import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.Username;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
+import seedu.address.model.job.Status;
+import seedu.address.model.job.exceptions.JobNotStartedException;
 import seedu.address.model.machine.Machine;
+import seedu.address.model.machine.MachineName;
 import seedu.address.model.machine.exceptions.MachineNotFoundException;
 import seedu.address.model.person.Person;
 
@@ -37,8 +42,6 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<Machine> filteredMachines;
     private final FilteredList<Job> filteredJobs;
 
-    private boolean loginStatus = false;
-    private Username loggedInAdmin = null;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -54,10 +57,32 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
         filteredMachines = new FilteredList<>(versionedAddressBook.getMachineList());
         filteredAdmins = new FilteredList<>(versionedAddressBook.getAdminList());
-        //Queue list is the sorted list of jobs based on custom comparator
         filteredJobs = new FilteredList<>(versionedAddressBook.getJobList());
         //TODO find a better way to change the data according to sorted jobs based on comparator
         indicateJobListChanged();
+
+        // Timer for auto print cleanup
+        // credit: https://dzone.com/articles/how-schedule-task-run-interval
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                for (Job job : versionedAddressBook.getJobList()) {
+                    try {
+                        if (job.getStatus() == Status.ONGOING && job.isFinished()) {
+                            finishJob(job);
+                        }
+                    } catch (JobNotStartedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+
+        Timer timer = new Timer();
+        long delay = 60000;
+        long intervalPeriod = 60000;
+        timer.scheduleAtFixedRate(task, delay, intervalPeriod);
+
     }
 
     public ModelManager() {
@@ -93,6 +118,10 @@ public class ModelManager extends ComponentManager implements Model {
     /** Raises an event to indicate the model has changed */
     private void indicateJobListChanged() {
         raise(new JobListChangedEvent(versionedAddressBook));
+        /**
+         * Since when job changes, it implicitly implies that machine list will change too
+         */
+        raise(new MachineListChangedEvent(versionedAddressBook));
     }
 
     // ============================== Person methods ======================================= //
@@ -136,6 +165,8 @@ public class ModelManager extends ComponentManager implements Model {
         //TODO find another way to check if the printer exist before adding job
         //TODO refactor after this is working
         for (Machine m : filteredMachines) {
+            //TODO: Fix and reenable
+            /*
             if (job.getMachine().getName().fullName.equals(new Machine("AUTO").getName().fullName)) {
                 Machine mostFree = getMostFreeMachine();
                 job.setMachine(mostFree);
@@ -145,6 +176,7 @@ public class ModelManager extends ComponentManager implements Model {
                 indicateMachineListChanged();
                 return;
             }
+            */
             if (job.getMachine().getName().fullName.equals(m.getName().fullName)) {
                 versionedAddressBook.addJob(job);
                 versionedAddressBook.addJobToMachineList(m, job);
@@ -161,6 +193,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(job);
         versionedAddressBook.removeJob(job);
         indicateJobListChanged();
+        indicateMachineListChanged();
     }
 
     @Override
@@ -168,6 +201,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(oldJob, updatedJob);
         versionedAddressBook.updateJob(oldJob, updatedJob);
         indicateJobListChanged();
+        indicateMachineListChanged();
     }
 
     @Override
@@ -181,6 +215,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(name);
         versionedAddressBook.startJob(name);
         indicateJobListChanged();
+        indicateMachineListChanged();
     }
 
     @Override
@@ -188,6 +223,8 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull();
         versionedAddressBook.cancelJob(name);
         indicateJobListChanged();
+        indicateMachineListChanged();
+
     }
 
     @Override
@@ -195,6 +232,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull();
         versionedAddressBook.restartJob(name);
         indicateJobListChanged();
+        indicateMachineListChanged();
     }
 
     @Override
@@ -204,6 +242,12 @@ public class ModelManager extends ComponentManager implements Model {
         indicateJobListChanged();
 
 
+    }
+
+    @Override
+    public void finishJob(Job job) {
+        versionedAddressBook.finishJob(job);
+        indicateJobListChanged();
     }
 
     @Override
@@ -234,6 +278,7 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedAddressBook.hasMachine(machine);
     }
 
+
     @Override
     public void updateMachine(Machine target, Machine editedMachine) {
         requireAllNonNull(target, editedMachine);
@@ -246,6 +291,11 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedAddressBook.getMostFreeMachine();
     }
 
+    @Override
+    public Machine findMachine(MachineName machineName) {
+        requireNonNull(machineName);
+        return versionedAddressBook.findMachine(machineName);
+    }
 
     // ============================== Admin methods ======================================= //
 
@@ -271,25 +321,23 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void setLogin(Username username) {
-        this.loggedInAdmin = username;
-        this.loginStatus = true;
+    public void setLogin(Admin admin) {
+        versionedAddressBook.setLoggedInAdmin(admin);
     }
 
     @Override
     public void clearLogin() {
-        this.loggedInAdmin = null;
-        this.loginStatus = false;
+        versionedAddressBook.clearLogin();
     }
 
     @Override
     public boolean isLoggedIn() {
-        return this.loginStatus;
+        return versionedAddressBook.isLoggedIn();
     }
 
     @Override
-    public Username currentlyLoggedIn() {
-        return this.loggedInAdmin;
+    public Admin currentlyLoggedIn() {
+        return versionedAddressBook.currentlyLoggedIn();
     }
 
     @Override
@@ -302,9 +350,6 @@ public class ModelManager extends ComponentManager implements Model {
     public int numAdmins() {
         return versionedAddressBook.numAdmins();
     }
-
-
-
 
     //=========== Filtered Person List Accessors =============================================================
 
@@ -387,6 +432,21 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public boolean isUndoLogout() {
+        return versionedAddressBook.isUndoLogout();
+    }
+
+    @Override
+    public boolean isRedoLogin() {
+        return versionedAddressBook.isRedoLogin();
+    }
+
+    @Override
+    public boolean isUndoLogin() {
+        return versionedAddressBook.isUndoLogin();
+    }
+
+    @Override
     public void undoAddressBook() {
         versionedAddressBook.undo();
         indicateAddressBookChanged();
@@ -401,6 +461,16 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void commitAddressBook() {
         versionedAddressBook.commit();
+    }
+
+    @Override
+    public void adminLoginCommitAddressBook() {
+        versionedAddressBook.adminLoginCommit();
+    }
+
+    @Override
+    public void adminLogoutCommitAddressBook() {
+        versionedAddressBook.adminLogoutCommit();
     }
 
     @Override
@@ -421,5 +491,6 @@ public class ModelManager extends ComponentManager implements Model {
                 && (filteredPersons.equals(other.filteredPersons)
                     || filteredMachines.equals(other.filteredMachines));
     }
+
 
 }

@@ -11,6 +11,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.admin.Admin;
+import seedu.address.model.admin.AdminSession;
 import seedu.address.model.admin.Password;
 import seedu.address.model.admin.UniqueAdminList;
 import seedu.address.model.admin.Username;
@@ -18,12 +19,10 @@ import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
 import seedu.address.model.job.UniqueJobList;
 import seedu.address.model.machine.Machine;
+import seedu.address.model.machine.MachineName;
 import seedu.address.model.machine.UniqueMachineList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
-
-
-
 
 
 /**
@@ -38,6 +37,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniqueAdminList admins;
     private final UniqueMachineList machines;
     private final UniqueJobList jobs;
+    private final AdminSession adminSession;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to
@@ -54,6 +54,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         admins = new UniqueAdminList();
         machines = new UniqueMachineList();
         jobs = new UniqueJobList();
+        adminSession = new AdminSession();
     }
 
     public AddressBook() {
@@ -67,7 +68,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         this();
         resetData(toBeCopied);
     }
-
 
 
     //============================= list overwrite operations ==============================//
@@ -103,6 +103,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setJobs(ObservableList<Job> jobs) {
         this.jobs.setJobs(jobs);
     }
+
+    public void setAdminsSession(AdminSession adminsSession) {
+        if (adminsSession.isAdminLoggedIn()) {
+            this.adminSession.setLogin(adminsSession.getLoggedInAdmin());
+        }
+    }
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -113,6 +120,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         setMachines(newData.getMachineList());
         setAdmins(newData.getAdminList());
         setJobs(newData.getJobList());
+        setAdminsSession(newData.getAdminSession());
 
     }
 
@@ -122,7 +130,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Adds a job to the chosen machine list
      */
 
-    public void addJobToMachineList(Machine targetMachine , Job jobToAdd) {
+    public void addJobToMachineList(Machine targetMachine, Job jobToAdd) {
         requireAllNonNull(targetMachine, jobToAdd);
         machines.addJobToMachineList(targetMachine, jobToAdd);
     }
@@ -211,11 +219,27 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @return
      */
     private Admin encryptedAdmin(Admin rawAdmin) {
-        Password encryptedPassword = new Password(
-            BCrypt.hashpw(rawAdmin.getPassword().toString(), BCrypt.gensalt()));
+        Password encryptedPassword = new Password(BCrypt.hashpw(rawAdmin.getPassword().toString(), BCrypt.gensalt()));
         Admin protectedAdmin = new Admin(rawAdmin.getUsername(), encryptedPassword);
         return protectedAdmin;
     }
+
+    public void setLoggedInAdmin(Admin admin) {
+        adminSession.setLogin(admin);
+    }
+
+    public void clearLogin() {
+        adminSession.clearLogin();
+    }
+
+    public boolean isLoggedIn() {
+        return adminSession.isAdminLoggedIn();
+    }
+
+    public Admin currentlyLoggedIn() {
+        return adminSession.getLoggedInAdmin();
+    }
+
 
     //======================== machine methods ================================//
 
@@ -262,10 +286,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         return machines.getMostFreeMachine();
     }
 
-
-    public Machine getMachineByName (String machineName) {
+    /**
+     * Returns the machine that Machines the MachineName
+     */
+    public Machine findMachine(MachineName machineName) {
         requireNonNull(machineName);
-        return machines.get(machineName);
+        return machines.findMachine(machineName);
     }
 
     //======================== job methods ================================//
@@ -323,6 +349,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Starts the job
+     *
      * @param name
      */
     public void startJob(JobName name) {
@@ -332,6 +359,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Cancels the job
+     *
      * @param name
      */
     public void cancelJob(JobName name) {
@@ -341,6 +369,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Restarts the job
+     *
      * @param name
      */
     public void restartJob(JobName name) {
@@ -357,6 +386,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         jobs.swapQueueNumber(jobName1, jobName2);
     }
 
+    /**
+     * Changes the status of the job to FINISHED
+     * @param job
+     */
+    public void finishJob(Job job) {
+        requireNonNull(job);
+        jobs.finishJob(job);
+    }
     /**
      * Request deletion of print job
      */
@@ -389,6 +426,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Job> getQueueList() {
         return jobs.asUnmodifiableObservableSortedList();
+    }
+
+    @Override
+    public AdminSession getAdminSession() {
+        return adminSession;
     }
 
     //======================== others ================================//

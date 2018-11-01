@@ -19,9 +19,10 @@ import seedu.address.model.AddressBook;
 import seedu.address.storage.XmlAdaptedPerson;
 import seedu.address.storage.XmlAdaptedTag;
 import seedu.address.storage.XmlSerializableAddressBook;
-import seedu.address.testutil.AddressBookBuilder;
-import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.TestUtil;
+import seedu.address.testutil.builders.AddressBookBuilder;
+import seedu.address.testutil.builders.PersonBuilder;
+
 
 public class XmlUtilTest {
 
