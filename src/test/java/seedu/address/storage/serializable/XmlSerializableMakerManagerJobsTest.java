@@ -4,16 +4,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
-import seedu.address.commons.util.XmlUtil;
-import seedu.address.storage.job.XmlSerializableMakerManagerJobs;
 
 public class XmlSerializableMakerManagerJobsTest {
 
     private static final Path TEST_DATA_FOLDER =
-            Paths.get("src", "test", "data", "XmlSerializableMakerManagerJobsTest");
+        Paths.get("src", "test", "data", "XmlSerializableMakerManagerJobsTest");
     private static final Path VALID_JOBS_FILE = TEST_DATA_FOLDER.resolve("validJobsFile.xml");
     private static final Path INVALID_JOBS_FILE = TEST_DATA_FOLDER.resolve("invalidJobsFile.xml");
     private static final Path DUPLICATE_JOBS_FILE = TEST_DATA_FOLDER.resolve("duplicateJobsFile.xml");

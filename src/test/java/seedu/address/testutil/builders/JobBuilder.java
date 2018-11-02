@@ -9,7 +9,6 @@ import seedu.address.model.job.JobNote;
 import seedu.address.model.job.Priority;
 import seedu.address.model.job.Status;
 import seedu.address.model.job.TimeStamp;
-import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.MachineName;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;

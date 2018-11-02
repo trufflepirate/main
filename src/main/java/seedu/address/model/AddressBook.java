@@ -321,7 +321,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         for (Machine machine : getMachineList()) {
             Job jobToFind = machine.findJob(name);
             if (!(jobToFind == null)) {
-                return new JobMachineTuple(jobToFind,machine);
+                return new JobMachineTuple(jobToFind, machine);
             }
         }
         return null;
@@ -331,7 +331,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Updates the job
      */
     public void updateJob(Job oldJob, Job updatedJob) {
-        requireAllNonNull(oldJob,updatedJob);
+        requireAllNonNull(oldJob, updatedJob);
         //jobs.updateJob(oldJob, updatedJob);
     }
 

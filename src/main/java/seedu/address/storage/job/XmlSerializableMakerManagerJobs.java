@@ -2,8 +2,6 @@ package seedu.address.storage.job;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -14,6 +12,7 @@ import seedu.address.model.job.Job;
 
 
 // TODO: 11/3/2018 REMOVE THIS CLASS! NO LONGER USED
+
 /**
  * An Immutable MakerManager AddressBook that is serializable to XML format
  */
@@ -30,6 +29,7 @@ public class XmlSerializableMakerManagerJobs {
     public XmlSerializableMakerManagerJobs() {
         jobs = new ArrayList<>();
     }
+
     /**
      * Conversion
      */
@@ -42,8 +42,8 @@ public class XmlSerializableMakerManagerJobs {
      * Converts this addressbook in the model's {@code Addressbook} object.
      *
      * @throws seedu.address.commons.exceptions.IllegalValueException if there were any data
-     * constraints violations or duplicates in the
-     * {@code XmlAdaptedJob}.
+     *                                                                constraints violations or duplicates in the
+     *                                                                {@code XmlAdaptedJob}.
      */
     public AddressBook toModelType() throws IllegalValueException {
         AddressBook addressBook = new AddressBook();

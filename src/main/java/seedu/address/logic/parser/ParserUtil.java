@@ -31,7 +31,8 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
-    public static final String MESSAGE_INVALID_DURATION = "Duration must be a non-zero unsigned number with optional decimal point";
+    public static final String MESSAGE_INVALID_DURATION =
+        "Duration must be a non-zero unsigned number with optional decimal point";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -187,7 +188,8 @@ public class ParserUtil {
         return new JobName(trimJobName);
     }
 
-    // TODO: 11/3/2018 REMOVE PLS 
+    // TODO: 11/3/2018 REMOVE PLS
+
     /**
      * Parses a {@code String machine} into a {@code machine}.
      * Leading and trailing whitespaces will be trimmed.
@@ -247,7 +249,7 @@ public class ParserUtil {
     public static Long parseDuration(String duration) throws ParseException {
         requireNonNull(duration);
         String trimDuration = duration.trim();
-        if(!StringUtil.isnonZeroFloat(trimDuration)) {
+        if (!StringUtil.isnonZeroFloat(trimDuration)) {
             throw new ParseException(MESSAGE_INVALID_DURATION);
         }
         return TimeStamp.hoursToMillis(Float.valueOf(trimDuration));

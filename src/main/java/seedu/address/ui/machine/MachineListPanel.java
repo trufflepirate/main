@@ -13,7 +13,6 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.MachinePanelSelectiononChangedEvent;
-import seedu.address.model.job.Job;
 import seedu.address.model.machine.Machine;
 import seedu.address.ui.UiPart;
 

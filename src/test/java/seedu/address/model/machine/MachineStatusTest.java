@@ -18,9 +18,11 @@ public class MachineStatusTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
     private Machine testMachine;
+
     @Before
     public void setup() {
-        testMachine = new Machine( new MachineName("test"), new ArrayList<Job>(), new HashSet<Tag>(), MachineStatus.ENABLED);
+        testMachine =
+            new Machine(new MachineName("test"), new ArrayList<Job>(), new HashSet<Tag>(), MachineStatus.ENABLED);
     }
 
 

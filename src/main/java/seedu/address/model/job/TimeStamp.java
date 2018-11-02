@@ -53,21 +53,24 @@ public class TimeStamp {
      * @return
      */
     public String showTime() {
-        return this.getCalendar().get(Calendar.DAY_OF_MONTH) + "/" + this.getCalendar().get(Calendar.MONTH)+1 + " " + this
-            .getCalendar().get(Calendar.HOUR) + ":" + this.getCalendar().get(Calendar.MINUTE) + ":" + this.getCalendar()
-            .get(Calendar.SECOND);
+        return this.getCalendar().get(Calendar.DAY_OF_MONTH) + "/" + this.getCalendar().get(Calendar.MONTH) + 1 + " "
+            + this.getCalendar().get(Calendar.HOUR) + ":" + this.getCalendar().get(Calendar.MINUTE) + ":" + this
+            .getCalendar().get(Calendar.SECOND);
     }
-
+    /**
+     * Shows the duration formatted
+     * @return
+     */
     public String showAsDuration() {
         long duration = this.getDate().getTime();
         calendar.setTimeZone(TimeZone.getTimeZone("GMT+0000"));
         if (duration < MILLIS_IN_HOURS) {
             return calendar.get(Calendar.MINUTE) + " Minutes";
-        } else if (duration < MILLIS_IN_HOURS*2) {
+        } else if (duration < MILLIS_IN_HOURS * 2) {
             return calendar.get(Calendar.HOUR_OF_DAY) + " Hour " + calendar.get(Calendar.MINUTE) + " Minutes";
         } else if (duration < MILLIS_IN_DAYS) {
             return calendar.get(Calendar.HOUR_OF_DAY) + " Hours " + calendar.get(Calendar.MINUTE) + " Minutes";
-        } else if (duration < MILLIS_IN_DAYS*2) {
+        } else if (duration < MILLIS_IN_DAYS * 2) {
             return (calendar.get(Calendar.DAY_OF_YEAR) - 1) + " Day " + calendar.get(Calendar.HOUR_OF_DAY) + " Hours ";
         } else if (duration < MILLIS_IN_YEARS) {
             return (calendar.get(Calendar.DAY_OF_YEAR) - 1) + " Days " + calendar.get(Calendar.HOUR_OF_DAY) + " Hours ";
@@ -76,7 +79,9 @@ public class TimeStamp {
                 + " Days ";
         }
     }
-
+    /**
+     * Shows the time
+     */
     public static String showAsDuration(long millis) {
         TimeStamp t = new TimeStamp(millis);
         return t.showAsDuration();

@@ -83,13 +83,13 @@ public class UniqueMachineList {
     public void addJobToMachineList(Job job) throws MachineNotFoundException {
         requireAllNonNull(job);
 
-        Machine Target = this.findMachine(job.getMachineName());
+        Machine target = this.findMachine(job.getMachineName());
 
-        if (Target == null) {
+        if (target == null) {
             throw new MachineNotFoundException();
         }
 
-        Target.addJob(job);
+        target.addJob(job);
     }
 
     /**

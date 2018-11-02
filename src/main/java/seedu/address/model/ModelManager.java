@@ -119,6 +119,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     // TODO: 11/3/2018 REMOVE UNUSED METHOD
+
     /**
      * Raises an event to indicate the model has changed
      */
@@ -239,10 +240,9 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public int getTotalNumberOfJobsDisplayed(){
+    public int getTotalNumberOfJobsDisplayed() {
         return getFilteredMachineList().stream().mapToInt(m -> m.getJobsAsFilteredObservableList().size()).sum();
     }
-
 
 
     // ============================== Machine methods ======================================= //

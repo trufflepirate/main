@@ -65,7 +65,9 @@ public class StringUtil {
             return false;
         }
     }
-
+    /**
+     * Returns true if {@code s} represents a non-zero decimal number
+     */
     public static boolean isnonZeroFloat(String s) {
         requireNonNull(s);
 

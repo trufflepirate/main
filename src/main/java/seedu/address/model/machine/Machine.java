@@ -56,7 +56,7 @@ public class Machine {
         this.jobs.setJobs(jobs);
         this.tags.addAll(tags);
         this.status = status;
-        this.filteredJobs=new FilteredList<>(this.jobs.asUnmodifiableObservableList());
+        this.filteredJobs = new FilteredList<>(this.jobs.asUnmodifiableObservableList());
     }
 
     /**
@@ -172,7 +172,7 @@ public class Machine {
         return Collections.unmodifiableList(jobs.asUnmodifiableObservableList());
     }
 
-    public Job findJob(JobName jobName ) {
+    public Job findJob(JobName jobName) {
         return jobs.findJob(jobName);
     }
 
@@ -199,6 +199,9 @@ public class Machine {
         jobs.add(job);
     }
 
+    /**
+     * updates the FilteredJobList with a predicate
+     */
     public void updateFilteredJobList(Predicate<Job> predicate) {
         requireNonNull(predicate);
         filteredJobs.setPredicate(predicate);
@@ -211,8 +214,8 @@ public class Machine {
         return (Predicate<Job>) filteredJobs.getPredicate();
     }
 
-    public void replaceJob(Job jobToBeReplaced, Job replaceWith ) {
-        jobs.replaceJob(jobToBeReplaced,replaceWith);
+    public void replaceJob(Job jobToBeReplaced, Job replaceWith) {
+        jobs.replaceJob(jobToBeReplaced, replaceWith);
     }
 
 }

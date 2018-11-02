@@ -3,7 +3,6 @@ package seedu.address.model.job;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Logger;
@@ -86,8 +85,9 @@ public class UniqueJobList {
             logger.info(j.getJobName().fullName);
             if (j.getJobName().fullName.equals(jobName)) {
                 logger.info("Job name matches!!");
-                Job changedJob = new Job(j.getJobName(), j.getMachineName(), j.getOwner(), j.getPriority(), j.getDuration(),
-                    j.getJobNote(), j.getTags());
+                Job changedJob =
+                    new Job(j.getJobName(), j.getMachineName(), j.getOwner(), j.getPriority(), j.getDuration(),
+                        j.getJobNote(), j.getTags());
                 return changedJob;
             }
         }
@@ -205,7 +205,7 @@ public class UniqueJobList {
     //============================= swap queue number operations =======================================//
 
     /**
-     * Swaps job with @param jobname1 and job with @param jobname2
+     * Swaps job @param jobToBeReplaced with @param replaceWith
      * in the queue and updates it
      */
     public void replaceJob(Job jobToBeReplaced, Job replaceWith) {
@@ -215,7 +215,7 @@ public class UniqueJobList {
         if (targetIndex == -1 || targetIndex > size()) {
             throw new JobNotFoundException();
         }
-       internalList.set(targetIndex,replaceWith);
+        internalList.set(targetIndex, replaceWith);
     }
 
     public void finishJob(Job job) {

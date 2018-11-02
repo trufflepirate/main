@@ -4,12 +4,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.job.Status.ONGOING;
 import static seedu.address.model.job.Status.PAUSED;
 
-import java.sql.Time;
-import java.time.Duration;
-import java.time.Period;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -17,7 +12,6 @@ import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.job.exceptions.JobNotStartedException;
-import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.MachineName;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
@@ -29,15 +23,12 @@ import seedu.address.model.tag.Tag;
  */
 public class Job {
     public static final String MESSAGE_NAME_CONSTRAINTS =
-            "Job names should only contain alphanumeric characters and spaces, "
-                    + "and it should not be blank";
+        "Job names should only contain alphanumeric characters and spaces, " + "and it should not be blank";
 
     public static final String MESSAGE_NOTE_CONSTRAINTS =
-            "Job notes should only contain alphanumeric characters and spaces, "
-                    + "and it should not be blank";
+        "Job notes should only contain alphanumeric characters and spaces, " + "and it should not be blank";
 
-    public static final String MEEEAGE_PRIORITY_CONSTRAINTS =
-            "Job priority can only be URGENT, HIGH and NORMAL";
+    public static final String MEEEAGE_PRIORITY_CONSTRAINTS = "Job priority can only be URGENT, HIGH and NORMAL";
 
     private static final Logger logger = LogsCenter.getLogger(Job.class);
 
@@ -59,8 +50,8 @@ public class Job {
      * Every field must be present and not null.
      * TODO: Need to validate all these somewhere
      */
-    public Job(JobName name, MachineName machine, Person owner, Priority priority, long duration,
-               JobNote jobNote, Set<Tag> tags) {
+    public Job(JobName name, MachineName machine, Person owner, Priority priority, long duration, JobNote jobNote,
+               Set<Tag> tags) {
         requireAllNonNull(name, machine, owner, tags);
         this.name = name;
         this.machineName = machine;
@@ -78,8 +69,8 @@ public class Job {
     /**
      * Recovers a job object from the storage file
      */
-    public Job(JobName name, MachineName machine, Person owner, TimeStamp addedTime, TimeStamp startTime, Priority priority,
-               Status status, long duration, JobNote jobNote, Set<Tag> tags) {
+    public Job(JobName name, MachineName machine, Person owner, TimeStamp addedTime, TimeStamp startTime,
+               Priority priority, Status status, long duration, JobNote jobNote, Set<Tag> tags) {
         requireAllNonNull(name, machine, owner, tags);
         this.name = name;
         this.machineName = machine;
@@ -232,10 +223,8 @@ public class Job {
             return true;
         }
 
-        return otherJob != null
-                && otherJob.getJobName().equals(getJobName())
-                && (otherJob.getMachineName().equals(getMachineName())
-                || otherJob.getAddedTime().equals(getAddedTime())
+        return otherJob != null && otherJob.getJobName().equals(getJobName()) && (
+            otherJob.getMachineName().equals(getMachineName()) || otherJob.getAddedTime().equals(getAddedTime())
                 || otherJob.getOwner().equals(getOwner()));
     }
 
@@ -279,12 +268,11 @@ public class Job {
             return false;
         }
 
-        return otherJob.getJobName().equals(getJobName())
-                && otherJob.getMachineName().equals(getMachineName())
-                && otherJob.getOwner().equals(getOwner())
-                && otherJob.getAddedTime().equals(getAddedTime())
-                && otherJob.getTags().equals(getTags());
+        return otherJob.getJobName().equals(getJobName()) && otherJob.getMachineName().equals(getMachineName())
+            && otherJob.getOwner().equals(getOwner()) && otherJob.getAddedTime().equals(getAddedTime()) && otherJob
+            .getTags().equals(getTags());
     }
+
     /**
      * Returns true if both jobs have the same identity.
      * This defines a weaker notion of equality between two jobs.
@@ -312,10 +300,8 @@ public class Job {
 
     @Override
     public String toString() {
-        return "Job name " + this.getJobName().toString()
-                + "\nJob machine " + this.getMachineName().toString()
-                + "\nJob Priority " + this.getPriority()
-                + "\nJob status " + this.getStatus();
+        return "Job name " + this.getJobName().toString() + "\nJob machine " + this.getMachineName().toString()
+            + "\nJob Priority " + this.getPriority() + "\nJob status " + this.getStatus();
     }
 
 
