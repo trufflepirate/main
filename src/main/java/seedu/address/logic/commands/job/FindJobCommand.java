@@ -31,9 +31,9 @@ public class FindJobCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
-        model.updateFilteredJobList(predicate);
+        model.updateFilteredJobListInAllMachines(predicate);
         return new CommandResult(
-                String.format(Messages.MESSAGE_JOBS_LISTED_OVERVIEW, model.getFilteredJobList().size()));
+                String.format(Messages.MESSAGE_JOBS_LISTED_OVERVIEW, model.getTotalNumberOfJobsDisplayed()));
     }
 
     @Override

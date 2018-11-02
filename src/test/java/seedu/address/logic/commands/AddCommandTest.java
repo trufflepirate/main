@@ -131,7 +131,6 @@ public class AddCommandTest {
 
         @Override
         public void addJob(Job job) {
-
             throw new AssertionError("This method should not be called.");
         }
 
@@ -167,6 +166,11 @@ public class AddCommandTest {
         @Override
         public void requestDeletion(JobName jobName) {
 
+        }
+
+        @Override
+        public int getTotalNumberOfJobsDisplayed() {
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override
@@ -281,12 +285,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public ObservableList<Job> getFilteredJobList() {
-            return null;
-        }
-
-        @Override
-        public void updateFilteredJobList(Predicate<Job> predicate) {
+        public void updateFilteredJobListInAllMachines(Predicate<Job> predicate) {
 
         }
 

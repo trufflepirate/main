@@ -50,6 +50,7 @@ public class SwapJobsCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
+
         if (!model.isLoggedIn()) {
             throw new CommandException(MESSAGE_ACCESS_DENIED);
         }

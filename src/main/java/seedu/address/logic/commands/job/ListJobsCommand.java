@@ -21,7 +21,7 @@ public class ListJobsCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
-        model.updateFilteredJobList(PREDICATE_SHOW_ALL_JOBS);
+        model.updateFilteredJobListInAllMachines(PREDICATE_SHOW_ALL_JOBS);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

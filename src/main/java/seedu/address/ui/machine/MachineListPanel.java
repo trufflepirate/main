@@ -25,20 +25,18 @@ public class MachineListPanel extends UiPart<Region> {
     private static final String FXML = "MachineListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(MachineListPanel.class);
 
-    private ObservableList<Job> jobList;
     @FXML
     private ListView<Machine> machineListView;
 
-    public MachineListPanel(ObservableList<Machine> machineList, ObservableList<Job> jobList) {
+    public MachineListPanel(ObservableList<Machine> machineList) {
         super(FXML);
-        setConnections(machineList, jobList);
+        setConnections(machineList);
         registerAsAnEventHandler(this);
     }
 
-    private void setConnections(ObservableList<Machine> machineList, ObservableList<Job> jobList) {
-        this.jobList = jobList;
+    private void setConnections(ObservableList<Machine> machineList) {
         machineListView.setItems(machineList);
-        machineListView.setCellFactory(listView -> new MachineListViewCell(jobList));
+        machineListView.setCellFactory(listView -> new MachineListViewCell());
         setEventHandlerForSelectionChangeEvent();
     }
 
@@ -71,15 +69,9 @@ public class MachineListPanel extends UiPart<Region> {
      * Custom {@code ListCell} that displays the graphics of a {@code Machine} using a {@code MachineCard}
      */
     class MachineListViewCell extends ListCell<Machine> {
-        private ObservableList<Job> jobList;
 
-        public MachineListViewCell(ObservableList<Job> jobList) {
+        public MachineListViewCell() {
             super();
-            this.jobList = jobList;
-        }
-
-        public ObservableList<Job> getJobList() {
-            return jobList;
         }
 
         @Override
@@ -90,7 +82,7 @@ public class MachineListPanel extends UiPart<Region> {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new MachineCard(machine, getIndex() + 1, this.getJobList()).getRoot());
+                setGraphic(new MachineCard(machine, getIndex() + 1).getRoot());
             }
         }
     }

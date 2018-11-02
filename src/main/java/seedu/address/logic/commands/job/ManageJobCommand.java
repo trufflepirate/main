@@ -1,6 +1,7 @@
 package seedu.address.logic.commands.job;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_MACHINES;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.Command;
@@ -52,14 +53,17 @@ public class ManageJobCommand extends Command {
         if (option.equals(OPTION_START)) {
             model.startJob(name);
             model.commitAddressBook();
+            model.updateFilteredMachineList(PREDICATE_SHOW_ALL_MACHINES);
             return new CommandResult(MESSAGE_STARTED_JOB);
         } else if (option.equals(OPTION_RESTART)) {
             model.restartJob(name);
             model.commitAddressBook();
+            model.updateFilteredMachineList(PREDICATE_SHOW_ALL_MACHINES);
             return new CommandResult(MESSAGE_RESTARTED_JOB);
         } else if (option.equals(OPTION_CANCEL)) {
             model.cancelJob(name);
             model.commitAddressBook();
+            model.updateFilteredMachineList(PREDICATE_SHOW_ALL_MACHINES);
             return new CommandResult(MESSAGE_CANCELLED_JOB);
         } else if (option.equals(OPTION_DELETE)) {
             //TODO:Disbled until v1.4!
@@ -70,6 +74,7 @@ public class ManageJobCommand extends Command {
             }
             model.deleteJob(name);
             model.commitAddressBook();
+            model.updateFilteredMachineList(PREDICATE_SHOW_ALL_MACHINES);
             return new CommandResult(MESSAGE_DELETED_JOB);
             */
         } else {

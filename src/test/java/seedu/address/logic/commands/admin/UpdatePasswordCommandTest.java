@@ -115,8 +115,9 @@ public class UpdatePasswordCommandTest {
             new Password("$2a$10$Cj1nZuVAdZIysLK24P8zBe9gRBK.hagqzZJ0zF7i0UFlxlplRCI7e")));
         //weird string is hash for "admin2"
 
-        CommandResult commandResult = new UpdatePasswordCommand(new Username("dummy"), new Password("admin2"),
-            new Password("aaaAAA1$"), new Password("aaaAAA1$")).execute(modelStub, commandHistory);
+        CommandResult commandResult =
+            new UpdatePasswordCommand(new Username("dummy"), new Password("admin2"), new Password("aaaAAA1$"),
+                new Password("aaaAAA1$")).execute(modelStub, commandHistory);
 
         assertEquals(commandResult.feedbackToUser, UpdatePasswordCommand.MESSAGE_SUCCESS);
         assertEquals(modelStub.isLoggedIn(), true);
@@ -205,6 +206,11 @@ public class UpdatePasswordCommandTest {
         @Override
         public void requestDeletion(JobName jobName) {
 
+        }
+
+        @Override
+        public int getTotalNumberOfJobsDisplayed() {
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override
@@ -304,12 +310,7 @@ public class UpdatePasswordCommandTest {
         }
 
         @Override
-        public ObservableList<Job> getFilteredJobList() {
-            return null;
-        }
-
-        @Override
-        public void updateFilteredJobList(Predicate<Job> predicate) {
+        public void updateFilteredJobListInAllMachines(Predicate<Job> predicate) {
             throw new AssertionError("This method should not be called.");
         }
 

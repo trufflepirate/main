@@ -65,4 +65,15 @@ public class StringUtil {
             return false;
         }
     }
+
+    public static boolean isnonZeroFloat(String s) {
+        requireNonNull(s);
+
+        try {
+            float value = Float.parseFloat(s);
+            return value > 0;
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+    }
 }

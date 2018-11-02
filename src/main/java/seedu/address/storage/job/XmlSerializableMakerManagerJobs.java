@@ -12,14 +12,14 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.job.Job;
 
+
+// TODO: 11/3/2018 REMOVE THIS CLASS! NO LONGER USED
 /**
  * An Immutable MakerManager AddressBook that is serializable to XML format
  */
 @XmlRootElement(name = "MakerManagerJobs")
 public class XmlSerializableMakerManagerJobs {
-
     public static final String MESSAGE_DUPLICATE_JOB = "Jobs list contains duplicate job(s)";
-
     @XmlElement
     private List<XmlAdaptedJob> jobs;
 
@@ -35,7 +35,7 @@ public class XmlSerializableMakerManagerJobs {
      */
     public XmlSerializableMakerManagerJobs(ReadOnlyAddressBook src) {
         this();
-        jobs.addAll(src.getJobList().stream().map(XmlAdaptedJob::new).collect(Collectors.toList()));
+        //jobs.addAll(src.getJobList().stream().map(XmlAdaptedJob::new).collect(Collectors.toList()));
     }
 
     /**

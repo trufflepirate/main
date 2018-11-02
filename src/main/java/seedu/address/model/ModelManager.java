@@ -9,7 +9,6 @@ import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
-
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
@@ -26,7 +25,6 @@ import seedu.address.model.job.Status;
 import seedu.address.model.job.exceptions.JobNotStartedException;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.MachineName;
-import seedu.address.model.machine.exceptions.MachineNotFoundException;
 import seedu.address.model.person.Person;
 
 
@@ -40,7 +38,6 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Admin> filteredAdmins;
     private final FilteredList<Machine> filteredMachines;
-    private final FilteredList<Job> filteredJobs;
 
 
     /**
@@ -50,29 +47,29 @@ public class ModelManager extends ComponentManager implements Model {
         super();
         requireAllNonNull(addressBook, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs "
-                + userPrefs + "and initial admin");
+        logger.fine(
+            "Initializing with address book: " + addressBook + " and user prefs " + userPrefs + "and initial admin");
 
         versionedAddressBook = new VersionedAddressBook(addressBook);
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
         filteredMachines = new FilteredList<>(versionedAddressBook.getMachineList());
         filteredAdmins = new FilteredList<>(versionedAddressBook.getAdminList());
-        filteredJobs = new FilteredList<>(versionedAddressBook.getJobList());
         //TODO find a better way to change the data according to sorted jobs based on comparator
-        indicateJobListChanged();
 
         // Timer for auto print cleanup
         // credit: https://dzone.com/articles/how-schedule-task-run-interval
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                for (Job job : versionedAddressBook.getJobList()) {
-                    try {
-                        if (job.getStatus() == Status.ONGOING && job.isFinished()) {
-                            finishJob(job);
+                for (Machine machine : versionedAddressBook.getMachineList()) {
+                    for (Job job : machine.getJobs()) {
+                        try {
+                            if (job.getStatus() == Status.ONGOING && job.isFinished()) {
+                                finishJob(job);
+                            }
+                        } catch (JobNotStartedException e) {
+                            e.printStackTrace();
                         }
-                    } catch (JobNotStartedException e) {
-                        e.printStackTrace();
                     }
                 }
             }
@@ -100,22 +97,31 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedAddressBook;
     }
 
-    /** Raises an event to indicate the model has changed */
+    /**
+     * Raises an event to indicate the model has changed
+     */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(versionedAddressBook));
     }
 
-    /** Raises an event to indicate the model has changed */
+    /**
+     * Raises an event to indicate the model has changed
+     */
     private void indicateAdminListChanged() {
         raise(new AdminListChangedEvent(versionedAddressBook));
     }
 
-    /** Raises an event to indicate the model has changed */
+    /**
+     * Raises an event to indicate the model has changed
+     */
     private void indicateMachineListChanged() {
         raise(new MachineListChangedEvent(versionedAddressBook));
     }
 
-    /** Raises an event to indicate the model has changed */
+    // TODO: 11/3/2018 REMOVE UNUSED METHOD
+    /**
+     * Raises an event to indicate the model has changed
+     */
     private void indicateJobListChanged() {
         raise(new JobListChangedEvent(versionedAddressBook));
         /**
@@ -151,7 +157,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    // ============================== Job methods ======================================= //
+    // ============================== Job related methods ======================================= //
 
     @Override
     public boolean hasJob(Job job) {
@@ -160,39 +166,16 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void addJob(Job job) throws MachineNotFoundException {
+    public void addJob(Job job) {
         requireAllNonNull(job);
-        //TODO find another way to check if the printer exist before adding job
-        //TODO refactor after this is working
-        for (Machine m : filteredMachines) {
-            //TODO: Fix and reenable
-            /*
-            if (job.getMachine().getName().fullName.equals(new Machine("AUTO").getName().fullName)) {
-                Machine mostFree = getMostFreeMachine();
-                job.setMachine(mostFree);
-                versionedAddressBook.addJob(job);
-                versionedAddressBook.addJobToMachineList(mostFree, job);
-                indicateJobListChanged();
-                indicateMachineListChanged();
-                return;
-            }
-            */
-            if (job.getMachine().getName().fullName.equals(m.getName().fullName)) {
-                versionedAddressBook.addJob(job);
-                versionedAddressBook.addJobToMachineList(m, job);
-                indicateJobListChanged();
-                indicateMachineListChanged();
-                return;
-            }
-        }
-        throw new MachineNotFoundException();
+        versionedAddressBook.addJobToMachineList(job);
+        indicateMachineListChanged();
     }
 
     @Override
     public void deleteJob(JobName job) {
         requireAllNonNull(job);
         versionedAddressBook.removeJob(job);
-        indicateJobListChanged();
         indicateMachineListChanged();
     }
 
@@ -200,21 +183,19 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateJob(Job oldJob, Job updatedJob) {
         requireAllNonNull(oldJob, updatedJob);
         versionedAddressBook.updateJob(oldJob, updatedJob);
-        indicateJobListChanged();
         indicateMachineListChanged();
     }
 
     @Override
     public Job findJob(JobName name) {
         requireAllNonNull(name);
-        return versionedAddressBook.findJob(name);
+        return versionedAddressBook.findJob(name).job;
     }
 
     @Override
     public void startJob(JobName name) {
         requireNonNull(name);
         versionedAddressBook.startJob(name);
-        indicateJobListChanged();
         indicateMachineListChanged();
     }
 
@@ -222,40 +203,47 @@ public class ModelManager extends ComponentManager implements Model {
     public void cancelJob(JobName name) {
         requireAllNonNull();
         versionedAddressBook.cancelJob(name);
-        indicateJobListChanged();
         indicateMachineListChanged();
-
     }
 
     @Override
     public void restartJob(JobName name) {
         requireAllNonNull();
         versionedAddressBook.restartJob(name);
-        indicateJobListChanged();
         indicateMachineListChanged();
     }
 
     @Override
     public void swapJobs(JobName jobName1, JobName jobName2) {
         versionedAddressBook.swapJobs(jobName1, jobName2);
-        versionedAddressBook.commit();
-        indicateJobListChanged();
-
-
+        indicateMachineListChanged();
     }
 
     @Override
     public void finishJob(Job job) {
         versionedAddressBook.finishJob(job);
-        indicateJobListChanged();
+        indicateMachineListChanged();
     }
 
     @Override
     public void requestDeletion(JobName jobName) {
         versionedAddressBook.requestDeletion(jobName);
-        indicateJobListChanged();
-
+        indicateMachineListChanged();
     }
+
+    @Override
+    public void updateFilteredJobListInAllMachines(Predicate<Job> predicate) {
+        for (Machine machine : getFilteredMachineList()) {
+            machine.updateFilteredJobList(predicate);
+        }
+    }
+
+    @Override
+    public int getTotalNumberOfJobsDisplayed(){
+        return getFilteredMachineList().stream().mapToInt(m -> m.getJobsAsFilteredObservableList().size()).sum();
+    }
+
+
 
     // ============================== Machine methods ======================================= //
 
@@ -400,24 +388,6 @@ public class ModelManager extends ComponentManager implements Model {
         filteredAdmins.setPredicate(predicate);
     }
 
-    //=========== Filtered Jobs List Accessors ============================================================
-
-    /**
-     * Returns an unmodifiable view of the list of {@code Job} backed by the internal list of
-     * {@code versionedAddressBook}
-     */
-
-    @Override
-    public ObservableList<Job> getFilteredJobList() {
-        return FXCollections.unmodifiableObservableList(filteredJobs);
-    }
-
-    @Override
-    public void updateFilteredJobList(Predicate<Job> predicate) {
-        requireNonNull(predicate);
-        filteredJobs.setPredicate(predicate);
-    }
-
 
     //=========== Undo/Redo =================================================================================
 
@@ -461,16 +431,19 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void commitAddressBook() {
         versionedAddressBook.commit();
+        indicateAddressBookChanged();
     }
 
     @Override
     public void adminLoginCommitAddressBook() {
         versionedAddressBook.adminLoginCommit();
+        indicateAddressBookChanged();
     }
 
     @Override
     public void adminLogoutCommitAddressBook() {
         versionedAddressBook.adminLogoutCommit();
+        indicateAddressBookChanged();
     }
 
     @Override
@@ -487,9 +460,8 @@ public class ModelManager extends ComponentManager implements Model {
 
         // state check
         ModelManager other = (ModelManager) obj;
-        return versionedAddressBook.equals(other.versionedAddressBook)
-                && (filteredPersons.equals(other.filteredPersons)
-                    || filteredMachines.equals(other.filteredMachines));
+        return versionedAddressBook.equals(other.versionedAddressBook) && (filteredPersons.equals(other.filteredPersons)
+            || filteredMachines.equals(other.filteredMachines));
     }
 
 

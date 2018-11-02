@@ -17,12 +17,10 @@ import seedu.address.commons.util.FileUtil;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
-
 import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.Password;
 import seedu.address.model.admin.Username;
 import seedu.address.storage.admin.XmlSerializableMakerManagerAdmins;
-import seedu.address.storage.job.XmlSerializableMakerManagerJobs;
 import seedu.address.storage.machine.XmlSerializableMakerManagerMachines;
 
 /**
@@ -38,7 +36,6 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
     private String addressBookFilePath;
     private String makerManagerAdminsFilePath;
     private String makerManagerMachinesFilePath;
-    private String makerManagerJobsFilePath;
 
     public XmlAddressBookStorage(UserPrefs userPrefs) {
         this.userPrefs = userPrefs;
@@ -46,7 +43,6 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
         this.addressBookFilePath = userPrefs.getAddressBookFilePath().getFileName().toString();
         this.makerManagerAdminsFilePath = userPrefs.getMakerManagerAdminsFilePath().getFileName().toString();
         this.makerManagerMachinesFilePath = userPrefs.getMakerManagerMachinesFilePath().getFileName().toString();
-        this.makerManagerJobsFilePath = userPrefs.getMakerManagerJobsFilePath().getFileName().toString();
     }
 
     public Path getAddressBookFilePath() {
@@ -87,11 +83,6 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
                 XmlSerializableMakerManagerAdmins xmlMakerManagerAdmins =
                         XmlFileStorage.loadMakerManagerAdminDataFromSaveFile(filePath);
                 return Optional.of(xmlMakerManagerAdmins.toModelType());
-            } else if (filePath.getFileName().toString().equals(makerManagerJobsFilePath)) {
-
-                XmlSerializableMakerManagerJobs xmlMakerManagerJobs =
-                        XmlFileStorage.loadMakerManagerJobDataFromSaveFile(filePath);
-                return Optional.of(xmlMakerManagerJobs.toModelType());
             } else {
                 logger.info("No such file path available to read data from");
                 return Optional.empty();
@@ -164,18 +155,6 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
         }
 
         try {
-            XmlSerializableMakerManagerJobs xmlMakerManagerJobs =
-                    XmlFileStorage.loadMakerManagerJobDataFromSaveFile(makerManagerJobsFile);
-            AddressBook jobsAddressBookData = xmlMakerManagerJobs.toModelType();
-            fullAddressBookData.setJobs(jobsAddressBookData.getJobList());
-            logger.info("Full addressbook data jobs size : " + fullAddressBookData.getJobList().size());
-        } catch (IllegalValueException e) {
-            e.printStackTrace();
-        } catch (DataConversionException dce) {
-            logger.info("Jobs conversion error");
-        }
-
-        try {
             XmlSerializableMakerManagerAdmins xmlMakerManagerAdmins =
                     XmlFileStorage.loadMakerManagerAdminDataFromSaveFile(makerManagerAdminsFile);
             AddressBook adminsData = xmlMakerManagerAdmins.toModelType();
@@ -196,22 +175,7 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
         } catch (IllegalValueException e) {
             e.printStackTrace();
         }
-
-        try {
-            XmlSerializableMakerManagerJobs xmlMakerManagerJobs =
-                    XmlFileStorage.loadMakerManagerJobDataFromSaveFile(makerManagerJobsFile);
-            AddressBook jobsAddressBookData = xmlMakerManagerJobs.toModelType();
-            fullAddressBookData.setJobs(jobsAddressBookData.getJobList());
-        } catch (DataConversionException dce) {
-            logger.info("Job conversion error");
-        } catch (IllegalValueException e) {
-            e.printStackTrace();
-        }
-
-
         return Optional.of(fullAddressBookData);
-
-
     }
 
     @Override
@@ -236,8 +200,6 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
             XmlFileStorage.saveDataToFile(filePath, new XmlSerializableMakerManagerMachines(addressBook));
         } else if (filePath.getFileName().toString().equals(makerManagerAdminsFilePath)) {
             XmlFileStorage.saveDataToFile(filePath, new XmlSerializableMakerManagerAdmins(addressBook));
-        } else if (filePath.getFileName().toString().equals(makerManagerJobsFilePath)) {
-            XmlFileStorage.saveDataToFile(filePath, new XmlSerializableMakerManagerJobs(addressBook));
         } else {
             logger.info("No such file path available to save data in");
         }
@@ -270,8 +232,6 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
         XmlFileStorage.saveDataToFile(mainAddressBookFile, new XmlSerializableAddressBook(addressBook));
         XmlFileStorage.saveDataToFile(makerManagerMachinesFile, new XmlSerializableMakerManagerMachines(addressBook));
         XmlFileStorage.saveDataToFile(makerManagerAdminsFile, new XmlSerializableMakerManagerAdmins(addressBook));
-        XmlFileStorage.saveDataToFile(makerManagerJobsFile, new XmlSerializableMakerManagerJobs(addressBook));
-
     }
 
     @Override

@@ -1,16 +1,14 @@
 package seedu.address.storage;
 
+import javax.xml.bind.JAXBException;
 import java.io.FileNotFoundException;
 import java.nio.file.Path;
 import java.util.logging.Logger;
-
-import javax.xml.bind.JAXBException;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.XmlUtil;
 import seedu.address.storage.admin.XmlSerializableMakerManagerAdmins;
-import seedu.address.storage.job.XmlSerializableMakerManagerJobs;
 import seedu.address.storage.machine.XmlSerializableMakerManagerMachines;
 
 /**
@@ -57,18 +55,6 @@ public class XmlFileStorage {
         }
     }
 
-    /**
-     * Saves the given jobs data to the specified file
-     */
-    public static void saveDataToFile(Path file, XmlSerializableMakerManagerJobs addressBook)
-            throws FileNotFoundException {
-        try {
-            XmlUtil.saveDataToFile(file, addressBook);
-        } catch (JAXBException e) {
-            throw new AssertionError("Unexpected exception " + e.getMessage(), e);
-        }
-    }
-
     //==================================Load data================================================//
 
     /**
@@ -107,17 +93,4 @@ public class XmlFileStorage {
             throw new DataConversionException(e);
         }
     }
-    /**
-     * Returns makerManager job_file in the file or an empty job_file
-     */
-    public static XmlSerializableMakerManagerJobs loadMakerManagerJobDataFromSaveFile(Path file)
-            throws DataConversionException,
-            FileNotFoundException {
-        try {
-            return XmlUtil.getDataFromFile(file, XmlSerializableMakerManagerJobs.class);
-        } catch (JAXBException e) {
-            throw new DataConversionException(e);
-        }
-    }
-
 }

@@ -22,7 +22,7 @@ public class ValidJobs {
             .withName("IDCP")
             .withMachine(new MachineBuilder()
                     .withMachineName("JJPrinter")
-                    .withMachineStatus(MachineStatus.ENABLED).build())
+                    .withMachineStatus(MachineStatus.ENABLED).build().getName())
             .withJobNote("This is jj jobnote")
             .withDuration(2)
             .withPriority(Priority.HIGH)
@@ -36,7 +36,7 @@ public class ValidJobs {
             .withName("newProject")
             .withMachine(new MachineBuilder()
                     .withMachineName("TyPrinter")
-                    .withMachineStatus(MachineStatus.ENABLED).build())
+                    .withMachineStatus(MachineStatus.ENABLED).build().getName())
             .withJobNote("This is newproject jobnote")
             .withDuration(2)
             .withPriority(Priority.HIGH)
@@ -50,7 +50,7 @@ public class ValidJobs {
             .withName("bumblebee")
             .withMachine(new MachineBuilder()
                     .withMachineName("BumberbeePrinter")
-                    .withMachineStatus(MachineStatus.ENABLED).build())
+                    .withMachineStatus(MachineStatus.ENABLED).build().getName())
             .withJobNote("This is bumberbee jobnote")
             .withDuration(1)
             .withPriority(Priority.NORMAL)
@@ -61,14 +61,6 @@ public class ValidJobs {
             .build();
 
 
-
-    public static AddressBook getValidMakerManagerJobsData() {
-        AddressBook makerManagerData = new AddressBook();
-        for (Job job : getValidJobs()) {
-            makerManagerData.addJob(job);
-        }
-        return makerManagerData;
-    }
 
     public static List<Job> getValidJobs() {
         return new ArrayList<>(Arrays.asList(IDCP, newProject, bumberbee));

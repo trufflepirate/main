@@ -31,9 +31,6 @@ public interface Logic {
     /** Returns an unmodifiable vie wof the filtered list of admins */
     ObservableList<Admin> getFilteredAdminList();
 
-    /**Returns an unmodifiable view of the filtered list of jobs */
-    ObservableList<Job> getFilteredJobList();
-
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();
 }

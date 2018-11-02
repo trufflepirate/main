@@ -32,7 +32,7 @@ public class XmlSerializableMakerManagerJobsTest {
         assertEquals(makerManagerJobsDataFromFile, validMakerManagerJobs);
     }
     */
-
+    /*
     @Test
     public void toModelType_invalidJobsFile_throwsNullPointerException() throws Exception {
         XmlSerializableMakerManagerJobs dataFromFile =
@@ -40,7 +40,7 @@ public class XmlSerializableMakerManagerJobsTest {
         thrown.expect(NullPointerException.class);
         dataFromFile.toModelType();
     }
-
+    */
     /*
     @Test
     public void toModelType_duplicateJobs_throwsIllegalValueException() throws Exception {
