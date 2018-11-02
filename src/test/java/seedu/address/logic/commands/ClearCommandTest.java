@@ -1,6 +1,6 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+//import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.testdata.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
