@@ -99,12 +99,9 @@ public class Machine {
      * This defines a weaker notion of equality between two machines.
      */
     public boolean isSameMachine(Machine otherMachine) {
-        if (otherMachine.getName() == getName()) {
-            return true;
-        }
-
-        return otherMachine != null && otherMachine.getName().equals(getName()) && otherMachine.getJobs()
-            .equals(getJobs());
+        return otherMachine != null
+            && otherMachine.getName().equals(getName())
+            && otherMachine.getJobs().equals(getJobs());
     }
 
     public void setMachineStatus(MachineStatus machineStatus) throws InvalidMachineStatusException {
@@ -118,7 +115,7 @@ public class Machine {
 
     /**
      * Returns true if both machines have the same identity and data fields.
-     * This defines a stronger notion of equality between two persons.
+     * This defines a stronger notion of equality between two machines.
      */
     @Override
     public boolean equals(Object other) {
@@ -131,8 +128,10 @@ public class Machine {
         }
 
         Machine otherMachine = (Machine) other;
-        return otherMachine.getName().equals(getName()) && otherMachine.getStatus().equals(getStatus()) && otherMachine
-            .getJobs().equals(getJobs()) && otherMachine.getTags().equals(getTags());
+        return otherMachine.getName().equals(getName())
+            && otherMachine.getStatus().equals(getStatus())
+            && otherMachine.getJobs().equals(getJobs())
+            && otherMachine.getTags().equals(getTags());
     }
 
     @Override

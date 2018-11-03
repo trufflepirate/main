@@ -26,7 +26,7 @@ public class UniqueMachineList {
      */
     public boolean contains(Machine toCheck) {
         requireNonNull(toCheck);
-        return internalList.stream().anyMatch(toCheck::equals);
+        return internalList.stream().anyMatch(toCheck::isSameMachine);
     }
 
     /**

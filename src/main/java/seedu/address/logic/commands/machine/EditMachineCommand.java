@@ -12,7 +12,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.Command;
@@ -47,6 +49,8 @@ public class EditMachineCommand extends Command {
     private final MachineName machineName;
     private final EditMachineDescriptor editMachineDescriptor;
 
+    private final Logger logger = LogsCenter.getLogger(EditMachineCommand.class);
+
     /**
      * @param machineName           of the person in the filtered person list to edit
      * @param editMachineDescriptor details to edit the person with
@@ -74,6 +78,8 @@ public class EditMachineCommand extends Command {
 
         Machine editedMachine = createEditedMachine(machineToEdit, editMachineDescriptor);
 
+        logger.info("Is same machine : " + ((machineToEdit.isSameMachine(editedMachine)) ? "True" : "False"));
+        logger.info("Model has machine : " + (model.hasMachine(editedMachine) ? "True" : "False"));
         if (!machineToEdit.isSameMachine(editedMachine) && model.hasMachine(editedMachine)) {
             throw new CommandException(MESSAGE_DUPLICATE_MACHINE);
         }
@@ -116,7 +122,7 @@ public class EditMachineCommand extends Command {
     }
 
     /**
-     * Stores the details to edit the person with. Each non-empty field value will replace the
+     * Stores the details to edit the machine with. Each non-empty field value will replace the
      * corresponding field value of the person.
      */
     public static class EditMachineDescriptor {
