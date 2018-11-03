@@ -243,9 +243,9 @@ and it should not be blank.
 . addAdmin USERNAME PASSWORD VERIFY_PASSWORD
 . removeAdmin USERNAME
 . updatePassword USERNAME OLD_PW NEW_PW NEW_PW_VERIFY
-. add_machine n/MACHINE_NAME s/STATUS
+. add_machine n/MACHINE_NAME ms/STATUS
 . `[WIP][DISABLED]` remove_machine MACHINE_NAME
-. edit_machine MACHINE_NAME [n/MACHINE_NAME] [s/STATUS]
+. edit_machine MACHINE_NAME [n/MACHINE_NAME] [ms/STATUS]
 . manageJob JOB_NAME start
 . manageJob JOB_NAME cancel
 . manageJob JOB_NAME restart
