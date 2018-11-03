@@ -201,7 +201,7 @@ and it should not be blank.
     addMachine n/MACHINE_NAME ms/STATUS
 
     Example:
-    addMachine n/my_machine ms/ENABLED
+    addMachine n/myMachine ms/ENABLED
 
 ... *`[WIP][DISABLED]` Remove Machine:*
 removes a machine.  +
