@@ -23,7 +23,8 @@ public class AddAdminCommand extends Command {
             + "Example: addAdmin USERNAME PASSWORD PASSWORD\n";
     public static final String MESSAGE_PASSWORDS_DONT_MATCH = "The two password fields don't match! Please try again.";
     public static final String MESSAGE_NOT_VALID_PASSWORD = "Password not valid! You need at least 8 chars, "
-            + "where you have at least 1 smaller case, 1 bigger case, 1 number, no whitespace and one of these symbols [@#$%^&+=]";
+            + "where you have at least 1 smaller case, 1 bigger case, 1 number, no whitespace and"
+            + "one of these symbols [@#$%^&+=]";
 
     private final Username username;
     private final Password password;
