@@ -246,6 +246,7 @@ and it should not be blank.
 . add_machine n/MACHINE_NAME ms/STATUS
 . `[WIP][DISABLED]` remove_machine MACHINE_NAME
 . edit_machine MACHINE_NAME [n/MACHINE_NAME] [ms/STATUS]
+. listMachines
 . manageJob JOB_NAME start
 . manageJob JOB_NAME cancel
 . manageJob JOB_NAME restart
