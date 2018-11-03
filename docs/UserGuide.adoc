@@ -225,7 +225,7 @@ and it should not be blank.
     Format: editMachine MACHINE_NAME [n/MACHINE_NAME] [ms/STATUS]
 
     Example:
-    editMachine my_machine n/my_machine2 ms/enabled
+    editMachine my_machine n/my_machine2 ms/ENABLED
 
 
 == FAQ
