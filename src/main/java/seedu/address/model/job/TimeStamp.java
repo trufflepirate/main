@@ -2,11 +2,15 @@ package seedu.address.model.job;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Timestamp for modelling time
  */
 public class TimeStamp {
+    private static final long MILLIS_IN_HOURS = 3600000;
+    private static final long MILLIS_IN_DAYS = MILLIS_IN_HOURS * 24;
+    private static final long MILLIS_IN_YEARS = MILLIS_IN_DAYS * 365;
     private Calendar calendar;
 
     public TimeStamp() {
@@ -16,6 +20,10 @@ public class TimeStamp {
     public TimeStamp(long millis) {
         this.calendar = Calendar.getInstance();
         this.calendar.setTimeInMillis(millis);
+    }
+
+    public static long hoursToMillis(float hours) {
+        return (long) (hours * MILLIS_IN_HOURS);
     }
 
     /**
@@ -45,9 +53,38 @@ public class TimeStamp {
      * @return
      */
     public String showTime() {
-        return this.getCalendar().get(Calendar.DAY_OF_MONTH) + "/" + this.getCalendar().get(Calendar.MONTH) + " " + this
-            .getCalendar().get(Calendar.HOUR) + ":" + this.getCalendar().get(Calendar.MINUTE) + ":" + this.getCalendar()
-            .get(Calendar.SECOND);
+        return this.getCalendar().get(Calendar.DAY_OF_MONTH) + "/" + this.getCalendar().get(Calendar.MONTH) + 1 + " "
+            + this.getCalendar().get(Calendar.HOUR) + ":" + this.getCalendar().get(Calendar.MINUTE) + ":" + this
+            .getCalendar().get(Calendar.SECOND);
+    }
+    /**
+     * Shows the duration formatted
+     * @return
+     */
+    public String showAsDuration() {
+        long duration = this.getDate().getTime();
+        calendar.setTimeZone(TimeZone.getTimeZone("GMT+0000"));
+        if (duration < MILLIS_IN_HOURS) {
+            return calendar.get(Calendar.MINUTE) + " Minutes";
+        } else if (duration < MILLIS_IN_HOURS * 2) {
+            return calendar.get(Calendar.HOUR_OF_DAY) + " Hour " + calendar.get(Calendar.MINUTE) + " Minutes";
+        } else if (duration < MILLIS_IN_DAYS) {
+            return calendar.get(Calendar.HOUR_OF_DAY) + " Hours " + calendar.get(Calendar.MINUTE) + " Minutes";
+        } else if (duration < MILLIS_IN_DAYS * 2) {
+            return (calendar.get(Calendar.DAY_OF_YEAR) - 1) + " Day " + calendar.get(Calendar.HOUR_OF_DAY) + " Hours ";
+        } else if (duration < MILLIS_IN_YEARS) {
+            return (calendar.get(Calendar.DAY_OF_YEAR) - 1) + " Days " + calendar.get(Calendar.HOUR_OF_DAY) + " Hours ";
+        } else {
+            return (calendar.get(Calendar.YEAR) - 1970) + " Years " + (calendar.get(Calendar.DAY_OF_YEAR) - 1)
+                + " Days ";
+        }
+    }
+    /**
+     * Shows the time
+     */
+    public static String showAsDuration(long millis) {
+        TimeStamp t = new TimeStamp(millis);
+        return t.showAsDuration();
     }
 
 }

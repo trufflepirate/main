@@ -134,6 +134,11 @@ public class LogoutCommandTest {
         }
 
         @Override
+        public int getTotalNumberOfJobsDisplayed() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void updateJob(Job oldJob, Job updatedJob) {
 
         }
@@ -225,12 +230,7 @@ public class LogoutCommandTest {
         }
 
         @Override
-        public ObservableList<Job> getFilteredJobList() {
-            return null;
-        }
-
-        @Override
-        public void updateFilteredJobList(Predicate<Job> predicate) {
+        public void updateFilteredJobListInAllMachines(Predicate<Job> predicate) {
 
         }
 

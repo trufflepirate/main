@@ -88,6 +88,8 @@ public interface Model {
 
     void requestDeletion(JobName jobName);
 
+    int getTotalNumberOfJobsDisplayed();
+
     // ============================== Machine methods ======================================= //
     /**
      * Adds the given machine
@@ -193,11 +195,9 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredMachineList(Predicate<Machine> predicate);
-
     //=========== Filtered Job List Accessors =============================================================
-    ObservableList<Job> getFilteredJobList();
-    void updateFilteredJobList(Predicate<Job> predicate);
 
+    void updateFilteredJobListInAllMachines(Predicate<Job> predicate);
 
     //================================= AddressBook methods ===================================//
     /**

@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.job.exceptions.JobNotStartedException;
-import seedu.address.model.machine.Machine;
+import seedu.address.model.machine.MachineName;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 
@@ -23,21 +23,18 @@ import seedu.address.model.tag.Tag;
  */
 public class Job {
     public static final String MESSAGE_NAME_CONSTRAINTS =
-            "Job names should only contain alphanumeric characters and spaces, "
-                    + "and it should not be blank";
+        "Job names should only contain alphanumeric characters and spaces, " + "and it should not be blank";
 
     public static final String MESSAGE_NOTE_CONSTRAINTS =
-            "Job notes should only contain alphanumeric characters and spaces, "
-                    + "and it should not be blank";
+        "Job notes should only contain alphanumeric characters and spaces, " + "and it should not be blank";
 
-    public static final String MEEEAGE_PRIORITY_CONSTRAINTS =
-            "Job priority can only be URGENT, HIGH and NORMAL";
+    public static final String MEEEAGE_PRIORITY_CONSTRAINTS = "Job priority can only be URGENT, HIGH and NORMAL";
 
     private static final Logger logger = LogsCenter.getLogger(Job.class);
 
     //Identity field
     private JobName name;
-    private Machine machine;
+    private MachineName machineName;
     private TimeStamp startTime;
     private Person owner;
     private final TimeStamp addedTime;
@@ -47,17 +44,17 @@ public class Job {
     private JobNote jobNote;
     private Priority priority;
     private Status status;
-    private float duration;
+    private long duration;
 
     /**
      * Every field must be present and not null.
      * TODO: Need to validate all these somewhere
      */
-    public Job(JobName name, Machine machine, Person owner, Priority priority, float duration,
-               JobNote jobNote, Set<Tag> tags) {
+    public Job(JobName name, MachineName machine, Person owner, Priority priority, long duration, JobNote jobNote,
+               Set<Tag> tags) {
         requireAllNonNull(name, machine, owner, tags);
         this.name = name;
-        this.machine = machine;
+        this.machineName = machine;
         this.owner = owner;
         this.priority = priority;
         this.duration = duration;
@@ -72,11 +69,11 @@ public class Job {
     /**
      * Recovers a job object from the storage file
      */
-    public Job(JobName name, Machine machine, Person owner, TimeStamp addedTime, TimeStamp startTime, Priority priority,
-               Status status, float duration, JobNote jobNote, Set<Tag> tags) {
+    public Job(JobName name, MachineName machine, Person owner, TimeStamp addedTime, TimeStamp startTime,
+               Priority priority, Status status, long duration, JobNote jobNote, Set<Tag> tags) {
         requireAllNonNull(name, machine, owner, tags);
         this.name = name;
-        this.machine = machine;
+        this.machineName = machine;
         this.owner = owner;
         this.addedTime = addedTime;
         this.priority = priority;
@@ -95,26 +92,27 @@ public class Job {
 
         if (this.status == ONGOING) {
             TimeStamp current = new TimeStamp();
-            return TimeStamp.timeDifference(startTime, current) > hoursToMillis(this.duration);
+            return TimeStamp.timeDifference(startTime, current) > this.duration;
         } else {
             throw new JobNotStartedException();
         }
     }
 
-    private static long hoursToMillis(float hours) {
-        return (long) hours * 60 * 60 * 1000;
-    }
-
-
     public JobNote getJobNote() {
         return this.jobNote;
     }
 
-    public float getDuration() {
+    public long getDuration() {
         return this.duration;
     }
 
-    public void setDuration(float duration) {
+    public String getReadableDurationString() {
+        //return this.duration + "";
+        TimeStamp t = new TimeStamp(this.duration);
+        return t.showAsDuration();
+    }
+
+    public void setDuration(long duration) {
         this.duration = duration;
     }
 
@@ -173,8 +171,8 @@ public class Job {
         return name;
     }
 
-    public Machine getMachine() {
-        return machine;
+    public MachineName getMachineName() {
+        return machineName;
     }
 
     public TimeStamp getAddedTime() {
@@ -206,8 +204,8 @@ public class Job {
         name = new JobName(newName);
     }
 
-    public void setMachine(Machine newMachine) {
-        machine = newMachine;
+    public void setMachine(MachineName newMachine) {
+        machineName = newMachine;
     }
 
     public void setOwner(Person newOwner) {
@@ -225,10 +223,8 @@ public class Job {
             return true;
         }
 
-        return otherJob != null
-                && otherJob.getJobName().equals(getJobName())
-                && (otherJob.getMachine().equals(getMachine())
-                || otherJob.getAddedTime().equals(getAddedTime())
+        return otherJob != null && otherJob.getJobName().equals(getJobName()) && (
+            otherJob.getMachineName().equals(getMachineName()) || otherJob.getAddedTime().equals(getAddedTime())
                 || otherJob.getOwner().equals(getOwner()));
     }
 
@@ -272,25 +268,40 @@ public class Job {
             return false;
         }
 
-        return otherJob.getJobName().equals(getJobName())
-                && otherJob.getMachine().equals(getMachine())
-                && otherJob.getOwner().equals(getOwner())
-                && otherJob.getAddedTime().equals(getAddedTime())
-                && otherJob.getTags().equals(getTags());
+        return otherJob.getJobName().equals(getJobName()) && otherJob.getMachineName().equals(getMachineName())
+            && otherJob.getOwner().equals(getOwner()) && otherJob.getAddedTime().equals(getAddedTime()) && otherJob
+            .getTags().equals(getTags());
     }
+
+    /**
+     * Returns true if both jobs have the same identity.
+     * This defines a weaker notion of equality between two jobs.
+     */
+    public boolean hasSameName(Object other) {
+        Job otherJob = (Job) other;
+
+        if (other == this) {
+            return true;
+        }
+
+        if (other == null) {
+            return false;
+        }
+
+        return otherJob.getJobName().equals(getJobName());
+    }
+
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, machine, startTime, owner, tags);
+        return Objects.hash(name, machineName, startTime, owner, tags);
     }
 
     @Override
     public String toString() {
-        return "Job name " + this.getJobName().fullName
-                + "\nJob machine " + this.getMachine()
-                + "\nJob Priority " + this.getPriority()
-                + "\nJob status " + this.getStatus();
+        return "Job name " + this.getJobName().toString() + "\nJob machine " + this.getMachineName().toString()
+            + "\nJob Priority " + this.getPriority() + "\nJob status " + this.getStatus();
     }
 
 

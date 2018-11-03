@@ -52,7 +52,7 @@
             <Insets top="5" right="10" bottom="5" left="10" />
           </padding>
           <HBox fx:id="machineList" >
-            <StackPane fx:id="machineListPanelPlaceholder" HBox.hgrow="ALWAYS" />
+            <StackPane fx:id="machineListPanelPlaceholder" HBox.hgrow="ALWAYS"/>
           </HBox>
         </StackPane>
 

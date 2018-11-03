@@ -33,7 +33,7 @@ public class EditMachineCommand extends Command {
     public static final String COMMAND_WORD = "editMachine";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the Machine identified "
-        + "by the index number used in the displayed Machine list. "
+        + "by machine name. "
         + "Existing values will be overwritten by the input values.\n" + "Parameters: MACHINE_NAME " + "[" + PREFIX_NAME
         + "NAME] " + "[" + PREFIX_MACHINE_STATUS + "MACHINE_STATUS] " + "[" + PREFIX_TAG + "TAG]...\n" + "Example: "
         + COMMAND_WORD + " MyPrinter " + PREFIX_NAME + "YourPrinter " + PREFIX_MACHINE_STATUS + "ENABLED";

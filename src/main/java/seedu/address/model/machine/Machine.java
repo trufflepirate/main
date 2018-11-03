@@ -1,16 +1,20 @@
 package seedu.address.model.machine;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_JOBS;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import seedu.address.model.job.Job;
-import seedu.address.model.job.Status;
+import seedu.address.model.job.JobName;
 import seedu.address.model.job.UniqueJobList;
 import seedu.address.model.machine.exceptions.InvalidMachineStatusException;
 import seedu.address.model.tag.Tag;
@@ -40,6 +44,8 @@ public class Machine {
     private final UniqueJobList jobs = new UniqueJobList();
     private final Set<Tag> tags = new HashSet<>();
 
+    //Display fields
+    private final FilteredList<Job> filteredJobs;
 
     /**
      * Every field must be present and not null.
@@ -50,11 +56,7 @@ public class Machine {
         this.jobs.setJobs(jobs);
         this.tags.addAll(tags);
         this.status = status;
-    }
-
-    public Machine(String machineName) {
-        this.machineName = new MachineName(machineName);
-        this.status = MachineStatus.ENABLED;
+        this.filteredJobs = new FilteredList<>(this.jobs.asUnmodifiableObservableList());
     }
 
     /**
@@ -68,12 +70,8 @@ public class Machine {
         return machineName;
     }
 
-    /**
-     * Returns an immutable Job List, which throws {@code UnsupportedOperationException}
-     * if modification is attempted.
-     */
-    public List<Job> getJobs() {
-        return Collections.unmodifiableList(jobs.asUnmodifiableObservableList());
+    public MachineStatus getStatus() {
+        return status;
     }
 
     /**
@@ -84,30 +82,9 @@ public class Machine {
         return Collections.unmodifiableSet(tags);
     }
 
-    /**
-     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
-     * if modification is attempted.
-     */
-    public ObservableList<Job> getJobsAsObeservableList() {
-        return jobs.asUnmodifiableObservableList();
+    public long getTotalDuration() {
+        return jobs.getTotalTime();
     }
-
-    /**
-     * Returns true if the machine contains
-     * {@code job} in its list;
-     */
-    public boolean hasJob(Job job) {
-        return jobs.contains(job);
-    }
-
-    /**
-     * Adds a job to the machine job list
-     */
-
-    public void addJob(Job job) {
-        jobs.add(job);
-    }
-
 
     /**
      * Returns true if both machines of the same name.
@@ -185,19 +162,60 @@ public class Machine {
         return test.matches(NAME_VALIDATION_REGEX);
     }
 
-    public MachineStatus getStatus() {
-        return status;
+    //======================== job list methods ================================//
+
+    /**
+     * Returns an immutable Job List, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public List<Job> getJobs() {
+        return Collections.unmodifiableList(jobs.asUnmodifiableObservableList());
     }
 
-    public float getTotalDuration() {
-        float duration = 0;
+    public Job findJob(JobName jobName) {
+        return jobs.findJob(jobName);
+    }
 
-        for (Job job : jobs.asUnmodifiableObservableList()) {
-            if (job.getStatus() == Status.ONGOING || job.getStatus() == Status.QUEUED) {
-                duration += job.getDuration();
-            }
+    /**
+     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public ObservableList<Job> getJobsAsFilteredObservableList() {
+        return this.filteredJobs;
+    }
+
+    /**
+     * Returns true if the machine contains
+     * {@code job} in its list;
+     */
+    public boolean hasJob(Job job) {
+        return jobs.contains(job);
+    }
+
+    /**
+     * Adds a job to the machine job list
+     */
+    public void addJob(Job job) {
+        jobs.add(job);
+    }
+
+    /**
+     * updates the FilteredJobList with a predicate
+     */
+    public void updateFilteredJobList(Predicate<Job> predicate) {
+        requireNonNull(predicate);
+        filteredJobs.setPredicate(predicate);
+    }
+
+    public Predicate<Job> getFilteredJobListPredicate() {
+        if (filteredJobs.getPredicate() == null) {
+            return PREDICATE_SHOW_ALL_JOBS;
         }
-        return duration;
-
+        return (Predicate<Job>) filteredJobs.getPredicate();
     }
+
+    public void replaceJob(Job jobToBeReplaced, Job replaceWith) {
+        jobs.replaceJob(jobToBeReplaced, replaceWith);
+    }
+
 }

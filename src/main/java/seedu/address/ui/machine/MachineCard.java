@@ -1,9 +1,7 @@
 package seedu.address.ui.machine;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -12,7 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
-import seedu.address.model.job.Job;
+import seedu.address.model.job.TimeStamp;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.MachineStatus;
 import seedu.address.ui.UiPart;
@@ -51,14 +49,13 @@ public class MachineCard extends UiPart<Region> {
     @FXML
     private StackPane jobsListPlaceHolder;
 
-    public MachineCard(Machine machine, int displayIndex, ObservableList<Job> jobList) {
+    public MachineCard(Machine machine, int displayIndex) {
         super(FXML);
         this.machine = machine;
         id.setText(displayIndex + ". ");
         machineName.setText(machine.getName().fullName);
         Label machineStatusLabel = new Label(machine.getStatus().toString());
-        Label durationLabel = new Label("Time until released: " + String.valueOf(machine.getTotalDuration())
-                + " hour(s).");
+        Label durationLabel = new Label("Time until released: " + TimeStamp.showAsDuration(machine.getTotalDuration()));
         machineStatusLabel.setStyle("-fx-font: 12 arial;"
                 + "-fx-text-fill: black;"
                 + "-fx-padding: 2;"
@@ -87,7 +84,7 @@ public class MachineCard extends UiPart<Region> {
         machineStatus.setHgap(4);
         totalDuration.getChildren().add(durationLabel);
 
-        jobListPanel = new JobListPanel(jobList.filtered(job -> job.getMachine().getName().equals(machine.getName())));
+        jobListPanel = new JobListPanel(machine.getJobsAsFilteredObservableList());
         jobsListPlaceHolder.getChildren().add(jobListPanel.getRoot());
     }
 

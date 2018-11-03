@@ -24,7 +24,7 @@ import seedu.address.model.job.JobName;
 import seedu.address.model.job.JobNote;
 import seedu.address.model.job.JobOwner;
 import seedu.address.model.job.Priority;
-import seedu.address.model.machine.Machine;
+import seedu.address.model.machine.MachineName;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -34,23 +34,24 @@ public class AddJobCommandParser implements Parser<AddJobCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the AddJobCommand
      * and returns an AddJobCommand object for execution.
+     *
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddJobCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_MACHINE,
-                        PREFIX_JOB_OWNER, PREFIX_JOB_PRIORITY, PREFIX_JOB_DURATION, PREFIX_JOB_NOTE, PREFIX_TAG);
+        ArgumentMultimap argMultimap = ArgumentTokenizer
+            .tokenize(args, PREFIX_NAME, PREFIX_MACHINE, PREFIX_JOB_OWNER, PREFIX_JOB_PRIORITY, PREFIX_JOB_DURATION,
+                PREFIX_JOB_NOTE, PREFIX_TAG);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_MACHINE, PREFIX_JOB_OWNER, PREFIX_JOB_PRIORITY,
-                PREFIX_JOB_DURATION, PREFIX_JOB_NOTE, PREFIX_TAG) || !argMultimap.getPreamble().isEmpty()) {
+            PREFIX_JOB_DURATION, PREFIX_JOB_NOTE, PREFIX_TAG) || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddJobCommand.MESSAGE_USAGE));
         }
 
         JobName name = ParserUtil.parseJobName(argMultimap.getValue(PREFIX_NAME).get());
-        Machine machine = ParserUtil.parseMachine(argMultimap.getValue(PREFIX_MACHINE).get());
+        MachineName machine = ParserUtil.parseMachineName(argMultimap.getValue(PREFIX_MACHINE).get());
         JobOwner jobOwner = ParserUtil.parseJobOwner(argMultimap.getValue(PREFIX_JOB_OWNER).get());
         Priority priority = ParserUtil.parseJobPriority(argMultimap.getValue(PREFIX_JOB_PRIORITY).get());
-        Float duration = ParserUtil.parseDuration(argMultimap.getValue(PREFIX_JOB_DURATION).get());
+        Long duration = ParserUtil.parseDuration(argMultimap.getValue(PREFIX_JOB_DURATION).get());
         JobNote note = ParserUtil.parseJobNote(argMultimap.getValue(PREFIX_JOB_NOTE).get());
         Set<Tag> tags = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 

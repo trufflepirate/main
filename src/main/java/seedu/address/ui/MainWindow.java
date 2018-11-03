@@ -130,7 +130,7 @@ public class MainWindow extends UiPart<Stage> {
         //viewInfoPanel = new ViewInfoPanel();
         //displayMachineDetailsPlaceholder.getChildren().add(viewInfoPanel.getRoot());
 
-        machineListPanel = new MachineListPanel(logic.getFilteredMachineList(), logic.getFilteredJobList());
+        machineListPanel = new MachineListPanel(logic.getFilteredMachineList());
         machineListPanelPlaceholder.getChildren().add(machineListPanel.getRoot());
 
         //jobListPanel = new JobListPanel(logic.getFilteredJobList());

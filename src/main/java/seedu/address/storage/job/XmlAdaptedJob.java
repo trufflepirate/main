@@ -23,7 +23,6 @@ import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 import seedu.address.storage.XmlAdaptedPerson;
 import seedu.address.storage.XmlAdaptedTag;
-import seedu.address.storage.machine.XmlAdaptedMachine;
 
 /**
  * JAXB-friendly version of the Job.
@@ -37,7 +36,7 @@ public class XmlAdaptedJob {
     @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)
-    private XmlAdaptedMachine machine;
+    private String machine;
     @XmlElement(required = true)
     private XmlAdaptedPerson owner;
     @XmlElement(required = true)
@@ -47,7 +46,7 @@ public class XmlAdaptedJob {
     @XmlElement(required = true)
     private Priority priority;
     @XmlElement(required = true)
-    private float duration;
+    private Long duration;
     @XmlElement(required = true)
     private Status status;
     @XmlElement
@@ -67,8 +66,8 @@ public class XmlAdaptedJob {
     /**
      * Constructs an {@code XmlAdaptedJob} with the given job details.
      */
-    public XmlAdaptedJob(String name, XmlAdaptedMachine machine, XmlAdaptedPerson owner, XmlAdaptedTimeStamp addedTime,
-                         XmlAdaptedTimeStamp startTime, Priority priority, float duration,
+    public XmlAdaptedJob(String name, String machine, XmlAdaptedPerson owner, XmlAdaptedTimeStamp addedTime,
+                         XmlAdaptedTimeStamp startTime, Priority priority, Long duration,
                          Status status, List<XmlAdaptedTag> tagged, String note) {
         this.name = name;
         this.machine = machine;
@@ -91,7 +90,7 @@ public class XmlAdaptedJob {
      */
     public XmlAdaptedJob(Job source) {
         name = source.getJobName().fullName;
-        machine = new XmlAdaptedMachine(source.getMachine());
+        machine = source.getMachineName().toString();
         owner = new XmlAdaptedPerson(source.getOwner());
         addedTime = new XmlAdaptedTimeStamp(source.getAddedTime());
         startTime = new XmlAdaptedTimeStamp(source.getStartTime());
@@ -123,7 +122,7 @@ public class XmlAdaptedJob {
             throw new NullPointerException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Machine.class.getSimpleName()));
         }
 
-        Machine modelJobMachine = machine.toModelType();
+        MachineName modelJobMachine = new MachineName(machine);
 
         if (owner == null) {
             throw new NullPointerException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Person.class.getSimpleName()));
@@ -138,11 +137,11 @@ public class XmlAdaptedJob {
 
         final Priority modelPriority = priority;
 
-        if (duration == 0.0f) {
-            throw new NullPointerException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Float.class.getSimpleName()));
+        if (duration == null) {
+            throw new NullPointerException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Long.class.getSimpleName()));
         }
 
-        float modelDuration = duration;
+        Long modelDuration = duration;
 
         if (note == null) {
             throw new NullPointerException(String.format(MISSING_FIELD_MESSAGE_FORMAT, JobNote.class.getSimpleName()));

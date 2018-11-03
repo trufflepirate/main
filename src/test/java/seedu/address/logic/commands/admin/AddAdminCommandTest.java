@@ -105,8 +105,9 @@ public class AddAdminCommandTest {
         modelStub.setLogin(admin);
         Admin adminToAdd = new Admin(new Username("dummyUsername"), new Password("aaaAAA123$"));
 
-        CommandResult commandResult = new AddAdminCommand(new Username("dummyUsername"), new Password("aaaAAA123$"),
-            new Password("aaaAAA123$")).execute(modelStub, commandHistory);
+        CommandResult commandResult =
+            new AddAdminCommand(new Username("dummyUsername"), new Password("aaaAAA123$"), new Password("aaaAAA123$"))
+                .execute(modelStub, commandHistory);
 
         assertEquals(commandResult.feedbackToUser, AddAdminCommand.MESSAGE_SUCCESS);
         assertEquals(modelStub.adminList, Arrays.asList(adminToAdd));
@@ -193,6 +194,11 @@ public class AddAdminCommandTest {
         @Override
         public void requestDeletion(JobName jobName) {
 
+        }
+
+        @Override
+        public int getTotalNumberOfJobsDisplayed() {
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override
@@ -291,12 +297,7 @@ public class AddAdminCommandTest {
         }
 
         @Override
-        public ObservableList<Job> getFilteredJobList() {
-            return null;
-        }
-
-        @Override
-        public void updateFilteredJobList(Predicate<Job> predicate) {
+        public void updateFilteredJobListInAllMachines(Predicate<Job> predicate) {
             throw new AssertionError("This method should not be called.");
         }
 

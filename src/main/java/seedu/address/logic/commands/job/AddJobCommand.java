@@ -24,28 +24,19 @@ public class AddJobCommand extends Command {
 
     public static final String COMMAND_WORD = "addJob";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a job to the address book. "
-            + "Parameters: "
-            + PREFIX_NAME + "JOB NAME "
-            + PREFIX_MACHINE + "MACHINE NAME "
-            + PREFIX_JOB_OWNER + "JOB OWNER NAME "
-            + PREFIX_JOB_PRIORITY + "JOB PRIORITY "
-            + PREFIX_JOB_DURATION + "JOB DURATION "
-            + PREFIX_JOB_NOTE + "JOB NOTE "
-            + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Example: " + COMMAND_WORD + " "
-            + PREFIX_NAME + "iDCP "
-            + PREFIX_MACHINE + "TYPrinter "
-            + PREFIX_JOB_OWNER + "TIAN YUAN "
-            + PREFIX_JOB_PRIORITY + "HIGH "
-            + PREFIX_JOB_DURATION + "1.5 "
-            + PREFIX_JOB_NOTE + "This is for the iDCP project "
-            + PREFIX_TAG + "iDCP";
+    public static final String MESSAGE_USAGE =
+        COMMAND_WORD + ": Adds a job to the address book. " + "Parameters: " + PREFIX_NAME + "JOB NAME "
+            + PREFIX_MACHINE + "MACHINE NAME " + PREFIX_JOB_OWNER + "JOB OWNER NAME " + PREFIX_JOB_PRIORITY
+            + "JOB PRIORITY " + PREFIX_JOB_DURATION + "JOB DURATION " + PREFIX_JOB_NOTE + "JOB NOTE " + "[" + PREFIX_TAG
+            + "TAG]...\n" + "Example: " + COMMAND_WORD + " " + PREFIX_NAME + "iDCP " + PREFIX_MACHINE + "TYPrinter "
+            + PREFIX_JOB_OWNER + "TIAN YUAN " + PREFIX_JOB_PRIORITY + "HIGH " + PREFIX_JOB_DURATION + "1.5 "
+            + PREFIX_JOB_NOTE + "This is for the iDCP project " + PREFIX_TAG + "iDCP";
 
 
     public static final String MESSAGE_SUCCESS = "New job added: %1$s";
     public static final String MESSAGE_FAILURE = "New job NOT added: %1$s";
-    public static final String MESSAGE_DUPLICATE_JOB = "This job already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_JOB = "This job already exists! Job Names must be unique";
+    public static final String MESSAGE_NO_MACHINE = "Machine specified does not exist";
 
     private final Job jobToAdd;
 
@@ -67,18 +58,18 @@ public class AddJobCommand extends Command {
 
         try {
             model.addJob(jobToAdd);
-            model.commitAddressBook();
-            return new CommandResult(String.format(MESSAGE_SUCCESS, jobToAdd.getJobName()));
-        } catch (MachineNotFoundException mie) {
-            return new CommandResult(String.format(MESSAGE_FAILURE, mie.getMessage()));
+        } catch (MachineNotFoundException mfe) {
+            throw new CommandException(MESSAGE_NO_MACHINE);
         }
 
+        model.commitAddressBook();
+        return new CommandResult(String.format(MESSAGE_SUCCESS, jobToAdd.getJobName()));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof seedu.address.logic.commands.job.AddJobCommand // instanceof handles nulls
-                && jobToAdd.equals(((seedu.address.logic.commands.job.AddJobCommand) other).jobToAdd));
+            || (other instanceof seedu.address.logic.commands.job.AddJobCommand // instanceof handles nulls
+            && jobToAdd.equals(((seedu.address.logic.commands.job.AddJobCommand) other).jobToAdd));
     }
 }
