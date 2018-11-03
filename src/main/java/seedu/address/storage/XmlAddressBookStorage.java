@@ -79,7 +79,6 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
                         XmlFileStorage.loadMakerManagerMachineDataFromSaveFile(filePath);
                 return Optional.of(xmlMakerManagerMachines.toModelType());
             } else if (filePath.getFileName().toString().equals(makerManagerAdminsFilePath)) {
-
                 XmlSerializableMakerManagerAdmins xmlMakerManagerAdmins =
                         XmlFileStorage.loadMakerManagerAdminDataFromSaveFile(filePath);
                 return Optional.of(xmlMakerManagerAdmins.toModelType());
@@ -104,7 +103,6 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
         Path mainAddressBookFile = userPrefs.getAddressBookFilePath();
         Path makerManagerMachinesFile = userPrefs.getMakerManagerMachinesFilePath();
         Path makerManagerAdminsFile = userPrefs.getMakerManagerAdminsFilePath();
-        Path makerManagerJobsFile = userPrefs.getMakerManagerJobsFilePath();
 
 
         try {
@@ -116,9 +114,6 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
             }
             if (!Files.exists(makerManagerAdminsFile)) {
                 FileUtil.createIfMissing(makerManagerAdminsFile);
-            }
-            if (!Files.exists(makerManagerJobsFile)) {
-                FileUtil.createIfMissing(makerManagerJobsFile);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -217,12 +212,12 @@ public class XmlAddressBookStorage extends ComponentManager implements AddressBo
         Path mainAddressBookFile = userPrefs.getAddressBookFilePath();
         Path makerManagerMachinesFile = userPrefs.getMakerManagerMachinesFilePath();
         Path makerManagerAdminsFile = userPrefs.getMakerManagerAdminsFilePath();
-        Path makerManagerJobsFile = userPrefs.getMakerManagerJobsFilePath();
+
 
         FileUtil.createIfMissing(mainAddressBookFile);
         FileUtil.createIfMissing(makerManagerMachinesFile);
         FileUtil.createIfMissing(makerManagerAdminsFile);
-        FileUtil.createIfMissing(makerManagerJobsFile);
+
 
         /**
          * The serializable all has to be different classes as the formatting
