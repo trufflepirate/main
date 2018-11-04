@@ -2,18 +2,19 @@ package seedu.address.ui.machine;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
+import seedu.address.model.job.TimeStamp;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.MachineStatus;
 import seedu.address.ui.UiPart;
-
+import seedu.address.ui.job.JobListPanel;
 
 
 /**
@@ -33,6 +34,8 @@ public class MachineCard extends UiPart<Region> {
 
     public final Machine machine;
 
+    private JobListPanel jobListPanel;
+
     @FXML
     private HBox cardPane;
     @FXML
@@ -43,6 +46,8 @@ public class MachineCard extends UiPart<Region> {
     private FlowPane machineStatus;
     @FXML
     private FlowPane totalDuration;
+    @FXML
+    private StackPane jobsListPlaceHolder;
 
     public MachineCard(Machine machine, int displayIndex) {
         super(FXML);
@@ -50,8 +55,7 @@ public class MachineCard extends UiPart<Region> {
         id.setText(displayIndex + ". ");
         machineName.setText(machine.getName().fullName);
         Label machineStatusLabel = new Label(machine.getStatus().toString());
-        Label durationLabel = new Label("Time until released: " + String.valueOf(machine.getTotalDuration())
-                + " hour(s).");
+        Label durationLabel = new Label("Time until released: " + TimeStamp.showAsDuration(machine.getTotalDuration()));
         machineStatusLabel.setStyle("-fx-font: 12 arial;"
                 + "-fx-text-fill: black;"
                 + "-fx-padding: 2;"
@@ -79,6 +83,9 @@ public class MachineCard extends UiPart<Region> {
         machineStatus.getChildren().add(machineAvailabilityLabel);
         machineStatus.setHgap(4);
         totalDuration.getChildren().add(durationLabel);
+
+        jobListPanel = new JobListPanel(machine.getJobsAsFilteredObservableList());
+        jobsListPlaceHolder.getChildren().add(jobListPanel.getRoot());
     }
 
     @Override
