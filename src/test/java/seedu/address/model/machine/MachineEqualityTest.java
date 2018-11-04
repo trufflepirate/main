@@ -7,7 +7,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.model.job.Job;
 import seedu.address.testutil.MachineBuilder;
 import seedu.address.testutil.testdata.ValidJobs;
 import seedu.address.testutil.testdata.ValidMachines;
@@ -46,14 +45,10 @@ public class MachineEqualityTest {
         Machine toCheck = new MachineBuilder()
             .withName("JJPrinter")
             .withStatus(MachineStatus.ENABLED)
-            .withJobs(ValidJobs.getValidJobs())
             .build();
 
-        for (Job job : ValidJobs.getValidJobs()) {
-            testMachine.addJob(job);
-        }
-
         assertTrue(toCheck.isSameMachine(testMachine));
+
     }
 
     @Test
@@ -61,12 +56,8 @@ public class MachineEqualityTest {
         Machine toCheck = new MachineBuilder()
             .withName("JJPrinter")
             .withStatus(MachineStatus.ENABLED)
-            .withJobs(ValidJobs.getValidJobs())
             .build();
 
-        for (Job job : ValidJobs.getValidJobs()) {
-            testMachine.addJob(job);
-        }
 
         assertTrue(toCheck.equals(testMachine));
     }
@@ -74,9 +65,8 @@ public class MachineEqualityTest {
     @Test
     public void notEquals() {
         Machine toCheck = new MachineBuilder()
-            .withName("JJPrinter")
+            .withName("Printer")
             .withStatus(MachineStatus.ENABLED)
-            .withJobs(ValidJobs.getValidJobs())
             .build();
 
         assertTrue(!toCheck.equals(testMachine));

@@ -17,7 +17,7 @@ import seedu.address.testutil.builders.PersonBuilder;
  */
 public class ValidJobs {
 
-    private static final Job IDCP = new JobBuilder().withName("IDCP").withMachine(
+    public static final Job IDCP = new JobBuilder().withName("IDCP").withMachine(
         new MachineBuilder().withMachineName("JJPrinter").withMachineStatus(MachineStatus.ENABLED).build().getName())
         .withJobNote("This is jj jobnote").withDuration(2).withPriority(Priority.HIGH)
         .withOwner(new PersonBuilder().withName("Jun jie").build()).withStatus(Status.QUEUED).build();
