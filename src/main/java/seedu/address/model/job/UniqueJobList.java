@@ -73,7 +73,6 @@ public class UniqueJobList {
     /**
      * Returns a job by name
      */
-
     public Job get(String jobName) {
         requireNonNull(jobName);
         logger.info("Jobs size : " + Integer.toString(internalList.size()));

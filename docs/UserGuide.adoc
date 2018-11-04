@@ -58,7 +58,7 @@ Give the user guidance as to what (s)he can do with makerManager +
     Format: help
 
 .. *Adding a print Job:*
-Adds a print job to the machine's queue. +
+Adds a print job to the machine's queue. Specifying AUTO as MACHINE_NAME will let the software optimize which queue to add the print to. +
 
     Format: addJob n/JOB NAME m/MACHINE NAME on/JOB OWNER NAME pr/JOB PRIORITY d/JOB DURATION jn/JOB NOTE [t/TAG]
 
@@ -89,7 +89,7 @@ Restart an existing print in the queue. +
     Examples:
     manageJob myPrint restart
 
-.. *`[WIP][DISABLED]` Deleting a Print:*
+.. *Deleting a Print:*
 deletes an existing print in the queue. +
 
     Format: manageJob JOBNAME delete
@@ -238,5 +238,6 @@ Edits an existing machine. All machine names must be unique. Status can only be 
 . manageJob JOB_NAME start
 . manageJob JOB_NAME cancel
 . manageJob JOB_NAME restart
+. manageJob JOB_NAME delete
 . `[WIP][DISABLED]` manageJob JOB_NAME delete
 . requestDeletion n/iDCP

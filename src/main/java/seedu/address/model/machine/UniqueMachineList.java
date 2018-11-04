@@ -174,9 +174,8 @@ public class UniqueMachineList {
         return true;
     }
 
-
     public Machine getMostFreeMachine() {
-        float minimumTime = 999999;
+        long minimumTime = Long.MAX_VALUE;
         Machine mostFreeMachine = null;
 
         for (Machine machine : internalList) {
