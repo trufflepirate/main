@@ -18,6 +18,12 @@ public class UniqueMachineListTest {
     private final UniqueMachineList uniqueMachineList = new UniqueMachineList();
 
     @Test
+    public void contains_sameNameMachine() {
+        uniqueMachineList.add(ValidMachines.JJPRINTER);
+        assertTrue(uniqueMachineList.contains(ValidMachines.JJPRINTER));
+    }
+
+    @Test
     public void contains_nullMachine_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         uniqueMachineList.contains(null);
