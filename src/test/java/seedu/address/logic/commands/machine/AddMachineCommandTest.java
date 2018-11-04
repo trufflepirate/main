@@ -215,6 +215,11 @@ public class AddMachineCommandTest {
         }
 
         @Override
+        public boolean hasSameMachineName(Machine machine) {
+            return false;
+        }
+
+        @Override
         public void addAdmin(Admin admin) {
             throw new AssertionError("This method should not be called.");
         }
