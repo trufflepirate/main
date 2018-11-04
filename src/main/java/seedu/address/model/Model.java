@@ -84,7 +84,11 @@ public interface Model {
 
     void swapJobs(JobName jobname1, JobName jobName2);
 
+    void finishJob(Job job);
+
     void requestDeletion(JobName jobName);
+
+    int getTotalNumberOfJobsDisplayed();
 
     // ============================== Machine methods ======================================= //
     /**
@@ -191,11 +195,9 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredMachineList(Predicate<Machine> predicate);
-
     //=========== Filtered Job List Accessors =============================================================
-    ObservableList<Job> getFilteredJobList();
-    void updateFilteredJobList(Predicate<Job> predicate);
 
+    void updateFilteredJobListInAllMachines(Predicate<Job> predicate);
 
     //================================= AddressBook methods ===================================//
     /**

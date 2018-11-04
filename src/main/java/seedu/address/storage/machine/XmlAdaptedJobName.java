@@ -1,8 +1,6 @@
 package seedu.address.storage.machine;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-
 import javax.xml.bind.annotation.XmlValue;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -10,15 +8,12 @@ import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
 import seedu.address.model.job.JobNote;
 import seedu.address.model.job.Priority;
-import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.MachineName;
-import seedu.address.model.machine.MachineStatus;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-
 
 
 /**
@@ -33,7 +28,8 @@ public class XmlAdaptedJobName {
      * Constructs an XmlAdaptedJobName
      * This is the no-arg constructor that is required by JAXB
      */
-    public XmlAdaptedJobName(){}
+    public XmlAdaptedJobName() {
+    }
 
     /**
      * Constructs a {@code XmlAdaptedJobName} with the given {@code jobName}.
@@ -61,16 +57,10 @@ public class XmlAdaptedJobName {
 
         //TODO:  Remove hardcoding
         JobName name = new JobName(jobName);
-        Machine machine = new Machine(new MachineName("JJ's printer"),
-                new ArrayList<>(),
-                new HashSet<>(),
-                MachineStatus.ENABLED);
+        MachineName machine = new MachineName("JJ's printer");
         JobNote note = new JobNote("Empty note for now");
-        Person person = new Person(new Name("JunJie"),
-                new Phone("81184502"),
-                new Email("teojunjie@gmail.com"),
-                new Address("1 Rivervale Link #06-09"),
-                new HashSet<>());
+        Person person = new Person(new Name("JunJie"), new Phone("81184502"), new Email("teojunjie@gmail.com"),
+            new Address("1 Rivervale Link #06-09"), new HashSet<>());
 
         return new Job(name, machine, person, Priority.HIGH, 2, note, new HashSet<>());
     }

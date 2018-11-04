@@ -65,4 +65,17 @@ public class StringUtil {
             return false;
         }
     }
+    /**
+     * Returns true if {@code s} represents a non-zero decimal number
+     */
+    public static boolean isnonZeroFloat(String s) {
+        requireNonNull(s);
+
+        try {
+            float value = Float.parseFloat(s);
+            return value > 0;
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+    }
 }
