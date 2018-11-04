@@ -58,9 +58,9 @@ public class JobBuilder {
 
     public JobBuilder(Job jobToCopy) {
         name = jobToCopy.getJobName();
-        machine = jobToCopy.getMachine();
+        machine = jobToCopy.getMachineName();
         owner = jobToCopy.getOwner();
-        addedTime = jobToCopy.getAddedTime();
+        addedTime = jobToCopy.getAddedTime().showTime();
         tags = new HashSet<>(jobToCopy.getTags());
         jobNote = jobToCopy.getJobNote();
         priority = jobToCopy.getPriority();

@@ -62,6 +62,7 @@ public class CommandTestUtil {
     public static final Status VALID_JOBSTATUS_CANCELLED = CANCELLED;
     public static final Status VALID_JOBSTATUS_ONGOING = ONGOING;
     public static final String VALID_JOBADDEDTIME_SOMEDAY = "sample day";
+    public static final String VALID_JOBADDEDTIME_SOMETIME = "3/10 13:19:20";
 
 
 

@@ -350,8 +350,8 @@ public class Job {
 
 
         return otherJob.getJobName().equals(getJobName()) && otherJob.getMachineName().equals(getMachineName())
-            && otherJob.getOwner().equals(getOwner()) && otherJob.getAddedTime().equals(getAddedTime()) && otherJob
-            .getTags().equals(getTags());
+            && otherJob.getOwner().equals(getOwner())
+            && otherJob.getAddedTime().showTime().equals(getAddedTime().showTime());
     }
 
     /**
