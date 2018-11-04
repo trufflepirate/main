@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.testutil.MachineBuilder;
-import seedu.address.testutil.testdata.ValidJobs;
 import seedu.address.testutil.testdata.ValidMachines;
 
 public class MachineEqualityTest {
