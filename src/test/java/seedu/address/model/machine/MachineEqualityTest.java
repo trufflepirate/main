@@ -10,6 +10,8 @@ import org.junit.rules.ExpectedException;
 import seedu.address.testutil.MachineBuilder;
 import seedu.address.testutil.testdata.ValidMachines;
 
+
+
 public class MachineEqualityTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
