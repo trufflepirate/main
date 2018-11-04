@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<<<<<<< HEAD
 <MakerManagerJobs>
     <jobs>
         <name>iDCP</name>
@@ -45,3 +46,6 @@
         <note>This is for the iDCP project</note>
     </jobs>
 </MakerManagerJobs>
+=======
+<MakerManagerJobs/>
+>>>>>>> master
