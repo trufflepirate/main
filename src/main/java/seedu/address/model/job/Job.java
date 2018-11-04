@@ -11,7 +11,6 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.model.machine.Machine;
 import seedu.address.model.job.exceptions.JobNotStartedException;
 import seedu.address.model.machine.MachineName;
 import seedu.address.model.person.Person;
