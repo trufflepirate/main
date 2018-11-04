@@ -30,6 +30,15 @@ public class UniqueMachineList {
     }
 
     /**
+     * Returns true if the list cotains an equivalent machine name
+     */
+
+    public boolean containsSameNameMachine(Machine toCheck) {
+        requireNonNull(toCheck);
+        return internalList.stream().anyMatch(toCheck::isSameNamedMachine);
+    }
+
+    /**
      * Replaces the contents of this list with {@code machines}.
      * {@code machines} must not contain duplicate machines.
      */

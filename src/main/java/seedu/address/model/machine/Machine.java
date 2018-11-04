@@ -91,7 +91,18 @@ public class Machine {
      * This defines a weakest notion of equality between two machines.
      */
     public boolean isSameNamedMachine(Machine otherMachine) {
-        return otherMachine.getName() == getName();
+        return otherMachine.getName().equals(getName());
+    }
+
+    /**
+     * Returns true if the other machine has the same parameters
+     * 1) name
+     * 2) status
+     */
+
+    public boolean hasSameMachineParameters(Machine otherMachine) {
+        return otherMachine.getName().equals(getName())
+            && otherMachine.getStatus().equals(getStatus());
     }
 
     /**
