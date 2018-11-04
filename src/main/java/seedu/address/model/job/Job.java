@@ -86,7 +86,7 @@ public class Job {
 
 
     /**
-     * returns the job note
+     * checks if a job has been finished
      */
     public boolean isFinished() throws JobNotStartedException {
 
@@ -117,7 +117,7 @@ public class Job {
     }
 
     /**
-     * starts a job
+     * Used to start a job
      */
     public void startJob() {
         if (this.status == PAUSED) {
@@ -129,16 +129,12 @@ public class Job {
     }
 
     /**
-     * restarts a job once the job is cancelled
+     * Used in case of failed prints
      */
     public void restartJob() {
         this.startJob();
     }
 
-
-    /**
-     * cancel the printing of the job
-     */
     public void pauseJob() {
         this.status = PAUSED;
     }
@@ -147,58 +143,30 @@ public class Job {
         this.status = Status.CANCELLED;
     }
 
-    /**
-     * finishes a job
-     */
     public void finishJob() {
         this.status = Status.FINISHED;
     }
 
-    /**
-     * sets the note of the job by a new job
-     * @param jobNote
-     */
     public void setJobNote(String jobNote) {
         this.jobNote.changeNote(jobNote);
     }
 
-    /**
-     * returns the priority of the job
-     * @return
-     */
     public Priority getPriority() {
         return priority;
     }
 
-    /**
-     * sets the priority of the job
-     * @param priority
-     */
     public void setPriority(Priority priority) {
         this.priority = priority;
     }
 
-    /**
-     * returns the status of the job
-     * @return
-     */
     public Status getStatus() {
         return this.status;
     }
 
-    /**
-     * sets the status of the job
-     * @param status
-     */
     public void setStatus(Status status) {
         this.status = status;
     }
 
-
-    /**
-     * returns the name of the job
-     * @return
-     */
     public JobName getJobName() {
         return name;
     }
@@ -211,16 +179,10 @@ public class Job {
         return addedTime;
     }
 
-    /**
-     * returns the timestamp of the job being executed
-     */
     public TimeStamp getStartTime() {
         return startTime;
     }
 
-    /**
-     * returns the owner object of the job
-     */
     public Person getOwner() {
         return owner;
     }
@@ -233,17 +195,11 @@ public class Job {
         return Collections.unmodifiableSet(tags);
     }
 
-    /**
-     * Adds an extra note to the job
-     */
     public void addNote(String addition) {
         this.jobNote.addNote(addition);
     }
 
-    /**
-     * changes the name of the job to a new name
-     * @param newName
-     */
+
     public void setName(String newName) {
         name = new JobName(newName);
     }
@@ -252,39 +208,9 @@ public class Job {
         machineName = newMachine;
     }
 
-    /**
-     * changes the owner of the job to a new one
-     * @param newOwner
-     */
     public void setOwner(Person newOwner) {
         owner = newOwner;
     }
-
-
-    /**
-     * checks if a job has been finished
-     */
-    /*
-    public boolean isFinished() throws JobNotStartedException {
-
-        if (this.status == ONGOING) {
-            Integer[] current = new TimeStamp().getTime();
-            Integer[] start = startTime.getTime();
-            Integer[] deviation = new Integer[start.length];
-
-            for (int i = 0; i < start.length; i++) {
-                deviation[i] = current[i] - start[i];
-            }
-
-            double runningTime = 30.0 * 24.0 * deviation[0] + 24.0 * deviation[1] + deviation[2]
-                    + 1 / 60 * deviation[3] + 1 / 3600 * deviation[4];
-
-            return runningTime > this.duration;
-        } else {
-            throw new JobNotStartedException();
-        }
-    }
-    */
 
 
     /**
@@ -332,26 +258,19 @@ public class Job {
      */
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof Job)) {
-            return false;
-        }
-
         Job otherJob = (Job) other;
 
-        /*
-        if (otherJob == this) {
+        if (other == this) {
             return true;
         }
-        */
 
-        if (otherJob == null) {
+        if (other == null) {
             return false;
         }
 
-
         return otherJob.getJobName().equals(getJobName()) && otherJob.getMachineName().equals(getMachineName())
-            && otherJob.getOwner().equals(getOwner())
-            && otherJob.getAddedTime().showTime().equals(getAddedTime().showTime());
+            && otherJob.getOwner().equals(getOwner()) && otherJob.getAddedTime().equals(getAddedTime()) && otherJob
+            .getTags().equals(getTags());
     }
 
     /**
