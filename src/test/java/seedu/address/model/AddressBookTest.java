@@ -21,7 +21,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.AdminSession;
-import seedu.address.model.job.Job;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -102,7 +101,6 @@ public class AddressBookTest {
         private final ObservableList<Person> persons = FXCollections.observableArrayList();
         private final ObservableList<Admin> admins = FXCollections.observableArrayList();
         private final ObservableList<Machine> machines = FXCollections.observableArrayList();
-        private final ObservableList<Job> jobs = FXCollections.observableArrayList();
         private final AdminSession adminSession = new AdminSession();
 
         AddressBookStub(Collection<Person> persons) {
@@ -126,18 +124,13 @@ public class AddressBookTest {
         }
 
         @Override
-        public ObservableList<Job> getJobList() {
-            return jobs;
-        }
-
-        @Override
-        public ObservableList<Job> getQueueList() {
-            return jobs;
-        }
-
-        @Override
         public AdminSession getAdminSession() {
             return adminSession;
+        }
+
+        @Override
+        public int getTotalNumberOfStoredJobs() {
+            return getMachineList().stream().mapToInt(machine -> machine.getJobs().size()).sum();
         }
 
     }

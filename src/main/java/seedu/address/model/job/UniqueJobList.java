@@ -3,7 +3,6 @@ package seedu.address.model.job;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Logger;
@@ -28,7 +27,7 @@ public class UniqueJobList {
      */
     public boolean contains(Job toCheck) {
         requireNonNull(toCheck);
-        return internalList.stream().anyMatch(toCheck::equals);
+        return internalList.stream().anyMatch(toCheck::hasSameName);
 
     }
 
@@ -109,13 +108,9 @@ public class UniqueJobList {
             logger.info(j.getJobName().fullName);
             if (j.getJobName().fullName.equals(jobName)) {
                 logger.info("Job name matches!!");
-                Job changedJob = new Job(j.getJobName(),
-                                        j.getMachine(),
-                                        j.getOwner(),
-                                        j.getPriority(),
-                                        j.getDuration(),
-                                        j.getJobNote(),
-                                        j.getTags());
+                Job changedJob =
+                    new Job(j.getJobName(), j.getMachineName(), j.getOwner(), j.getPriority(), j.getDuration(),
+                        j.getJobNote(), j.getTags());
                 return changedJob;
             }
         }
@@ -152,7 +147,7 @@ public class UniqueJobList {
     }
 
     /**
-     *Returns the number of distinct elements in the list
+     * Returns the number of distinct elements in the list
      */
     public int size() {
         return internalList.size();
@@ -160,16 +155,23 @@ public class UniqueJobList {
 
     /**
      * Returns the job, given the jobName
+     *
      * @param jobName
      * @return
      */
     public Job findJob(JobName jobName) {
-        for (Job job: internalList) {
+        for (Job job : internalList) {
             if (job.getJobName().equals(jobName)) {
                 return job;
             }
         }
         return null;
+    }
+
+    public long getTotalTime() {
+        return internalList.stream()
+            .filter(job -> (job.getStatus() == Status.ONGOING) || (job.getStatus() == Status.QUEUED))
+            .mapToLong(job -> job.getDuration()).sum();
     }
 
     /**
@@ -205,7 +207,8 @@ public class UniqueJobList {
      */
     public void cancelJob(JobName name) {
         requireAllNonNull();
-        findJob(name).cancelJob();;
+        findJob(name).cancelJob();
+        ;
     }
 
     /**
@@ -221,30 +224,24 @@ public class UniqueJobList {
     }
 
 
-
     //============================= swap queue number operations =======================================//
 
     /**
-     * Swaps job with @param jobname1 and job with @param jobname2
+     * Swaps job @param jobToBeReplaced with @param replaceWith
      * in the queue and updates it
      */
-    public void swapQueueNumber(JobName jobname1, JobName jobname2) {
-        Job job1 = findJob(jobname1);
-        Job job2 = findJob(jobname2);
+    public void replaceJob(Job jobToBeReplaced, Job replaceWith) {
 
-        int index1 = internalList.indexOf(job1);
-        int index2 = internalList.indexOf(job2);
+        int targetIndex = internalList.indexOf(jobToBeReplaced);
 
-        if (index1 == -1 || index2 == -1) {
+        if (targetIndex == -1 || targetIndex > size()) {
             throw new JobNotFoundException();
         }
+        internalList.set(targetIndex, replaceWith);
+    }
 
-        if (job1.isSameJob(job2)) {
-            throw new DuplicateJobException();
-        }
-
-        Collections.swap(internalList, index1, index2);
-
+    public void finishJob(Job job) {
+        job.finishJob();
     }
 
     //============================= queue operations =======================================//

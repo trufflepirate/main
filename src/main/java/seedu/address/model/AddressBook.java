@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.JobMachineTuple;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.AdminSession;
@@ -17,7 +18,7 @@ import seedu.address.model.admin.UniqueAdminList;
 import seedu.address.model.admin.Username;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
-import seedu.address.model.job.UniqueJobList;
+import seedu.address.model.job.Status;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.MachineName;
 import seedu.address.model.machine.UniqueMachineList;
@@ -36,7 +37,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniquePersonList persons;
     private final UniqueAdminList admins;
     private final UniqueMachineList machines;
-    private final UniqueJobList jobs;
     private final AdminSession adminSession;
 
     /*
@@ -53,7 +53,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons = new UniquePersonList();
         admins = new UniqueAdminList();
         machines = new UniqueMachineList();
-        jobs = new UniqueJobList();
         adminSession = new AdminSession();
     }
 
@@ -96,14 +95,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.admins.setAdmins(admins);
     }
 
-    /**
-     * Replaces the contents of the jobs list with {@code jobs}.
-     * {@code jobs} must not contain duplicate jobs
-     */
-    public void setJobs(ObservableList<Job> jobs) {
-        this.jobs.setJobs(jobs);
-    }
-
     public void setAdminsSession(AdminSession adminsSession) {
         if (adminsSession.isAdminLoggedIn()) {
             this.adminSession.setLogin(adminsSession.getLoggedInAdmin());
@@ -119,20 +110,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         setPersons(newData.getPersonList());
         setMachines(newData.getMachineList());
         setAdmins(newData.getAdminList());
-        setJobs(newData.getJobList());
         setAdminsSession(newData.getAdminSession());
 
-    }
-
-    //======================== queue methods ================================//
-
-    /**
-     * Adds a job to the chosen machine list
-     */
-
-    public void addJobToMachineList(Machine targetMachine, Job jobToAdd) {
-        requireAllNonNull(targetMachine, jobToAdd);
-        machines.addJobToMachineList(targetMachine, jobToAdd);
     }
 
     //======================== person methods ================================//
@@ -301,7 +280,21 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public boolean hasJob(Job job) {
         requireNonNull(job);
-        return jobs.contains(job);
+        for (Machine machine : getMachineList()) {
+            if (machine.hasJob(job)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Adds a job to the chosen machine list
+     */
+
+    public void addJobToMachineList(Job jobToAdd) {
+        requireAllNonNull(jobToAdd);
+        machines.addJobToMachineList(jobToAdd);
     }
 
     /**
@@ -309,8 +302,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void addJob(Job job) {
         requireNonNull(job);
-
-        jobs.add(job);
+        //jobs.add(job);
     }
 
     /**
@@ -318,34 +310,31 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void removeJob(JobName job) {
         requireNonNull(job);
-        jobs.remove(job);
+        //jobs.remove(job);
     }
 
     /**
      * Returns the job, if present, according to JobName
      */
-    public Job findJob(JobName name) {
+    public JobMachineTuple findJob(JobName name) {
         requireNonNull(name);
-        return jobs.findJob(name);
+        for (Machine machine : getMachineList()) {
+            Job jobToFind = machine.findJob(name);
+            if (!(jobToFind == null)) {
+                return new JobMachineTuple(jobToFind, machine);
+            }
+        }
+        return null;
     }
 
     /**
      * Updates the job
      */
     public void updateJob(Job oldJob, Job updatedJob) {
-        requireNonNull(oldJob);
-        requireNonNull(updatedJob);
-        jobs.updateJob(oldJob, updatedJob);
+        requireAllNonNull(oldJob, updatedJob);
+        //jobs.updateJob(oldJob, updatedJob);
     }
 
-    /**
-     * Gets a job by name
-     */
-
-    public Job getJobByName(String jobName) {
-        requireNonNull(jobName);
-        return jobs.get(jobName);
-    }
 
     /**
      * Starts the job
@@ -354,7 +343,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void startJob(JobName name) {
         requireNonNull(name);
-        jobs.startJob(name);
+        findJob(name).job.startJob();
     }
 
     /**
@@ -364,7 +353,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void cancelJob(JobName name) {
         requireNonNull(name);
-        jobs.cancelJob(name);
+        findJob(name).job.cancelJob();
     }
 
     /**
@@ -374,7 +363,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void restartJob(JobName name) {
         requireNonNull(name);
-        jobs.restartJob(name);
+        findJob(name).job.restartJob();
     }
 
     /**
@@ -383,15 +372,32 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
 
     public void swapJobs(JobName jobName1, JobName jobName2) {
-        jobs.swapQueueNumber(jobName1, jobName2);
+        JobMachineTuple mj1 = findJob(jobName1);
+        JobMachineTuple mj2 = findJob(jobName2);
+        mj1.machine.replaceJob(mj1.job, mj2.job);
+        mj2.machine.replaceJob(mj2.job, mj1.job);
+    }
+
+    /**
+     * Changes the status of the job to FINISHED
+     *
+     * @param job
+     */
+    public void finishJob(Job job) {
+        requireNonNull(job);
+        job.finishJob();
     }
 
     /**
      * Request deletion of print job
      */
-
     public void requestDeletion(JobName jobName) {
-        jobs.requestDeletion(jobName);
+        Job toRequestDelete = findJob(jobName).job;
+        toRequestDelete.setStatus(Status.DELETING);
+    }
+
+    public int getTotalNumberOfStoredJobs() {
+        return getMachineList().stream().mapToInt(machine -> machine.getJobs().size()).sum();
     }
 
     //======================== get lists methods ===========================//
@@ -406,18 +412,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
-    public ObservableList<Job> getJobList() {
-        return jobs.asUnmodifiableObservableList();
-    }
-
-    @Override
     public ObservableList<Machine> getMachineList() {
         return machines.asUnmodifiableObservableList();
-    }
-
-    @Override
-    public ObservableList<Job> getQueueList() {
-        return jobs.asUnmodifiableObservableSortedList();
     }
 
     @Override
@@ -450,6 +446,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * list all the current's version data for addressbook
      */
+    /*
     public void listCurrentVersionData() {
         logger.info("Listing current version data");
         logger.info("-----------------------Machine data---------------------");
@@ -472,7 +469,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             logger.info(p.getName().fullName);
         }
     }
-
+    */
 }
 
 

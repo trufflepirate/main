@@ -16,6 +16,6 @@ public class JobListChangedEvent extends BaseEvent {
 
     @Override
     public String toString() {
-        return "number of jobs " + data.getJobList().size();
+        return "number of jobs " + data.getTotalNumberOfStoredJobs();
     }
 }

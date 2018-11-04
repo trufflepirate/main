@@ -78,8 +78,8 @@ public class RemoveAdminCommandTest {
         modelStub.addAdmin(new Admin(new Username("dummyLogin"), new Password("dummyPW")));
         modelStub.addAdmin(new Admin(new Username("dummyRemove"), new Password("dummyPW")));
 
-        CommandResult commandResult = new RemoveAdminCommand(new Username("dummyRemove"))
-            .execute(modelStub, commandHistory);
+        CommandResult commandResult =
+            new RemoveAdminCommand(new Username("dummyRemove")).execute(modelStub, commandHistory);
 
         assertEquals(commandResult.feedbackToUser, RemoveAdminCommand.MESSAGE_SUCCESS);
         assertEquals(modelStub.currentlyLoggedIn(), admin);
@@ -94,8 +94,8 @@ public class RemoveAdminCommandTest {
         modelStub.addAdmin(admin);
         modelStub.addAdmin(new Admin(new Username("dummyOther"), new Password("dummyPW")));
 
-        CommandResult commandResult = new RemoveAdminCommand(new Username("dummyLogin"))
-            .execute(modelStub, commandHistory);
+        CommandResult commandResult =
+            new RemoveAdminCommand(new Username("dummyLogin")).execute(modelStub, commandHistory);
 
         assertEquals(commandResult.feedbackToUser, RemoveAdminCommand.MESSAGE_SUCCESS);
         assertEquals(modelStub.currentlyLoggedIn(), null);
@@ -177,8 +177,18 @@ public class RemoveAdminCommandTest {
         }
 
         @Override
+        public void finishJob(Job job) {
+
+        }
+
+        @Override
         public void requestDeletion(JobName jobName) {
 
+        }
+
+        @Override
+        public int getTotalNumberOfJobsDisplayed() {
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override
@@ -276,13 +286,9 @@ public class RemoveAdminCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override
-        public ObservableList<Job> getFilteredJobList() {
-            return null;
-        }
 
         @Override
-        public void updateFilteredJobList(Predicate<Job> predicate) {
+        public void updateFilteredJobListInAllMachines(Predicate<Job> predicate) {
             throw new AssertionError("This method should not be called.");
         }
 

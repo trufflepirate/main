@@ -1,104 +1,90 @@
 package seedu.address.model.job;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 /**
- * Represents a TimeStamp Object for Job.
- * The Timestamp will record the time information while the job started
+ * Timestamp for modelling time
  */
 public class TimeStamp {
-
-    private Integer[] time;
-    private String timeString;
-    private String[] timeStringArray = new String[5];
-
-    private Calendar calendar = Calendar.getInstance();
-    private SimpleDateFormat timeFormat = new SimpleDateFormat("MM-dd-HH-mm-ss");
+    private static final long MILLIS_IN_HOURS = 3600000;
+    private static final long MILLIS_IN_DAYS = MILLIS_IN_HOURS * 24;
+    private static final long MILLIS_IN_YEARS = MILLIS_IN_DAYS * 365;
+    private Calendar calendar;
 
     public TimeStamp() {
-        timeString = timeFormat.format(calendar.getTime());
-        timeStringArray = timeString.split("-");
-        this.time = convertTimeString(timeStringArray);
+        this.calendar = Calendar.getInstance();
     }
 
-    public  TimeStamp(String timeString) {
-        String[] splitTime = timeString.split(" ");
-        timeStringArray[0] = String.valueOf(splitTime[0].split("/")[0]);
-        timeStringArray[1] = String.valueOf(splitTime[0].split("/")[1]);
-        timeStringArray[2] = String.valueOf(splitTime[1].split(":")[0]);
-        timeStringArray[3] = String.valueOf(splitTime[1].split(":")[1]);
-        timeStringArray[4] = String.valueOf(splitTime[1].split(":")[2]);
-        time = convertTimeString(timeStringArray);
+    public TimeStamp(long millis) {
+        this.calendar = Calendar.getInstance();
+        this.calendar.setTimeInMillis(millis);
     }
+
+    public static long hoursToMillis(float hours) {
+        return (long) (hours * MILLIS_IN_HOURS);
+    }
+
     /**
-     * gives the information about date and time
-     * @return the formatted string showing the time
+     * Return the calendar
+     *
+     * @return
+     */
+    public Calendar getCalendar() {
+        return calendar;
+    }
+
+    public Date getDate() {
+        return this.getCalendar().getTime();
+    }
+
+    public static boolean compareTime(TimeStamp time1, TimeStamp time2) {
+        return time1.getDate().getTime() <= time2.getDate().getTime();
+    }
+
+    public static long timeDifference(TimeStamp time1, TimeStamp time2) {
+        return time2.getDate().getTime() - time1.getDate().getTime();
+    }
+
+    /**
+     * Shows the time
+     *
+     * @return
      */
     public String showTime() {
-        return timeStringArray[1] + "/" + timeStringArray[0] + " "
-            + timeStringArray[2] + ":" + timeStringArray[3] + ":" + timeStringArray[4];
+        return this.getCalendar().get(Calendar.DAY_OF_MONTH) + "/" + this.getCalendar().get(Calendar.MONTH) + 1 + " "
+            + this.getCalendar().get(Calendar.HOUR) + ":" + this.getCalendar().get(Calendar.MINUTE) + ":" + this
+            .getCalendar().get(Calendar.SECOND);
     }
-
-    public Integer[] getTime() {
-        return time;
-    }
-
-
     /**
-     * Compares two timestamps and returns true
-     * if {@code timestamp1} is earlier than
-     * {@code timestamp2}
+     * Shows the duration formatted
+     * @return
      */
-    public static boolean compareTime(String time1, String time2) {
-        String[] splitTime1 = time1.split(" ");
-        String[] splitTime2 = time2.split(" ");
-        Integer[] deviation = new Integer[5];
-
-
-        int month1 = Integer.valueOf(splitTime1[0].split("/")[0]);
-        int date1 = Integer.valueOf(splitTime1[0].split("/")[1]);
-        int hour1 = Integer.valueOf(splitTime1[1].split(":")[0]);
-        int minute1 = Integer.valueOf(splitTime1[1].split(":")[1]);
-        int second1 = Integer.valueOf(splitTime1[1].split(":")[2]);
-
-        int month2 = Integer.valueOf(splitTime2[0].split("/")[0]);
-        int date2 = Integer.valueOf(splitTime2[0].split("/")[1]);
-        int hour2 = Integer.valueOf(splitTime2[1].split(":")[0]);
-        int minute2 = Integer.valueOf(splitTime2[1].split(":")[1]);
-        int second2 = Integer.valueOf(splitTime2[1].split(":")[2]);
-
-        deviation[0] = month1 - month2;
-        deviation[1] = date1 - date2;
-        deviation[2] = hour1 - hour2;
-        deviation[3] = minute1 - minute2;
-        deviation[4] = second1 - second2;
-
-        for (int i = 0; i < 5; i++) {
-            if (deviation[i] == 0) {
-                continue;
-            } else if (deviation[i] < 0) {
-                return true;
-            } else {
-                return false;
-            }
+    public String showAsDuration() {
+        long duration = this.getDate().getTime();
+        calendar.setTimeZone(TimeZone.getTimeZone("GMT+0000"));
+        if (duration < MILLIS_IN_HOURS) {
+            return calendar.get(Calendar.MINUTE) + " Minutes";
+        } else if (duration < MILLIS_IN_HOURS * 2) {
+            return calendar.get(Calendar.HOUR_OF_DAY) + " Hour " + calendar.get(Calendar.MINUTE) + " Minutes";
+        } else if (duration < MILLIS_IN_DAYS) {
+            return calendar.get(Calendar.HOUR_OF_DAY) + " Hours " + calendar.get(Calendar.MINUTE) + " Minutes";
+        } else if (duration < MILLIS_IN_DAYS * 2) {
+            return (calendar.get(Calendar.DAY_OF_YEAR) - 1) + " Day " + calendar.get(Calendar.HOUR_OF_DAY) + " Hours ";
+        } else if (duration < MILLIS_IN_YEARS) {
+            return (calendar.get(Calendar.DAY_OF_YEAR) - 1) + " Days " + calendar.get(Calendar.HOUR_OF_DAY) + " Hours ";
+        } else {
+            return (calendar.get(Calendar.YEAR) - 1970) + " Years " + (calendar.get(Calendar.DAY_OF_YEAR) - 1)
+                + " Days ";
         }
-
-        return true;
     }
-
     /**
-     * Converts the split strings of time to the format of Integers for processing
-     * @param timeString
-     * @return results
+     * Shows the time
      */
-    public static Integer[] convertTimeString(String[] timeString) {
-        Integer[] result = new Integer[timeString.length];
-
-        for (int i = 0; i < timeString.length; i++) {
-            result[i] = Integer.parseInt(timeString[i]);
-        }
-
-        return result;
+    public static String showAsDuration(long millis) {
+        TimeStamp t = new TimeStamp(millis);
+        return t.showAsDuration();
     }
+
 }

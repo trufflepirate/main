@@ -32,9 +32,9 @@ image::Ui.png[width="790"]
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
+* *`listMachine`* : lists all machines
+* **`addJob`**`n/iDCP m/TYPrinter on/TIAN YUAN pr/HIGH d/1.5 jn/This is for the iDCP project t/iDCP` : adds a Job named `iDCP` to the MakerManager.
+* **`manageJob`**`iDCP start` : starts a Job named `iDCP`
 * *`exit`* : exits the app
 
 .  Refer to <<Features>> for details of each command.
@@ -97,7 +97,7 @@ Restart an existing print in the queue. +
     Examples:
     manageJob myPrint restart
 
-.. *Deleting a Print:*
+.. *`[WIP][DISABLED]` Deleting a Print:*
 deletes an existing print in the queue. +
 
     Format: manageJob JOBNAME delete
@@ -114,7 +114,7 @@ Tags a print job with a "requestDeletion" tag that is to be removed by admin
     Examples:
     requestDeletion n/iDCP
 
-.. *[WIP]Listing Prints:*
+.. *`[WIP][DISABLED]` Listing Prints:*
 Lists prints with optional filters. Currently lists persons. +
 
     Format: listJob [n/PRINT_NAME] [m/MACHINE_NAME] [s/SPECIAL_NOTES] [p/PRIORITY]
@@ -124,7 +124,7 @@ Lists prints with optional filters. Currently lists persons. +
     list p/1
 
 
-.. *[NOT IMPLEMENTED YET]Listing History of Prints:*
+.. *`[WIP][DISABLED]` Listing History of Prints:*
 Lists all completed prints with optional filters. +
 
     Format: list_history [n/PRINT_NAME] [m/MACHINE_NAME] [s/SPECIAL_NOTES] [p/PRIORITY]
@@ -133,7 +133,7 @@ Lists all completed prints with optional filters. +
     list_history n/myprint m/printer_1 s/red filament only p/1 +
     list_history p/1
 
-.. *[NOT IMPLEMENTED YET]Editing a Print:*
+.. *`[WIP][DISABLED]` Editing a Print:*
 Edits an existing print in the queue. +
 
     Format: editJob INDEX [n/PRINT_NAME] [m/MACHINE_NAME] [s/SPECIAL_NOTES] <p/PRIORITY>
@@ -182,7 +182,6 @@ Disable admin mode. +
 	Format: logout
 
 ... *Add Admin:*
-
 Add another admin. Note that PASSWORD has to match some specific validation criteria. +
 
     Format: addAdmin USERNAME PASSWORD VERIFY_PASSWORD
@@ -205,7 +204,7 @@ Adds a new machine. All machine names must be unique. Status can only be either 
     Example:
     addMachine n/my_machine ms/ENABLED
 
-... *[WIP]Remove Machine:*
+... *`[WIP][DISABLED]` Remove Machine:*
 removes a machine.  +
 
     Format: removeMachine MACHINE_NAME
@@ -213,8 +212,8 @@ removes a machine.  +
     Example:
     removeMachine my_machine
 
-... *[WIP]Change Device Status:*
-Edits an existing machine. All machine names must be unique. Status can only be either “enabled” or “disabled”. At least one optional argument must be present. +
+... *Change Device Status:*
+Edits an existing machine. All machine names must be unique. Status can only be either “ENABLED” or “DISABLED”. At least one optional argument must be present. +
 
     Format: editMachine MACHINE_NAME [n/MACHINE_NAME] [s/STATUS]
 
