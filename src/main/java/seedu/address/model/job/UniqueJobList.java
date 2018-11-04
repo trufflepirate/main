@@ -47,12 +47,9 @@ public class UniqueJobList {
      * Removes the equivalent job from the list.
      * The job must exist in the list.
      */
-    public void remove(JobName toRemoveName) {
-        requireNonNull(toRemoveName);
-        Job toRemove = findJob(toRemoveName);
-        if (!internalList.remove(toRemove)) {
-            throw new JobNotFoundException();
-        }
+    public void remove(Job toRemove) {
+        requireNonNull(toRemove);
+        internalList.remove(toRemove);
     }
 
     public void setJobs(UniqueJobList replacement) {

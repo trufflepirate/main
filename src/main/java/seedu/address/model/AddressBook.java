@@ -310,7 +310,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void removeJob(JobName job) {
         requireNonNull(job);
-        //jobs.remove(job);
+        machines.removeJobFromMachineList(job);
     }
 
     /**

@@ -200,6 +200,13 @@ public class Machine {
     }
 
     /**
+     * Removes a job from the machine job list
+     */
+    public void removeJob(Job job) {
+        jobs.remove(job);
+    }
+
+    /**
      * updates the FilteredJobList with a predicate
      */
     public void updateFilteredJobList(Predicate<Job> predicate) {
