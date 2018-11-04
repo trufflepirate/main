@@ -104,8 +104,8 @@ public class JobTest {
 
         //TODO: find out why this is true
         // different added time -> returns false
-        editedIdcp = new JobBuilder(IDCP).withAddedTime(VALID_JOBADDEDTIME_SOMEDAY).build();
-        assertTrue(IDCP.equals(editedIdcp));
+        editedIdcp = new JobBuilder(IDCP).build();
+        assertFalse(IDCP.equals(editedIdcp));
 
     }
 

@@ -336,9 +336,11 @@ public class Job {
 
         Job otherJob = (Job) other;
 
+        /*
         if (otherJob == this) {
             return true;
         }
+        */
 
         if (otherJob == null) {
             return false;
