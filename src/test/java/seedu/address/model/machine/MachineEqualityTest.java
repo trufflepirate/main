@@ -40,28 +40,6 @@ public class MachineEqualityTest {
     }
 
     @Test
-    public void isSameMachine() {
-        Machine toCheck = new MachineBuilder()
-            .withName("JJPrinter")
-            .withStatus(MachineStatus.ENABLED)
-            .build();
-        Machine testMachine = ValidMachines.JJPRINTER;
-        assertTrue(toCheck.isSameMachine(testMachine));
-
-    }
-
-    @Test
-    public void equals() {
-        Machine toCheck = new MachineBuilder()
-            .withName("JJPrinter")
-            .withStatus(MachineStatus.ENABLED)
-            .build();
-
-        Machine testMachine = ValidMachines.JJPRINTER;
-        assertTrue(toCheck.equals(testMachine));
-    }
-
-    @Test
     public void notEquals() {
         Machine toCheck = new MachineBuilder()
             .withName("Printer")
