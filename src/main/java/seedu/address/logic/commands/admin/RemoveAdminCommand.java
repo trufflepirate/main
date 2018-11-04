@@ -2,6 +2,8 @@ package seedu.address.logic.commands.admin;
 
 import static java.util.Objects.requireNonNull;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.AdminLogoutEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
@@ -47,12 +49,13 @@ public class RemoveAdminCommand extends Command {
         model.removeAdmin(toRemove);
 
         //Logout current admin if deleted him/herself
-        if (model.currentlyLoggedIn().equals(username)) {
+        if (model.currentlyLoggedIn().getUsername().equals(username)) {
             model.clearLogin();
+            model.adminLogoutCommitAddressBook();
+            EventsCenter.getInstance().post(new AdminLogoutEvent());
+        } else {
+            model.commitAddressBook();
         }
-
-        model.commitAddressBook();  //TODO: not sure what this does;
-
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

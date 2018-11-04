@@ -8,13 +8,10 @@ import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.job.Job;
 import seedu.address.model.machine.exceptions.DuplicateMachineException;
 import seedu.address.model.machine.exceptions.MachineNotFoundException;
-
-
 
 
 /**
@@ -25,7 +22,7 @@ public class UniqueMachineList {
     private final ObservableList<Machine> internalList = FXCollections.observableArrayList();
 
     /**
-     * Returns true if the list contains an equivalent machineName
+     * Returns true if the list contains an equivalent machine
      */
     public boolean contains(Machine toCheck) {
         requireNonNull(toCheck);
@@ -67,11 +64,12 @@ public class UniqueMachineList {
 
     /**
      * Returns the machine, given the machineName
+     *
      * @param machineName
      * @return
      */
     public Machine findMachine(MachineName machineName) {
-        for (Machine machine: internalList) {
+        for (Machine machine : internalList) {
             if (machine.getName().equals(machineName)) {
                 return machine;
             }
@@ -82,25 +80,22 @@ public class UniqueMachineList {
     /**
      * Adds a job the machine {@code target} jobs list
      */
-    public void addJobToMachineList(Machine target, Job job) {
-        requireAllNonNull(target, job);
+    public void addJobToMachineList(Job job) throws MachineNotFoundException {
+        requireAllNonNull(job);
 
-        int index = internalList.indexOf(target);
-        if (index == -1) {
+        Machine target = this.findMachine(job.getMachineName());
+
+        if (target == null) {
             throw new MachineNotFoundException();
         }
 
-        Machine updatedMachine = internalList.get(index);
-        updatedMachine.addJob(job);
-
-        internalList.set(index, updatedMachine);
-
-
+        target.addJob(job);
     }
 
     /**
      * Adds the Machine to the list
      * The Machine must not exist in the list
+     *
      * @param toAdd
      */
     public void add(Machine toAdd) {
@@ -131,10 +126,7 @@ public class UniqueMachineList {
             logger.info(m.getName().fullName);
             if (m.getName().fullName.equals(machineName)) {
                 logger.info("Machine name matches!!");
-                Machine changedMachine = new Machine(m.getName(),
-                                                    m.getJobs(),
-                                                    m.getTags(),
-                                                    m.getStatus());
+                Machine changedMachine = new Machine(m.getName(), m.getJobs(), m.getTags(), m.getStatus());
                 return changedMachine;
             }
         }

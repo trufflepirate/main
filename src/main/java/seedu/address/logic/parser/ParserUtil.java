@@ -15,6 +15,7 @@ import seedu.address.model.job.JobName;
 import seedu.address.model.job.JobNote;
 import seedu.address.model.job.JobOwner;
 import seedu.address.model.job.Priority;
+import seedu.address.model.job.TimeStamp;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.MachineName;
 import seedu.address.model.machine.MachineStatus;
@@ -30,10 +31,13 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_DURATION =
+        "Duration must be a non-zero unsigned number with optional decimal point";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
+     *
      * @throws ParseException if the specified index is invalid (not non-zero unsigned integer).
      */
     public static Index parseIndex(String oneBasedIndex) throws ParseException {
@@ -184,6 +188,8 @@ public class ParserUtil {
         return new JobName(trimJobName);
     }
 
+    // TODO: 11/3/2018 REMOVE PLS
+
     /**
      * Parses a {@code String machine} into a {@code machine}.
      * Leading and trailing whitespaces will be trimmed.
@@ -196,11 +202,12 @@ public class ParserUtil {
         if (!Machine.isValidMachine(trimmedMachine)) {
             throw new ParseException(Machine.MESSAGE_NAME_CONSTRAINTS);
         }
-        return new Machine(new MachineName(trimmedMachine), new ArrayList<Job>(),
-            new HashSet<>(), MachineStatus.ENABLED);
+        return new Machine(new MachineName(trimmedMachine), new ArrayList<Job>(), new HashSet<>(),
+            MachineStatus.ENABLED);
     }
 
     // TODO: 10-Oct-18 hardcoded: should find a better way or modify the JobOwner
+
     /**
      * Parses {@code String jobOwner} into {@code trimJobOwner}
      * Leading and trailing whitespace will be trimmed
@@ -234,16 +241,18 @@ public class ParserUtil {
     }
 
     /**
-     * Parses {@code String jobPriority} into {@code trimJobPriority}
+     * Parses {@code String jobDuration} into {@code trimDuration}
      * Leading and trailing whitespace will be trimmed
      *
-     * @throws ParseException if the given {@code jobPriority is invalid}
+     * @throws ParseException if the given {@code trimDuration is invalid}
      */
-    public static float parseDuration(String duration) throws ParseException {
+    public static Long parseDuration(String duration) throws ParseException {
         requireNonNull(duration);
         String trimDuration = duration.trim();
-
-        return Float.valueOf(trimDuration);
+        if (!StringUtil.isnonZeroFloat(trimDuration)) {
+            throw new ParseException(MESSAGE_INVALID_DURATION);
+        }
+        return TimeStamp.hoursToMillis(Float.valueOf(trimDuration));
     }
 
     /**

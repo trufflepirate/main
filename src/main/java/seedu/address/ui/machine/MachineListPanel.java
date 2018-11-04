@@ -10,14 +10,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
-
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.MachinePanelSelectiononChangedEvent;
 import seedu.address.model.machine.Machine;
 import seedu.address.ui.UiPart;
-
-
 
 
 /**
@@ -43,13 +40,12 @@ public class MachineListPanel extends UiPart<Region> {
     }
 
     private void setEventHandlerForSelectionChangeEvent() {
-        machineListView.getSelectionModel().selectedItemProperty()
-                .addListener(((observable, oldValue, newValue) -> {
-                    if (newValue != null) {
-                        logger.info("Selection in machine list panel changed to : " + newValue + "'");
-                        raise(new MachinePanelSelectiononChangedEvent(newValue));
-                    }
-                }));
+        machineListView.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                logger.info("Selection in machine list panel changed to : " + newValue + "'");
+                raise(new MachinePanelSelectiononChangedEvent(newValue));
+            }
+        }));
     }
 
     /**
@@ -72,6 +68,11 @@ public class MachineListPanel extends UiPart<Region> {
      * Custom {@code ListCell} that displays the graphics of a {@code Machine} using a {@code MachineCard}
      */
     class MachineListViewCell extends ListCell<Machine> {
+
+        public MachineListViewCell() {
+            super();
+        }
+
         @Override
         protected void updateItem(Machine machine, boolean empty) {
             super.updateItem(machine, empty);

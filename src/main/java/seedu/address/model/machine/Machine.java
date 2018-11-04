@@ -1,15 +1,21 @@
 package seedu.address.model.machine;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_JOBS;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Predicate;
 
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import seedu.address.model.job.Job;
+import seedu.address.model.job.JobName;
+import seedu.address.model.job.UniqueJobList;
 import seedu.address.model.machine.exceptions.InvalidMachineStatusException;
 import seedu.address.model.tag.Tag;
 
@@ -25,11 +31,9 @@ public class Machine {
      */
     public static final String NAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
     public static final String MESSAGE_NAME_CONSTRAINTS =
-            "Names should only contain alphanumeric characters and spaces, "
-                    + "and it should not be blank";
+        "Names should only contain alphanumeric characters and spaces, " + "and it should not be blank";
     public static final String MESSAGE_WRONG_STATUS =
-            "Status can only contain 'ENABLED' or 'DISABLED'"
-                    + "and should not be blank";
+        "Status can only contain 'ENABLED' or 'DISABLED'" + "and should not be blank";
     // Identity fields
     private MachineName machineName;
     //TODO make status be more diverse, like enum
@@ -37,9 +41,11 @@ public class Machine {
 
     // Data fields
     //Name is a placeholder. To be replaced by Job class in the future
-    private List<Job> jobs = new ArrayList<>();
-    private Set<Tag> tags = new HashSet<>();
+    private final UniqueJobList jobs = new UniqueJobList();
+    private final Set<Tag> tags = new HashSet<>();
 
+    //Display fields
+    private final FilteredList<Job> filteredJobs;
 
     /**
      * Every field must be present and not null.
@@ -47,14 +53,10 @@ public class Machine {
     public Machine(MachineName name, List<Job> jobs, Set<Tag> tags, MachineStatus status) {
         requireAllNonNull(name, jobs, tags);
         this.machineName = name;
-        this.jobs.addAll(jobs);
+        this.jobs.setJobs(jobs);
         this.tags.addAll(tags);
         this.status = status;
-    }
-
-    public Machine(String machineName) {
-        this.machineName = new MachineName(machineName);
-        this.status = MachineStatus.ENABLED;
+        this.filteredJobs = new FilteredList<>(this.jobs.asUnmodifiableObservableList());
     }
 
     /**
@@ -68,13 +70,10 @@ public class Machine {
         return machineName;
     }
 
-    /**
-     * Returns an immutable Job List, which throws {@code UnsupportedOperationException}
-     * if modification is attempted.
-     */
-    public List<Job> getJobs() {
-        return Collections.unmodifiableList(jobs);
+    public MachineStatus getStatus() {
+        return status;
     }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -83,22 +82,17 @@ public class Machine {
         return Collections.unmodifiableSet(tags);
     }
 
-    /**
-     * Returns true if the machine contains
-     * {@code job} in its list;
-     */
-    public boolean hasJob(Job job) {
-        return jobs.contains(job);
+    public long getTotalDuration() {
+        return jobs.getTotalTime();
     }
 
     /**
-     * Adds a job to the machine job list
+     * Returns true if both machines of the same name.
+     * This defines a weakest notion of equality between two machines.
      */
-
-    public void addJob(Job job) {
-        jobs.add(job);
+    public boolean isSameNamedMachine(Machine otherMachine) {
+        return otherMachine.getName() == getName();
     }
-
 
     /**
      * Returns true if both machines of the same name and same list of Jobs.
@@ -109,9 +103,8 @@ public class Machine {
             return true;
         }
 
-        return otherMachine != null
-                && otherMachine.getName().equals(getName())
-                && otherMachine.getJobs().equals(getJobs());
+        return otherMachine != null && otherMachine.getName().equals(getName()) && otherMachine.getJobs()
+            .equals(getJobs());
     }
 
     public void setMachineStatus(MachineStatus machineStatus) throws InvalidMachineStatusException {
@@ -122,6 +115,7 @@ public class Machine {
         throw new InvalidMachineStatusException();
 
     }
+
     /**
      * Returns true if both machines have the same identity and data fields.
      * This defines a stronger notion of equality between two persons.
@@ -137,10 +131,8 @@ public class Machine {
         }
 
         Machine otherMachine = (Machine) other;
-        return otherMachine.getName().equals(getName())
-                && otherMachine.getStatus().equals(getStatus())
-                && otherMachine.getJobs().equals(getJobs())
-                && otherMachine.getTags().equals(getTags());
+        return otherMachine.getName().equals(getName()) && otherMachine.getStatus().equals(getStatus()) && otherMachine
+            .getJobs().equals(getJobs()) && otherMachine.getTags().equals(getTags());
     }
 
     @Override
@@ -152,8 +144,7 @@ public class Machine {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getName())
-                .append(" Tags: ");
+        builder.append(getName()).append(" Tags: ");
         getTags().forEach(builder::append);
 
         builder.append(" Jobs: ");
@@ -171,18 +162,60 @@ public class Machine {
         return test.matches(NAME_VALIDATION_REGEX);
     }
 
-    public MachineStatus getStatus() {
-        return status;
+    //======================== job list methods ================================//
+
+    /**
+     * Returns an immutable Job List, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public List<Job> getJobs() {
+        return Collections.unmodifiableList(jobs.asUnmodifiableObservableList());
     }
 
-    public float getTotalDuration() {
-        float duration = 0;
+    public Job findJob(JobName jobName) {
+        return jobs.findJob(jobName);
+    }
 
-        for (Job job : jobs) {
-            duration += job.getDuration();
+    /**
+     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public ObservableList<Job> getJobsAsFilteredObservableList() {
+        return this.filteredJobs;
+    }
+
+    /**
+     * Returns true if the machine contains
+     * {@code job} in its list;
+     */
+    public boolean hasJob(Job job) {
+        return jobs.contains(job);
+    }
+
+    /**
+     * Adds a job to the machine job list
+     */
+    public void addJob(Job job) {
+        jobs.add(job);
+    }
+
+    /**
+     * updates the FilteredJobList with a predicate
+     */
+    public void updateFilteredJobList(Predicate<Job> predicate) {
+        requireNonNull(predicate);
+        filteredJobs.setPredicate(predicate);
+    }
+
+    public Predicate<Job> getFilteredJobListPredicate() {
+        if (filteredJobs.getPredicate() == null) {
+            return PREDICATE_SHOW_ALL_JOBS;
         }
-        return duration;
+        return (Predicate<Job>) filteredJobs.getPredicate();
     }
 
+    public void replaceJob(Job jobToBeReplaced, Job replaceWith) {
+        jobs.replaceJob(jobToBeReplaced, replaceWith);
+    }
 
 }

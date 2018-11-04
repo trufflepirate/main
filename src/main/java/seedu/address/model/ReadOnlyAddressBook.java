@@ -2,7 +2,7 @@ package seedu.address.model;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.admin.Admin;
-import seedu.address.model.job.Job;
+import seedu.address.model.admin.AdminSession;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.person.Person;
 
@@ -27,21 +27,18 @@ public interface ReadOnlyAddressBook {
     /**
      * Returns an unmodifiable view of the machines list.
      * This list will not contain any duplicate machines.
-     *
      */
     ObservableList<Machine> getMachineList();
 
     /**
-     * Returns an unmodifiable view of jobs list
-     * This list will not contain any duplicate jobs
+     * Returns an admin Session
+     * Session should contain currently logged in Admin, or null if no admin is currently logged in
      */
-    ObservableList<Job> getJobList();
+    AdminSession getAdminSession();
 
     /**
-     * Returns a unmodifiable view of queue
-     * This list should contain the highest priority job in descending order
+     * Returns total number of Jobs stored in all Machines.
      */
-
-    ObservableList<Job> getQueueList();
+    int getTotalNumberOfStoredJobs();
 
 }

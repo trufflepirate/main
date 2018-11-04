@@ -9,7 +9,7 @@ import seedu.address.model.job.JobNote;
 import seedu.address.model.job.Priority;
 import seedu.address.model.job.Status;
 import seedu.address.model.job.TimeStamp;
-import seedu.address.model.machine.Machine;
+import seedu.address.model.machine.MachineName;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
@@ -24,12 +24,12 @@ public class JobBuilder {
     public static final Priority DEFAULT_PRIORITY = Priority.URGENT;
     public static final Status DEFAULT_STATUS = Status.ONGOING;
     private static final String DEFAULT_JOBNOTE = "This is makerManager default job";
-    private static final float DEFAULT_DURAATION = 3;
+    private static final long DEFAULT_DURAATION = 3;
 
 
     //Identity field
     private JobName name;
-    private Machine machine;
+    private MachineName machine;
     private TimeStamp startTime;
     private Person owner;
     private String addedTime;
@@ -39,12 +39,12 @@ public class JobBuilder {
     private JobNote jobNote;
     private Priority priority;
     private Status status;
-    private float duration;
+    private long duration;
 
 
     public JobBuilder() {
         name = new JobName(DEFAULT_JOBNAME);
-        machine = new MachineBuilder().build();
+        machine = new MachineBuilder().build().getName();
         owner = new PersonBuilder().build();
         priority = DEFAULT_PRIORITY;
         status = DEFAULT_STATUS;
@@ -80,7 +80,7 @@ public class JobBuilder {
     /**
      * Sets the machine to be the input machine parameter
      */
-    public JobBuilder withMachine(Machine machine) {
+    public JobBuilder withMachine(MachineName machine) {
         this.machine = machine;
         return this;
     }
@@ -120,7 +120,7 @@ public class JobBuilder {
     /**
      * Sets the duration to be the input duration parameter
      */
-    public JobBuilder withDuration(float duration) {
+    public JobBuilder withDuration(long duration) {
         this.duration = duration;
         return this;
     }

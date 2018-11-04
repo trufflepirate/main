@@ -31,8 +31,6 @@ public class  AddMachineCommand extends Command {
             + "Names should only contain alphanumeric "
             + "characters and spaces, and it should not be blank"
             + "\nReserved names are : [ AUTO ]";
-
-
     public static final String MESSAGE_SUCCESS = "New machine added: %1$s";
     public static final String MESSAGE_DUPLICATE_MACHINE = " This machine already exists in MakerManager address book";
     private static final String MESSAGE_ACCESS_DENIED =
@@ -52,7 +50,7 @@ public class  AddMachineCommand extends Command {
             throw new CommandException(MESSAGE_ACCESS_DENIED);
         }
 
-        if (model.hasMachine(machineToAdd)) {
+        if (!(model.findMachine(machineToAdd.getName()) == null)) {
             throw new CommandException(MESSAGE_DUPLICATE_MACHINE);
         }
 

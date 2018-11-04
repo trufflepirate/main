@@ -17,11 +17,13 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.admin.Admin;
+import seedu.address.model.admin.AdminSession;
 import seedu.address.model.admin.Password;
 import seedu.address.model.admin.Username;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
 import seedu.address.model.machine.Machine;
+import seedu.address.model.machine.MachineName;
 import seedu.address.model.person.Person;
 
 public class UpdatePasswordCommandTest {
@@ -40,22 +42,19 @@ public class UpdatePasswordCommandTest {
     @Test
     public void constructor_nullOldPassword_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new UpdatePasswordCommand(new Username("username"),
-                null, new Password("newPW"), new Password("newPW"));
+        new UpdatePasswordCommand(new Username("username"), null, new Password("newPW"), new Password("newPW"));
     }
 
     @Test
     public void constructor_nullNewPassword_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new UpdatePasswordCommand(new Username("username"), new Password("oldPW"),
-                null, new Password("newPW"));
+        new UpdatePasswordCommand(new Username("username"), new Password("oldPW"), null, new Password("newPW"));
     }
 
     @Test
     public void constructor_nullNewPasswordVerify_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new UpdatePasswordCommand(new Username("username"),
-                new Password("oldPW"), new Password("newPW"), null);
+        new UpdatePasswordCommand(new Username("username"), new Password("oldPW"), new Password("newPW"), null);
     }
 
     @Test
@@ -64,62 +63,65 @@ public class UpdatePasswordCommandTest {
 
         thrown.expect(CommandException.class);
         thrown.expectMessage(UpdatePasswordCommand.MESSAGE_NO_ACCESS);
-        new UpdatePasswordCommand(new Username("username"),
-                new Password("oldPW"), new Password("newPW"), new Password("newPW")).execute(modelStub, commandHistory);
+        new UpdatePasswordCommand(new Username("username"), new Password("oldPW"), new Password("newPW"),
+            new Password("newPW")).execute(modelStub, commandHistory);
     }
 
     @Test
     public void execute_passwordsDoNotMatch_throwsCommandException() throws Exception {
         ModelStub modelStub = new ModelStub();
-        modelStub.setLogin(new Username("dummy"));
-
+        Admin admin = new Admin(new Username("dummy"), new Password("oldPW"));
+        modelStub.setLogin(admin);
         thrown.expect(CommandException.class);
         thrown.expectMessage(UpdatePasswordCommand.MESSAGE_PASSWORDS_DONT_MATCH);
-        new UpdatePasswordCommand(new Username("username"),
-                new Password("oldPW"), new Password("newPW"), new Password("asdhb")).execute(modelStub, commandHistory);
+        new UpdatePasswordCommand(new Username("dummy"), new Password("oldPW"), new Password("newPW"),
+            new Password("asdhb")).execute(modelStub, commandHistory);
     }
 
     @Test
     public void execute_notOwnAccount_throwsCommandException() throws Exception {
         ModelStub modelStub = new ModelStub();
-        modelStub.setLogin(new Username("dummy"));
+        Admin admin = new Admin(new Username("dummy"), new Password("oldPW"));
+        modelStub.setLogin(admin);
 
         thrown.expect(CommandException.class);
         thrown.expectMessage(UpdatePasswordCommand.MESSAGE_ONLY_CHANGE_YOUR_OWN_PW);
-        new UpdatePasswordCommand(new Username("username"),
-                new Password("oldPW"), new Password("newPW"), new Password("newPW")).execute(modelStub, commandHistory);
+        new UpdatePasswordCommand(new Username("username"), new Password("oldPW"), new Password("newPW"),
+            new Password("newPW")).execute(modelStub, commandHistory);
     }
 
     @Test
     public void execute_updateAdmin_throwsCommandException() throws Exception {
         ModelStub modelStub = new ModelStub();
-        modelStub.setLogin(new Username("dummy"));
+        Admin admin = new Admin(new Username("dummy"), new Password("oldPW"));
+        modelStub.setLogin(admin);
         modelStub.addAdmin(new Admin(new Username("dummy"),
-                new Password("$2a$10$Cj1nZuVAdZIysLK24P8zBe9gRBK.hagqzZJ0zF7i0UFlxlplRCI7e")));
+            new Password("$2a$10$Cj1nZuVAdZIysLK24P8zBe9gRBK.hagqzZJ0zF7i0UFlxlplRCI7e")));
         //weird string is hash for "admin2"
 
         thrown.expect(CommandException.class);
         thrown.expectMessage(UpdatePasswordCommand.MESSAGE_NOT_VALID_PASSWORD);
-        new UpdatePasswordCommand(new Username("dummy"),
-                new Password("admin2"), new Password("invalidPW"),
-                new Password("invalidPW")).execute(modelStub, commandHistory);
+        new UpdatePasswordCommand(new Username("dummy"), new Password("admin2"), new Password("invalidPW"),
+            new Password("invalidPW")).execute(modelStub, commandHistory);
     }
 
     @Test
     public void execute_updateAdmin_success() throws Exception {
         ModelStub modelStub = new ModelStub();
-        modelStub.setLogin(new Username("dummy"));
+        Admin admin = new Admin(new Username("dummy"),
+            new Password("$2a$10$Cj1nZuVAdZIysLK24P8zBe9gRBK.hagqzZJ0zF7i0UFlxlplRCI7e"));
+        modelStub.setLogin(admin);
         modelStub.addAdmin(new Admin(new Username("dummy"),
-                new Password("$2a$10$Cj1nZuVAdZIysLK24P8zBe9gRBK.hagqzZJ0zF7i0UFlxlplRCI7e")));
+            new Password("$2a$10$Cj1nZuVAdZIysLK24P8zBe9gRBK.hagqzZJ0zF7i0UFlxlplRCI7e")));
         //weird string is hash for "admin2"
 
-        CommandResult commandResult = new UpdatePasswordCommand(new Username("dummy"),
-                new Password("admin2"), new Password("aaaAAA1$"),
+        CommandResult commandResult =
+            new UpdatePasswordCommand(new Username("dummy"), new Password("admin2"), new Password("aaaAAA1$"),
                 new Password("aaaAAA1$")).execute(modelStub, commandHistory);
 
         assertEquals(commandResult.feedbackToUser, UpdatePasswordCommand.MESSAGE_SUCCESS);
         assertEquals(modelStub.isLoggedIn(), true);
-        assertEquals(modelStub.currentlyLoggedIn(), new Username("dummy"));
+        assertEquals(modelStub.currentlyLoggedIn(), admin);
         assertEquals(modelStub.adminList, Arrays.asList(new Admin(new Username("dummy"), new Password("aaaAAA1$"))));
     }
 
@@ -130,9 +132,7 @@ public class UpdatePasswordCommandTest {
      */
     private class ModelStub implements Model {
         final ArrayList<Admin> adminList = new ArrayList<>();
-
-        private boolean loginStatus = false;
-        private Username loggedInAdmin = null;
+        final AdminSession adminSession = new AdminSession();
 
         @Override
         public void addPerson(Person person) {
@@ -199,8 +199,18 @@ public class UpdatePasswordCommandTest {
         }
 
         @Override
+        public void finishJob(Job job) {
+
+        }
+
+        @Override
         public void requestDeletion(JobName jobName) {
 
+        }
+
+        @Override
+        public int getTotalNumberOfJobsDisplayed() {
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override
@@ -255,30 +265,8 @@ public class UpdatePasswordCommandTest {
         }
 
         @Override
-        public void setLogin(Username username) {
-            this.loggedInAdmin = username;
-            this.loginStatus = true;
-        }
-
-        @Override
-        public void clearLogin() {
-            this.loginStatus = false;
-            this.loggedInAdmin = null;
-        }
-
-        @Override
-        public boolean isLoggedIn() {
-            return this.loginStatus;
-        }
-
-        @Override
-        public Username currentlyLoggedIn() {
-            return loggedInAdmin;
-        }
-
-        @Override
         public Admin findAdmin(Username username) {
-            for (Admin admin: adminList) {
+            for (Admin admin : adminList) {
                 if (admin.getUsername().equals(username)) {
                     return admin;
                 }
@@ -322,12 +310,7 @@ public class UpdatePasswordCommandTest {
         }
 
         @Override
-        public ObservableList<Job> getFilteredJobList() {
-            return null;
-        }
-
-        @Override
-        public void updateFilteredJobList(Predicate<Job> predicate) {
+        public void updateFilteredJobListInAllMachines(Predicate<Job> predicate) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -355,6 +338,56 @@ public class UpdatePasswordCommandTest {
         @Override
         public void commitAddressBook() {
             return;
+        }
+
+        @Override
+        public void adminLoginCommitAddressBook() {
+            return;
+        }
+
+        @Override
+        public void adminLogoutCommitAddressBook() {
+            return;
+        }
+
+        @Override
+        public boolean isRedoLogin() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean isUndoLogout() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public Admin currentlyLoggedIn() {
+            return adminSession.getLoggedInAdmin();
+        }
+
+        @Override
+        public void setLogin(Admin admin) {
+            adminSession.setLogin(admin);
+        }
+
+        @Override
+        public void clearLogin() {
+            adminSession.clearLogin();
+        }
+
+        @Override
+        public boolean isLoggedIn() {
+            return adminSession.isAdminLoggedIn();
+        }
+
+        @Override
+        public Machine findMachine(MachineName machinename) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean isUndoLogin() {
+            throw new AssertionError("This method should not be called.");
         }
     }
 }

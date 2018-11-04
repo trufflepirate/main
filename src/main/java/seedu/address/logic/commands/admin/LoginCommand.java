@@ -11,6 +11,7 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.Password;
 import seedu.address.model.admin.Username;
 
@@ -44,14 +45,20 @@ public class LoginCommand extends Command {
         requireNonNull(model);
         if (model.isLoggedIn()) {
             throw new CommandException(MESSAGE_ALREADY_LOGGED_IN);
-        } else if (model.findAdmin(username) == null) {
-            throw new CommandException(MESSAGE_WRONG_DETAILS);
-        } else if (!BCrypt.checkpw(password.toString(), model.findAdmin(username).getPassword().toString())) {
+        }
+
+        Admin currentAdmin = model.findAdmin(username);
+
+        if (currentAdmin == null) {
             throw new CommandException(MESSAGE_WRONG_DETAILS);
         }
 
-        model.setLogin(username);
-        model.commitAddressBook(); //TODO: not sure what this does;
+        if (!BCrypt.checkpw(password.toString(), currentAdmin.getPassword().toString())) {
+            throw new CommandException(MESSAGE_WRONG_DETAILS);
+        }
+
+        model.setLogin(currentAdmin);
+        model.adminLoginCommitAddressBook();
 
         EventsCenter.getInstance().post(new AdminLoginEvent());
         return new CommandResult(MESSAGE_SUCCESS);

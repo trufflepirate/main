@@ -8,6 +8,7 @@ import seedu.address.model.admin.Username;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
 import seedu.address.model.machine.Machine;
+import seedu.address.model.machine.MachineName;
 import seedu.address.model.person.Person;
 
 /**
@@ -83,7 +84,11 @@ public interface Model {
 
     void swapJobs(JobName jobname1, JobName jobName2);
 
+    void finishJob(Job job);
+
     void requestDeletion(JobName jobName);
+
+    int getTotalNumberOfJobsDisplayed();
 
     // ============================== Machine methods ======================================= //
     /**
@@ -97,7 +102,7 @@ public interface Model {
      */
     void removeMachine(Machine machine);
     /**
-     * Returns true if a Machine with the same identity as {@code person} exists in the address book.
+     * Returns true if a Machine with the same identity as {@code machine} exists in the address book.
      */
     boolean hasMachine(Machine machine);
     /**
@@ -106,6 +111,11 @@ public interface Model {
      * The machine identity of {@code editedMachine} must not be the same as another existing machine in the model.
      */
     void updateMachine(Machine target, Machine editedMachine);
+    /**
+     * returns the machine if machine name is found
+     * @param machinename
+     */
+    Machine findMachine(MachineName machinename);
 
 
     // ============================== Admin methods ======================================= //
@@ -139,7 +149,7 @@ public interface Model {
     /**
      * sets loginStatus to true
      */
-    void setLogin(Username username);
+    void setLogin(Admin admin);
     /**
      * sets loginStatus to false
      */
@@ -151,7 +161,7 @@ public interface Model {
     /**
      * Returns the current logged in admin
      */
-    Username currentlyLoggedIn();
+    Admin currentlyLoggedIn();
     /**
      * returns the admin if username is found
      * @param username
@@ -185,11 +195,9 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredMachineList(Predicate<Machine> predicate);
-
     //=========== Filtered Job List Accessors =============================================================
-    ObservableList<Job> getFilteredJobList();
-    void updateFilteredJobList(Predicate<Job> predicate);
 
+    void updateFilteredJobListInAllMachines(Predicate<Job> predicate);
 
     //================================= AddressBook methods ===================================//
     /**
@@ -212,5 +220,26 @@ public interface Model {
      * Saves the current address book state for undo/redo.
      */
     void commitAddressBook();
+    /**
+     * Saves the current address book state for undo/redo. Indicates saved state is a login.
+     */
+    void adminLoginCommitAddressBook();
+    /**
+     * Saves the current address book state for undo/redo. Indicates saved state is a logout.
+     */
+    void adminLogoutCommitAddressBook();
+    /**
+     * Returns true if next state is a login.
+     */
+    boolean isRedoLogin();
+    /**
+     * Returns true if previous state is a logout.
+     */
+    boolean isUndoLogout();
+    /**
+     * Returns True if previos state was a login
+     * @return boolean
+     */
+    boolean isUndoLogin();
 
 }
