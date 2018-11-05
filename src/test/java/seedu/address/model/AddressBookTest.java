@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
@@ -19,12 +20,19 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.JobMachineTuple;
 import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.AdminSession;
+import seedu.address.model.job.Job;
+import seedu.address.model.job.JobName;
+import seedu.address.model.job.Status;
 import seedu.address.model.machine.Machine;
+import seedu.address.model.machine.MachineName;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.testutil.builders.PersonBuilder;
+import seedu.address.testutil.testdata.ValidJobs;
+import seedu.address.testutil.testdata.ValidMachines;
 
 public class AddressBookTest {
 
@@ -92,6 +100,76 @@ public class AddressBookTest {
     public void getPersonList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
         addressBook.getPersonList().remove(0);
+    }
+
+    @Test
+    public void canRemoveMachine() {
+        addressBook.addMachine(ValidMachines.JJPRINTER);
+        addressBook.removeMachine(ValidMachines.JJPRINTER);
+        assertNull(addressBook.findMachine(new MachineName("JJPrinter")));
+    }
+
+    @Test
+    public void canFlushMachine() {
+        addressBook.addMachine(ValidMachines.JJPRINTER);
+        addressBook.flushMachine(ValidMachines.JJPRINTER);
+        Machine flushedMachine = addressBook.findMachine(new MachineName("JJPrinter"));
+        assertTrue(!flushedMachine.hasJobs());
+    }
+
+    @Test
+    public void canCleanMachine() {
+        addressBook.addMachine(ValidMachines.JJPRINTER);
+        Job toAddJob = ValidJobs.IDCP;
+        toAddJob.setStatus(Status.CANCELLED);
+        addressBook.addJobToMachineList(toAddJob);
+        addressBook.cleanMachine(ValidMachines.JJPRINTER);
+        Machine cleanedMachine = addressBook.findMachine(new MachineName("JJPrinter"));
+        assertTrue(!cleanedMachine.hasCleanableJobs());
+    }
+
+    @Test
+    public void canAddJobToMachineList() {
+        addressBook.addMachine(ValidMachines.JJPRINTER);
+        Job toAddJob = ValidJobs.IDCP;
+        addressBook.addJobToMachineList(toAddJob);
+        Machine foundJob = addressBook.findMachine(new MachineName("JJPrinter"));
+        assertTrue(foundJob.hasJob(toAddJob));
+    }
+
+    @Test
+    public void canStartJobInMachineList() {
+        addressBook.addMachine(ValidMachines.JJPRINTER);
+        Job toAddJob = ValidJobs.IDCP;
+        addressBook.addJobToMachineList(toAddJob);
+        addressBook.startJob(new JobName(toAddJob.getJobName().fullName));
+        JobMachineTuple foundJobMachineTuple = addressBook.findJob(new JobName(toAddJob.getJobName().fullName));
+        Job foundJob = foundJobMachineTuple.job;
+        assertTrue(foundJob.getStatus().equals(Status.ONGOING));
+    }
+
+    @Test
+    public void canCancelJobInMachineList() {
+        addressBook.addMachine(ValidMachines.JJPRINTER);
+        Job toAddJob = ValidJobs.IDCP;
+        addressBook.addJobToMachineList(toAddJob);
+        addressBook.startJob(new JobName(toAddJob.getJobName().fullName));
+        JobMachineTuple foundJobMachineTuple = addressBook.findJob(new JobName(toAddJob.getJobName().fullName));
+        Job foundJob = foundJobMachineTuple.job;
+        addressBook.cancelJob(new JobName(toAddJob.getJobName().fullName));
+        assertTrue(foundJob.getStatus().equals(Status.CANCELLED));
+    }
+
+    @Test
+    public void canRestartJobInMachineList() {
+        addressBook.addMachine(ValidMachines.JJPRINTER);
+        Job toAddJob = ValidJobs.IDCP;
+        addressBook.addJobToMachineList(toAddJob);
+        addressBook.startJob(new JobName(toAddJob.getJobName().fullName));
+        JobMachineTuple foundJobMachineTuple = addressBook.findJob(new JobName(toAddJob.getJobName().fullName));
+        Job foundJob = foundJobMachineTuple.job;
+        addressBook.restartJob(new JobName(toAddJob.getJobName().fullName));
+        assertTrue(foundJob.getStatus().equals(Status.ONGOING));
     }
 
     /**
