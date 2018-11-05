@@ -23,14 +23,14 @@ public class ManageMachineCommand extends Command {
     public static final String OPTION_FLUSH = "flush";
     public static final String OPTION_CLEAN = "clean";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": flush/clean/remove a machine from Maker Manager address book"
-            + "\nExample: " + COMMAND_WORD + " "
-            + "JJPrinter flush";
+    public static final String MESSAGE_USAGE =
+        COMMAND_WORD + ": flush/clean/remove a machine from Maker Manager address book" + "\nExample: " + COMMAND_WORD
+            + " " + "JJPrinter flush";
 
     public static final String MESSAGE_REMOVE_MACHINE_SUCCESS = "Machine removed: %1$s";
     public static final String MESSAGE_FLUSH_MACHINE_SUCCESS = "Machine has been flushed";
     public static final String MESSAGE_CLEAN_MACHINE_SUCCESS = "Machine has been cleaned";
-    public static final String MESSAGE_MACHINE_NOT_FOUND  = "Machine not found";
+    public static final String MESSAGE_MACHINE_NOT_FOUND = "Machine not found";
     public static final String MESSAGE_MACHINE_STILL_HAVE_JOBS = "Machine still have jobs";
     public static final String MESSAGE_MACHINE_STILL_HAVE_UNFINISHED_JOBS = "Machine still have unfinished jobs";
     public static final String MESSAGE_MACHINE_DOES_NOT_HAVE_CLEANABLE_JOBS = "Machine is already clean";
@@ -60,35 +60,35 @@ public class ManageMachineCommand extends Command {
         }
 
         Machine machineToManage = model.findMachine(machineName);
-
         if (machineToManage != null) {
             switch (option) {
-                case OPTION_REMOVE :
-                    if (machineToManage.hasJobs()) {
-                        throw new CommandException(MESSAGE_MACHINE_STILL_HAVE_JOBS);
-                    }
-                    model.removeMachine(machineToManage);
-                    model.commitAddressBook();
-                    model.updateFilteredMachineList(PREDICATE_SHOW_ALL_MACHINES);
-                    return new CommandResult(String.format(MESSAGE_REMOVE_MACHINE_SUCCESS, machineToManage));
-                case OPTION_FLUSH :
-                    model.flushMachine(machineToManage);
+            case OPTION_REMOVE:
+                if (machineToManage.hasJobs()) {
+                    throw new CommandException(MESSAGE_MACHINE_STILL_HAVE_JOBS);
+                }
+                model.removeMachine(machineToManage);
+                model.commitAddressBook();
+                model.updateFilteredMachineList(PREDICATE_SHOW_ALL_MACHINES);
+                return new CommandResult(String.format(MESSAGE_REMOVE_MACHINE_SUCCESS, machineToManage));
+            case OPTION_FLUSH:
+                model.flushMachine(machineToManage);
+                model.commitAddressBook();
+                model.updateFilteredMachineList(PREDICATE_SHOW_ALL_MACHINES);
+                model.updateFilteredJobListInAllMachines(PREDICATE_SHOW_ALL_JOBS);
+                return new CommandResult(String.format(MESSAGE_FLUSH_MACHINE_SUCCESS, machineToManage));
+            case OPTION_CLEAN:
+                if (machineToManage.hasCleanableJobs()) {
+                    model.cleanMachine(machineToManage);
                     model.commitAddressBook();
                     model.updateFilteredMachineList(PREDICATE_SHOW_ALL_MACHINES);
                     model.updateFilteredJobListInAllMachines(PREDICATE_SHOW_ALL_JOBS);
-                    return new CommandResult(String.format(MESSAGE_FLUSH_MACHINE_SUCCESS, machineToManage));
-                case OPTION_CLEAN :
-                    if (machineToManage.hasCleanableJobs()) {
-                        model.cleanMachine(machineToManage);
-                        model.commitAddressBook();
-                        model.updateFilteredMachineList(PREDICATE_SHOW_ALL_MACHINES);
-                        model.updateFilteredJobListInAllMachines(PREDICATE_SHOW_ALL_JOBS);
-                        return new CommandResult(String.format(MESSAGE_CLEAN_MACHINE_SUCCESS, machineToManage));
-                    } else {
-                        return new CommandResult(String.format(MESSAGE_MACHINE_DOES_NOT_HAVE_CLEANABLE_JOBS, machineToManage));
-                    }
-                default:
-                    throw new CommandException(MESSAGE_NO_SUCH_MANAGE_MACHINE_COMMAND);
+                    return new CommandResult(String.format(MESSAGE_CLEAN_MACHINE_SUCCESS, machineToManage));
+                } else {
+                    return new CommandResult(
+                        String.format(MESSAGE_MACHINE_DOES_NOT_HAVE_CLEANABLE_JOBS, machineToManage));
+                }
+            default:
+                throw new CommandException(MESSAGE_NO_SUCH_MANAGE_MACHINE_COMMAND);
             }
         } else {
             throw new CommandException(MESSAGE_MACHINE_NOT_FOUND);
