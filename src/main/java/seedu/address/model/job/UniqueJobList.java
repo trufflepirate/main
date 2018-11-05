@@ -211,7 +211,7 @@ public class UniqueJobList {
         if (targetIndex == -1 || targetIndex > size()) {
             throw new JobNotFoundException();
         }
-        internalList.set(targetIndex, replaceWith);
+        internalList.set(targetIndex, new Job(replaceWith));
     }
 
     public void finishJob(Job job) {

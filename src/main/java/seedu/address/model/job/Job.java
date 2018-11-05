@@ -84,6 +84,19 @@ public class Job {
         this.tags.addAll(tags);
     }
 
+    public Job( Job toBeCopied ){
+        this.name = toBeCopied.name;
+        this.machineName = toBeCopied.machineName;
+        this.owner = toBeCopied.owner;
+        this.addedTime = new TimeStamp(toBeCopied.addedTime.getDate().getTime());
+        this.priority = toBeCopied.priority;
+        this.status = toBeCopied.status;
+        this.duration = toBeCopied.duration;
+        this.jobNote = toBeCopied.jobNote;
+        this.startTime = new TimeStamp(toBeCopied.startTime.getDate().getTime());
+        this.tags.addAll(toBeCopied.tags);
+    }
+
 
     /**
      * checks if a job has been finished

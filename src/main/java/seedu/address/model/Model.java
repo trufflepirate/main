@@ -86,6 +86,8 @@ public interface Model {
 
     void swapJobs(JobName jobname1, JobName jobName2);
 
+    void moveJob(JobName jobName, MachineName targetMachineName);
+
     void finishJob(Job job);
 
     void requestDeletion(JobName jobName);

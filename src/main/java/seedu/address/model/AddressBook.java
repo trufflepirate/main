@@ -23,6 +23,7 @@ import seedu.address.model.job.exceptions.JobNotFoundException;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.MachineName;
 import seedu.address.model.machine.UniqueMachineList;
+import seedu.address.model.machine.exceptions.MachineNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 
@@ -85,6 +86,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * {@code machines} must not contain duplicate machines
      */
     public void setMachines(List<Machine> machines) {
+
         this.machines.setMachines(machines);
     }
 
@@ -99,6 +101,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setAdminsSession(AdminSession adminsSession) {
         if (adminsSession.isAdminLoggedIn()) {
             this.adminSession.setLogin(adminsSession.getLoggedInAdmin());
+        } else {
+            this.adminSession.clearLogin();
         }
     }
 
@@ -112,7 +116,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         setMachines(newData.getMachineList());
         setAdmins(newData.getAdminList());
         setAdminsSession(newData.getAdminSession());
-
     }
 
     //======================== person methods ================================//
@@ -383,11 +386,29 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void swapJobs(JobName jobName1, JobName jobName2) {
         JobMachineTuple mj1 = findJob(jobName1);
         JobMachineTuple mj2 = findJob(jobName2);
-        if (mj1.machine == null || mj2.machine == null || mj1.job == null || mj2.job == null ){
+        if (mj1 == null || mj2 == null) {
             throw new JobNotFoundException();
         }
         mj1.machine.replaceJob(mj1.job, mj2.job);
         mj2.machine.replaceJob(mj2.job, mj1.job);
+    }
+
+    public void moveJob(JobName jobName, MachineName targetMachineName) throws JobNotFoundException,MachineNotFoundException {
+        JobMachineTuple targetJobAndMachine = findJob(jobName);
+        if (targetJobAndMachine == null){
+            throw new JobNotFoundException();
+        }
+        Machine targetMachine = findMachine(targetMachineName);
+        if (targetMachine == null){
+            throw new MachineNotFoundException();
+        }
+        //removing job from old machine
+        targetJobAndMachine.machine.removeJob(targetJobAndMachine.job);
+        //updating job
+        targetJobAndMachine.job.setMachine(targetMachine.getName());
+        //adding to new Machine
+        targetMachine.addJob(targetJobAndMachine.job);
+
     }
 
     /**

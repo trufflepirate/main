@@ -7,8 +7,12 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.ParserUtil;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.job.JobName;
+import seedu.address.model.machine.MachineName;
+import seedu.address.model.machine.exceptions.MachineNotFoundException;
 
 /**
  * Command used to manage jobs (eg: starting a Print)
@@ -19,6 +23,8 @@ public class ManageJobCommand extends Command {
     public static final String OPTION_RESTART = "restart";
     public static final String OPTION_CANCEL = "cancel";
     public static final String OPTION_DELETE = "delete";
+    public static final String OPTION_MOVE = "move";
+
 
 
     public static final String MESSAGE_USAGE =
@@ -30,15 +36,20 @@ public class ManageJobCommand extends Command {
     private static final String MESSAGE_DELETED_JOB = "The print has been deleted";
     private static final String MESSAGE_NO_SUCH_JOB = "No such print found";
     private static final String MESSAGE_NO_SUCH_OPTION = "No such options. Only use: start, restart, cancel.";
-    private static final String MESSAGE_ACCESS_DENIED = "Non admin user is not allowed to delete jobs in maker manager";
+    private static final String MESSAGE_ACCESS_DENIED_DELETE = "Non admin user is not allowed to delete jobs in maker manager";
+    private static final String MESSAGE_ACCESS_DENIED_MOVE = "Non admin user is not allowed to move jobs in maker manager";
+    private static final String MESSAGE_MACHINE_NOT_FOUND = "Machine not found in MakerManager!";
+    private static final String MESSAGE_MOVED_JOB = "Job moved to ";
 
     private JobName name;
     private String option;
+    private String operand2;
 
-    public ManageJobCommand(JobName name, String option) {
+    public ManageJobCommand(JobName name, String option, String operand2) {
         requireNonNull(name);
         this.name = name;
         this.option = option;
+        this.operand2 = operand2;
     }
 
     @Override
@@ -49,7 +60,58 @@ public class ManageJobCommand extends Command {
         if (model.findJob(this.name) == null) {
             throw new CommandException(MESSAGE_NO_SUCH_JOB);
         }
+        switch (option) {
 
+        case OPTION_START:
+            model.startJob(name);
+            model.commitAddressBook();
+            model.updateFilteredMachineList(PREDICATE_SHOW_ALL_MACHINES);
+            return new CommandResult(MESSAGE_STARTED_JOB);
+
+        case OPTION_RESTART:
+            model.restartJob(name);
+            model.commitAddressBook();
+            model.updateFilteredMachineList(PREDICATE_SHOW_ALL_MACHINES);
+            return new CommandResult(MESSAGE_RESTARTED_JOB);
+
+        case OPTION_CANCEL:
+            model.cancelJob(name);
+            model.commitAddressBook();
+            model.updateFilteredMachineList(PREDICATE_SHOW_ALL_MACHINES);
+            return new CommandResult(MESSAGE_CANCELLED_JOB);
+
+        case OPTION_DELETE:
+            if (!model.isLoggedIn()) {
+                throw new CommandException(MESSAGE_ACCESS_DENIED_DELETE);
+            }
+            model.deleteJob(name);
+            model.commitAddressBook();
+            model.updateFilteredMachineList(PREDICATE_SHOW_ALL_MACHINES);
+            return new CommandResult(MESSAGE_DELETED_JOB);
+
+        case OPTION_MOVE:
+            if (!model.isLoggedIn()) {
+                throw new CommandException(MESSAGE_ACCESS_DENIED_MOVE);
+            }
+            //parsing operand2
+            try {
+                MachineName targetMachineName = ParserUtil.parseMachineName(operand2);
+                model.moveJob(name, targetMachineName);
+                model.commitAddressBook();
+                return new CommandResult(MESSAGE_MOVED_JOB + targetMachineName.toString() );
+
+            } catch (ParseException pe){
+                throw new CommandException(pe.getMessage());
+            } catch (MachineNotFoundException mfe) {
+                throw new CommandException(MESSAGE_MACHINE_NOT_FOUND);
+            }
+
+        default:
+            return new CommandResult(MESSAGE_NO_SUCH_OPTION);
+        }
+
+        // TODO: 11/5/2018 REMOVE IF CASE SWITCH WORKS
+        /*
         if (option.equals(OPTION_START)) {
             model.startJob(name);
             model.commitAddressBook();
@@ -77,7 +139,7 @@ public class ManageJobCommand extends Command {
         } else {
             return new CommandResult(MESSAGE_NO_SUCH_OPTION);
         }
-
+        */
     }
 
     @Override

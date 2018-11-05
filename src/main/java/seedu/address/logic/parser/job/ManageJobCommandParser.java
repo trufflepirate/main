@@ -26,14 +26,20 @@ public class ManageJobCommandParser implements Parser<ManageJobCommand> {
 
         String [] temp = trimmedArgs.split(" ");
 
-        if (temp.length != 2) {
+        if (temp.length < 2) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ManageJobCommand.MESSAGE_USAGE));
         }
 
         try {
             JobName name = new JobName(temp[0]);
             String option = temp[1];
-            return new ManageJobCommand(name, option);
+            if (temp.length == 3){
+                String operand2 = temp[2];
+                return new ManageJobCommand(name, option, operand2);
+            } else {
+                String operand2 = "";
+                return new ManageJobCommand(name, option, operand2);
+            }
         } catch (Exception IllegalArgumentException) {
             throw new ParseException(String.format(MESSAGE_ILLEGAL_JOB_NAME, ManageJobCommand.MESSAGE_USAGE));
         }

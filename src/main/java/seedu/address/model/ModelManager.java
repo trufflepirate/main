@@ -228,6 +228,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void moveJob(JobName jobName, MachineName targetMachineName) {
+        versionedAddressBook.moveJob(jobName, targetMachineName);
+        indicateMachineListChanged();
+    }
+
+    @Override
     public void finishJob(Job job) {
         versionedAddressBook.finishJob(job);
         indicateMachineListChanged();

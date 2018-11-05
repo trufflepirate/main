@@ -49,8 +49,11 @@ public class UniqueMachineList {
         if (!machinesAreUnique(machines)) {
             throw new DuplicateMachineException();
         }
-
-        internalList.setAll(machines);
+        List<Machine> temp = FXCollections.observableArrayList();
+        for (Machine machine: machines) {
+            temp.add(new Machine(machine));
+        }
+        internalList.setAll(temp);
     }
 
     /**
@@ -166,6 +169,10 @@ public class UniqueMachineList {
      * Returns the backing list as an unmodifiable {@code ObservableList}
      */
     public ObservableList<Machine> asUnmodifiableObservableList() {
+        ObservableList<Machine> listCopy = FXCollections.observableArrayList();
+        for(Machine machine: internalList) {
+            //listCopy.add(machine.clone())
+        }
         return FXCollections.unmodifiableObservableList(internalList);
     }
 

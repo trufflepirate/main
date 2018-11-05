@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_JOBS;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.model.job.Job;
@@ -31,7 +33,7 @@ public class Machine {
      */
     public static final String NAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
     public static final String MESSAGE_NAME_CONSTRAINTS =
-        "Names should only contain alphanumeric characters and spaces, " + "and it should not be blank";
+        "Machine Names should only contain alphanumeric characters and spaces, " + "and it should not be blank";
     public static final String MESSAGE_WRONG_STATUS =
         "Status can only contain 'ENABLED' or 'DISABLED'" + "and should not be blank";
     // Identity fields
@@ -57,6 +59,13 @@ public class Machine {
         this.tags.addAll(tags);
         this.status = status;
         this.filteredJobs = new FilteredList<>(this.jobs.asUnmodifiableObservableList());
+    }
+
+    public Machine(Machine toBeCopied){
+        this(toBeCopied.getName(), new ArrayList<Job>(), toBeCopied.tags, toBeCopied.status);
+        for (Job job: toBeCopied.getJobs()) {
+            this.jobs.add(new Job(job));
+        }
     }
 
     /**
