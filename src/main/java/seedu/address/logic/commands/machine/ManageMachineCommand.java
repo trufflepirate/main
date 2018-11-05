@@ -33,6 +33,7 @@ public class ManageMachineCommand extends Command {
     public static final String MESSAGE_MACHINE_NOT_FOUND  = "Machine not found";
     public static final String MESSAGE_MACHINE_STILL_HAVE_JOBS = "Machine still have jobs";
     public static final String MESSAGE_MACHINE_STILL_HAVE_UNFINISHED_JOBS = "Machine still have unfinished jobs";
+    public static final String MESSAGE_MACHINE_DOES_NOT_HAVE_CLEANABLE_JOBS = "Machine is already clean";
     public static final String MESSAGE_NO_SUCH_MANAGE_MACHINE_COMMAND = "No such option to manage machine";
     private static final String MESSAGE_ACCESS_DENIED =
         "Non admin user is not allowed to manage a machine from maker manager";
@@ -77,7 +78,15 @@ public class ManageMachineCommand extends Command {
                     model.updateFilteredJobListInAllMachines(PREDICATE_SHOW_ALL_JOBS);
                     return new CommandResult(String.format(MESSAGE_FLUSH_MACHINE_SUCCESS, machineToManage));
                 case OPTION_CLEAN :
-                    return new CommandResult(String.format(MESSAGE_CLEAN_MACHINE_SUCCESS, machineToManage));
+                    if (machineToManage.hasCleanableJobs()) {
+                        model.cleanMachine(machineToManage);
+                        model.commitAddressBook();
+                        model.updateFilteredMachineList(PREDICATE_SHOW_ALL_MACHINES);
+                        model.updateFilteredJobListInAllMachines(PREDICATE_SHOW_ALL_JOBS);
+                        return new CommandResult(String.format(MESSAGE_CLEAN_MACHINE_SUCCESS, machineToManage));
+                    } else {
+                        return new CommandResult(String.format(MESSAGE_MACHINE_DOES_NOT_HAVE_CLEANABLE_JOBS, machineToManage));
+                    }
                 default:
                     throw new CommandException(MESSAGE_NO_SUCH_MANAGE_MACHINE_COMMAND);
             }

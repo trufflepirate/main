@@ -121,6 +121,12 @@ public interface Model {
     void flushMachine(Machine toFlushMachine);
 
     /**
+     * Cleans all the jobs in the machine that fufills the predicate in uniqueJobList
+     * for cleanJobPredicate
+     */
+
+    void cleanMachine(Machine toCleanMachine);
+    /**
      * Replaces the given machine {@code target} with {@code editedMachine}.
      * {@code target} must exist in the Model.
      * The machine identity of {@code editedMachine} must not be the same as another existing machine in the model.
