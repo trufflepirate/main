@@ -164,6 +164,11 @@ public class LogoutCommandTest {
         }
 
         @Override
+        public boolean hasSameMachineName(Machine machine) {
+            return false;
+        }
+
+        @Override
         public void updateMachine(Machine target, Machine editedMachine) {
 
         }

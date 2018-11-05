@@ -12,6 +12,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
+import seedu.address.commons.core.JobMachineTuple;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.AdminListChangedEvent;
@@ -190,7 +191,13 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public Job findJob(JobName name) {
         requireAllNonNull(name);
-        return versionedAddressBook.findJob(name).job;
+        JobMachineTuple query = versionedAddressBook.findJob(name);
+
+        if (query != null) {
+            return query.job;
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -266,6 +273,10 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedAddressBook.hasMachine(machine);
     }
 
+    @Override
+    public boolean hasSameMachineName(Machine machine) {
+        return versionedAddressBook.hasSameMachineName(machine);
+    }
 
     @Override
     public void updateMachine(Machine target, Machine editedMachine) {

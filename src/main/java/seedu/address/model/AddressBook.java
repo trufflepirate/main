@@ -232,6 +232,14 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Returns true if a machine name matches any of that in the list
+     */
+
+    public boolean hasSameMachineName(Machine machine) {
+        requireNonNull(machine);
+        return machines.containsSameNameMachine(machine);
+    }
+    /**
      * Adds a machine if {@code machine} does not exist in the list
      */
     public void addMachine(Machine machine) {
@@ -311,7 +319,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void removeJob(JobName job) {
         requireNonNull(job);
-        //jobs.remove(job);
+        machines.removeJobFromMachineList(job);
     }
 
     /**

@@ -32,7 +32,7 @@ image::Ui.png[width="790"]
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
-* *`listMachine`* : lists all machines
+* *`listMachines`* : lists all machines
 * **`addJob`**`n/iDCP m/TYPrinter on/TIAN YUAN pr/HIGH d/1.5 jn/This is for the iDCP project t/iDCP` : adds a Job named `iDCP` to the MakerManager.
 * **`manageJob`**`iDCP start` : starts a Job named `iDCP`
 * *`exit`* : exits the app
@@ -58,7 +58,8 @@ Give the user guidance as to what (s)he can do with makerManager +
     Format: help
 
 .. *Adding a print Job:*
-Adds a print job to the machine's queue. +
+Adds a print job to the machine's queue. Specifying AUTO as MACHINE_NAME will let the software optimize which queue to add the print to. +
+Available priorities: URGENT, HIGH, NORMAL.
 
     Format: addJob n/JOB NAME m/MACHINE NAME on/JOB OWNER NAME pr/JOB PRIORITY d/JOB DURATION jn/JOB NOTE [t/TAG]
 
@@ -89,7 +90,7 @@ Restart an existing print in the queue. +
     Examples:
     manageJob myPrint restart
 
-.. *`[WIP][DISABLED]` Deleting a Print:*
+.. *Deleting a Print:*
 deletes an existing print in the queue. +
 
     Format: manageJob JOBNAME delete
@@ -164,9 +165,12 @@ Address book data are saved in the hard disk automatically after any command tha
 The following commands will only work in admin mode. Admin accounts currently not saved across sessions.
 
 ... *Login:*
-Enables admin mode. +
+Enables admin mode. Note that a default account is created when no other admins exist. Username and Password of default are both 'admin' +
 
 	Format: login ADMIN_ID PASSWORD
+
+	Examples:
+	login admin admin
 
 ... *Logout:*
 Disable admin mode. +
@@ -188,14 +192,20 @@ Updating your own account's password. Note that NEW_PW has to match some specifi
 
     Format: updatePassword USERNAME OLD_PW NEW_PW NEW_PW_VERIFY
 
-... *Add Machine:*
-Adds a new machine. All machine names must be unique. Status can only be either “ENABLED” or “DISABLED”. +
+... *Add Machine:* Adds a new machine.
+.... All machine names must be unique.
+..... Names should only contain alphanumeric characters and spaces,
+and it should not be blank.
+..... Reserved names are : [ AUTO ]
+.... Status can only be
+..... “ENABLED”
+..... “DISABLED”
 
     Format:
     addMachine n/MACHINE_NAME ms/STATUS
 
     Example:
-    addMachine n/my_machine ms/ENABLED
+    addMachine n/myMachine ms/ENABLED
 
 ... *`[WIP][DISABLED]` Remove Machine:*
 removes a machine.  +
@@ -205,13 +215,21 @@ removes a machine.  +
     Example:
     removeMachine my_machine
 
-... *Change Device Status:*
-Edits an existing machine. All machine names must be unique. Status can only be either “ENABLED” or “DISABLED”. At least one optional argument must be present. +
+... *Edit Machine* :
+Edits an existing machine.
+.... All machine names must be unique.
+..... Names should only contain alphanumeric characters and spaces,
+and it should not be blank.
+..... Reserved names are : [ AUTO ]
+.... Status can only be
+..... “ENABLED”
+..... “DISABLED”
+.... At least one optional argument must be present. +
 
-    Format: editMachine MACHINE_NAME [n/MACHINE_NAME] [s/STATUS]
+    Format: editMachine MACHINE_NAME [n/MACHINE_NAME] [ms/STATUS]
 
     Example:
-    editMachine my_machine n/my_machine2 s/enabled
+    editMachine my_machine n/my_machine2 ms/ENABLED
 
 
 == FAQ
@@ -229,11 +247,13 @@ Edits an existing machine. All machine names must be unique. Status can only be 
 . addAdmin USERNAME PASSWORD VERIFY_PASSWORD
 . removeAdmin USERNAME
 . updatePassword USERNAME OLD_PW NEW_PW NEW_PW_VERIFY
-. add_machine n/MACHINE_NAME s/STATUS
-. `[WIP][DISABLED]` remove_machine MACHINE_NAME
-. edit_machine MACHINE_NAME [n/MACHINE_NAME] [s/STATUS]
+. add_machine n/MACHINE_NAME ms/STATUS
+. `[WIP][DISABLED]` removeMachine n/MACHINE_NAME
+. edit_machine MACHINE_NAME [n/MACHINE_NAME] [ms/STATUS]
+. listMachines
 . manageJob JOB_NAME start
 . manageJob JOB_NAME cancel
 . manageJob JOB_NAME restart
+. manageJob JOB_NAME delete
 . `[WIP][DISABLED]` manageJob JOB_NAME delete
 . requestDeletion n/iDCP
