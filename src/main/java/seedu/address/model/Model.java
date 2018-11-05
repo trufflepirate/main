@@ -92,6 +92,10 @@ public interface Model {
 
     int getTotalNumberOfJobsDisplayed();
 
+    void moveJobToMachine(Job job, Machine targetMachine);
+
+    void autoMoveJobs(Machine currentMachine, Machine targetMachine);
+
     // ============================== Machine methods ======================================= //
 
     boolean isTopJob(JobName job);
@@ -116,6 +120,19 @@ public interface Model {
      */
 
     boolean hasSameMachineName(Machine machine);
+
+    /**
+     * Flushes all the jobs in the machine
+     */
+
+    void flushMachine(Machine toFlushMachine);
+
+    /**
+     * Cleans all the jobs in the machine that fufills the predicate in uniqueJobList
+     * for cleanJobPredicate
+     */
+
+    void cleanMachine(Machine toCleanMachine);
     /**
      * Replaces the given machine {@code target} with {@code editedMachine}.
      * {@code target} must exist in the Model.

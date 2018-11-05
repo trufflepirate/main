@@ -217,6 +217,15 @@ public class UpdatePasswordCommandTest {
         public boolean isTopJob(JobName job) {
             return false;
         }
+      
+        public void moveJobToMachine(Job job, Machine targetMachine) {
+
+        }
+
+        @Override
+        public void autoMoveJobs(Machine currentMachine, Machine targetMachine) {
+
+        }
 
         @Override
         public void updateJob(Job oldJob, Job updatedJob) {
@@ -246,6 +255,16 @@ public class UpdatePasswordCommandTest {
         @Override
         public boolean hasSameMachineName(Machine machine) {
             return false;
+        }
+
+        @Override
+        public void flushMachine(Machine toFlushMachine) {
+
+        }
+
+        @Override
+        public void cleanMachine(Machine toCleanMachine) {
+
         }
 
         @Override

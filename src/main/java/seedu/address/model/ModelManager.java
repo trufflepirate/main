@@ -55,7 +55,6 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
         filteredMachines = new FilteredList<>(versionedAddressBook.getMachineList());
         filteredAdmins = new FilteredList<>(versionedAddressBook.getAdminList());
-        //TODO find a better way to change the data according to sorted jobs based on comparator
 
         // Timer for auto print cleanup
         // credit: https://dzone.com/articles/how-schedule-task-run-interval
@@ -188,6 +187,8 @@ public class ModelManager extends ComponentManager implements Model {
         indicateMachineListChanged();
     }
 
+
+
     @Override
     public Job findJob(JobName name) {
         requireAllNonNull(name);
@@ -254,6 +255,19 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public boolean isTopJob(JobName job) {
         return versionedAddressBook.isTopJob(job);
+
+    public void moveJobToMachine(Job job, Machine targetMachine) {
+        job.setMachine(targetMachine.getName());
+        targetMachine.addJob(job);
+    }
+
+    @Override
+    public void autoMoveJobs(Machine currentMachine, Machine targetMachine) {
+        for (Job j : currentMachine.getJobs()) {
+            moveJobToMachine(j, targetMachine);
+        }
+        flushMachine(currentMachine);
+        indicateMachineListChanged();
     }
 
 
@@ -282,6 +296,21 @@ public class ModelManager extends ComponentManager implements Model {
     public boolean hasSameMachineName(Machine machine) {
         return versionedAddressBook.hasSameMachineName(machine);
     }
+
+    @Override
+    public void flushMachine(Machine toFlushMachine) {
+        requireNonNull(toFlushMachine);
+        versionedAddressBook.flushMachine(toFlushMachine);
+        indicateMachineListChanged();
+    }
+
+    @Override
+    public void cleanMachine(Machine toCleanMachine) {
+        requireNonNull(toCleanMachine);
+        versionedAddressBook.cleanMachine(toCleanMachine);
+        indicateMachineListChanged();
+    }
+
 
     @Override
     public void updateMachine(Machine target, Machine editedMachine) {

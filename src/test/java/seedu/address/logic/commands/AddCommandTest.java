@@ -177,6 +177,15 @@ public class AddCommandTest {
         public boolean isTopJob(JobName job) {
             return false;
         }
+      
+        public void moveJobToMachine(Job job, Machine targetMachine) {
+
+        }
+
+        @Override
+        public void autoMoveJobs(Machine currentMachine, Machine targetMachine) {
+
+        }
 
         @Override
         public Machine findMachine(MachineName machinename) {
@@ -221,6 +230,16 @@ public class AddCommandTest {
         @Override
         public boolean hasSameMachineName(Machine machine) {
             return false;
+        }
+
+        @Override
+        public void flushMachine(Machine toFlushMachine) {
+
+        }
+
+        @Override
+        public void cleanMachine(Machine toCleanMachine) {
+
         }
 
         @Override
