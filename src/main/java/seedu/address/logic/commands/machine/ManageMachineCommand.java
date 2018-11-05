@@ -43,6 +43,7 @@ public class ManageMachineCommand extends Command {
     public static final String MESSAGE_NO_SUCH_MANAGE_MACHINE_COMMAND = "No such option to manage machine %1$s";
     public static final String MESSAGE_MACHINE_NOT_FLUSHED = "Machine is not flushed";
     public static final String MESSAGE_FLUSH_AUTO_OPTION_INVALID = "Invalid flush auto option";
+    public static final String MESSAGE_NO_MORE_MACHINES = "No more machines to flush jobs to. Please add a new machine";
     private static final String MESSAGE_ACCESS_DENIED =
         "Non admin user is not allowed to manage a machine from maker manager";
 
@@ -103,6 +104,13 @@ public class ManageMachineCommand extends Command {
                         return new CommandResult(String.format(MESSAGE_MACHINE_NOT_FLUSHED, machineToManage));
                     }
                 } else if (flushAutoOption.equals(OPTION_FLUSH_AUTO)) {
+                    Machine mostFreeMachine = model.getMostFreeMachine();
+                    if (mostFreeMachine.equals(machineToManage)) {
+                        throw new CommandException(MESSAGE_NO_MORE_MACHINES);
+                    }
+                    model.autoMoveJobs(machineToManage, mostFreeMachine);
+                    model.updateFilteredMachineList(PREDICATE_SHOW_ALL_MACHINES);
+                    model.updateFilteredJobListInAllMachines(PREDICATE_SHOW_ALL_JOBS);
                     return new CommandResult(String.format(MESSAGE_AUTO_FLUSHING_MACHINE, machineToManage));
                 } else {
                     return new CommandResult(String.format(MESSAGE_FLUSH_AUTO_OPTION_INVALID));

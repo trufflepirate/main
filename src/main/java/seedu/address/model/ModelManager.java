@@ -55,7 +55,6 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
         filteredMachines = new FilteredList<>(versionedAddressBook.getMachineList());
         filteredAdmins = new FilteredList<>(versionedAddressBook.getAdminList());
-        //TODO find a better way to change the data according to sorted jobs based on comparator
 
         // Timer for auto print cleanup
         // credit: https://dzone.com/articles/how-schedule-task-run-interval
@@ -188,6 +187,8 @@ public class ModelManager extends ComponentManager implements Model {
         indicateMachineListChanged();
     }
 
+
+
     @Override
     public Job findJob(JobName name) {
         requireAllNonNull(name);
@@ -249,6 +250,21 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public int getTotalNumberOfJobsDisplayed() {
         return getFilteredMachineList().stream().mapToInt(m -> m.getJobsAsFilteredObservableList().size()).sum();
+    }
+
+    @Override
+    public void moveJobToMachine(Job job, Machine targetMachine) {
+        job.setMachine(targetMachine.getName());
+        targetMachine.addJob(job);
+    }
+
+    @Override
+    public void autoMoveJobs(Machine currentMachine, Machine targetMachine) {
+        for (Job j : currentMachine.getJobs()) {
+            moveJobToMachine(j, targetMachine);
+        }
+        flushMachine(currentMachine);
+        indicateMachineListChanged();
     }
 
 

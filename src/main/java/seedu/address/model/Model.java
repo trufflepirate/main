@@ -92,6 +92,10 @@ public interface Model {
 
     int getTotalNumberOfJobsDisplayed();
 
+    void moveJobToMachine(Job job, Machine targetMachine);
+
+    void autoMoveJobs(Machine currentMachine, Machine targetMachine);
+
     // ============================== Machine methods ======================================= //
     /**
      * Adds the given machine
