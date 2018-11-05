@@ -266,6 +266,10 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedAddressBook.hasMachine(machine);
     }
 
+    @Override
+    public boolean hasSameMachineName(Machine machine) {
+        return versionedAddressBook.hasSameMachineName(machine);
+    }
 
     @Override
     public void updateMachine(Machine target, Machine editedMachine) {

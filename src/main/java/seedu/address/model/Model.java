@@ -105,6 +105,12 @@ public interface Model {
      * Returns true if a Machine with the same identity as {@code machine} exists in the address book.
      */
     boolean hasMachine(Machine machine);
+
+    /**
+     * Returns true if the same Machine name exists in the address book.
+     */
+
+    boolean hasSameMachineName(Machine machine);
     /**
      * Replaces the given machine {@code target} with {@code editedMachine}.
      * {@code target} must exist in the Model.
