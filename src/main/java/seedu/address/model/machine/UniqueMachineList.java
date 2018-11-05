@@ -10,6 +10,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.job.Job;
+import seedu.address.model.job.JobName;
+import seedu.address.model.job.exceptions.JobNotFoundException;
 import seedu.address.model.machine.exceptions.DuplicateMachineException;
 import seedu.address.model.machine.exceptions.MachineNotFoundException;
 
@@ -102,6 +104,23 @@ public class UniqueMachineList {
     }
 
     /**
+     * Remove a job from the machine {@code target} jobs list
+     */
+    public void removeJobFromMachineList(JobName job) throws JobNotFoundException {
+        requireAllNonNull(job);
+
+        for (Machine m : internalList) {
+            Job query = m.findJob(job);
+            if (query != null) {
+                m.removeJob(query);
+                return;
+            }
+        }
+
+        throw new JobNotFoundException();
+    }
+
+    /**
      * Adds the Machine to the list
      * The Machine must not exist in the list
      *
@@ -164,9 +183,8 @@ public class UniqueMachineList {
         return true;
     }
 
-
     public Machine getMostFreeMachine() {
-        float minimumTime = 999999;
+        long minimumTime = Long.MAX_VALUE;
         Machine mostFreeMachine = null;
 
         for (Machine machine : internalList) {

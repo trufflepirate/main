@@ -58,7 +58,8 @@ Give the user guidance as to what (s)he can do with makerManager +
     Format: help
 
 .. *Adding a print Job:*
-Adds a print job to the machine's queue. +
+Adds a print job to the machine's queue. Specifying AUTO as MACHINE_NAME will let the software optimize which queue to add the print to. +
+Available priorities: URGENT, HIGH, NORMAL.
 
     Format: addJob n/JOB NAME m/MACHINE NAME on/JOB OWNER NAME pr/JOB PRIORITY d/JOB DURATION jn/JOB NOTE [t/TAG]
 
@@ -89,7 +90,7 @@ Restart an existing print in the queue. +
     Examples:
     manageJob myPrint restart
 
-.. *`[WIP][DISABLED]` Deleting a Print:*
+.. *Deleting a Print:*
 deletes an existing print in the queue. +
 
     Format: manageJob JOBNAME delete
@@ -164,9 +165,12 @@ Address book data are saved in the hard disk automatically after any command tha
 The following commands will only work in admin mode. Admin accounts currently not saved across sessions.
 
 ... *Login:*
-Enables admin mode. +
+Enables admin mode. Note that a default account is created when no other admins exist. Username and Password of default are both 'admin' +
 
 	Format: login ADMIN_ID PASSWORD
+
+	Examples:
+	login admin admin
 
 ... *Logout:*
 Disable admin mode. +
@@ -244,11 +248,12 @@ and it should not be blank.
 . removeAdmin USERNAME
 . updatePassword USERNAME OLD_PW NEW_PW NEW_PW_VERIFY
 . add_machine n/MACHINE_NAME ms/STATUS
-. `[WIP][DISABLED]` remove_machine MACHINE_NAME
+. `[WIP][DISABLED]` removeMachine n/MACHINE_NAME
 . edit_machine MACHINE_NAME [n/MACHINE_NAME] [ms/STATUS]
 . listMachines
 . manageJob JOB_NAME start
 . manageJob JOB_NAME cancel
 . manageJob JOB_NAME restart
+. manageJob JOB_NAME delete
 . `[WIP][DISABLED]` manageJob JOB_NAME delete
 . requestDeletion n/iDCP
