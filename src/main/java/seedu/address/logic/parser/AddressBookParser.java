@@ -47,7 +47,7 @@ import seedu.address.logic.parser.job.RequestDeletionCommandParser;
 import seedu.address.logic.parser.machine.AddMachineCommandParser;
 import seedu.address.logic.parser.machine.EditMachineCommandParser;
 import seedu.address.logic.parser.machine.FindMachineCommandParser;
-import seedu.address.logic.parser.machine.RemoveMachineCommandParser;
+import seedu.address.logic.parser.machine.ManageMachineCommandParser;
 import seedu.address.logic.parser.queue.SwapJobsCommandParser;
 
 /**
@@ -159,7 +159,7 @@ public class AddressBookParser {
             return new RequestDeletionCommandParser().parse(arguments);
 
         case ManageMachineCommand.COMMAND_WORD:
-            return new RemoveMachineCommandParser().parse(arguments);
+            return new ManageMachineCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
