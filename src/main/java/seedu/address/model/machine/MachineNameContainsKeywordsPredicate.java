@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import me.xdrop.fuzzywuzzy.FuzzySearch;
-import me.xdrop.fuzzywuzzy.model.BoundExtractedResult;
 import seedu.address.commons.util.StringUtil;
 
 /**
@@ -17,10 +16,14 @@ public class MachineNameContainsKeywordsPredicate implements Predicate<Machine> 
         this.keywords = keywords;
     }
 
+    public Integer getNumberOfKeywords () {
+        return keywords.size();
+    }
+
     @Override
     public boolean test(Machine machine) {
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(machine.getName().fullName, keyword));
+            .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(machine.getName().fullName, keyword));
     }
 
     @Override

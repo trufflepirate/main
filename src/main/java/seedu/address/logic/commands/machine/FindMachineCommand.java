@@ -9,8 +9,7 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.model.Model;
 import seedu.address.model.machine.MachineName;
 import seedu.address.model.machine.MachineNameContainsKeywordsPredicate;
-
-
+import seedu.address.model.machine.MachineNameFuzzyWuzzyPredicate;
 
 
 /**
@@ -27,16 +26,20 @@ public class FindMachineCommand extends Command {
             + "Example: " + COMMAND_WORD + " machine1 machine2 machine3";
 
     private final MachineNameContainsKeywordsPredicate predicate;
+    private final MachineNameFuzzyWuzzyPredicate fuzzyWuzzyPredicate;
 
-    public FindMachineCommand(MachineNameContainsKeywordsPredicate predicate) {
+    public FindMachineCommand(MachineNameContainsKeywordsPredicate predicate, MachineNameFuzzyWuzzyPredicate fuzzyWuzzyPredicate) {
         this.predicate = predicate;
+        this.fuzzyWuzzyPredicate = fuzzyWuzzyPredicate;
     }
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
-        model.findMachine(new MachineName("JJPrinter"));
         model.updateFilteredMachineList(predicate);
+        if (model.getFilteredMachineList().size() < predicate.getNumberOfKeywords()) {
+            model.updateFilteredMachineList(fuzzyWuzzyPredicate);
+        }
         return new CommandResult(
                 String.format(Messages.MESSAGE_MACHINE_LISTED_OVERVIEW, model.getFilteredMachineList().size()));
     }
