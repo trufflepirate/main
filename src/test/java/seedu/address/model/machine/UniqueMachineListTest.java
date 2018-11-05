@@ -106,7 +106,7 @@ public class UniqueMachineListTest {
     public void replaceTargetMachineWithEditedMachine() {
         uniqueMachineList.add(ValidMachines.JJPRINTER);
         uniqueMachineList.setMachine(ValidMachines.JJPRINTER, ValidMachines.TYPRINTER);
-        assertNotNull(uniqueMachineList.get("TYPrinter"));
+        assertNotNull(uniqueMachineList.findMachine(new MachineName("TYPrinter")));
     }
 
     @Test
@@ -118,14 +118,6 @@ public class UniqueMachineListTest {
     @Test
     public void findMachineReturnsNull() {
         assertNull(uniqueMachineList.findMachine(new MachineName("JJPrinter")));
-    }
-
-    @Test
-    public void addJobToMachineList() {
-        uniqueMachineList.add(ValidMachines.JJPRINTER);
-        uniqueMachineList.addJobToMachineList(ValidJobs.IDCP);
-        Machine addedJobMachine = uniqueMachineList.findMachine(new MachineName("JJPrinter"));
-        assertTrue(addedJobMachine.getJobs().contains(ValidJobs.IDCP));
     }
 
     @Test

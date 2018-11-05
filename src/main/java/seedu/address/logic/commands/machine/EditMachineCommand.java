@@ -52,8 +52,8 @@ public class EditMachineCommand extends Command {
 
 
     /**
-     * @param machineName           of the person in the filtered person list to edit
-     * @param editMachineDescriptor details to edit the person with
+     * @param machineName           of the machine in the filtered machine list to edit
+     * @param editMachineDescriptor details to edit the machine with
      */
     public EditMachineCommand(MachineName machineName, EditMachineDescriptor editMachineDescriptor) {
         requireNonNull(machineName);

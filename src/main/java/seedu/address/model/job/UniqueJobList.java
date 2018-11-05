@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
@@ -20,7 +21,7 @@ public class UniqueJobList {
 
     private static final Logger logger = LogsCenter.getLogger(UniqueJobList.class);
     private final ObservableList<Job> internalList = FXCollections.observableArrayList();
-
+    private Predicate<Job> cleanJobPredicate = job -> job.isCompleted() || job.isCancelled() || job.isDeleting();
 
     /**
      * Returns true if the list contains an equivalent job as the given argument.
@@ -193,6 +194,33 @@ public class UniqueJobList {
         findJob(name).restartJob();
     }
 
+    /**
+     * Clears the entire jobs list
+     */
+    public void clearJobs() {
+        internalList.clear();
+    }
+
+    /**
+     * Clears jobs that are of status
+     * 1) FINISHED
+     * 2) CANCELLED
+     * 3) DELETING
+     */
+
+    public void cleanJobs() {
+        internalList.removeIf(cleanJobPredicate);
+    }
+
+    /**
+     * Returns true if internal list still have cleanable jobs
+     */
+
+    public boolean hasCleanableJobs() {
+        return internalList.filtered(cleanJobPredicate).size() != 0;
+    }
+
+
     public void requestDeletion(JobName name) {
         findJob(name).setStatus(Status.DELETING);
     }
@@ -217,6 +245,7 @@ public class UniqueJobList {
     public void finishJob(Job job) {
         job.finishJob();
     }
+
 
     //============================= queue operations =======================================//
 
