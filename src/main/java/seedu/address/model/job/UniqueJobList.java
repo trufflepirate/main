@@ -44,6 +44,25 @@ public class UniqueJobList {
     }
 
     /**
+     * Shifts Jobs according to index offset
+     */
+    public void shift(Job toShift, int shiftBy) {
+        requireNonNull(toShift);
+        int currentIndex = internalList.indexOf(toShift);
+        //removing job
+        internalList.remove(currentIndex);
+
+        //re-addition
+        if (currentIndex - shiftBy > size()) {
+            internalList.add(toShift);
+        } else if (currentIndex - shiftBy < 0) {
+            internalList.add(0, toShift);
+        } else {
+            internalList.add(currentIndex - shiftBy, toShift);
+        }
+    }
+
+    /**
      * Removes the equivalent job from the list.
      * The job must exist in the list.
      */
@@ -81,9 +100,7 @@ public class UniqueJobList {
             logger.info(j.getJobName().fullName);
             if (j.getJobName().fullName.equals(jobName)) {
                 logger.info("Job name matches!!");
-                Job changedJob =
-                    new Job(j.getJobName(), j.getMachineName(), j.getOwner(), j.getPriority(), j.getDuration(),
-                        j.getJobNote(), j.getTags());
+                Job changedJob = new Job(j);
                 return changedJob;
             }
         }

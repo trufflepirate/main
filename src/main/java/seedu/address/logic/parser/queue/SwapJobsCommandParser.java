@@ -1,17 +1,13 @@
 package seedu.address.logic.parser.queue;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MACHINE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
-import java.util.Optional;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.queue.SwapJobsCommand;
 import seedu.address.logic.parser.ArgumentMultimap;
-import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -28,28 +24,28 @@ public class SwapJobsCommandParser implements Parser<SwapJobsCommand> {
     /**
      * Parses the given {@code userInput} of arguments in the context
      * of SwapJobsCommandParser and returns a SwapJobCommand object
+     *
      * @throws ParseException if the user input does not conform to the expected
-     * format
+     *                        format
      */
     public SwapJobsCommand parse(String userInput) throws ParseException {
         logger.info("User input : " + userInput);
         String trimmedArgs = userInput.trim();
         if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SwapJobsCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SwapJobsCommand.MESSAGE_USAGE));
         }
 
-        String [] temp = trimmedArgs.split(" ");
+        String[] temp = trimmedArgs.split(" ");
 
         if (temp.length < 2) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SwapJobsCommand.MESSAGE_USAGE));
         }
 
-        try{
+        try {
             String jobName1 = temp[0];
             String jobName2 = temp[1];
             return new SwapJobsCommand(jobName1, jobName2);
-        } catch (IllegalArgumentException ile){
+        } catch (IllegalArgumentException ile) {
             throw new ParseException(JobName.MESSAGE_JOBNAME_CONSTRAINTS);
         }
     }

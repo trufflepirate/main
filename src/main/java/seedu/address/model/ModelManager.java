@@ -234,6 +234,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void shiftJob(JobName jobName, int shiftBy) {
+        versionedAddressBook.shiftJob(jobName, shiftBy);
+        indicateMachineListChanged();
+    }
+
+    @Override
     public void finishJob(Job job) {
         versionedAddressBook.finishJob(job);
         indicateMachineListChanged();

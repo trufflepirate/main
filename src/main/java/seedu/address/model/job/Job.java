@@ -84,7 +84,7 @@ public class Job {
         this.tags.addAll(tags);
     }
 
-    public Job( Job toBeCopied ){
+    public Job(Job toBeCopied) {
         this.name = toBeCopied.name;
         this.machineName = toBeCopied.machineName;
         this.owner = toBeCopied.owner;

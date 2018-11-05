@@ -333,6 +333,16 @@ public class LoginCommandTest {
         public boolean isUndoLogin() {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public void shiftJob(JobName jobName, int shiftBy) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void moveJob(JobName jobName, MachineName targetMachineName) {
+            throw new AssertionError("This method should not be called.");
+        }
     }
 }
 

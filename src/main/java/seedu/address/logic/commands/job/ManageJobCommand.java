@@ -11,6 +11,7 @@ import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.job.JobName;
+import seedu.address.model.job.exceptions.JobNotFoundException;
 import seedu.address.model.machine.MachineName;
 import seedu.address.model.machine.exceptions.MachineNotFoundException;
 
@@ -24,8 +25,10 @@ public class ManageJobCommand extends Command {
     public static final String OPTION_CANCEL = "cancel";
     public static final String OPTION_DELETE = "delete";
     public static final String OPTION_MOVE = "move";
+    public static final String OPTION_SHIFT = "shift";
 
-
+    public static final String SHIFT_OPTION_UP = "up";
+    public static final String SHIFT_OPTION_DOWN = "down";
 
     public static final String MESSAGE_USAGE =
         COMMAND_WORD + ": starts/restarts/cancels/deletes a particular job\n" + "Example: " + COMMAND_WORD
@@ -36,10 +39,12 @@ public class ManageJobCommand extends Command {
     private static final String MESSAGE_DELETED_JOB = "The print has been deleted";
     private static final String MESSAGE_NO_SUCH_JOB = "No such print found";
     private static final String MESSAGE_NO_SUCH_OPTION = "No such options. Only use: start, restart, cancel.";
-    private static final String MESSAGE_ACCESS_DENIED_DELETE = "Non admin user is not allowed to delete jobs in maker manager";
-    private static final String MESSAGE_ACCESS_DENIED_MOVE = "Non admin user is not allowed to move jobs in maker manager";
+    private static final String MESSAGE_ACCESS_DENIED_1 = "Non admin user is not allowed to ";
+    private static final String MESSAGE_ACCESS_DENIED_2 = " Jobs in Maker Manager";
     private static final String MESSAGE_MACHINE_NOT_FOUND = "Machine not found in MakerManager!";
     private static final String MESSAGE_MOVED_JOB = "Job moved to ";
+    private static final String MESSAGE_SHIFTED = "Job Shifted!";
+    private static final String MESSAGE_SHIFTED_NO_SUCH_OPTION = "Only shift up or shift down allowed";
 
     private JobName name;
     private String option;
@@ -82,7 +87,7 @@ public class ManageJobCommand extends Command {
 
         case OPTION_DELETE:
             if (!model.isLoggedIn()) {
-                throw new CommandException(MESSAGE_ACCESS_DENIED_DELETE);
+                throw new CommandException(MESSAGE_ACCESS_DENIED_1 + OPTION_DELETE + MESSAGE_ACCESS_DENIED_2);
             }
             model.deleteJob(name);
             model.commitAddressBook();
@@ -91,19 +96,42 @@ public class ManageJobCommand extends Command {
 
         case OPTION_MOVE:
             if (!model.isLoggedIn()) {
-                throw new CommandException(MESSAGE_ACCESS_DENIED_MOVE);
+                throw new CommandException(MESSAGE_ACCESS_DENIED_1 + OPTION_MOVE + MESSAGE_ACCESS_DENIED_2);
             }
             //parsing operand2
             try {
                 MachineName targetMachineName = ParserUtil.parseMachineName(operand2);
                 model.moveJob(name, targetMachineName);
                 model.commitAddressBook();
-                return new CommandResult(MESSAGE_MOVED_JOB + targetMachineName.toString() );
+                return new CommandResult(MESSAGE_MOVED_JOB + targetMachineName.toString());
 
-            } catch (ParseException pe){
+            } catch (ParseException pe) {
                 throw new CommandException(pe.getMessage());
             } catch (MachineNotFoundException mfe) {
                 throw new CommandException(MESSAGE_MACHINE_NOT_FOUND);
+            }
+
+        case OPTION_SHIFT:
+            if (!model.isLoggedIn()) {
+                throw new CommandException(MESSAGE_ACCESS_DENIED_1 + OPTION_SHIFT + MESSAGE_ACCESS_DENIED_2);
+            }
+            //parsing operand2
+            try {
+                switch (operand2) {
+                case SHIFT_OPTION_UP:
+                    model.shiftJob(name, 1);
+                    model.commitAddressBook();
+                    return new CommandResult(MESSAGE_SHIFTED);
+                case SHIFT_OPTION_DOWN:
+                    model.shiftJob(name, -1);
+                    model.commitAddressBook();
+                    return new CommandResult(MESSAGE_SHIFTED);
+
+                default:
+                    throw new CommandException(MESSAGE_SHIFTED_NO_SUCH_OPTION);
+                }
+            } catch (JobNotFoundException jfe) {
+                throw new CommandException(MESSAGE_NO_SUCH_JOB);
             }
 
         default:

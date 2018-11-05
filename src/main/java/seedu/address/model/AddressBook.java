@@ -242,6 +242,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(machine);
         return machines.containsSameNameMachine(machine);
     }
+
     /**
      * Adds a machine if {@code machine} does not exist in the list
      */
@@ -382,7 +383,6 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Only admin can do this
      * Swaps the jobs with the given jobnames
      */
-
     public void swapJobs(JobName jobName1, JobName jobName2) {
         JobMachineTuple mj1 = findJob(jobName1);
         JobMachineTuple mj2 = findJob(jobName2);
@@ -393,13 +393,18 @@ public class AddressBook implements ReadOnlyAddressBook {
         mj2.machine.replaceJob(mj2.job, mj1.job);
     }
 
-    public void moveJob(JobName jobName, MachineName targetMachineName) throws JobNotFoundException,MachineNotFoundException {
+    /**
+     * Only admin can do this
+     * Moves the job with the given jobnames to the machine with the give Machine Name
+     */
+    public void moveJob(JobName jobName, MachineName targetMachineName)
+        throws JobNotFoundException, MachineNotFoundException {
         JobMachineTuple targetJobAndMachine = findJob(jobName);
-        if (targetJobAndMachine == null){
+        if (targetJobAndMachine == null) {
             throw new JobNotFoundException();
         }
         Machine targetMachine = findMachine(targetMachineName);
-        if (targetMachine == null){
+        if (targetMachine == null) {
             throw new MachineNotFoundException();
         }
         //removing job from old machine
@@ -408,7 +413,19 @@ public class AddressBook implements ReadOnlyAddressBook {
         targetJobAndMachine.job.setMachine(targetMachine.getName());
         //adding to new Machine
         targetMachine.addJob(targetJobAndMachine.job);
+    }
 
+    /**
+     * Only admin can do this
+     * shifts the order job with the given jobname within a machine
+     */
+    public void shiftJob(JobName jobName, int shiftBy) {
+        JobMachineTuple targetJobAndMachine = findJob(jobName);
+        if (targetJobAndMachine == null) {
+            throw new JobNotFoundException();
+        }
+        //shifting
+        targetJobAndMachine.machine.shift(targetJobAndMachine.job, shiftBy);
     }
 
     /**

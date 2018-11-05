@@ -88,6 +88,8 @@ public interface Model {
 
     void moveJob(JobName jobName, MachineName targetMachineName);
 
+    void shiftJob(JobName jobName, int shiftBy);
+
     void finishJob(Job job);
 
     void requestDeletion(JobName jobName);

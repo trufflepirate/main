@@ -3,6 +3,7 @@ package seedu.address.model.machine;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.lang.reflect.MalformedParametersException;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -11,6 +12,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
+import seedu.address.model.job.exceptions.DuplicateJobException;
 import seedu.address.model.job.exceptions.JobNotFoundException;
 import seedu.address.model.machine.exceptions.DuplicateMachineException;
 import seedu.address.model.machine.exceptions.MachineNotFoundException;
@@ -50,7 +52,7 @@ public class UniqueMachineList {
             throw new DuplicateMachineException();
         }
         List<Machine> temp = FXCollections.observableArrayList();
-        for (Machine machine: machines) {
+        for (Machine machine : machines) {
             temp.add(new Machine(machine));
         }
         internalList.setAll(temp);
@@ -102,8 +104,7 @@ public class UniqueMachineList {
         if (target == null) {
             throw new MachineNotFoundException();
         }
-
-        target.addJob(job);
+            target.addJob(job);
     }
 
     /**
@@ -170,7 +171,7 @@ public class UniqueMachineList {
      */
     public ObservableList<Machine> asUnmodifiableObservableList() {
         ObservableList<Machine> listCopy = FXCollections.observableArrayList();
-        for(Machine machine: internalList) {
+        for (Machine machine : internalList) {
             //listCopy.add(machine.clone())
         }
         return FXCollections.unmodifiableObservableList(internalList);

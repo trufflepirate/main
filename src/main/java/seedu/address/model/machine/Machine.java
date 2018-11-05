@@ -12,7 +12,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.model.job.Job;
@@ -61,9 +60,9 @@ public class Machine {
         this.filteredJobs = new FilteredList<>(this.jobs.asUnmodifiableObservableList());
     }
 
-    public Machine(Machine toBeCopied){
+    public Machine(Machine toBeCopied) {
         this(toBeCopied.getName(), new ArrayList<Job>(), toBeCopied.tags, toBeCopied.status);
-        for (Job job: toBeCopied.getJobs()) {
+        for (Job job : toBeCopied.getJobs()) {
             this.jobs.add(new Job(job));
         }
     }
@@ -110,8 +109,7 @@ public class Machine {
      */
 
     public boolean hasSameMachineParameters(Machine otherMachine) {
-        return otherMachine.getName().equals(getName())
-            && otherMachine.getStatus().equals(getStatus());
+        return otherMachine.getName().equals(getName()) && otherMachine.getStatus().equals(getStatus());
     }
 
     /**
@@ -119,9 +117,8 @@ public class Machine {
      * This defines a weaker notion of equality between two machines.
      */
     public boolean isSameMachine(Machine otherMachine) {
-        return otherMachine != null
-            && otherMachine.getName().equals(getName())
-            && otherMachine.getJobs().equals(getJobs());
+        return otherMachine != null && otherMachine.getName().equals(getName()) && otherMachine.getJobs()
+            .equals(getJobs());
     }
 
     public void setMachineStatus(MachineStatus machineStatus) throws InvalidMachineStatusException {
@@ -148,10 +145,8 @@ public class Machine {
         }
 
         Machine otherMachine = (Machine) other;
-        return otherMachine.getName().equals(getName())
-            && otherMachine.getStatus().equals(getStatus())
-            && otherMachine.getJobs().equals(getJobs())
-            && otherMachine.getTags().equals(getTags());
+        return otherMachine.getName().equals(getName()) && otherMachine.getStatus().equals(getStatus()) && otherMachine
+            .getJobs().equals(getJobs()) && otherMachine.getTags().equals(getTags());
     }
 
     @Override
@@ -244,4 +239,7 @@ public class Machine {
         jobs.replaceJob(jobToBeReplaced, replaceWith);
     }
 
+    public void shift(Job toShift, int shiftBy) {
+        jobs.shift(toShift, shiftBy);
+    }
 }
