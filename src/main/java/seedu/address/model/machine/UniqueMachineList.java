@@ -89,10 +89,6 @@ public class UniqueMachineList {
     }
 
     /**
-     * Get list of machine String names
-     */
-
-    /**
      * Adds a job the machine {@code target} jobs list
      */
     public void addJobToMachineList(Job job) throws MachineNotFoundException {
