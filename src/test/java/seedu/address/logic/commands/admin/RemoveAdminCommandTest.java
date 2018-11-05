@@ -222,6 +222,16 @@ public class RemoveAdminCommandTest {
         }
 
         @Override
+        public void flushMachine(Machine toFlushMachine) {
+
+        }
+
+        @Override
+        public void cleanMachine(Machine toCleanMachine) {
+
+        }
+
+        @Override
         public void updateMachine(Machine target, Machine editedMachine) {
 
         }

@@ -219,6 +219,16 @@ public class AddCommandTest {
         }
 
         @Override
+        public void flushMachine(Machine toFlushMachine) {
+
+        }
+
+        @Override
+        public void cleanMachine(Machine toCleanMachine) {
+
+        }
+
+        @Override
         public void addAdmin(Admin admin) {
             throw new AssertionError("This method should not be called.");
         }
