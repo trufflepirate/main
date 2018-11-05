@@ -7,7 +7,6 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.model.Model;
-import seedu.address.model.machine.MachineName;
 import seedu.address.model.machine.MachineNameContainsKeywordsPredicate;
 import seedu.address.model.machine.MachineNameFuzzyWuzzyPredicate;
 
@@ -28,7 +27,8 @@ public class FindMachineCommand extends Command {
     private final MachineNameContainsKeywordsPredicate predicate;
     private final MachineNameFuzzyWuzzyPredicate fuzzyWuzzyPredicate;
 
-    public FindMachineCommand(MachineNameContainsKeywordsPredicate predicate, MachineNameFuzzyWuzzyPredicate fuzzyWuzzyPredicate) {
+    public FindMachineCommand(MachineNameContainsKeywordsPredicate predicate,
+                              MachineNameFuzzyWuzzyPredicate fuzzyWuzzyPredicate) {
         this.predicate = predicate;
         this.fuzzyWuzzyPredicate = fuzzyWuzzyPredicate;
     }
