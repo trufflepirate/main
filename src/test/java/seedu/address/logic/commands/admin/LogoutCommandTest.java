@@ -139,6 +139,11 @@ public class LogoutCommandTest {
         }
 
         @Override
+        public boolean isTopJob(JobName job) {
+            return false;
+        }
+
+        @Override
         public void updateJob(Job oldJob, Job updatedJob) {
 
         }

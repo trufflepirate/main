@@ -197,6 +197,10 @@ public class UniqueMachineList {
         return mostFreeMachine;
     }
 
+    /**
+     * Returns true if any machine has job at the front of the queue
+     * @param job
+     */
     public boolean isTopJob(JobName job) {
         for (Machine m : internalList) {
             if (m.getJobs().get(0).getJobName().equals(job)) {

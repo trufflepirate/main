@@ -31,8 +31,8 @@ public class ManageJobCommand extends Command {
     private static final String MESSAGE_NO_SUCH_JOB = "No such print found";
     private static final String MESSAGE_NO_SUCH_OPTION = "No such options. Only use: start, restart, cancel.";
     private static final String MESSAGE_ACCESS_DENIED = "Non admin user is not allowed to delete jobs in maker manager";
-    private static final String MESSAGE_ONLY_TOP_JOB_STARTABLE = "You can only start/restart the first job in queue." +
-            " If you have to start another job, please ask the manager to help change the queue.";
+    private static final String MESSAGE_ONLY_TOP_JOB_STARTABLE = "You can only start/restart the first job in queue."
+            + " If you have to start another job, please ask the manager to help change the queue.";
 
     private JobName name;
     private String option;

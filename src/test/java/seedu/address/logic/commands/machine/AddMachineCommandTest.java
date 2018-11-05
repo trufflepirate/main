@@ -175,6 +175,11 @@ public class AddMachineCommandTest {
         }
 
         @Override
+        public boolean isTopJob(JobName job) {
+            return false;
+        }
+
+        @Override
         public Machine findMachine(MachineName machinename) {
             return null;
         }

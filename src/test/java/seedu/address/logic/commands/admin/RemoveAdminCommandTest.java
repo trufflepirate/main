@@ -192,6 +192,11 @@ public class RemoveAdminCommandTest {
         }
 
         @Override
+        public boolean isTopJob(JobName job) {
+            return false;
+        }
+
+        @Override
         public void updateJob(Job oldJob, Job updatedJob) {
             throw new AssertionError("This method should not be called.");
         }
