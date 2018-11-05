@@ -174,6 +174,16 @@ public class AddCommandTest {
         }
 
         @Override
+        public void moveJobToMachine(Job job, Machine targetMachine) {
+
+        }
+
+        @Override
+        public void autoMoveJobs(Machine currentMachine, Machine targetMachine) {
+
+        }
+
+        @Override
         public Machine findMachine(MachineName machinename) {
             return null;
         }

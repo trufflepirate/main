@@ -152,6 +152,16 @@ public class LoginCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
+        @Override
+        public void moveJobToMachine(Job job, Machine targetMachine) {
+
+        }
+
+        @Override
+        public void autoMoveJobs(Machine currentMachine, Machine targetMachine) {
+
+        }
+
 
         @Override
         public void updateJob(Job oldJob, Job updatedJob) {
