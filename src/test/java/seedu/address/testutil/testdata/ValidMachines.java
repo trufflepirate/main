@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.model.AddressBook;
-import seedu.address.model.job.Job;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.MachineStatus;
 import seedu.address.testutil.builders.MachineBuilder;
@@ -16,20 +15,14 @@ import seedu.address.testutil.builders.MachineBuilder;
 
 public class ValidMachines {
 
-    public static final Machine JJPRINTER = new MachineBuilder()
-            .withMachineName("JJPrinter")
-            .withMachineStatus(MachineStatus.ENABLED)
-            .build();
+    public static final Machine JJPRINTER =
+        new MachineBuilder().withMachineName("JJPrinter").withMachineStatus(MachineStatus.ENABLED).build();
 
-    public static final Machine TYPRINTER = new MachineBuilder()
-            .withMachineName("TYPrinter")
-            .withMachineStatus(MachineStatus.DISABLED)
-            .build();
+    public static final Machine TYPRINTER =
+        new MachineBuilder().withMachineName("TYPrinter").withMachineStatus(MachineStatus.DISABLED).build();
 
-    public static final Machine JIAHUAPRINTER = new MachineBuilder()
-            .withMachineName("JiaHuaPrinter")
-            .withMachineStatus(MachineStatus.ENABLED)
-            .build();
+    public static final Machine JIAHUAPRINTER =
+        new MachineBuilder().withMachineName("JiaHuaPrinter").withMachineStatus(MachineStatus.ENABLED).build();
 
 
     public static AddressBook getMachinesData() {
@@ -39,7 +32,8 @@ public class ValidMachines {
         }
         return makerManagerMachinesData;
     }
-    public static List<Machine> getValidMachines () {
+
+    public static List<Machine> getValidMachines() {
         return new ArrayList<>(Arrays.asList(JJPRINTER, TYPRINTER));
     }
 }

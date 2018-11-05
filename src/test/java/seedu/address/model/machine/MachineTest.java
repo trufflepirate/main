@@ -17,15 +17,15 @@ public class MachineTest {
     @Test
     public void canAddJobToMachine() {
         Machine testMachine = ValidMachines.JJPRINTER;
-        testMachine.addJob(ValidJobs.bumberbee);
+        testMachine.addJob(ValidJobs.job2());
     }
 
     @Test
     public void addDuplicateJobToMachine() {
         thrown.expect(DuplicateJobException.class);
         Machine testMachine = ValidMachines.JJPRINTER;
-        testMachine.addJob(ValidJobs.IDCP);
-        testMachine.addJob(ValidJobs.IDCP);
+        testMachine.addJob(ValidJobs.job1());
+        testMachine.addJob(ValidJobs.job1());
     }
 
     @Test

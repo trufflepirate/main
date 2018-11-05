@@ -3,7 +3,6 @@ package seedu.address.model.machine;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.lang.reflect.MalformedParametersException;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -12,8 +11,9 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
-import seedu.address.model.job.exceptions.DuplicateJobException;
+import seedu.address.model.job.Status;
 import seedu.address.model.job.exceptions.JobNotFoundException;
+import seedu.address.model.job.exceptions.JobOngoingException;
 import seedu.address.model.machine.exceptions.DuplicateMachineException;
 import seedu.address.model.machine.exceptions.MachineNotFoundException;
 
@@ -104,7 +104,7 @@ public class UniqueMachineList {
         if (target == null) {
             throw new MachineNotFoundException();
         }
-            target.addJob(job);
+        target.addJob(job);
     }
 
     /**
@@ -116,6 +116,9 @@ public class UniqueMachineList {
         for (Machine m : internalList) {
             Job query = m.findJob(job);
             if (query != null) {
+                if (query.getStatus() == Status.ONGOING) {
+                    throw new JobOngoingException();
+                }
                 m.removeJob(query);
                 return;
             }

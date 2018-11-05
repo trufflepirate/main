@@ -12,6 +12,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.job.JobName;
 import seedu.address.model.job.exceptions.JobNotFoundException;
+import seedu.address.model.job.exceptions.JobOngoingException;
 import seedu.address.model.machine.MachineName;
 import seedu.address.model.machine.exceptions.MachineNotFoundException;
 
@@ -45,6 +46,7 @@ public class ManageJobCommand extends Command {
     private static final String MESSAGE_MOVED_JOB = "Job moved to ";
     private static final String MESSAGE_SHIFTED = "Job Shifted!";
     private static final String MESSAGE_SHIFTED_NO_SUCH_OPTION = "Only shift up or shift down allowed";
+    private static final String MESSAGE_JOB_ONGOING = "Unable to Modify ongoing Job";
 
     private JobName name;
     private String option;
@@ -89,7 +91,11 @@ public class ManageJobCommand extends Command {
             if (!model.isLoggedIn()) {
                 throw new CommandException(MESSAGE_ACCESS_DENIED_1 + OPTION_DELETE + MESSAGE_ACCESS_DENIED_2);
             }
-            model.deleteJob(name);
+            try {
+                model.deleteJob(name);
+            } catch (JobOngoingException joe) {
+                throw new CommandException(MESSAGE_JOB_ONGOING);
+            }
             model.commitAddressBook();
             model.updateFilteredMachineList(PREDICATE_SHOW_ALL_MACHINES);
             return new CommandResult(MESSAGE_DELETED_JOB);
@@ -109,6 +115,8 @@ public class ManageJobCommand extends Command {
                 throw new CommandException(pe.getMessage());
             } catch (MachineNotFoundException mfe) {
                 throw new CommandException(MESSAGE_MACHINE_NOT_FOUND);
+            } catch (JobOngoingException je) {
+                throw new CommandException(MESSAGE_JOB_ONGOING);
             }
 
         case OPTION_SHIFT:
@@ -132,6 +140,8 @@ public class ManageJobCommand extends Command {
                 }
             } catch (JobNotFoundException jfe) {
                 throw new CommandException(MESSAGE_NO_SUCH_JOB);
+            } catch (JobOngoingException jo) {
+                throw new CommandException(MESSAGE_JOB_ONGOING);
             }
 
         default:

@@ -20,6 +20,7 @@ import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
 import seedu.address.model.job.Status;
 import seedu.address.model.job.exceptions.JobNotFoundException;
+import seedu.address.model.job.exceptions.JobOngoingException;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.MachineName;
 import seedu.address.model.machine.UniqueMachineList;
@@ -403,6 +404,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         if (targetJobAndMachine == null) {
             throw new JobNotFoundException();
         }
+        if (targetJobAndMachine.job.getStatus() == Status.ONGOING) {
+            throw new JobOngoingException();
+        }
         Machine targetMachine = findMachine(targetMachineName);
         if (targetMachine == null) {
             throw new MachineNotFoundException();
@@ -423,6 +427,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         JobMachineTuple targetJobAndMachine = findJob(jobName);
         if (targetJobAndMachine == null) {
             throw new JobNotFoundException();
+        }
+        if (targetJobAndMachine.job.getStatus() == Status.ONGOING) {
+            throw new JobOngoingException();
         }
         //shifting
         targetJobAndMachine.machine.shift(targetJobAndMachine.job, shiftBy);
