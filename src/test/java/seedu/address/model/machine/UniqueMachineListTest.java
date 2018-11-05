@@ -106,7 +106,7 @@ public class UniqueMachineListTest {
         myList.add(ValidMachines.JJPRINTER);
 
         myList.setMachine(ValidMachines.JJPRINTER, ValidMachines.TYPRINTER);
-        assertNotNull(myList.get("TYPrinter"));
+        assertNotNull(myList.findMachine(new MachineName("TYPrinter")));
     }
 
 
@@ -133,7 +133,6 @@ public class UniqueMachineListTest {
         assertTrue(addedJobMachine.hasJob(jobToAdd));
     }
 
-    @Test
     public void addJobToMachineList_returnsMachineNotFoundException() {
         thrown.expect(MachineNotFoundException.class);
         myList.add(ValidMachines.TYPRINTER);

@@ -199,6 +199,21 @@ public class Machine {
     }
 
     /**
+     * Returns true if the machine still have jobs
+     */
+
+    public boolean hasJobs() {
+        return jobs.size() != 0;
+    }
+
+    /**
+     * Returns true if the machine still have cleanable jobs
+     */
+
+    public boolean hasCleanableJobs() {
+        return jobs.hasCleanableJobs();
+    }
+    /**
      * Returns true if the machine contains
      * {@code job} in its list;
      */
@@ -241,5 +256,20 @@ public class Machine {
 
     public void shift(Job toShift, int shiftBy) {
         jobs.shift(toShift, shiftBy);
+    }
+
+    /**
+     * Flushes all jobs from machine
+     */
+    public void flushMachine() {
+        jobs.clearJobs();
+    }
+
+    /**
+     * Cleans all jobs in machine that satisfy the cleanJobPredicate in uniqueJobList
+     */
+
+    public void cleanMachine() {
+        jobs.cleanJobs();
     }
 }

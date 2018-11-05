@@ -1,5 +1,6 @@
 package seedu.address.model.machine;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Rule;
@@ -20,6 +21,8 @@ public class MachineTest {
         testMachine.addJob(ValidJobs.job2());
     }
 
+
+
     @Test
     public void addDuplicateJobToMachine() {
         thrown.expect(DuplicateJobException.class);
@@ -38,5 +41,11 @@ public class MachineTest {
         assertTrue(Machine.isValidMachine("JJ JJ JJ "));
     }
 
+
+    @Test
+    public void getFilteredJobListPredicate() {
+        Machine testMachine = ValidMachines.JJPRINTER;
+        assertNotNull(testMachine.getFilteredJobListPredicate());
+    }
 
 }

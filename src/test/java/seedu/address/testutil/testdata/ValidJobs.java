@@ -12,7 +12,6 @@ import seedu.address.testutil.builders.PersonBuilder;
  * A utility class containing a list of {@code Job} objects to be used in tests.
  */
 public class ValidJobs {
-
     /**
      * Static method that returns a new Job created with the same parameters
      */
@@ -42,6 +41,4 @@ public class ValidJobs {
                 .getName()).withJobNote("This is BUMBERBEE jobnote").withDuration(1).withPriority(Priority.NORMAL)
             .withOwner(new PersonBuilder().withName("Bumble bee").build()).withStatus(Status.CANCELLED).build();
     }
-
-
 }
