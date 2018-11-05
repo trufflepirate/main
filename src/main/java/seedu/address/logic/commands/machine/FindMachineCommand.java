@@ -7,6 +7,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.model.Model;
+import seedu.address.model.machine.MachineName;
 import seedu.address.model.machine.MachineNameContainsKeywordsPredicate;
 
 
@@ -34,6 +35,7 @@ public class FindMachineCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
+        model.findMachine(new MachineName("JJPrinter"));
         model.updateFilteredMachineList(predicate);
         return new CommandResult(
                 String.format(Messages.MESSAGE_MACHINE_LISTED_OVERVIEW, model.getFilteredMachineList().size()));

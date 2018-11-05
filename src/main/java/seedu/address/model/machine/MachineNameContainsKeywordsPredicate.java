@@ -3,6 +3,8 @@ package seedu.address.model.machine;
 import java.util.List;
 import java.util.function.Predicate;
 
+import me.xdrop.fuzzywuzzy.FuzzySearch;
+import me.xdrop.fuzzywuzzy.model.BoundExtractedResult;
 import seedu.address.commons.util.StringUtil;
 
 /**

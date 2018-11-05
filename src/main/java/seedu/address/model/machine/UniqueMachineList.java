@@ -8,6 +8,8 @@ import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import me.xdrop.fuzzywuzzy.FuzzySearch;
+import me.xdrop.fuzzywuzzy.model.BoundExtractedResult;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
@@ -80,6 +82,13 @@ public class UniqueMachineList {
      * @return
      */
     public Machine findMachine(MachineName machineName) {
+
+        List<BoundExtractedResult<Machine>> result =
+            FuzzySearch.extractSorted(machineName.fullName, internalList.sorted(), x-> x.getName().fullName);
+        logger.info("Fuzzy wuzzy");
+        for (BoundExtractedResult r : result) {
+            logger.info(r.getReferent().toString());
+        }
         for (Machine machine : internalList) {
             if (machine.getName().equals(machineName)) {
                 return machine;
@@ -87,6 +96,10 @@ public class UniqueMachineList {
         }
         return null;
     }
+
+    /**
+     * Get list of machine String names
+     */
 
     /**
      * Adds a job the machine {@code target} jobs list
