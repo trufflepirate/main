@@ -12,6 +12,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.job.JobName;
 import seedu.address.model.job.exceptions.JobNotFoundException;
+import seedu.address.model.job.exceptions.JobOngoingException;
 
 /**
  * Swaps two jobs in the maker manager queue
@@ -26,7 +27,7 @@ public class SwapJobsCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Jobs swapped: %1$s";
     private static final String MESSAGE_ACCESS_DENIED = "Non admin user is not allowed to swap jobs";
     private static final String MESSAGE_JOB_NOT_FOUND = "1 or more Jobs entered does not not exist!";
-
+    private static final String MESSAGE_JOB_ONGOING = "Ongoing Jobs cannot be swapped!";
 
     private final JobName jobName1;
     private final JobName jobName2;
@@ -55,6 +56,8 @@ public class SwapJobsCommand extends Command {
             model.swapJobs(jobName1, jobName2);
         } catch (JobNotFoundException jfe) {
             throw new CommandException(MESSAGE_JOB_NOT_FOUND);
+        } catch (JobOngoingException joe) {
+            throw new CommandException(MESSAGE_JOB_ONGOING);
         }
         model.commitAddressBook();
         return new CommandResult(String.format(MESSAGE_SUCCESS, jobName1 + " and " + jobName2));

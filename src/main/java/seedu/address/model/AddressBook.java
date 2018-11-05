@@ -390,6 +390,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         if (mj1 == null || mj2 == null) {
             throw new JobNotFoundException();
         }
+        if (mj1.job.getStatus() == Status.ONGOING || mj1.job.getStatus() == Status.ONGOING) {
+            throw new JobOngoingException();
+        }
         mj1.machine.replaceJob(mj1.job, mj2.job);
         mj2.machine.replaceJob(mj2.job, mj1.job);
     }
