@@ -58,7 +58,6 @@ public class AddJobCommand extends Command {
         }
 
         try {
-            //TODO: this is breaking after one auto addition for some reason
             if (jobToAdd.getMachineName().equals(new MachineName("AUTO"))) {
                 jobToAdd.setMachine(model.getMostFreeMachine().getName());
             }
