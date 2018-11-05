@@ -59,6 +59,7 @@ Give the user guidance as to what (s)he can do with makerManager +
 
 .. *Adding a print Job:*
 Adds a print job to the machine's queue. Specifying AUTO as MACHINE_NAME will let the software optimize which queue to add the print to. +
+Available priorities: URGENT, HIGH, NORMAL.
 
     Format: addJob n/JOB NAME m/MACHINE NAME on/JOB OWNER NAME pr/JOB PRIORITY d/JOB DURATION jn/JOB NOTE [t/TAG]
 
