@@ -43,11 +43,11 @@ public class MachineTest {
 
     @Test
     public void hasCleanableJobs() {
-         Machine testMachine = ValidMachines.JJPRINTER;
-         Job toAddJob = ValidJobs.IDCP;
-         toAddJob.setStatus(Status.CANCELLED);
-         testMachine.addJob(toAddJob);
-         assertTrue(testMachine.hasCleanableJobs());
+        Machine testMachine = ValidMachines.JJPRINTER;
+        Job toAddJob = ValidJobs.IDCP;
+        toAddJob.setStatus(Status.CANCELLED);
+        testMachine.addJob(toAddJob);
+        assertTrue(testMachine.hasCleanableJobs());
     }
 
     @Test
