@@ -197,4 +197,14 @@ public class UniqueMachineList {
         return mostFreeMachine;
     }
 
+    public boolean isTopJob(JobName job) {
+        for (Machine m : internalList) {
+            if (m.getJobs().get(0).getJobName().equals(job)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }

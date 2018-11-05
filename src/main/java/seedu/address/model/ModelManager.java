@@ -251,6 +251,11 @@ public class ModelManager extends ComponentManager implements Model {
         return getFilteredMachineList().stream().mapToInt(m -> m.getJobsAsFilteredObservableList().size()).sum();
     }
 
+    @Override
+    public boolean isTopJob(JobName job) {
+        return versionedAddressBook.isTopJob(job);
+    }
+
 
     // ============================== Machine methods ======================================= //
 

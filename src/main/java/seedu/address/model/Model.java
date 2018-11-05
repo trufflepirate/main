@@ -93,6 +93,9 @@ public interface Model {
     int getTotalNumberOfJobsDisplayed();
 
     // ============================== Machine methods ======================================= //
+
+    boolean isTopJob(JobName job);
+
     /**
      * Adds the given machine
      * Machine must not exists
