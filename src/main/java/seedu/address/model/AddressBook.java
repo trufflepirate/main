@@ -19,6 +19,7 @@ import seedu.address.model.admin.Username;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
 import seedu.address.model.job.Status;
+import seedu.address.model.job.exceptions.JobNotFoundException;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.MachineName;
 import seedu.address.model.machine.UniqueMachineList;
@@ -374,6 +375,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void swapJobs(JobName jobName1, JobName jobName2) {
         JobMachineTuple mj1 = findJob(jobName1);
         JobMachineTuple mj2 = findJob(jobName2);
+        if (mj1.machine == null || mj2.machine == null || mj1.job == null || mj2.job == null ){
+            throw new JobNotFoundException();
+        }
         mj1.machine.replaceJob(mj1.job, mj2.job);
         mj2.machine.replaceJob(mj2.job, mj1.job);
     }

@@ -11,24 +11,21 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.job.JobName;
+import seedu.address.model.job.exceptions.JobNotFoundException;
 
 /**
  * Swaps two jobs in the maker manager queue
  */
 public class SwapJobsCommand extends Command {
     public static final String COMMAND_WORD = "swapJobs";
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Swaps jobs with jobname1 and jobname2"
-            + " Parameters: "
-            + PREFIX_NAME + "JOB NAME 1" + " "
-            + PREFIX_MACHINE + "JOB NAME 2"
-            + "\nEXAMPLE: \n" + COMMAND_WORD + " "
-            + PREFIX_NAME + "iDCP project" + " "
+    public static final String MESSAGE_USAGE =
+        COMMAND_WORD + ": Swaps jobs with jobname1 and jobname2" + " Parameters: " + PREFIX_NAME + "JOB NAME 1" + " "
+            + PREFIX_MACHINE + "JOB NAME 2" + "\nEXAMPLE: \n" + COMMAND_WORD + " " + PREFIX_NAME + "iDCP project" + " "
             + PREFIX_MACHINE + "iDCP";
 
     public static final String MESSAGE_SUCCESS = "Jobs swapped: %1$s";
-    private static final String MESSAGE_ACCESS_DENIED =
-            "Non admin user is not allowed to swap jobs";
+    private static final String MESSAGE_ACCESS_DENIED = "Non admin user is not allowed to swap jobs";
+    private static final String MESSAGE_JOB_NOT_FOUND = "No could not find Machine for Job";
 
 
     private final JobName jobName1;
@@ -53,9 +50,14 @@ public class SwapJobsCommand extends Command {
 
         if (!model.isLoggedIn()) {
             throw new CommandException(MESSAGE_ACCESS_DENIED);
+
         }
 
-        model.swapJobs(jobName1, jobName2);
+        try {
+            model.swapJobs(jobName1, jobName2);
+        } catch (JobNotFoundException jfe) {
+            throw new CommandException(MESSAGE_JOB_NOT_FOUND);
+        }
         model.commitAddressBook();
         return new CommandResult(String.format(MESSAGE_SUCCESS, jobName1 + " and " + jobName2));
     }
@@ -63,8 +65,8 @@ public class SwapJobsCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof SwapJobsCommand // instanceof handles nulls
-                && jobName1.equals(((SwapJobsCommand) other).jobName1)
-                && jobName2.equals(((SwapJobsCommand) other).jobName2));
+            || (other instanceof SwapJobsCommand // instanceof handles nulls
+            && jobName1.equals(((SwapJobsCommand) other).jobName1) && jobName2
+            .equals(((SwapJobsCommand) other).jobName2));
     }
 }
