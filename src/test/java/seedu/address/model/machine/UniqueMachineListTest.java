@@ -133,6 +133,7 @@ public class UniqueMachineListTest {
         assertTrue(addedJobMachine.hasJob(jobToAdd));
     }
 
+    @Test
     public void addJobToMachineList_returnsMachineNotFoundException() {
         thrown.expect(MachineNotFoundException.class);
         myList.add(ValidMachines.TYPRINTER);
