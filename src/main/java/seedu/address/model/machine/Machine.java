@@ -195,6 +195,13 @@ public class Machine {
     }
 
     /**
+     * Returns true if the machine still have jobs
+     */
+
+    public boolean hasJobs() {
+        return jobs.size() != 0;
+    }
+    /**
      * Returns true if the machine contains
      * {@code job} in its list;
      */
@@ -233,6 +240,13 @@ public class Machine {
 
     public void replaceJob(Job jobToBeReplaced, Job replaceWith) {
         jobs.replaceJob(jobToBeReplaced, replaceWith);
+    }
+
+    /**
+     * Flushes all jobs from machine
+     */
+    public void flushMachine() {
+        jobs.clearJobs();
     }
 
 }

@@ -2,7 +2,8 @@ package seedu.address.logic.commands.machine;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_JOBS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_MACHINES;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.Command;
@@ -22,7 +23,7 @@ public class ManageMachineCommand extends Command {
     public static final String OPTION_FLUSH = "flush";
     public static final String OPTION_CLEAN = "clean";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": flush/clean/removes a machine from Maker Manager address book"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": flush/clean/remove a machine from Maker Manager address book"
             + "\nExample: " + COMMAND_WORD + " "
             + "JJPrinter flush";
 
@@ -30,6 +31,9 @@ public class ManageMachineCommand extends Command {
     public static final String MESSAGE_FLUSH_MACHINE_SUCCESS = "Machine has been flushed";
     public static final String MESSAGE_CLEAN_MACHINE_SUCCESS = "Machine has been cleaned";
     public static final String MESSAGE_MACHINE_NOT_FOUND  = "Machine not found";
+    public static final String MESSAGE_MACHINE_STILL_HAVE_JOBS = "Machine still have jobs";
+    public static final String MESSAGE_MACHINE_STILL_HAVE_UNFINISHED_JOBS = "Machine still have unfinished jobs";
+    public static final String MESSAGE_NO_SUCH_MANAGE_MACHINE_COMMAND = "No such option to manage machine";
     private static final String MESSAGE_ACCESS_DENIED =
         "Non admin user is not allowed to manage a machine from maker manager";
 
@@ -54,12 +58,33 @@ public class ManageMachineCommand extends Command {
             throw new CommandException(MESSAGE_ACCESS_DENIED);
         }
 
-        Machine machineToRemove = model.findMachine(machineName);
+        Machine machineToManage = model.findMachine(machineName);
 
-        if (machineToRemove == null) {
+        if (machineToManage != null) {
+            switch (option) {
+                case OPTION_REMOVE :
+                    if (machineToManage.hasJobs()) {
+                        throw new CommandException(MESSAGE_MACHINE_STILL_HAVE_JOBS);
+                    }
+                    model.removeMachine(machineToManage);
+                    model.commitAddressBook();
+                    model.updateFilteredMachineList(PREDICATE_SHOW_ALL_MACHINES);
+                    return new CommandResult(String.format(MESSAGE_REMOVE_MACHINE_SUCCESS, machineToManage));
+                case OPTION_FLUSH :
+                    model.flushMachine(machineToManage);
+                    model.commitAddressBook();
+                    model.updateFilteredMachineList(PREDICATE_SHOW_ALL_MACHINES);
+                    model.updateFilteredJobListInAllMachines(PREDICATE_SHOW_ALL_JOBS);
+                    return new CommandResult(String.format(MESSAGE_FLUSH_MACHINE_SUCCESS, machineToManage));
+                case OPTION_CLEAN :
+                    return new CommandResult(String.format(MESSAGE_CLEAN_MACHINE_SUCCESS, machineToManage));
+                default:
+                    throw new CommandException(MESSAGE_NO_SUCH_MANAGE_MACHINE_COMMAND);
+            }
+        } else {
             throw new CommandException(MESSAGE_MACHINE_NOT_FOUND);
         }
 
-        return new CommandResult(String.format(MESSAGE_REMOVE_MACHINE_SUCCESS, machineToRemove));
+
     }
 }

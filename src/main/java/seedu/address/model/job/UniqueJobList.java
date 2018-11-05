@@ -193,6 +193,13 @@ public class UniqueJobList {
         findJob(name).restartJob();
     }
 
+    /**
+     * Clears the entire jobs list
+     */
+    public void clearJobs() {
+        internalList.clear();
+    }
+
     public void requestDeletion(JobName name) {
         findJob(name).setStatus(Status.DELETING);
     }
@@ -217,6 +224,7 @@ public class UniqueJobList {
     public void finishJob(Job job) {
         job.finishJob();
     }
+
 
     //============================= queue operations =======================================//
 

@@ -255,6 +255,15 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Flushes all jobs from a machine
+     */
+
+    public void flushMachine(Machine toFlushMachine) {
+        requireNonNull(toFlushMachine);
+        toFlushMachine.flushMachine();
+    }
+
+    /**
      * Replaces the given Machine {@code target} in the list with {@code editedMachine}.
      * {@code target} must exist in the address book.
      * The Machine identity of {@code editedMachine} must not be the same as another existing

@@ -113,6 +113,13 @@ public interface Model {
      */
 
     boolean hasSameMachineName(Machine machine);
+
+    /**
+     * Flushes all the jobs in the machine
+     */
+
+    void flushMachine(Machine toFlushMachine);
+
     /**
      * Replaces the given machine {@code target} with {@code editedMachine}.
      * {@code target} must exist in the Model.

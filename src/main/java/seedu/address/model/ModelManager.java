@@ -279,6 +279,13 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void flushMachine(Machine toFlushMachine) {
+        requireNonNull(toFlushMachine);
+        versionedAddressBook.flushMachine(toFlushMachine);
+        indicateMachineListChanged();
+    }
+
+    @Override
     public void updateMachine(Machine target, Machine editedMachine) {
         requireAllNonNull(target, editedMachine);
         versionedAddressBook.updateMachine(target, editedMachine);

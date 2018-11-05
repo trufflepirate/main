@@ -106,7 +106,7 @@ public class UniqueMachineListTest {
     public void replaceTargetMachineWithEditedMachine() {
         uniqueMachineList.add(ValidMachines.JJPRINTER);
         uniqueMachineList.setMachine(ValidMachines.JJPRINTER, ValidMachines.TYPRINTER);
-        assertNotNull(uniqueMachineList.get("TYPrinter"));
+        assertNotNull(uniqueMachineList.findMachine(new MachineName("TYPrinter")));
     }
 
     @Test
