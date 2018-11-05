@@ -104,72 +104,34 @@ public class AddressBookTest {
 
     @Test
     public void canRemoveMachine() {
-        addressBook.addMachine(ValidMachines.JJPRINTER);
-        addressBook.removeMachine(ValidMachines.JJPRINTER);
-        assertNull(addressBook.findMachine(new MachineName("JJPrinter")));
+        AddressBook tempAddressBook = new AddressBook();
+        tempAddressBook.addMachine(ValidMachines.JJPRINTER);
+        tempAddressBook.removeMachine(ValidMachines.JJPRINTER);
+        assertNull(tempAddressBook.findMachine(new MachineName("JJPrinter")));
     }
 
     @Test
     public void canFlushMachine() {
-        addressBook.addMachine(ValidMachines.JJPRINTER);
-        addressBook.flushMachine(ValidMachines.JJPRINTER);
-        Machine flushedMachine = addressBook.findMachine(new MachineName("JJPrinter"));
+        AddressBook tempAddressBook = new AddressBook();
+        tempAddressBook.addMachine(ValidMachines.JJPRINTER);
+        tempAddressBook.flushMachine(ValidMachines.JJPRINTER);
+        Machine flushedMachine = tempAddressBook.findMachine(new MachineName("JJPrinter"));
         assertTrue(!flushedMachine.hasJobs());
-    }
-
-    @Test
-    public void canCleanMachine() {
-        addressBook.addMachine(ValidMachines.JJPRINTER);
-        Job toAddJob = ValidJobs.IDCP;
-        toAddJob.setStatus(Status.CANCELLED);
-        addressBook.addJobToMachineList(toAddJob);
-        addressBook.cleanMachine(ValidMachines.JJPRINTER);
-        Machine cleanedMachine = addressBook.findMachine(new MachineName("JJPrinter"));
-        assertTrue(!cleanedMachine.hasCleanableJobs());
-    }
-
-    @Test
-    public void canAddJobToMachineList() {
-        addressBook.addMachine(ValidMachines.JJPRINTER);
-        Job toAddJob = ValidJobs.IDCP;
-        addressBook.addJobToMachineList(toAddJob);
-        Machine foundJob = addressBook.findMachine(new MachineName("JJPrinter"));
-        assertTrue(foundJob.hasJob(toAddJob));
-    }
-
-    @Test
-    public void canStartJobInMachineList() {
-        addressBook.addMachine(ValidMachines.JJPRINTER);
-        Job toAddJob = ValidJobs.IDCP;
-        addressBook.addJobToMachineList(toAddJob);
-        addressBook.startJob(new JobName(toAddJob.getJobName().fullName));
-        JobMachineTuple foundJobMachineTuple = addressBook.findJob(new JobName(toAddJob.getJobName().fullName));
-        Job foundJob = foundJobMachineTuple.job;
-        assertTrue(foundJob.getStatus().equals(Status.ONGOING));
-    }
-
-    @Test
-    public void canCancelJobInMachineList() {
-        addressBook.addMachine(ValidMachines.JJPRINTER);
-        Job toAddJob = ValidJobs.IDCP;
-        addressBook.addJobToMachineList(toAddJob);
-        addressBook.startJob(new JobName(toAddJob.getJobName().fullName));
-        JobMachineTuple foundJobMachineTuple = addressBook.findJob(new JobName(toAddJob.getJobName().fullName));
-        Job foundJob = foundJobMachineTuple.job;
-        addressBook.cancelJob(new JobName(toAddJob.getJobName().fullName));
-        assertTrue(foundJob.getStatus().equals(Status.CANCELLED));
+        tempAddressBook.removeMachine(ValidMachines.JJPRINTER);
     }
 
     @Test
     public void canRestartJobInMachineList() {
-        addressBook.addMachine(ValidMachines.JJPRINTER);
+        AddressBook tempAddressBook = new AddressBook();
+        tempAddressBook.addMachine(ValidMachines.JJPRINTER);
         Job toAddJob = ValidJobs.IDCP;
-        addressBook.addJobToMachineList(toAddJob);
-        addressBook.startJob(new JobName(toAddJob.getJobName().fullName));
-        JobMachineTuple foundJobMachineTuple = addressBook.findJob(new JobName(toAddJob.getJobName().fullName));
+        tempAddressBook.addJobToMachineList(toAddJob);
+        tempAddressBook.startJob(new JobName(toAddJob.getJobName().fullName));
+        JobMachineTuple foundJobMachineTuple = tempAddressBook.findJob(new JobName(toAddJob.getJobName().fullName));
         Job foundJob = foundJobMachineTuple.job;
-        addressBook.restartJob(new JobName(toAddJob.getJobName().fullName));
+        tempAddressBook.restartJob(new JobName(toAddJob.getJobName().fullName));
         assertTrue(foundJob.getStatus().equals(Status.ONGOING));
+        tempAddressBook.removeMachine(ValidMachines.JJPRINTER);
     }
 
     /**

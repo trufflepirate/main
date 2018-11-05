@@ -121,14 +121,6 @@ public class UniqueMachineListTest {
     }
 
     @Test
-    public void addJobToMachineList() {
-        uniqueMachineList.add(ValidMachines.JJPRINTER);
-        uniqueMachineList.addJobToMachineList(ValidJobs.IDCP);
-        Machine addedJobMachine = uniqueMachineList.findMachine(new MachineName("JJPrinter"));
-        assertTrue(addedJobMachine.getJobs().contains(ValidJobs.IDCP));
-    }
-
-    @Test
     public void addJobToMachineList_returnsMachineNotFoundException() {
         thrown.expect(MachineNotFoundException.class);
         uniqueMachineList.add(ValidMachines.TYPRINTER);
