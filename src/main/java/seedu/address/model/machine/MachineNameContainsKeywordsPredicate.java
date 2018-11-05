@@ -10,7 +10,7 @@ import seedu.address.commons.util.StringUtil;
  */
 public class MachineNameContainsKeywordsPredicate implements Predicate<Machine> {
     private final List<String> keywords;
-    
+
 
     public MachineNameContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
