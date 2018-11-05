@@ -22,33 +22,34 @@ public class ManageMachineCommandParser implements Parser<ManageMachineCommand> 
     public ManageMachineCommand parse(String userInput) throws ParseException {
         String trimmedArgs = userInput.trim();
         if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ManageMachineCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ManageMachineCommand.MESSAGE_USAGE));
         }
 
-        String [] temp = trimmedArgs.split(" ");
+        String[] temp = trimmedArgs.split(" ");
 
         MachineName name;
         String option;
         String autoFlush;
 
         switch (temp.length) {
-        case 2 :
+        case 2:
             try {
                 name = new MachineName(temp[0]);
                 option = temp[1];
                 autoFlush = null;
             } catch (Exception IllegalArgumentException) {
-                throw new ParseException(String.format(MESSAGE_ILLEGAL_MACHINE_NAME, ManageMachineCommand.MESSAGE_USAGE));
+                throw new ParseException(
+                    String.format(MESSAGE_ILLEGAL_MACHINE_NAME, ManageMachineCommand.MESSAGE_USAGE));
             }
             break;
-        case 3 :
+        case 3:
             try {
                 name = new MachineName(temp[0]);
                 option = temp[1];
                 autoFlush = temp[2];
             } catch (Exception IllegalArgumentException) {
-                throw new ParseException(String.format(MESSAGE_ILLEGAL_MACHINE_NAME, ManageMachineCommand.MESSAGE_USAGE));
+                throw new ParseException(
+                    String.format(MESSAGE_ILLEGAL_MACHINE_NAME, ManageMachineCommand.MESSAGE_USAGE));
             }
             break;
         default:
