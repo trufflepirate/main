@@ -219,7 +219,7 @@ public class UpdatePasswordCommandTest {
         }
 
         @Override
-        public void autoMoveJobs(Machine currentMachine) {
+        public void autoMoveJobsDuringFlush(Machine currentMachine) {
 
         }
 

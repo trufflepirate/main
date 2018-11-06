@@ -261,7 +261,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void autoMoveJobs(Machine currentMachine) throws CommandException {
+    public void autoMoveJobsDuringFlush(Machine currentMachine) throws CommandException {
         for (Job j : currentMachine.getJobs()) {
             Machine mostFreeMachine = getMostFreeMachine();
             if (mostFreeMachine.equals(currentMachine)) {

@@ -104,7 +104,7 @@ public class ManageMachineCommand extends Command {
                         return new CommandResult(String.format(MESSAGE_MACHINE_NOT_FLUSHED, machineToManage));
                     }
                 } else if (flushAutoOption.equals(OPTION_FLUSH_AUTO)) {
-                    model.autoMoveJobs(machineToManage);
+                    model.autoMoveJobsDuringFlush(machineToManage);
                     model.updateFilteredMachineList(PREDICATE_SHOW_ALL_MACHINES);
                     model.updateFilteredJobListInAllMachines(PREDICATE_SHOW_ALL_JOBS);
                     return new CommandResult(String.format(MESSAGE_AUTO_FLUSHING_MACHINE, machineToManage));

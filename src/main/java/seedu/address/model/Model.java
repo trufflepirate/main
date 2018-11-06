@@ -95,7 +95,7 @@ public interface Model {
 
     void moveJobToMachine(Job job, Machine targetMachine);
 
-    void autoMoveJobs(Machine currentMachine) throws CommandException;
+    void autoMoveJobsDuringFlush(Machine currentMachine) throws CommandException;
 
     // ============================== Machine methods ======================================= //
     /**
