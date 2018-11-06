@@ -3,8 +3,10 @@ package seedu.address.model.job;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.address.testutil.testdata.TypicalJobs.IDCP;
 import static seedu.address.testutil.testdata.TypicalJobs.NEWPROJECT;
+import static seedu.address.testutil.testdata.ValidJobs.bumberbee;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -77,7 +79,7 @@ public class UniqueJobListTest {
         uniqueJobList.setJob(IDCP, IDCP);
         UniqueJobList expectedUniqueJobList = new UniqueJobList();
         expectedUniqueJobList.add(IDCP);
-        assertNotEquals(expectedUniqueJobList, uniqueJobList);
+        assertEquals(expectedUniqueJobList, uniqueJobList);
     }
 
     @Test
@@ -106,13 +108,14 @@ public class UniqueJobListTest {
     @Test
     public void remove_jobDoesNotExist_throwsJobNotFoundException() {
         thrown.expect(JobNotFoundException.class);
-        uniqueJobList.remove(IDCP.getJobName());
+        uniqueJobList.remove(IDCP);
+        uniqueJobList.remove(bumberbee);
     }
 
     @Test
     public void remove_existingJob_removesJob() {
         uniqueJobList.add(IDCP);
-        uniqueJobList.remove(IDCP.getJobName());
+        uniqueJobList.remove(IDCP);
         UniqueJobList expectedUniqueJobList = new UniqueJobList();
         assertNotEquals(expectedUniqueJobList, uniqueJobList);
     }

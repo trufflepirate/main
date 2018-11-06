@@ -22,11 +22,11 @@ import seedu.address.model.tag.Tag;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Job {
-    public static final String MESSAGE_NAME_CONSTRAINTS =
-        "Job names should only contain alphanumeric characters and spaces, " + "and it should not be blank";
+    public static final String MESSAGE_NAME_CONSTRAINTS = "Job names should only contain alphanumeric characters and " +
+        "spaces, " + "and it should not be blank";
 
-    public static final String MESSAGE_NOTE_CONSTRAINTS =
-        "Job notes should only contain alphanumeric characters and spaces, " + "and it should not be blank";
+    public static final String MESSAGE_NOTE_CONSTRAINTS = "Job notes should only contain alphanumeric characters and " +
+        "spaces, " + "and it should not be blank";
 
     public static final String MEEEAGE_PRIORITY_CONSTRAINTS = "Job priority can only be URGENT, HIGH and NORMAL";
 
@@ -243,9 +243,9 @@ public class Job {
             return true;
         }
 
-        return otherJob != null && otherJob.getJobName().equals(getJobName()) && (
-            otherJob.getMachineName().equals(getMachineName()) || otherJob.getAddedTime().equals(getAddedTime())
-                || otherJob.getOwner().equals(getOwner()));
+        return otherJob != null && otherJob.getJobName().equals(getJobName()) && (otherJob.getMachineName()
+            .equals(getMachineName()) || otherJob.getAddedTime().equals(getAddedTime()) || otherJob.getOwner()
+            .equals(getOwner()));
     }
 
     /**
@@ -312,6 +312,9 @@ public class Job {
      */
     @Override
     public boolean equals(Object other) {
+        if (!(other instanceof Job)) {
+            return false;
+        }
         Job otherJob = (Job) other;
 
         if (other == this) {
@@ -322,9 +325,9 @@ public class Job {
             return false;
         }
 
-        return otherJob.getJobName().equals(getJobName()) && otherJob.getMachineName().equals(getMachineName())
-            && otherJob.getOwner().equals(getOwner()) && otherJob.getAddedTime().equals(getAddedTime()) && otherJob
-            .getTags().equals(getTags());
+        return otherJob.getJobName().equals(getJobName()) && otherJob.getMachineName()
+            .equals(getMachineName()) && otherJob.getOwner().equals(getOwner()) && otherJob.getAddedTime().showTime()
+            .equals(getAddedTime().showTime()) && otherJob.getTags().equals(getTags());
     }
 
     /**
@@ -354,8 +357,8 @@ public class Job {
 
     @Override
     public String toString() {
-        return "Job name " + this.getJobName().toString() + "\nJob machine " + this.getMachineName().toString()
-            + "\nJob Priority " + this.getPriority() + "\nJob status " + this.getStatus();
+        return "Job name " + this.getJobName().toString() + "\nJob machine " + this.getMachineName()
+            .toString() + "\nJob Priority " + this.getPriority() + "\nJob status " + this.getStatus();
     }
 
 
