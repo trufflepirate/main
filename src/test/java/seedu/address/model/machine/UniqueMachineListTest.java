@@ -140,5 +140,4 @@ public class UniqueMachineListTest {
         myList.addJobToMachineList(ValidJobs.job1());
     }
 
-
 }

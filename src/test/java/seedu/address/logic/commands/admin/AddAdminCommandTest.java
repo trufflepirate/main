@@ -203,12 +203,16 @@ public class AddAdminCommandTest {
         }
 
         @Override
+        public boolean isTopJob(JobName job) {
+            return false;
+        }
+
         public void moveJobToMachine(Job job, Machine targetMachine) {
 
         }
 
         @Override
-        public void autoMoveJobs(Machine currentMachine, Machine targetMachine) {
+        public void autoMoveJobsDuringFlush(Machine currentMachine) {
 
         }
 

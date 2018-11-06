@@ -4,6 +4,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.JobMachineTuple;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.Username;
 import seedu.address.model.job.Job;
@@ -99,9 +100,12 @@ public interface Model {
 
     void moveJobToMachine(Job job, Machine targetMachine);
 
-    void autoMoveJobs(Machine currentMachine, Machine targetMachine);
+    void autoMoveJobsDuringFlush(Machine currentMachine) throws CommandException;
 
     // ============================== Machine methods ======================================= //
+
+    boolean isTopJob(JobName job);
+
     /**
      * Adds the given machine
      * Machine must not exists

@@ -515,6 +515,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         return getMachineList().stream().mapToInt(machine -> machine.getJobs().size()).sum();
     }
 
+    public boolean isTopJob(JobName job) {
+        return machines.isTopJob(job);
+    }
+
     //======================== get lists methods ===========================//
     @Override
     public ObservableList<Person> getPersonList() {
@@ -557,6 +561,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.asUnmodifiableObservableList().size() + " persons";
         // TODO: refine later
     }
+
 
     /**
      * list all the current's version data for addressbook

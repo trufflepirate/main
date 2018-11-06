@@ -10,8 +10,6 @@ import seedu.address.model.Model;
 import seedu.address.model.machine.MachineNameContainsKeywordsPredicate;
 
 
-
-
 /**
  * Finds and lists all machines in address book whose name contains any of the argument keywords.
  * Keyword matching is case insensitive.

@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.commands.machine.ManageMachineCommand.MESSAGE_NO_MORE_MACHINES;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -18,6 +19,7 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.AdminListChangedEvent;
 import seedu.address.commons.events.model.JobListChangedEvent;
 import seedu.address.commons.events.model.MachineListChangedEvent;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.Username;
 import seedu.address.model.job.Job;
@@ -264,15 +266,28 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public boolean isTopJob(JobName job) {
+        return versionedAddressBook.isTopJob(job);
+    }
+
+    /**
+     * used for moving Job to Machine
+     * @param job
+     * @param targetMachine
+     */
     public void moveJobToMachine(Job job, Machine targetMachine) {
         job.setMachine(targetMachine.getName());
         targetMachine.addJob(job);
     }
 
     @Override
-    public void autoMoveJobs(Machine currentMachine, Machine targetMachine) {
+    public void autoMoveJobsDuringFlush(Machine currentMachine) throws CommandException {
         for (Job j : currentMachine.getJobs()) {
-            moveJobToMachine(j, targetMachine);
+            Machine mostFreeMachine = getMostFreeMachine();
+            if (mostFreeMachine.equals(currentMachine)) {
+                throw new CommandException(MESSAGE_NO_MORE_MACHINES);
+            }
+            moveJobToMachine(j, mostFreeMachine);
         }
         flushMachine(currentMachine);
         indicateMachineListChanged();
