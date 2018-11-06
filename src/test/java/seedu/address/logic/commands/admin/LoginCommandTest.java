@@ -162,7 +162,7 @@ public class LoginCommandTest {
         }
 
         @Override
-        public void autoMoveJobs(Machine currentMachine, Machine targetMachine) {
+        public void autoMoveJobsDuringFlush(Machine currentMachine) {
 
         }
 
