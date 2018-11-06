@@ -97,6 +97,9 @@ public interface Model {
     void autoMoveJobs(Machine currentMachine, Machine targetMachine);
 
     // ============================== Machine methods ======================================= //
+
+    boolean isTopJob(JobName job);
+
     /**
      * Adds the given machine
      * Machine must not exists

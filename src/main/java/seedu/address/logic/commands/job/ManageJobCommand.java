@@ -31,6 +31,8 @@ public class ManageJobCommand extends Command {
     private static final String MESSAGE_NO_SUCH_JOB = "No such print found";
     private static final String MESSAGE_NO_SUCH_OPTION = "No such options. Only use: start, restart, cancel.";
     private static final String MESSAGE_ACCESS_DENIED = "Non admin user is not allowed to delete jobs in maker manager";
+    private static final String MESSAGE_ONLY_TOP_JOB_STARTABLE = "You can only start/restart the first job in queue."
+            + " If you have to start another job, please ask the manager to help change the queue.";
 
     private JobName name;
     private String option;
@@ -45,17 +47,22 @@ public class ManageJobCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
 
-        //TODO: Currently findJob is happening twice. Fix.
         if (model.findJob(this.name) == null) {
             throw new CommandException(MESSAGE_NO_SUCH_JOB);
         }
 
         if (option.equals(OPTION_START)) {
+            if (!model.isTopJob(name)) {
+                throw new CommandException(MESSAGE_ONLY_TOP_JOB_STARTABLE);
+            }
             model.startJob(name);
             model.commitAddressBook();
             model.updateFilteredMachineList(PREDICATE_SHOW_ALL_MACHINES);
             return new CommandResult(MESSAGE_STARTED_JOB);
         } else if (option.equals(OPTION_RESTART)) {
+            if (!model.isTopJob(name)) {
+                throw new CommandException(MESSAGE_ONLY_TOP_JOB_STARTABLE);
+            }
             model.restartJob(name);
             model.commitAddressBook();
             model.updateFilteredMachineList(PREDICATE_SHOW_ALL_MACHINES);

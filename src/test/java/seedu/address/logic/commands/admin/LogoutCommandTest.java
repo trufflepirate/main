@@ -139,6 +139,11 @@ public class LogoutCommandTest {
         }
 
         @Override
+
+        public boolean isTopJob(JobName job) {
+            return false;
+        }
+
         public void moveJobToMachine(Job job, Machine targetMachine) {
 
         }

@@ -127,7 +127,4 @@ public class UniqueMachineListTest {
         uniqueMachineList.addJobToMachineList(ValidJobs.IDCP);
     }
 
-
-
-
 }

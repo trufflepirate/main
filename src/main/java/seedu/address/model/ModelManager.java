@@ -253,6 +253,15 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public boolean isTopJob(JobName job) {
+        return versionedAddressBook.isTopJob(job);
+    }
+
+    /**
+     * used for moving Job to Machine
+     * @param job
+     * @param targetMachine
+     */
     public void moveJobToMachine(Job job, Machine targetMachine) {
         job.setMachine(targetMachine.getName());
         targetMachine.addJob(job);
