@@ -207,7 +207,7 @@ public class AddAdminCommandTest {
         }
 
         @Override
-        public void autoMoveJobs(Machine currentMachine, Machine targetMachine) {
+        public void autoMoveJobs(Machine currentMachine) {
 
         }
 
