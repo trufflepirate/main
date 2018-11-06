@@ -392,6 +392,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new JobOngoingException();
         }
         target.job.startJob();
+        target.machine.reSortJobList();
         EventsCenter.getInstance().post(new FocusMachineRequestEvent(target));
     }
 
@@ -404,6 +405,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(name);
         JobMachineTuple target = findJob(name);
         target.job.cancelJob();
+        target.machine.reSortJobList();
         EventsCenter.getInstance().post(new FocusMachineRequestEvent(target));
     }
 
@@ -415,7 +417,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void restartJob(JobName name) {
         requireNonNull(name);
         JobMachineTuple target = findJob(name);
-        findJob(name).job.restartJob();
+        target.job.restartJob();
+        target.machine.reSortJobList();
         EventsCenter.getInstance().post(new FocusMachineRequestEvent(target));
     }
 
@@ -434,6 +437,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
         mj1.machine.replaceJob(mj1.job, mj2.job);
         mj2.machine.replaceJob(mj2.job, mj1.job);
+        mj1.machine.reSortJobList();
+        mj2.machine.reSortJobList();
         EventsCenter.getInstance().post(new FocusMachineRequestEvent(mj2));
     }
 
@@ -456,10 +461,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
         //removing job from old machine
         targetJobAndMachine.machine.removeJob(targetJobAndMachine.job);
+        targetJobAndMachine.machine.reSortJobList();
         //updating job
         targetJobAndMachine.job.setMachine(targetMachine.getName());
         //adding to new Machine
         targetMachine.addJob(targetJobAndMachine.job);
+        targetMachine.reSortJobList();
         EventsCenter.getInstance()
             .post(new FocusMachineRequestEvent(new JobMachineTuple(targetJobAndMachine.job, targetMachine)));
     }
@@ -478,6 +485,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
         //shifting
         targetJobAndMachine.machine.shift(targetJobAndMachine.job, shiftBy);
+        targetJobAndMachine.machine.reSortJobList();
         EventsCenter.getInstance().post(new FocusMachineRequestEvent(targetJobAndMachine));
     }
 
@@ -489,6 +497,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void finishJob(JobMachineTuple target) {
         requireNonNull(target);
         target.job.finishJob();
+        target.machine.reSortJobList();
         EventsCenter.getInstance().post(new FocusMachineRequestEvent(target));
     }
 
@@ -498,6 +507,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void requestDeletion(JobName jobName) {
         JobMachineTuple toRequestDelete = findJob(jobName);
         toRequestDelete.job.setStatus(Status.DELETING);
+        toRequestDelete.machine.reSortJobList();
         EventsCenter.getInstance().post(new FocusMachineRequestEvent(toRequestDelete));
     }
 

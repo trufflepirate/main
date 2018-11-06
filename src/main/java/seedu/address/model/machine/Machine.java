@@ -191,6 +191,10 @@ public class Machine {
         return jobs.findJob(jobName);
     }
 
+    public void reSortJobList() {
+        jobs.reSortList();
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -214,6 +218,7 @@ public class Machine {
     public boolean hasCleanableJobs() {
         return jobs.hasCleanableJobs();
     }
+
     /**
      * Returns true if the machine contains
      * {@code job} in its list;

@@ -33,6 +33,13 @@ public class UniqueJobList {
     }
 
     /**
+     * sorts the internal list
+     */
+    public void reSortList() {
+        FXCollections.sort(internalList, new JobComparator());
+    }
+
+    /**
      * Adds a job to the list.
      * The jpb must not already exist in the list.
      */
@@ -42,7 +49,6 @@ public class UniqueJobList {
             throw new DuplicateJobException();
         }
         internalList.add(toAdd);
-        FXCollections.sort(internalList, new JobComparator());
     }
 
     /**
@@ -188,7 +194,6 @@ public class UniqueJobList {
         }
 
         internalList.set(index, editedJob);
-        FXCollections.sort(internalList, new JobComparator());
     }
 
     /**
@@ -197,7 +202,6 @@ public class UniqueJobList {
     public void startJob(JobName name) {
         requireAllNonNull();
         findJob(name).startJob();
-        FXCollections.sort(internalList, new JobComparator());
     }
 
     /**
@@ -206,7 +210,6 @@ public class UniqueJobList {
     public void cancelJob(JobName name) {
         requireAllNonNull();
         findJob(name).cancelJob();
-        FXCollections.sort(internalList, new JobComparator());
     }
 
     /**
@@ -215,7 +218,6 @@ public class UniqueJobList {
     public void restartJob(JobName name) {
         requireAllNonNull();
         findJob(name).restartJob();
-        FXCollections.sort(internalList, new JobComparator());
     }
 
     /**
@@ -264,14 +266,13 @@ public class UniqueJobList {
             throw new JobNotFoundException();
         }
         internalList.set(targetIndex, new Job(replaceWith));
-        FXCollections.sort(internalList, new JobComparator());
     }
+
     /**
      * sets a jobStatus to finish.
      */
     public void finishJob(Job job) {
         job.finishJob();
-        FXCollections.sort(internalList, new JobComparator());
     }
 
 

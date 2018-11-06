@@ -3,7 +3,6 @@ package seedu.address.model.job;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.job.Status.ONGOING;
 import static seedu.address.model.job.Status.PAUSED;
-import static seedu.address.model.job.Status.QUEUED;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -279,20 +278,32 @@ public class Job {
 
     public int hasHigherDisplayPriority(Job comparedJob) {
         //TODO clean up code to make it neater for comparison
-        if (this.equals(comparedJob)) {
+        if (this.equals(comparedJob) || statusRank(this.getStatus()) == statusRank(comparedJob.getStatus())) {
             return 0;
         }
-        if (this.getStatus() == Status.ONGOING) {
+        if (statusRank(this.getStatus()) > statusRank(comparedJob.getStatus())) {
             return 1;
-        }
-        if (this.getStatus() == QUEUED && comparedJob.getStatus() != QUEUED && comparedJob.getStatus() != ONGOING) {
-            return 1;
-        }
-        if (this.getStatus() != QUEUED && comparedJob.getStatus() != QUEUED && this.getStatus() != ONGOING
-            && comparedJob.getStatus() != ONGOING) {
-            return 0;
         }
         return -1;
+    }
+
+    /**
+     * ranks statuses
+     */
+    private int statusRank(Status myStatus) {
+        switch (myStatus) {
+        case ONGOING:
+            return 3;
+        case QUEUED:
+            return 2;
+        case CANCELLED:
+        case FINISHED:
+        case DELETING:
+        case PAUSED:
+        default:
+            return 1;
+        }
+
     }
 
     /**
