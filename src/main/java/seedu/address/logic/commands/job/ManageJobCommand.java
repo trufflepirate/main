@@ -43,7 +43,8 @@ public class ManageJobCommand extends Command {
     public static final String MESSAGE_USAGE_SHIFT =
         COMMAND_WORD + " shift up/down" + "Example: " + COMMAND_WORD + " IDCP swap PrintJob7";
     private static final String MESSAGE_STARTED_JOB = "The print has started.";
-    private static final String MESSAGE_CANNOT_START_JOB = "Cannot Start Job! This printer already has an ongoing Job!";
+    private static final String MESSAGE_CANNOT_START_JOB =
+        "Cannot Start/Restart Job! This printer already has an ongoing Job!";
     private static final String MESSAGE_CANCELLED_JOB = "The print has been cancelled.";
     private static final String MESSAGE_RESTARTED_JOB = "The print has restarted.";
     private static final String MESSAGE_DELETED_JOB = "The print has been deleted";
@@ -60,7 +61,7 @@ public class ManageJobCommand extends Command {
     private static final String MESSAGE_MACHINE_DISABLED = "Unable to Start/Restart! Machine Disabled!";
     private static final String MESSAGE_ACCESS_DENIED = "Non admin user is not allowed to delete jobs in maker manager";
     private static final String MESSAGE_ONLY_TOP_JOB_STARTABLE = "You can only start/restart the first job in queue."
-            + " If you have to start another job, please ask the manager to help change the queue.";
+        + " If you have to start another job, please ask the manager to help change the queue.";
 
     private JobName name;
     private String option;
@@ -84,6 +85,9 @@ public class ManageJobCommand extends Command {
 
         case OPTION_START:
             try {
+                if (!model.isTopJob(name) && !model.isLoggedIn()) {
+                    throw new CommandException(MESSAGE_ONLY_TOP_JOB_STARTABLE);
+                }
                 model.startJob(name);
                 model.commitAddressBook();
                 model.updateFilteredMachineList(PREDICATE_SHOW_ALL_MACHINES);
@@ -96,6 +100,9 @@ public class ManageJobCommand extends Command {
 
         case OPTION_RESTART:
             try {
+                if (!model.isTopJob(name) && !model.isLoggedIn()) {
+                    throw new CommandException(MESSAGE_ONLY_TOP_JOB_STARTABLE);
+                }
                 model.restartJob(name);
                 model.commitAddressBook();
                 model.updateFilteredMachineList(PREDICATE_SHOW_ALL_MACHINES);
