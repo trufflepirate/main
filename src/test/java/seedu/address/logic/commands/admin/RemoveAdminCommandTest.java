@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.JobMachineTuple;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -177,7 +178,7 @@ public class RemoveAdminCommandTest {
         }
 
         @Override
-        public void finishJob(Job job) {
+        public void finishJob(JobMachineTuple job) {
 
         }
 
@@ -207,7 +208,7 @@ public class RemoveAdminCommandTest {
         }
 
         @Override
-        public Job findJob(JobName name) {
+        public JobMachineTuple findJob(JobName name) {
             return null;
         }
 

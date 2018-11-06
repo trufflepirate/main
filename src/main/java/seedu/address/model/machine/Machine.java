@@ -58,6 +58,7 @@ public class Machine {
         this.tags.addAll(tags);
         this.status = status;
         this.filteredJobs = new FilteredList<>(this.jobs.asUnmodifiableObservableList());
+
     }
 
     public Machine(Machine toBeCopied) {

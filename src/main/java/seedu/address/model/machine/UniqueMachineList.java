@@ -8,7 +8,10 @@ import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.JobMachineTuple;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.FocusMachineRequestEvent;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
 import seedu.address.model.job.Status;
@@ -105,6 +108,7 @@ public class UniqueMachineList {
             throw new MachineNotFoundException();
         }
         target.addJob(job);
+        EventsCenter.getInstance().post(new FocusMachineRequestEvent(new JobMachineTuple(job, target)));
     }
 
     /**
@@ -120,10 +124,10 @@ public class UniqueMachineList {
                     throw new JobOngoingException();
                 }
                 m.removeJob(query);
+                EventsCenter.getInstance().post(new FocusMachineRequestEvent(new JobMachineTuple(query, m)));
                 return;
             }
         }
-
         throw new JobNotFoundException();
     }
 

@@ -3,6 +3,7 @@ package seedu.address.model.job;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.job.Status.ONGOING;
 import static seedu.address.model.job.Status.PAUSED;
+import static seedu.address.model.job.Status.QUEUED;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -64,6 +65,7 @@ public class Job {
         this.status = Status.QUEUED;
         startTime = new TimeStamp();
         addedTime = new TimeStamp();
+        //pausedTime = new TimeStamp();
     }
 
     /**
@@ -123,6 +125,12 @@ public class Job {
         //return this.duration + "";
         TimeStamp t = new TimeStamp(this.duration);
         return t.showAsDuration();
+    }
+
+    public float getPercentageCompletion() {
+        TimeStamp t = new TimeStamp(this.duration);
+        long timeElapsed = TimeStamp.timeDifference(startTime, new TimeStamp());
+        return (float) timeElapsed / this.duration;
     }
 
     public void setDuration(long duration) {
@@ -269,24 +277,22 @@ public class Job {
      * Compares priority between two jobs
      */
 
-    public int hasHigherPriority(Job comparedJob) {
+    public int hasHigherDisplayPriority(Job comparedJob) {
         //TODO clean up code to make it neater for comparison
         if (this.equals(comparedJob)) {
             return 0;
         }
-
-        if (Priority.isHigherPriority(this.getPriority(), comparedJob.getPriority()) != 0) {
-            return Priority.isHigherPriority(this.getPriority(), comparedJob.getPriority());
-        }
-        if (TimeStamp.compareTime(this.addedTime, comparedJob.addedTime)) {
+        if (this.getStatus() == Status.ONGOING) {
             return 1;
         }
-        if (this.getJobName().fullName.compareTo(comparedJob.getJobName().fullName) <= 0) {
+        if (this.getStatus() == QUEUED && comparedJob.getStatus() != QUEUED && comparedJob.getStatus() != ONGOING) {
             return 1;
         }
-
+        if (this.getStatus() != QUEUED && comparedJob.getStatus() != QUEUED && this.getStatus() != ONGOING
+            && comparedJob.getStatus() != ONGOING) {
+            return 0;
+        }
         return -1;
-
     }
 
     /**

@@ -42,6 +42,7 @@ public class UniqueJobList {
             throw new DuplicateJobException();
         }
         internalList.add(toAdd);
+        FXCollections.sort(internalList, new JobComparator());
     }
 
     /**
@@ -61,6 +62,7 @@ public class UniqueJobList {
         } else {
             internalList.add(currentIndex - shiftBy, toShift);
         }
+        FXCollections.sort(internalList, new JobComparator());
     }
 
     /**
@@ -75,6 +77,7 @@ public class UniqueJobList {
     public void setJobs(UniqueJobList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
+        FXCollections.sort(internalList, new JobComparator());
     }
 
     /**
@@ -88,6 +91,7 @@ public class UniqueJobList {
         }
 
         internalList.setAll(jobs);
+        FXCollections.sort(internalList, new JobComparator());
     }
 
     /**
@@ -184,6 +188,7 @@ public class UniqueJobList {
         }
 
         internalList.set(index, editedJob);
+        FXCollections.sort(internalList, new JobComparator());
     }
 
     /**
@@ -192,6 +197,7 @@ public class UniqueJobList {
     public void startJob(JobName name) {
         requireAllNonNull();
         findJob(name).startJob();
+        FXCollections.sort(internalList, new JobComparator());
     }
 
     /**
@@ -200,7 +206,7 @@ public class UniqueJobList {
     public void cancelJob(JobName name) {
         requireAllNonNull();
         findJob(name).cancelJob();
-        ;
+        FXCollections.sort(internalList, new JobComparator());
     }
 
     /**
@@ -209,6 +215,7 @@ public class UniqueJobList {
     public void restartJob(JobName name) {
         requireAllNonNull();
         findJob(name).restartJob();
+        FXCollections.sort(internalList, new JobComparator());
     }
 
     /**
@@ -257,10 +264,14 @@ public class UniqueJobList {
             throw new JobNotFoundException();
         }
         internalList.set(targetIndex, new Job(replaceWith));
+        FXCollections.sort(internalList, new JobComparator());
     }
-
+    /**
+     * sets a jobStatus to finish.
+     */
     public void finishJob(Job job) {
         job.finishJob();
+        FXCollections.sort(internalList, new JobComparator());
     }
 
 
@@ -273,7 +284,8 @@ public class UniqueJobList {
 
         @Override
         public int compare(Job j1, Job j2) {
-            return j2.hasHigherPriority(j1);
+            return j2.hasHigherDisplayPriority(j1);
         }
     }
+
 }

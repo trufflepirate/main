@@ -26,7 +26,7 @@ public class ManageJobCommandParser implements Parser<ManageJobCommand> {
 
         String[] temp = trimmedArgs.split(" ");
 
-        if (temp.length < 2) {
+        if (temp.length < 2 || temp.length > 3) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ManageJobCommand.MESSAGE_USAGE));
         }
 

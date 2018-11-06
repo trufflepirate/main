@@ -9,8 +9,10 @@ import java.util.logging.Logger;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.JobMachineTuple;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.FocusMachineRequestEvent;
 import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.AdminSession;
 import seedu.address.model.admin.Password;
@@ -23,7 +25,9 @@ import seedu.address.model.job.exceptions.JobNotFoundException;
 import seedu.address.model.job.exceptions.JobOngoingException;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.MachineName;
+import seedu.address.model.machine.MachineStatus;
 import seedu.address.model.machine.UniqueMachineList;
+import seedu.address.model.machine.exceptions.MachineDisabledException;
 import seedu.address.model.machine.exceptions.MachineNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
@@ -346,6 +350,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void removeJob(JobName job) {
         requireNonNull(job);
         machines.removeJobFromMachineList(job);
+
     }
 
     /**
@@ -373,12 +378,21 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Starts the job
+     * Job Must exist in AddressBook else throws nullpointer exception
      *
      * @param name
      */
     public void startJob(JobName name) {
         requireNonNull(name);
-        findJob(name).job.startJob();
+        JobMachineTuple target = findJob(name);
+        if (target.machine.getStatus() == MachineStatus.DISABLED) {
+            throw new MachineDisabledException();
+        }
+        if (target.machine.getJobs().stream().anyMatch(job -> job.getStatus() == Status.ONGOING)) {
+            throw new JobOngoingException();
+        }
+        target.job.startJob();
+        EventsCenter.getInstance().post(new FocusMachineRequestEvent(target));
     }
 
     /**
@@ -388,7 +402,9 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void cancelJob(JobName name) {
         requireNonNull(name);
-        findJob(name).job.cancelJob();
+        JobMachineTuple target = findJob(name);
+        target.job.cancelJob();
+        EventsCenter.getInstance().post(new FocusMachineRequestEvent(target));
     }
 
     /**
@@ -398,7 +414,9 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void restartJob(JobName name) {
         requireNonNull(name);
+        JobMachineTuple target = findJob(name);
         findJob(name).job.restartJob();
+        EventsCenter.getInstance().post(new FocusMachineRequestEvent(target));
     }
 
     /**
@@ -416,6 +434,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
         mj1.machine.replaceJob(mj1.job, mj2.job);
         mj2.machine.replaceJob(mj2.job, mj1.job);
+        EventsCenter.getInstance().post(new FocusMachineRequestEvent(mj2));
     }
 
     /**
@@ -441,6 +460,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         targetJobAndMachine.job.setMachine(targetMachine.getName());
         //adding to new Machine
         targetMachine.addJob(targetJobAndMachine.job);
+        EventsCenter.getInstance()
+            .post(new FocusMachineRequestEvent(new JobMachineTuple(targetJobAndMachine.job, targetMachine)));
     }
 
     /**
@@ -457,24 +478,27 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
         //shifting
         targetJobAndMachine.machine.shift(targetJobAndMachine.job, shiftBy);
+        EventsCenter.getInstance().post(new FocusMachineRequestEvent(targetJobAndMachine));
     }
 
     /**
      * Changes the status of the job to FINISHED
      *
-     * @param job
+     * @param target
      */
-    public void finishJob(Job job) {
-        requireNonNull(job);
-        job.finishJob();
+    public void finishJob(JobMachineTuple target) {
+        requireNonNull(target);
+        target.job.finishJob();
+        EventsCenter.getInstance().post(new FocusMachineRequestEvent(target));
     }
 
     /**
      * Request deletion of print job
      */
     public void requestDeletion(JobName jobName) {
-        Job toRequestDelete = findJob(jobName).job;
-        toRequestDelete.setStatus(Status.DELETING);
+        JobMachineTuple toRequestDelete = findJob(jobName);
+        toRequestDelete.job.setStatus(Status.DELETING);
+        EventsCenter.getInstance().post(new FocusMachineRequestEvent(toRequestDelete));
     }
 
     public int getTotalNumberOfStoredJobs() {

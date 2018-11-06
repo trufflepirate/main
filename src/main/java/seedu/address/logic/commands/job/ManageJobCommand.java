@@ -14,6 +14,7 @@ import seedu.address.model.job.JobName;
 import seedu.address.model.job.exceptions.JobNotFoundException;
 import seedu.address.model.job.exceptions.JobOngoingException;
 import seedu.address.model.machine.MachineName;
+import seedu.address.model.machine.exceptions.MachineDisabledException;
 import seedu.address.model.machine.exceptions.MachineNotFoundException;
 
 /**
@@ -27,14 +28,22 @@ public class ManageJobCommand extends Command {
     public static final String OPTION_DELETE = "delete";
     public static final String OPTION_MOVE = "move";
     public static final String OPTION_SHIFT = "shift";
+    public static final String OPTION_SWAP = "swap";
 
     public static final String SHIFT_OPTION_UP = "up";
     public static final String SHIFT_OPTION_DOWN = "down";
 
     public static final String MESSAGE_USAGE =
-        COMMAND_WORD + ": starts/restarts/cancels/deletes a particular job\n" + "Example: " + COMMAND_WORD
+        COMMAND_WORD + ": start/restart/cancel/delete/move/shift/swap a particular job\n" + "Example: " + COMMAND_WORD
             + " IDCP start";
+    public static final String MESSAGE_USAGE_MOVE =
+        COMMAND_WORD + " move TargetMachineName" + "Example: " + COMMAND_WORD + " IDCP move JJPrinter";
+    public static final String MESSAGE_USAGE_SWAP =
+        COMMAND_WORD + " move TargetJobName" + "Example: " + COMMAND_WORD + " IDCP swap PrintJob7";
+    public static final String MESSAGE_USAGE_SHIFT =
+        COMMAND_WORD + " shift up/down" + "Example: " + COMMAND_WORD + " IDCP swap PrintJob7";
     private static final String MESSAGE_STARTED_JOB = "The print has started.";
+    private static final String MESSAGE_CANNOT_START_JOB = "Cannot Start Job! This printer already has an ongoing Job!";
     private static final String MESSAGE_CANCELLED_JOB = "The print has been cancelled.";
     private static final String MESSAGE_RESTARTED_JOB = "The print has restarted.";
     private static final String MESSAGE_DELETED_JOB = "The print has been deleted";
@@ -47,6 +56,8 @@ public class ManageJobCommand extends Command {
     private static final String MESSAGE_SHIFTED = "Job Shifted!";
     private static final String MESSAGE_SHIFTED_NO_SUCH_OPTION = "Only shift up or shift down allowed";
     private static final String MESSAGE_JOB_ONGOING = "Unable to Modify ongoing Job";
+    private static final String MESSAGE_SWAP_SUCCESS = "Jobs swapped: %1$s";
+    private static final String MESSAGE_MACHINE_DISABLED = "Unable to Start/Restart! Machine Disabled!";
 
     private JobName name;
     private String option;
@@ -70,16 +81,26 @@ public class ManageJobCommand extends Command {
         switch (option) {
 
         case OPTION_START:
-            model.startJob(name);
-            model.commitAddressBook();
-            model.updateFilteredMachineList(PREDICATE_SHOW_ALL_MACHINES);
-            return new CommandResult(MESSAGE_STARTED_JOB);
+            try {
+                model.startJob(name);
+                model.commitAddressBook();
+                model.updateFilteredMachineList(PREDICATE_SHOW_ALL_MACHINES);
+                return new CommandResult(MESSAGE_STARTED_JOB);
+            } catch (MachineDisabledException mde) {
+                throw new CommandException(MESSAGE_MACHINE_DISABLED);
+            } catch (JobOngoingException joe) {
+                throw new CommandException(MESSAGE_CANNOT_START_JOB);
+            }
 
         case OPTION_RESTART:
-            model.restartJob(name);
-            model.commitAddressBook();
-            model.updateFilteredMachineList(PREDICATE_SHOW_ALL_MACHINES);
-            return new CommandResult(MESSAGE_RESTARTED_JOB);
+            try {
+                model.restartJob(name);
+                model.commitAddressBook();
+                model.updateFilteredMachineList(PREDICATE_SHOW_ALL_MACHINES);
+                return new CommandResult(MESSAGE_RESTARTED_JOB);
+            } catch (MachineDisabledException mde) {
+                throw new CommandException(MESSAGE_MACHINE_DISABLED);
+            }
 
         case OPTION_CANCEL:
             model.cancelJob(name);
@@ -143,9 +164,24 @@ public class ManageJobCommand extends Command {
             } catch (JobOngoingException jo) {
                 throw new CommandException(MESSAGE_JOB_ONGOING);
             }
-
+        case OPTION_SWAP:
+            if (!model.isLoggedIn()) {
+                throw new CommandException(MESSAGE_ACCESS_DENIED_1 + OPTION_SHIFT + MESSAGE_ACCESS_DENIED_2);
+            }
+            try {
+                JobName targetJobName = ParserUtil.parseJobName(operand2);
+                model.swapJobs(name, targetJobName);
+                model.commitAddressBook();
+                return new CommandResult(String.format(MESSAGE_SWAP_SUCCESS, name + " and " + targetJobName));
+            } catch (ParseException pe) {
+                throw new CommandException(pe.getMessage());
+            } catch (JobNotFoundException jfe) {
+                throw new CommandException(MESSAGE_NO_SUCH_JOB);
+            } catch (JobOngoingException joe) {
+                throw new CommandException(MESSAGE_JOB_ONGOING);
+            }
         default:
-            return new CommandResult(MESSAGE_NO_SUCH_OPTION);
+            throw new CommandException(MESSAGE_NO_SUCH_OPTION);
         }
 
         // TODO: 11/5/2018 REMOVE IF CASE SWITCH WORKS
