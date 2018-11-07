@@ -114,13 +114,4 @@ public class JobTest {
 
 
     }
-
-
-    //TODO: test for hasHigherPriority
-    /*
-    @Test
-    public void hasHigherPriority() {
-
-    }
-    */
 }

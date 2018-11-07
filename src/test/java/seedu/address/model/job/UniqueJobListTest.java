@@ -1,7 +1,6 @@
 package seedu.address.model.job;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.address.testutil.testdata.TypicalJobs.IDCP;

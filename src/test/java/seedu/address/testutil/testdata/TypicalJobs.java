@@ -38,13 +38,23 @@ public class TypicalJobs {
 
     public static AddressBook getJobsData() {
         AddressBook makerManagerJobsData = new AddressBook();
-        for (Job m : getValidJobs()) {
+        for (Job m : getTypicalJobs()) {
             makerManagerJobsData.addJob(m);
         }
         return makerManagerJobsData;
     }
+    /**
+     * Returns an {@code AddressBook} with all the typical jobs.
+     */
+    public static AddressBook getTypicalAddressBook() {
+        AddressBook ab = new AddressBook();
+        for (Job job : getTypicalJobs()) {
+            ab.addJob(job);
+        }
+        return ab;
+    }
 
-    public static List<Job> getValidJobs() {
+    public static List<Job> getTypicalJobs() {
         return new ArrayList<>(Arrays.asList(IDCP, NEWPROJECT, BUMBERBEE));
     }
 }
