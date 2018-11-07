@@ -22,11 +22,11 @@ import seedu.address.model.tag.Tag;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Job {
-    public static final String MESSAGE_NAME_CONSTRAINTS = "Job names should only contain alphanumeric characters and " +
-        "spaces, " + "and it should not be blank";
+    public static final String MESSAGE_NAME_CONSTRAINTS = "Job names should only contain alphanumeric characters and "
+        + "spaces, " + "and it should not be blank";
 
-    public static final String MESSAGE_NOTE_CONSTRAINTS = "Job notes should only contain alphanumeric characters and " +
-        "spaces, " + "and it should not be blank";
+    public static final String MESSAGE_NOTE_CONSTRAINTS = "Job notes should only contain alphanumeric characters and "
+        + "spaces, " + "and it should not be blank";
 
     public static final String MEEEAGE_PRIORITY_CONSTRAINTS = "Job priority can only be URGENT, HIGH and NORMAL";
 
@@ -325,14 +325,11 @@ public class Job {
             return false;
         }
 
-        return otherJob.getJobName().equals(getJobName())
-            && otherJob.getMachineName().equals(getMachineName())
-            && otherJob.getOwner().equals(getOwner())
-            && otherJob.getAddedTime().showTime().equals(getAddedTime().showTime())
-            && otherJob.getTags().equals(getTags())
-            && otherJob.getJobNote().equals(getJobNote())
-            && (otherJob.getPriority() == getPriority())
-            && (otherJob.getDuration() == getDuration());
+        return otherJob.getJobName().equals(getJobName()) && otherJob.getMachineName()
+            .equals(getMachineName()) && otherJob.getOwner().equals(getOwner()) && otherJob.getAddedTime().showTime()
+            .equals(getAddedTime().showTime()) && otherJob.getTags().equals(getTags()) && otherJob.getJobNote()
+            .equals(getJobNote()) && (otherJob.getPriority() == getPriority()) && (otherJob
+            .getDuration() == getDuration());
     }
 
     /**
