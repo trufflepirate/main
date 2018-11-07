@@ -47,18 +47,24 @@ public class TimeStamp {
         return time2.getDate().getTime() - time1.getDate().getTime();
     }
 
+    public static TimeStamp timeAdd(TimeStamp time1, TimeStamp time2) {
+        return new TimeStamp(time2.getDate().getTime() + time1.getDate().getTime());
+    }
+
     /**
      * Shows the time
      *
      * @return
      */
     public String showTime() {
-        return this.getCalendar().get(Calendar.DAY_OF_MONTH) + "/" + this.getCalendar().get(Calendar.MONTH) + 1 + " "
+        return this.getCalendar().get(Calendar.DAY_OF_MONTH) + "/" + (this.getCalendar().get(Calendar.MONTH) + 1) + " "
             + this.getCalendar().get(Calendar.HOUR) + ":" + this.getCalendar().get(Calendar.MINUTE) + ":" + this
             .getCalendar().get(Calendar.SECOND);
     }
+
     /**
      * Shows the duration formatted
+     *
      * @return
      */
     public String showAsDuration() {
@@ -79,6 +85,7 @@ public class TimeStamp {
                 + " Days ";
         }
     }
+
     /**
      * Shows the time
      */

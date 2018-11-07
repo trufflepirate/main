@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.JobMachineTuple;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -138,7 +139,7 @@ public class LoginCommandTest {
         }
 
         @Override
-        public void finishJob(Job job) {
+        public void finishJob(JobMachineTuple job) {
 
         }
 
@@ -173,7 +174,7 @@ public class LoginCommandTest {
         }
 
         @Override
-        public Job findJob(JobName name) {
+        public JobMachineTuple findJob(JobName name) {
             return null;
         }
 
@@ -355,6 +356,16 @@ public class LoginCommandTest {
 
         @Override
         public boolean isUndoLogin() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void shiftJob(JobName jobName, int shiftBy) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void moveJob(JobName jobName, MachineName targetMachineName) {
             throw new AssertionError("This method should not be called.");
         }
     }

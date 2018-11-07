@@ -67,7 +67,7 @@ public class ModelManager extends ComponentManager implements Model {
                     for (Job job : machine.getJobs()) {
                         try {
                             if (job.getStatus() == Status.ONGOING && job.isFinished()) {
-                                finishJob(job);
+                                finishJob(new JobMachineTuple(job, machine));
                             }
                         } catch (JobNotStartedException e) {
                             e.printStackTrace();
@@ -78,8 +78,8 @@ public class ModelManager extends ComponentManager implements Model {
         };
 
         Timer timer = new Timer();
-        long delay = 60000;
-        long intervalPeriod = 60000;
+        long delay = 1000;
+        long intervalPeriod = 1000;
         timer.scheduleAtFixedRate(task, delay, intervalPeriod);
 
     }
@@ -190,14 +190,13 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
 
-
     @Override
-    public Job findJob(JobName name) {
+    public JobMachineTuple findJob(JobName name) {
         requireAllNonNull(name);
         JobMachineTuple query = versionedAddressBook.findJob(name);
 
         if (query != null) {
-            return query.job;
+            return query;
         } else {
             return null;
         }
@@ -231,8 +230,20 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void finishJob(Job job) {
-        versionedAddressBook.finishJob(job);
+    public void moveJob(JobName jobName, MachineName targetMachineName) {
+        versionedAddressBook.moveJob(jobName, targetMachineName);
+        indicateMachineListChanged();
+    }
+
+    @Override
+    public void shiftJob(JobName jobName, int shiftBy) {
+        versionedAddressBook.shiftJob(jobName, shiftBy);
+        indicateMachineListChanged();
+    }
+
+    @Override
+    public void finishJob(JobMachineTuple target) {
+        versionedAddressBook.finishJob(target);
         indicateMachineListChanged();
     }
 

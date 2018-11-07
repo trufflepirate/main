@@ -64,6 +64,7 @@ public class Job {
         this.status = Status.QUEUED;
         startTime = new TimeStamp();
         addedTime = new TimeStamp();
+        //pausedTime = new TimeStamp();
     }
 
     /**
@@ -82,6 +83,19 @@ public class Job {
         this.jobNote = jobNote;
         this.startTime = startTime;
         this.tags.addAll(tags);
+    }
+
+    public Job(Job toBeCopied) {
+        this.name = toBeCopied.name;
+        this.machineName = toBeCopied.machineName;
+        this.owner = toBeCopied.owner;
+        this.addedTime = new TimeStamp(toBeCopied.addedTime.getDate().getTime());
+        this.priority = toBeCopied.priority;
+        this.status = toBeCopied.status;
+        this.duration = toBeCopied.duration;
+        this.jobNote = toBeCopied.jobNote;
+        this.startTime = new TimeStamp(toBeCopied.startTime.getDate().getTime());
+        this.tags.addAll(toBeCopied.tags);
     }
 
 
@@ -110,6 +124,12 @@ public class Job {
         //return this.duration + "";
         TimeStamp t = new TimeStamp(this.duration);
         return t.showAsDuration();
+    }
+
+    public float getPercentageCompletion() {
+        TimeStamp t = new TimeStamp(this.duration);
+        long timeElapsed = TimeStamp.timeDifference(startTime, new TimeStamp());
+        return (float) timeElapsed / this.duration;
     }
 
     public void setDuration(long duration) {
@@ -256,23 +276,33 @@ public class Job {
      * Compares priority between two jobs
      */
 
-    public int hasHigherPriority(Job comparedJob) {
+    public int hasHigherDisplayPriority(Job comparedJob) {
         //TODO clean up code to make it neater for comparison
-        if (this.equals(comparedJob)) {
+        if (this.equals(comparedJob) || statusRank(this.getStatus()) == statusRank(comparedJob.getStatus())) {
             return 0;
         }
-
-        if (Priority.isHigherPriority(this.getPriority(), comparedJob.getPriority()) != 0) {
-            return Priority.isHigherPriority(this.getPriority(), comparedJob.getPriority());
-        }
-        if (TimeStamp.compareTime(this.addedTime, comparedJob.addedTime)) {
+        if (statusRank(this.getStatus()) > statusRank(comparedJob.getStatus())) {
             return 1;
         }
-        if (this.getJobName().fullName.compareTo(comparedJob.getJobName().fullName) <= 0) {
-            return 1;
-        }
-
         return -1;
+    }
+
+    /**
+     * ranks statuses
+     */
+    private int statusRank(Status myStatus) {
+        switch (myStatus) {
+        case ONGOING:
+            return 3;
+        case QUEUED:
+            return 2;
+        case CANCELLED:
+        case FINISHED:
+        case DELETING:
+        case PAUSED:
+        default:
+            return 1;
+        }
 
     }
 

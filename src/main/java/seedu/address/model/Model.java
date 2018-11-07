@@ -3,6 +3,7 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.JobMachineTuple;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.Username;
@@ -62,7 +63,7 @@ public interface Model {
 
     void updateJob(Job oldJob, Job updatedJob);
 
-    Job findJob(JobName name);
+    JobMachineTuple findJob(JobName name);
 
     boolean hasJob(Job job);
 
@@ -87,7 +88,11 @@ public interface Model {
 
     void swapJobs(JobName jobname1, JobName jobName2);
 
-    void finishJob(Job job);
+    void moveJob(JobName jobName, MachineName targetMachineName);
+
+    void shiftJob(JobName jobName, int shiftBy);
+
+    void finishJob(JobMachineTuple target);
 
     void requestDeletion(JobName jobName);
 

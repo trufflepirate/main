@@ -8,10 +8,15 @@ import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.JobMachineTuple;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.FocusMachineRequestEvent;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
+import seedu.address.model.job.Status;
 import seedu.address.model.job.exceptions.JobNotFoundException;
+import seedu.address.model.job.exceptions.JobOngoingException;
 import seedu.address.model.machine.exceptions.DuplicateMachineException;
 import seedu.address.model.machine.exceptions.MachineNotFoundException;
 
@@ -49,8 +54,11 @@ public class UniqueMachineList {
         if (!machinesAreUnique(machines)) {
             throw new DuplicateMachineException();
         }
-
-        internalList.setAll(machines);
+        List<Machine> temp = FXCollections.observableArrayList();
+        for (Machine machine : machines) {
+            temp.add(new Machine(machine));
+        }
+        internalList.setAll(temp);
     }
 
     /**
@@ -99,8 +107,8 @@ public class UniqueMachineList {
         if (target == null) {
             throw new MachineNotFoundException();
         }
-
         target.addJob(job);
+        EventsCenter.getInstance().post(new FocusMachineRequestEvent(new JobMachineTuple(job, target)));
     }
 
     /**
@@ -112,11 +120,14 @@ public class UniqueMachineList {
         for (Machine m : internalList) {
             Job query = m.findJob(job);
             if (query != null) {
+                if (query.getStatus() == Status.ONGOING) {
+                    throw new JobOngoingException();
+                }
                 m.removeJob(query);
+                EventsCenter.getInstance().post(new FocusMachineRequestEvent(new JobMachineTuple(query, m)));
                 return;
             }
         }
-
         throw new JobNotFoundException();
     }
 
@@ -152,6 +163,10 @@ public class UniqueMachineList {
      * Returns the backing list as an unmodifiable {@code ObservableList}
      */
     public ObservableList<Machine> asUnmodifiableObservableList() {
+        ObservableList<Machine> listCopy = FXCollections.observableArrayList();
+        for (Machine machine : internalList) {
+            //listCopy.add(machine.clone())
+        }
         return FXCollections.unmodifiableObservableList(internalList);
     }
 

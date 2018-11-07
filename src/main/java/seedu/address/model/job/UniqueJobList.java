@@ -33,6 +33,13 @@ public class UniqueJobList {
     }
 
     /**
+     * sorts the internal list
+     */
+    public void reSortList() {
+        FXCollections.sort(internalList, new JobComparator());
+    }
+
+    /**
      * Adds a job to the list.
      * The jpb must not already exist in the list.
      */
@@ -42,6 +49,26 @@ public class UniqueJobList {
             throw new DuplicateJobException();
         }
         internalList.add(toAdd);
+    }
+
+    /**
+     * Shifts Jobs according to index offset
+     */
+    public void shift(Job toShift, int shiftBy) {
+        requireNonNull(toShift);
+        int currentIndex = internalList.indexOf(toShift);
+        //removing job
+        internalList.remove(currentIndex);
+
+        //re-addition
+        if (currentIndex - shiftBy > size()) {
+            internalList.add(toShift);
+        } else if (currentIndex - shiftBy < 0) {
+            internalList.add(0, toShift);
+        } else {
+            internalList.add(currentIndex - shiftBy, toShift);
+        }
+        FXCollections.sort(internalList, new JobComparator());
     }
 
     /**
@@ -56,6 +83,7 @@ public class UniqueJobList {
     public void setJobs(UniqueJobList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
+        FXCollections.sort(internalList, new JobComparator());
     }
 
     /**
@@ -69,6 +97,7 @@ public class UniqueJobList {
         }
 
         internalList.setAll(jobs);
+        FXCollections.sort(internalList, new JobComparator());
     }
 
     /**
@@ -82,9 +111,7 @@ public class UniqueJobList {
             logger.info(j.getJobName().fullName);
             if (j.getJobName().fullName.equals(jobName)) {
                 logger.info("Job name matches!!");
-                Job changedJob =
-                    new Job(j.getJobName(), j.getMachineName(), j.getOwner(), j.getPriority(), j.getDuration(),
-                        j.getJobNote(), j.getTags());
+                Job changedJob = new Job(j);
                 return changedJob;
             }
         }
@@ -183,7 +210,6 @@ public class UniqueJobList {
     public void cancelJob(JobName name) {
         requireAllNonNull();
         findJob(name).cancelJob();
-        ;
     }
 
     /**
@@ -239,9 +265,12 @@ public class UniqueJobList {
         if (targetIndex == -1 || targetIndex > size()) {
             throw new JobNotFoundException();
         }
-        internalList.set(targetIndex, replaceWith);
+        internalList.set(targetIndex, new Job(replaceWith));
     }
 
+    /**
+     * sets a jobStatus to finish.
+     */
     public void finishJob(Job job) {
         job.finishJob();
     }
@@ -256,7 +285,8 @@ public class UniqueJobList {
 
         @Override
         public int compare(Job j1, Job j2) {
-            return j2.hasHigherPriority(j1);
+            return j2.hasHigherDisplayPriority(j1);
         }
     }
+
 }
