@@ -6,7 +6,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_JOBS_LISTED_OVERVIEW;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.testdata.TypicalJobs.getTypicalAddressBook;
 
-
 import java.util.Arrays;
 import java.util.Collections;
 

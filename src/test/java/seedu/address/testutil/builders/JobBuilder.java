@@ -134,6 +134,6 @@ public class JobBuilder {
     }
 
     public Job build() {
-        return new Job(name, machine, owner,addedTime, startTime, priority, status, duration, jobNote, tags);
+        return new Job(name, machine, owner, addedTime, startTime, priority, status, duration, jobNote, tags);
     }
 }

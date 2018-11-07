@@ -8,26 +8,21 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Predicate;
+import javafx.collections.ObservableList;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import javafx.collections.ObservableList;
 import seedu.address.commons.core.JobMachineTuple;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.commands.job.AddJobCommand;
-import seedu.address.logic.commands.job.AddJobCommandTest;
-import seedu.address.logic.commands.job.AddJobCommandTest;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.admin.Admin;
 import seedu.address.model.admin.Username;
-import seedu.address.model.job.Job;
-import seedu.address.model.job.Job;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
 import seedu.address.model.machine.Machine;
@@ -133,7 +128,8 @@ public class AddJobCommandTest {
      * A Model stub that is logged in.
      */
     private class ModelStubNonAdmin extends ModelStub {
-        ModelStubNonAdmin() {}
+        ModelStubNonAdmin() {
+        }
 
         @Override
         public boolean isLoggedIn() {

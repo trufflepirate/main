@@ -3,7 +3,6 @@ package seedu.address.model.job;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import static seedu.address.logic.commands.CommandTestUtil.VALID_JOBADDEDTIME_SOMETIME;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_JOBDURATION_FIVE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_JOBNAME_PROONE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_JOBNOTE_ANOTHERIDCP;
