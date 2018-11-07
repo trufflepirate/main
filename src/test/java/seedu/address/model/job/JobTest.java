@@ -10,6 +10,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_JOBNOTE_ANOTHER
 import static seedu.address.logic.commands.CommandTestUtil.VALID_JOBPRIORITY_NORMAL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_JOBSTATUS_CANCELLED;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.model.job.Status.QUEUED;
 import static seedu.address.testutil.testdata.TypicalJobs.IDCP;
 import static seedu.address.testutil.testdata.TypicalJobs.NEWPROJECT;
 
@@ -17,6 +18,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.model.machine.MachineStatus;
 import seedu.address.testutil.builders.JobBuilder;
 import seedu.address.testutil.builders.MachineBuilder;
 import seedu.address.testutil.builders.PersonBuilder;
@@ -99,10 +101,12 @@ public class JobTest {
         editedIdcp = new JobBuilder(IDCP).withMachine(new MachineBuilder().build().getName()).build();
         assertFalse(IDCP.equals(editedIdcp));
 
-        //TODO: find out why this is true
         // different added time -> returns false
-        editedIdcp = new JobBuilder(IDCP).withAddedTime(VALID_JOBADDEDTIME_SOMETIME).build();
-        assertTrue(IDCP.equals(editedIdcp));
+        editedIdcp = new JobBuilder().withName("IDCP").withMachine(
+            new MachineBuilder().withMachineName("JJPrinter").withMachineStatus(MachineStatus.ENABLED).build()
+                .getName()).withJobNote("This is jj jobnote").withDuration(2).withPriority(Priority.HIGH)
+            .withOwner(new PersonBuilder().withName("Jun jie").build()).withStatus(QUEUED).build();
+        assertFalse(IDCP.equals(editedIdcp));
 
         // different owner -> returns false
         editedIdcp = new JobBuilder(IDCP).withOwner(new PersonBuilder().build()).build();

@@ -32,7 +32,7 @@ public class JobBuilder {
     private MachineName machine;
     private TimeStamp startTime;
     private Person owner;
-    private String addedTime;
+    private final TimeStamp addedTime;
 
     //Data field
     private Set<Tag> tags;
@@ -53,14 +53,14 @@ public class JobBuilder {
         tags = new HashSet<>();
 
         startTime = new TimeStamp();
-        addedTime = startTime.showTime();
+        addedTime = new TimeStamp();
     }
 
     public JobBuilder(Job jobToCopy) {
         name = jobToCopy.getJobName();
         machine = jobToCopy.getMachineName();
         owner = jobToCopy.getOwner();
-        addedTime = jobToCopy.getAddedTime().showTime();
+        addedTime = jobToCopy.getAddedTime();
         tags = new HashSet<>(jobToCopy.getTags());
         jobNote = jobToCopy.getJobNote();
         priority = jobToCopy.getPriority();
@@ -126,14 +126,6 @@ public class JobBuilder {
     }
 
     /**
-     * Sets the added time to be the input added time parameter
-     */
-    public JobBuilder withAddedTime(String addedTime) {
-        this.addedTime = addedTime;
-        return this;
-    }
-
-    /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Person} that we are building.
      */
     public JobBuilder withTags(String... tags) {
@@ -142,6 +134,6 @@ public class JobBuilder {
     }
 
     public Job build() {
-        return new Job(name, machine, owner, priority, duration, jobNote, tags);
+        return new Job(name, machine, owner,addedTime, startTime, priority, status, duration, jobNote, tags);
     }
 }

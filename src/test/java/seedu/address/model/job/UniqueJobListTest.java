@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.address.testutil.testdata.TypicalJobs.IDCP;
 import static seedu.address.testutil.testdata.TypicalJobs.NEWPROJECT;
-import static seedu.address.testutil.testdata.ValidJobs.bumberbee;
+import static seedu.address.testutil.testdata.TypicalJobs.BUMBERBEE;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -88,7 +88,7 @@ public class UniqueJobListTest {
         uniqueJobList.setJob(IDCP, NEWPROJECT);
         UniqueJobList expectedUniqueJobList = new UniqueJobList();
         expectedUniqueJobList.add(NEWPROJECT);
-        assertNotEquals(expectedUniqueJobList, uniqueJobList);
+        assertEquals(expectedUniqueJobList, uniqueJobList);
     }
 
     @Test
@@ -109,7 +109,7 @@ public class UniqueJobListTest {
     public void remove_jobDoesNotExist_throwsJobNotFoundException() {
         thrown.expect(JobNotFoundException.class);
         uniqueJobList.remove(IDCP);
-        uniqueJobList.remove(bumberbee);
+        uniqueJobList.remove(BUMBERBEE);
     }
 
     @Test
@@ -117,7 +117,7 @@ public class UniqueJobListTest {
         uniqueJobList.add(IDCP);
         uniqueJobList.remove(IDCP);
         UniqueJobList expectedUniqueJobList = new UniqueJobList();
-        assertNotEquals(expectedUniqueJobList, uniqueJobList);
+        assertEquals(expectedUniqueJobList, uniqueJobList);
     }
 
     @Test
@@ -132,7 +132,7 @@ public class UniqueJobListTest {
         UniqueJobList expectedUniqueJobList = new UniqueJobList();
         expectedUniqueJobList.add(NEWPROJECT);
         uniqueJobList.setJobs(expectedUniqueJobList);
-        assertNotEquals(expectedUniqueJobList, uniqueJobList);
+        assertEquals(expectedUniqueJobList, uniqueJobList);
     }
 
     @Test
@@ -148,7 +148,7 @@ public class UniqueJobListTest {
         uniqueJobList.setJobs(jobList);
         UniqueJobList expectedUniqueJobList = new UniqueJobList();
         expectedUniqueJobList.add(NEWPROJECT);
-        assertNotEquals(expectedUniqueJobList, uniqueJobList);
+        assertEquals(expectedUniqueJobList, uniqueJobList);
     }
 
     @Test

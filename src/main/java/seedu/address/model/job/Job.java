@@ -325,9 +325,14 @@ public class Job {
             return false;
         }
 
-        return otherJob.getJobName().equals(getJobName()) && otherJob.getMachineName()
-            .equals(getMachineName()) && otherJob.getOwner().equals(getOwner()) && otherJob.getAddedTime().showTime()
-            .equals(getAddedTime().showTime()) && otherJob.getTags().equals(getTags());
+        return otherJob.getJobName().equals(getJobName())
+            && otherJob.getMachineName().equals(getMachineName())
+            && otherJob.getOwner().equals(getOwner())
+            && otherJob.getAddedTime().showTime().equals(getAddedTime().showTime())
+            && otherJob.getTags().equals(getTags())
+            && otherJob.getJobNote().equals(getJobNote())
+            && (otherJob.getPriority() == getPriority())
+            && (otherJob.getDuration() == getDuration());
     }
 
     /**

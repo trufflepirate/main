@@ -151,10 +151,20 @@ public class UniqueJobList {
     /**
      * Returns a sorted list based on custom comparator
      */
-
     public ObservableList<Job> asUnmodifiableObservableSortedList() {
         FXCollections.sort(internalList, new JobComparator());
         return FXCollections.unmodifiableObservableList(internalList);
+    }
+
+    /**
+     *
+     * checks whether the given object is equal to the UniqueJobList
+     */
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+            || (other instanceof UniqueJobList // instanceof handles nulls
+            && internalList.equals(((UniqueJobList) other).internalList));
     }
 
     /**
