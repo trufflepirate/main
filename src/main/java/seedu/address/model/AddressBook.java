@@ -271,6 +271,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void flushMachine(Machine toFlushMachine) {
         requireNonNull(toFlushMachine);
         toFlushMachine.flushMachine();
+        EventsCenter.getInstance().post(new FocusMachineRequestEvent(new JobMachineTuple(null, toFlushMachine)));
+
     }
 
     /**
@@ -283,6 +285,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void cleanMachine(Machine toCleanMachine) {
         requireNonNull(toCleanMachine);
         toCleanMachine.cleanMachine();
+        EventsCenter.getInstance().post(new FocusMachineRequestEvent(new JobMachineTuple(null, toCleanMachine)));
     }
 
     /**
@@ -302,6 +305,13 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public Machine getMostFreeMachine() {
         return machines.getMostFreeMachine();
+    }
+
+    /**
+     * Returns the machine that has least time left in Queue that is not {@code otherThanMe}
+     */
+    public Machine getMostFreeMachine(Machine otherThanMe) {
+        return machines.getMostFreeMachine(otherThanMe);
     }
 
     /**

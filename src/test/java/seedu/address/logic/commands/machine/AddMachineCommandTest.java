@@ -220,6 +220,11 @@ public class AddMachineCommandTest {
         }
 
         @Override
+        public Machine getMostFreeMachine(Machine otherThanMe) {
+            return null;
+        }
+
+        @Override
         public void removeMachine(Machine machine) {
             throw new AssertionError("This method should not be called");
         }

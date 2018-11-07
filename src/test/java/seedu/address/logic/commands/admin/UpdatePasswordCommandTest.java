@@ -279,6 +279,11 @@ public class UpdatePasswordCommandTest {
         }
 
         @Override
+        public Machine getMostFreeMachine(Machine otherThanMe) {
+            return null;
+        }
+
+        @Override
         public void addAdmin(Admin admin) {
             adminList.add(admin);
         }

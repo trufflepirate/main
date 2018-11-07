@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.commands.machine.ManageMachineCommand.MESSAGE_NO_MORE_MACHINES;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.function.Predicate;
@@ -26,8 +27,10 @@ import seedu.address.model.job.Job;
 import seedu.address.model.job.JobName;
 import seedu.address.model.job.Status;
 import seedu.address.model.job.exceptions.JobNotStartedException;
+import seedu.address.model.job.exceptions.JobOngoingException;
 import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.MachineName;
+import seedu.address.model.machine.exceptions.MachineNotFoundException;
 import seedu.address.model.person.Person;
 
 
@@ -272,6 +275,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     /**
      * used for moving Job to Machine
+     *
      * @param job
      * @param targetMachine
      */
@@ -282,12 +286,17 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void autoMoveJobsDuringFlush(Machine currentMachine) throws CommandException {
-        for (Job j : currentMachine.getJobs()) {
-            Machine mostFreeMachine = getMostFreeMachine();
-            if (mostFreeMachine.equals(currentMachine)) {
+        if (currentMachine.getJobs().stream().anyMatch(job -> job.getStatus() == Status.ONGOING)) {
+            throw new JobOngoingException();
+        }
+        for (Job j : new ArrayList<>(currentMachine.getJobs())) {
+            System.out.println(j.getJobName().fullName);
+            try {
+                Machine mostFreeMachine = getMostFreeMachine(currentMachine);
+                moveJob(j.getJobName(), mostFreeMachine.getName());
+            } catch (MachineNotFoundException mfe) {
                 throw new CommandException(MESSAGE_NO_MORE_MACHINES);
             }
-            moveJobToMachine(j, mostFreeMachine);
         }
         flushMachine(currentMachine);
         indicateMachineListChanged();
@@ -345,6 +354,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public Machine getMostFreeMachine() {
         return versionedAddressBook.getMostFreeMachine();
+    }
+
+    @Override
+    public Machine getMostFreeMachine(Machine otherThanMe) {
+        return versionedAddressBook.getMostFreeMachine(otherThanMe);
     }
 
     @Override
@@ -488,30 +502,40 @@ public class ModelManager extends ComponentManager implements Model {
     public void undoAddressBook() {
         versionedAddressBook.undo();
         indicateAddressBookChanged();
+        indicateMachineListChanged();
+        indicateAdminListChanged();
     }
 
     @Override
     public void redoAddressBook() {
         versionedAddressBook.redo();
         indicateAddressBookChanged();
+        indicateMachineListChanged();
+        indicateAdminListChanged();
     }
 
     @Override
     public void commitAddressBook() {
         versionedAddressBook.commit();
         indicateAddressBookChanged();
+        indicateMachineListChanged();
+        indicateAdminListChanged();
     }
 
     @Override
     public void adminLoginCommitAddressBook() {
         versionedAddressBook.adminLoginCommit();
         indicateAddressBookChanged();
+        indicateMachineListChanged();
+        indicateAdminListChanged();
     }
 
     @Override
     public void adminLogoutCommitAddressBook() {
         versionedAddressBook.adminLogoutCommit();
         indicateAddressBookChanged();
+        indicateMachineListChanged();
+        indicateAdminListChanged();
     }
 
     @Override

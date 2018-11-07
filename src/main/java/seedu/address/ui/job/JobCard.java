@@ -186,6 +186,10 @@ public class JobCard extends UiPart<Region> {
             progressBar.setProgress(job.getPercentageCompletion());
             progressIndicator.setProgress(job.getPercentageCompletion());
             break;
+        case FINISHED:
+            progressBar.setProgress(1);
+            progressIndicator.setProgress(1);
+            break;
         default:
             progressBar.setProgress(0);
             progressIndicator.setProgress(0);

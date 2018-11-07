@@ -81,8 +81,8 @@ public class ManageJobCommand extends Command {
         if (model.findJob(this.name) == null) {
             throw new CommandException(MESSAGE_NO_SUCH_JOB);
         }
-        switch (option) {
 
+        switch (option) {
         case OPTION_START:
             try {
                 if (!model.isTopJob(name) && !model.isLoggedIn()) {
