@@ -159,6 +159,12 @@ public interface Model {
      * @return Machine
      */
     Machine getMostFreeMachine();
+    /**
+     * Returns the machine that is most free and not {@code otherThanMe}, in terms of time left
+     * @param otherThanMe
+     * @return Machine
+     */
+    Machine getMostFreeMachine(Machine otherThanMe);
 
     /**
      * Adds the given Admin

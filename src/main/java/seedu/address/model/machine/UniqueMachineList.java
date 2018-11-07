@@ -18,6 +18,7 @@ import seedu.address.model.job.Status;
 import seedu.address.model.job.exceptions.JobNotFoundException;
 import seedu.address.model.job.exceptions.JobOngoingException;
 import seedu.address.model.machine.exceptions.DuplicateMachineException;
+import seedu.address.model.machine.exceptions.MachineDisabledException;
 import seedu.address.model.machine.exceptions.MachineNotFoundException;
 
 
@@ -99,13 +100,17 @@ public class UniqueMachineList {
     /**
      * Adds a job the machine {@code target} jobs list
      */
-    public void addJobToMachineList(Job job) throws MachineNotFoundException {
+    public void addJobToMachineList(Job job) throws MachineNotFoundException, MachineDisabledException {
         requireAllNonNull(job);
 
         Machine target = this.findMachine(job.getMachineName());
 
         if (target == null) {
             throw new MachineNotFoundException();
+        }
+
+        if (target.getStatus() == MachineStatus.DISABLED) {
+            throw new MachineDisabledException();
         }
         target.addJob(job);
         EventsCenter.getInstance().post(new FocusMachineRequestEvent(new JobMachineTuple(job, target)));
@@ -185,30 +190,42 @@ public class UniqueMachineList {
     }
 
     public Machine getMostFreeMachine() {
+        return getMostFreeMachine(null);
+    }
+
+    public Machine getMostFreeMachine(Machine otherThanMe) {
         long minimumTime = Long.MAX_VALUE;
         Machine mostFreeMachine = null;
 
         for (Machine machine : internalList) {
-            if (machine.getTotalDuration() < minimumTime) {
+            if ((machine.getTotalDuration() < minimumTime) && (machine.getStatus().equals(MachineStatus.ENABLED))
+                && !(machine == otherThanMe)) {
                 minimumTime = machine.getTotalDuration();
                 mostFreeMachine = machine;
             }
         }
 
-        return mostFreeMachine;
+        if (mostFreeMachine != null) {
+            return mostFreeMachine;
+        } else {
+            throw new MachineNotFoundException();
+        }
     }
 
     /**
      * Returns true if any machine has job at the front of the queue
+     *
      * @param job
      */
     public boolean isTopJob(JobName job) {
         for (Machine m : internalList) {
+            if (m.getJobs().isEmpty()) {
+                continue;
+            }
             if (m.getJobs().get(0).getJobName().equals(job)) {
                 return true;
             }
         }
-
         return false;
     }
 

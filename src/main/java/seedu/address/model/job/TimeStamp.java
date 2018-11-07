@@ -8,7 +8,8 @@ import java.util.TimeZone;
  * Timestamp for modelling time
  */
 public class TimeStamp {
-    private static final long MILLIS_IN_HOURS = 3600000;
+    private static final long MILLIS_IN_MINUTES = 60000;
+    private static final long MILLIS_IN_HOURS = MILLIS_IN_MINUTES * 60;
     private static final long MILLIS_IN_DAYS = MILLIS_IN_HOURS * 24;
     private static final long MILLIS_IN_YEARS = MILLIS_IN_DAYS * 365;
     private Calendar calendar;
@@ -70,7 +71,11 @@ public class TimeStamp {
     public String showAsDuration() {
         long duration = this.getDate().getTime();
         calendar.setTimeZone(TimeZone.getTimeZone("GMT+0000"));
-        if (duration < MILLIS_IN_HOURS) {
+        if (duration < MILLIS_IN_MINUTES) {
+            return calendar.get(Calendar.SECOND) + " Seconds";
+        } else if (duration == MILLIS_IN_MINUTES) {
+            return calendar.get(Calendar.MINUTE) + " Minute";
+        } else if (duration < MILLIS_IN_HOURS) {
             return calendar.get(Calendar.MINUTE) + " Minutes";
         } else if (duration < MILLIS_IN_HOURS * 2) {
             return calendar.get(Calendar.HOUR_OF_DAY) + " Hour " + calendar.get(Calendar.MINUTE) + " Minutes";
