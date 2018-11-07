@@ -8,7 +8,6 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Predicate;
-import javafx.collections.ObservableList;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -29,6 +28,8 @@ import seedu.address.model.machine.Machine;
 import seedu.address.model.machine.MachineName;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.builders.JobBuilder;
+
+import javafx.collections.ObservableList;
 
 public class AddJobCommandTest {
 
