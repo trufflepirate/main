@@ -13,6 +13,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.core.JobMachineTuple;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.CommandResult;
@@ -29,7 +30,6 @@ import seedu.address.model.machine.MachineName;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.builders.JobBuilder;
 
-import javafx.collections.ObservableList;
 
 public class AddJobCommandTest {
 
