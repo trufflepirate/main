@@ -18,7 +18,6 @@ import seedu.address.commons.core.JobMachineTuple;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.AdminListChangedEvent;
-import seedu.address.commons.events.model.JobListChangedEvent;
 import seedu.address.commons.events.model.MachineListChangedEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.admin.Admin;
@@ -71,7 +70,6 @@ public class ModelManager extends ComponentManager implements Model {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                System.out.println("Running refresh");
                 for (Machine machine : versionedAddressBook.getMachineList()) {
                     for (Job job : machine.getJobs()) {
                         try {
@@ -127,19 +125,6 @@ public class ModelManager extends ComponentManager implements Model {
      * Raises an event to indicate the model has changed
      */
     private void indicateMachineListChanged() {
-        raise(new MachineListChangedEvent(versionedAddressBook));
-    }
-
-    // TODO: 11/3/2018 REMOVE UNUSED METHOD
-
-    /**
-     * Raises an event to indicate the model has changed
-     */
-    private void indicateJobListChanged() {
-        raise(new JobListChangedEvent(versionedAddressBook));
-        /**
-         * Since when job changes, it implicitly implies that machine list will change too
-         */
         raise(new MachineListChangedEvent(versionedAddressBook));
     }
 
