@@ -1,5 +1,10 @@
 package seedu.address.testutil.testdata;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import seedu.address.model.AddressBook;
 import seedu.address.model.job.Job;
 import seedu.address.model.job.Priority;
 import seedu.address.model.job.Status;
@@ -41,4 +46,17 @@ public class ValidJobs {
                 .getName()).withJobNote("This is BUMBERBEE jobnote").withDuration(1).withPriority(Priority.NORMAL)
             .withOwner(new PersonBuilder().withName("Bumble bee").build()).withStatus(Status.CANCELLED).build();
     }
+
+    public static AddressBook getJobsData() {
+        AddressBook makerManagerJobsData = new AddressBook();
+        for (Job m : getValidJobs()) {
+            makerManagerJobsData.addJob(m);
+        }
+        return makerManagerJobsData;
+    }
+
+    public static List<Job> getValidJobs() {
+        return new ArrayList<>(Arrays.asList(job1(), job2(), job3()));
+    }
+
 }
