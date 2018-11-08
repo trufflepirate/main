@@ -61,11 +61,17 @@ public class ModelManager extends ComponentManager implements Model {
         filteredMachines = new FilteredList<>(versionedAddressBook.getMachineList());
         filteredAdmins = new FilteredList<>(versionedAddressBook.getAdminList());
 
+        Timer refreshTimer = refreshUITimer();
+
+    }
+
+    private Timer refreshUITimer() {
         // Timer for auto print cleanup
         // credit: https://dzone.com/articles/how-schedule-task-run-interval
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
+                System.out.println("Running refresh");
                 for (Machine machine : versionedAddressBook.getMachineList()) {
                     for (Job job : machine.getJobs()) {
                         try {
@@ -85,6 +91,7 @@ public class ModelManager extends ComponentManager implements Model {
         long intervalPeriod = 1000;
         timer.scheduleAtFixedRate(task, delay, intervalPeriod);
 
+        return timer;
     }
 
     public ModelManager() {
