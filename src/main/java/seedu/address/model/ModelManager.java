@@ -60,12 +60,21 @@ public class ModelManager extends ComponentManager implements Model {
         filteredMachines = new FilteredList<>(versionedAddressBook.getMachineList());
         filteredAdmins = new FilteredList<>(versionedAddressBook.getAdminList());
 
-        Timer refreshTimer = refreshUITimer();
+        Timer refreshTimer = refreshUiTimer();
 
     }
 
-    private Timer refreshUITimer() {
+    public ModelManager() {
+        this(new AddressBook(), new UserPrefs());
+    }
+
+    /**
+     * Helps refresh the Ui and show changes instantaneously
+     * @return
+     */
+    private Timer refreshUiTimer() {
         // Timer for auto print cleanup
+
         // credit: https://dzone.com/articles/how-schedule-task-run-interval
         TimerTask task = new TimerTask() {
             @Override
@@ -90,10 +99,6 @@ public class ModelManager extends ComponentManager implements Model {
         timer.scheduleAtFixedRate(task, delay, intervalPeriod);
 
         return timer;
-    }
-
-    public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
     }
 
     @Override
