@@ -18,7 +18,6 @@ import seedu.address.commons.core.JobMachineTuple;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.AdminListChangedEvent;
-import seedu.address.commons.events.model.JobListChangedEvent;
 import seedu.address.commons.events.model.MachineListChangedEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.admin.Admin;
@@ -61,7 +60,21 @@ public class ModelManager extends ComponentManager implements Model {
         filteredMachines = new FilteredList<>(versionedAddressBook.getMachineList());
         filteredAdmins = new FilteredList<>(versionedAddressBook.getAdminList());
 
+        Timer refreshTimer = refreshUiTimer();
+
+    }
+
+    public ModelManager() {
+        this(new AddressBook(), new UserPrefs());
+    }
+
+    /**
+     * Helps refresh the Ui and show changes instantaneously
+     * @return
+     */
+    private Timer refreshUiTimer() {
         // Timer for auto print cleanup
+
         // credit: https://dzone.com/articles/how-schedule-task-run-interval
         TimerTask task = new TimerTask() {
             @Override
@@ -85,10 +98,7 @@ public class ModelManager extends ComponentManager implements Model {
         long intervalPeriod = 1000;
         timer.scheduleAtFixedRate(task, delay, intervalPeriod);
 
-    }
-
-    public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        return timer;
     }
 
     @Override
@@ -120,19 +130,6 @@ public class ModelManager extends ComponentManager implements Model {
      * Raises an event to indicate the model has changed
      */
     private void indicateMachineListChanged() {
-        raise(new MachineListChangedEvent(versionedAddressBook));
-    }
-
-    // TODO: 11/3/2018 REMOVE UNUSED METHOD
-
-    /**
-     * Raises an event to indicate the model has changed
-     */
-    private void indicateJobListChanged() {
-        raise(new JobListChangedEvent(versionedAddressBook));
-        /**
-         * Since when job changes, it implicitly implies that machine list will change too
-         */
         raise(new MachineListChangedEvent(versionedAddressBook));
     }
 
