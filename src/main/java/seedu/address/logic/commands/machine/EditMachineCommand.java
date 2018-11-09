@@ -48,9 +48,10 @@ public class EditMachineCommand extends Command {
     public static final String MESSAGE_DUPLCIATE_MACHINE_NAME =
         "This machine name is already being used in the address book.";
     public static final String MESSAGE_NO_CHANGES_DETECTED = "No changes detected";
-    private static final String MESSAGE_ACCESS_DENIED =
+    public static final String MESSAGE_ACCESS_DENIED =
         "Non-admin user is not allowed to edit a machine in maker manager";
-    private static final String MESSAGE_ONGOING_JOB = "Cannot edit Machine with ongoing Job.";
+    public static final String MESSAGE_ONGOING_JOB = "Cannot edit Machine with ongoing Job.";
+
     private final MachineName machineName;
     private final EditMachineDescriptor editMachineDescriptor;
 
