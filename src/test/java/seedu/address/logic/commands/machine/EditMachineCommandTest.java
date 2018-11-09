@@ -1,5 +1,6 @@
 package seedu.address.logic.commands.machine;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_ENDER;
@@ -105,8 +106,11 @@ public class EditMachineCommandTest {
         expectedModel.commitAddressBook();
 
         CommandResult result = editMachineCommand.execute(model, new CommandHistory(commandHistory));
+        assertEquals(expectedMessage, result.feedbackToUser);
+        assertEquals(expectedModel, model);
+        //assertEquals(expectedCommandHistory, actualCommandHistory);
 
-        //assertCommandSuccess(editMachineCommand, model, commandHistory, expectedMessage, expectedModel);
+        assertCommandSuccess(editMachineCommand, model, commandHistory, expectedMessage, expectedModel);
 
         // undo -> reverts makerManager back to previous state
         expectedModel.undoAddressBook();
