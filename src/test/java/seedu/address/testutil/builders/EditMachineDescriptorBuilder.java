@@ -37,7 +37,7 @@ public class EditMachineDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Name} of the {@code EditMachineDescriptor} that we are building.
+     * Sets the {@code MachineName} of the {@code EditMachineDescriptor} that we are building.
      */
     public EditMachineDescriptorBuilder withName(String name) {
         descriptor.setName(new MachineName(name));
@@ -45,7 +45,7 @@ public class EditMachineDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Phone} of the {@code EditMachineDescriptor} that we are building.
+     * Sets the {@code Status} of the {@code EditMachineDescriptor} that we are building.
      */
     public EditMachineDescriptorBuilder withStatus(MachineStatus status) {
         descriptor.setStatus(status);
