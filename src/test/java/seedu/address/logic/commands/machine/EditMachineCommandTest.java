@@ -85,11 +85,9 @@ public class EditMachineCommandTest {
         //assertCommandSuccess(editCommand, model, commandHistory, expectedMessage, expectedModel);
         //START assertCommandSuccess
         //CommandHistory expectedCommandHistory = new CommandHistory(commandHistory);
-
-        //CommandResult result = editCommand.execute(model, new CommandHistory(commandHistory));
         /*
         try {
-
+            //CommandResult result = editCommand.execute(model, new CommandHistory(commandHistory));
             assertEquals(expectedMessage, result.feedbackToUser);
             assertEquals(expectedModel, model);
             assertEquals(expectedCommandHistory, commandHistory);
