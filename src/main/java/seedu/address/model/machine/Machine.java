@@ -159,15 +159,10 @@ public class Machine {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getName()).append(" Tags: ");
-        getTags().forEach(builder::append);
-
-        builder.append(" Jobs: ");
-        getJobs().forEach(builder::append);
-
+        builder.append(getName());
         builder.append(" Status: ");
         builder.append(getStatus().toString());
-        return builder.toString();
+        return builder.toString() + "\n";
     }
 
     /**
