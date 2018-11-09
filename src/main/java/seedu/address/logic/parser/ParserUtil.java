@@ -32,7 +32,7 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INVALID_DURATION =
-        "Duration must be a non-zero unsigned number with optional decimal point lesser than 9999 rounded to the "
+        "Duration must be a non-zero unsigned number with optional decimal point lesser than or equal to 9999 rounded to the "
             + "nearest 3 decimal places";
 
     /**
