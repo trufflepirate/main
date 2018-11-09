@@ -150,7 +150,7 @@ public class EditMachineCommandTest {
         EditMachineCommand editMachineCommand =
             new EditMachineCommand(machineInList.getName(), new EditMachineCommand.EditMachineDescriptor());
 
-        String expectedMessage = String.format(EditMachineCommand.MESSAGE_NO_CHANGES_DETECTED);
+        String expectedMessage = EditMachineCommand.MESSAGE_NO_CHANGES_DETECTED;
 
         //The following code is a direct clone of the assertCommandFailure in CommandTestUtil
         //calling assertCommandFailure fails Travis but passes local tests run by Gradle and Intellij possible bug?
