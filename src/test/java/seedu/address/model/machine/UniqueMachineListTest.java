@@ -1,9 +1,9 @@
 package seedu.address.model.machine;
 
-import static junit.framework.Assert.assertNull;
-import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.Rule;
 import org.junit.Test;
