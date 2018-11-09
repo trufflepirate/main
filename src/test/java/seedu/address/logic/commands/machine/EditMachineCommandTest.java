@@ -63,7 +63,7 @@ public class EditMachineCommandTest {
     }
 
     @Test
-    public void execute_allFieldsSpecified_editSuccessful() {
+    public void execute_allFieldsSpecified_editSuccessful() throws Exception {
         Machine machineInList = model.getFilteredMachineList().get(0);
         Machine editedMachine =
             new MachineBuilder().withName(VALID_MACHINE_NAME_ULTIMAKER).withStatus(MachineStatus.ENABLED).build();
@@ -89,7 +89,7 @@ public class EditMachineCommandTest {
     }
 
     @Test
-    public void execute_someFieldsSpecified_success() {
+    public void execute_someFieldsSpecified_success() throws Exception {
         Machine machineInList = model.getFilteredMachineList().get(0);
         Machine editedMachine = new MachineBuilder(machineInList).withName(VALID_MACHINE_NAME_ENDER).build();
 
