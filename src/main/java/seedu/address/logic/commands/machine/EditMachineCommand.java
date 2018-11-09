@@ -3,7 +3,6 @@ package seedu.address.logic.commands.machine;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MACHINE_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_MACHINES;
 
 import java.util.ArrayList;
@@ -37,9 +36,8 @@ public class EditMachineCommand extends Command {
     public static final String MESSAGE_USAGE =
         COMMAND_WORD + ": Edits the details of the Machine identified " + "by machine name. "
             + "Existing values will be overwritten by the input values.\n" + "Parameters: MACHINE_NAME " + "["
-            + PREFIX_NAME + "NAME] " + "[" + PREFIX_MACHINE_STATUS + "MACHINE_STATUS] " + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Example: " + COMMAND_WORD + " MyPrinter " + PREFIX_NAME + "YourPrinter " + PREFIX_MACHINE_STATUS
-            + "ENABLED";
+            + PREFIX_NAME + "NAME] " + "[" + PREFIX_MACHINE_STATUS + "MACHINE_STATUS] \n" + "Example: " + COMMAND_WORD
+            + " MyPrinter " + PREFIX_NAME + "YourPrinter " + PREFIX_MACHINE_STATUS + "ENABLED";
 
     public static final String MESSAGE_EDIT_MACHINE_SUCCESS = "Edited Machine: %1$s";
     public static final String MESSAGE_MACHINE_NOT_FOUND = "Machine does not exist";
