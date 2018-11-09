@@ -22,6 +22,7 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -105,12 +106,16 @@ public class EditMachineCommandTest {
         expectedModel.updateMachine(machineInList, editedMachine);
         expectedModel.commitAddressBook();
 
-        CommandResult result = editMachineCommand.execute(model, new CommandHistory(commandHistory));
-        assertEquals(expectedMessage, result.feedbackToUser);
-        assertEquals(expectedModel, model);
+        try {
+            CommandResult result = editMachineCommand.execute(model, new CommandHistory(commandHistory));
+            assertEquals(expectedMessage, result.feedbackToUser);
+            assertEquals(expectedModel, model);
+        } catch (CommandException ce) {
+            throw new AssertionError("test");
+        }
         //assertEquals(expectedCommandHistory, actualCommandHistory);
 
-        assertCommandSuccess(editMachineCommand, model, commandHistory, expectedMessage, expectedModel);
+        //assertCommandSuccess(editMachineCommand, model, commandHistory, expectedMessage, expectedModel);
 
         // undo -> reverts makerManager back to previous state
         expectedModel.undoAddressBook();
